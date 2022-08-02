@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Delaware Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Delaware</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Delaware</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>January 21, 2021, 3:05 PM PST</td>
+          <td>1074</td>
+          <td>
+            <a href="#issue-1074">[DE] Remove values carried over after Delaware stopped reporting Recovered on 12/7/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 21, 2021, 3:05 PM PST</td>
+          <td>1074</td>
+          <td>
+            <a href="#issue-1074">[DE] Remove values carried over after Delaware stopped reporting Recovered on 12/7/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 29, 2020, 2:05 PM PDT</td>
+          <td>918</td>
+          <td>
+            <a href="#issue-918">[DE] Backfill Test Encounters</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 27, 2020, 8:58 PM PDT</td>
+          <td>871</td>
+          <td>
+            <a href="#issue-871">[DE] confirmed+probable cases entered as confirmed cases on 9/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 24, 2020, 9:28 AM PDT</td>
+          <td>863</td>
+          <td>
+            <a href="#issue-863">[DE] Backfill probable cases from 6/11-7/27 by using total - confirmed </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 14, 2020, 7:17 AM PDT</td>
+          <td>622</td>
+          <td>
+            <a href="#issue-622">[DE] PCL Cases Historical</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 19, 2020, 10:51 AM PDT</td>
+          <td>501</td>
+          <td>
+            <a href="#issue-501">[Data Quality] Capture current values and fill in historicals for probable cases in DE spreadsheet</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 12, 2020, 4:10 PM PDT</td>
+          <td>491</td>
+          <td>
+            <a href="#issue-491">DE Death Total on 6/11 was entered incorrectly</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 2, 2020, 5:52 PM PDT</td>
+          <td>125</td>
+          <td>
+            <a href="#issue-125">DE Data correction by state 3/31</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2020, 4:30 PM PDT</td>
+          <td>117</td>
+          <td>
+            <a href="#issue-117">DE cases 3/31-4/1</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2020, 7:58 AM PDT</td>
+          <td>101</td>
+          <td>
+            <a href="#issue-101">DE: 31 March data does not match screenshots</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 4:46 AM PDT</td>
+          <td>90</td>
+          <td>
+            <a href="#issue-90">DE: Negatives fixed? Count updated but grade and state dash haven&#39;t</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1074">#1074: [DE] Remove values carried over after Delaware stopped reporting Recovered on 12/7/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1074</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 21, 2021, 3:05 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1074" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Delaware</p>
+<p>Issue: On December 7, 2020, Delaware announced on their dashboard that they would no longer be reporting <strong>Recovered</strong> as it was “no longer a true reflection of the number of persons that recovered from the disease”. We carried over the last available value, as that was our policy at the time, however the value is out of date and potentially confusing, so we are removing the carried over value. We will be keeping the time series as provided by the state, but removing the carried over values from December 7, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-764997986">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 21, 2021, 3:05 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1074#issuecomment-764997986" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values</li>
+<li>[x]  update public note</li>
+</ul>
+<p>no chart annotation added because we don't have a chart with this metric</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-765028217">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 21, 2021, 4:25 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1074#issuecomment-765028217" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values removed:
+<a href="../../assets/github/files/5852834/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1074">#1074: [DE] Remove values carried over after Delaware stopped reporting Recovered on 12/7/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1074</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 21, 2021, 3:05 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1074" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Delaware</p>
+<p>Issue: On December 7, 2020, Delaware announced on their dashboard that they would no longer be reporting <strong>Recovered</strong> as it was “no longer a true reflection of the number of persons that recovered from the disease”. We carried over the last available value, as that was our policy at the time, however the value is out of date and potentially confusing, so we are removing the carried over value. We will be keeping the time series as provided by the state, but removing the carried over values from December 7, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-764997986">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 21, 2021, 3:05 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1074#issuecomment-764997986" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values</li>
+<li>[x]  update public note</li>
+</ul>
+<p>no chart annotation added because we don't have a chart with this metric</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-765028217">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 21, 2021, 4:25 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1074#issuecomment-765028217" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values removed:
+<a href="../../assets/github/files/5852834/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-918">#918: [DE] Backfill Test Encounters</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            918</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 29, 2020, 2:05 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/918" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Delaware</p>
+<p><strong>Describe the problem</strong>
+Filling the time series of test encounters and positive tests from public State provided data.</p>
+<p><strong>Link to data source</strong>
+https://myhealthycommunity.dhss.delaware.gov/locations/state/download_covid_19_data</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-719064630">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on October 29, 2020, 3:40 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/918#issuecomment-719064630" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We backfilled total test encounters and positive tests (PCR).  Attached analysis sheet and data sheet that was downloaded from the data source on two separate days for comparison.</p>
+<p><a href="../../assets/github/files/5461636/DE.-.Analysis.PCR.20201028.csv.txt">DE - Analysis PCR 20201028.csv.txt</a>
+<a href="../../assets/github/files/5461637/DE.-.DE.data.10_19.and.10_28.csv.txt">DE - DE data 10_19 and 10_28.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-871">#871: [DE] confirmed+probable cases entered as confirmed cases on 9/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            871</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on September 27, 2020, 8:58 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/871" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: DE</p>
+<p><strong>Describe the problem</strong>
+Looks like we accidentally entered confirmed+probable as confirmed today. We have 20260; it should be 19207</p>
+<p><strong>Link to data source</strong>
+<img width="908" alt="Screen Shot 2020-09-27 at 11 55 01 PM" src="https://user-images.githubusercontent.com/15933271/94389246-57951700-011d-11eb-9861-613531b3acc3.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-699756085">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on September 27, 2020, 8:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/871#issuecomment-699756085" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<img width="595" alt="Screen Shot 2020-09-27 at 11 55 51 PM" src="../../assets/github/images/15933271/94389259-61b71580-011d-11eb-94d1-b830bf100bcb.png">
+<strong>After</strong>
+<img width="472" alt="Screen Shot 2020-09-27 at 11 59 13 PM" src="../../assets/github/images/15933271/94389291-75fb1280-011d-11eb-8954-750844e63b5c.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-863">#863: [DE] Backfill probable cases from 6/11-7/27 by using total - confirmed </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            863</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 24, 2020, 9:28 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/863" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Delaware</p>
+<p><strong>Describe the problem</strong>
+Delaware started separating confirmed and probable cases on 6/11. CTP did not start capturing probable cases until 7/28. This will backfill the <code>Probable Cases</code> time series by a calculation of <code>Positive </code>-<code> Positive Cases (PCR)</code>
+DE's calculated probables have a flat number from 6/30 to 7/11. We verified this was correct through screenshots.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus.delaware.gov/
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/DE/DE-20200630-183314.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/DE/DE-20200706-063510.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/DE/DE-20200711-180651.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698461212">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 24, 2020, 9:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/863#issuecomment-698461212" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and After values in the attached sheet
+<a href="../../assets/github/files/5277765/DE.Probable.Timeseries.Backfill.xlsx">DE Probable Timeseries Backfill.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-622">#622: [DE] PCL Cases Historical</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            622</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 14, 2020, 7:17 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/622" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Delaware</p>
+<p><strong>Describe the problem</strong>
+From 4/28-6/9, we report confirmed+probable lumped values in &quot;Positive Cases (PCR).&quot; Delaware began separating the numbers on 6/10, which we have reflected in that same column. We should delete the lumped values prior to 6/10</p>
+<p><strong>Link to data source</strong>
+<img src="https://user-images.githubusercontent.com/67408226/87436572-140d2100-c5a2-11ea-951c-927b8d84f00e.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660521872">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on July 18, 2020, 11:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/622#issuecomment-660521872" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>From 2020-04-29 through 2020-06-10 (inclusive), CTP reported the same value for positive and positiveCasesViral columns.</p>
+<ul>
+<li>The positiveCasesViral column data has been removed for this date range. <em>Please note, this reflects a total 337,159 removed from positiveCasesViral (over this 43 day timeframe)</em></li>
+<li>The positive column has been unaltered for this date range.</li>
+</ul>
+<p>Separately, on 2020-06-11, <a href="https://covidtracking.com/screenshots/DE/DE-20200611-183200.png">Delaware reported 9,158 confirmed cases, 948 probable cases which is 10,106 total cases</a>. This is reflected on 2020-06-11 in CTP's dataset.</p>
+<p><strong>BEFORE</strong>
+<img width="823" alt="BEFORE_DE" src="../../assets/github/images/31285549/87859133-a8032380-c8e7-11ea-99d4-349e12ce5e87.png"></p>
+<p><strong>AFTER</strong>
+<img width="794" alt="AFTER_DE" src="../../assets/github/images/31285549/87859141-ac2f4100-c8e7-11ea-8a96-2cf7c82d12fd.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-501">#501: [Data Quality] Capture current values and fill in historicals for probable cases in DE spreadsheet</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            501</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 19, 2020, 10:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Meta
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/501" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> 8/1
+<strong>Overview:</strong> Start explicitly recording probable cases during daily data entry shifts and backfill historical values.
+<strong>Contribution to milestone:</strong> This issue will enable us to expose probable cases explicitly in the API/public spreadsheet, enabling better communication when we switch to confirmed+neg instead of pos+neg.
+<strong>Other benefits:</strong> better understanding of probables (whether they are indeed pos-confirmed)
+<strong>Potential challenges:</strong> We are hoping that the probables equal Positives (confirmed+probable) - Positive Cases (PCR) in all states, but if this is not the case we may need to do more digging.
+<strong>Editorial:</strong> None</p>
+<ul>
+<li>[x] Add an explicit Cases (Probable) column to worksheet2. Begin collecting it in daily DE shifts.</li>
+<li>[ ] Create a sanity checking spreadsheet that checks whether Positives (confirmed+probable) - Positive Cases (PCR) matches our recorded probables values</li>
+<li>[ ] Backfill probables by using the calculation or other backfill sources if needed. File GH issues for any complicated states.</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-491">#491: DE Death Total on 6/11 was entered incorrectly</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            491</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 12, 2020, 4:10 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/491" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>DE</p>
+<p><strong>Describe the problem</strong>
+Data entry error</p>
+<p><strong>Link to data source</strong>
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1591987123059900</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-646368146">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 18, 2020, 5:19 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/491#issuecomment-646368146" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Looks like they added probable deaths that day and the person entering misinterpreted, adding the probables to the total and then reporting the total as confirmed deaths. Fixed both numbers:</p>
+<p>Before:
+<img src="../../assets/github/images/404503/85083769-b6eb9e80-b1a0-11ea-9b97-651a6ad058a0.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/85083837-003bee00-b1a1-11ea-9535-a74562bc9aa3.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-125">#125: DE Data correction by state 3/31</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            125</p>
+          <p>
+            <strong>careeningspace</strong> opened this issue on April 2, 2020, 5:52 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/125" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>DE changed its data reporting on 3/31. News article documenting change: https://delawarebusinessnow.com/2020/03/coronavirus-cases-increase-to-264/</p>
+<p>Data before:
+<img src="https://user-images.githubusercontent.com/43073915/78313050-9c9c1000-7523-11ea-9867-a4ec8e043756.png" alt="Screen Shot 2020-04-02 at 8 49 17 PM"></p>
+<p>Data After:
+<img src="https://user-images.githubusercontent.com/43073915/78313106-c81efa80-7523-11ea-96c8-fe8c02d9a052.png" alt="Screen Shot 2020-04-02 at 8 49 27 PM"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-117">#117: DE cases 3/31-4/1</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            117</p>
+          <p>
+            <strong>OregonCarrot</strong> opened this issue on April 1, 2020, 4:30 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/117" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The # of cases for Delaware dropped from 406 on 3/31 to 368 on 4/1.</p>
+<p>Given that it reports positive tests, and not active cases, I don't know how this is possible.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-608073083">
+          <div class="frontmatter">
+            <div>
+              <strong>tomdottom</strong> commented on April 2, 2020, 1:00 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/117#issuecomment-608073083" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Relates to #101</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608403432">
+          <div class="frontmatter">
+            <div>
+              <strong>tomdottom</strong> commented on April 3, 2020, 5:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/117#issuecomment-608403432" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I believe this has already been addressed</p>
+<p><img src="../../assets/github/images/5106166/78360034-267bc580-7584-11ea-9c42-536faef8cf6e.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608522007">
+          <div class="frontmatter">
+            <div>
+              <strong>OregonCarrot</strong> commented on April 3, 2020, 8:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/117#issuecomment-608522007" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-101">#101: DE: 31 March data does not match screenshots</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            101</p>
+          <p>
+            <strong>tomdottom</strong> opened this issue on April 1, 2020, 7:58 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/101" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Daily <code>positive</code> listed as 406 whilst screenshots shows 264.
+When I first noticed this last night (around 23:00) dashboard in question was actually showing 316.</p>
+<p><img src="https://user-images.githubusercontent.com/5106166/78151885-15597a00-7407-11ea-8f17-b15e93aee657.png" alt="image"></p>
+<p>316 aligns with latest reported figures</p>
+<p><img src="https://user-images.githubusercontent.com/5106166/78152222-826d0f80-7407-11ea-988d-da9474411ddf.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607337143">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 9:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/101#issuecomment-607337143" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>There is already an issue open for DE.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607377818">
+          <div class="frontmatter">
+            <div>
+              <strong>tomdottom</strong> commented on April 1, 2020, 10:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/101#issuecomment-607377818" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@una-smith</strong> #90 relates to the negative count and testing.</p>
+<p>This issues refers to positive count and the conflicting information between screenshots, historical data for 31 March, and latest reported data.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607399169">
+          <div class="frontmatter">
+            <div>
+              <strong>tomdottom</strong> commented on April 1, 2020, 10:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/101#issuecomment-607399169" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>:thinking: just looking at a public arcgis datasource and see</p>
+<pre><code>{'NAME': 'New Castle', 'Presumptive_Positive': 197}
+{'NAME': 'Kent', 'Presumptive_Positive': 34}
+{'NAME': 'Pea Patch', 'Presumptive_Positive': None}
+{'NAME': 'Sussex', 'Presumptive_Positive': 88}
+{'NAME': 'Reedy Island', 'Presumptive_Positive': None}
+{'NAME': 'Statewide', 'Presumptive_Positive': 87}
+</code></pre>
+<p>Sum including <code>Statewide</code> is 406 (which matches history).
+Sum excluding <code>Statewide</code> is 319 (which matches current reported count).</p>
+<p>Was a similar (same?) data source used and <code>Statewide</code> not excluded?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608196504">
+          <div class="frontmatter">
+            <div>
+              <strong>tomdottom</strong> commented on April 2, 2020, 7:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/101#issuecomment-608196504" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data on site now reflects expected value</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-90">#90: DE: Negatives fixed? Count updated but grade and state dash haven&#39;t</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            90</p>
+          <p>
+            <strong>catawbasam</strong> opened this issue on March 31, 2020, 4:46 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  State grades
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/90" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I have friends working to improve the Delaware situation, and want let them know whether the state has implemented regular reporting of negative test results.</p>
+<p>This morning I see a higher negatives count for Delaware on covid19tracking, but the grade remains 'C' and I see no state-reported negative count at https://coronavirus.delaware.gov/</p>
+<p>Could you clarify the situation?</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-606683753">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on March 31, 2020, 8:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/90#issuecomment-606683753" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi.  The new negatives count follows a contact I made yesterday with the Delaware Department of Public Health Call Center.  Here is the response I received from DPH Call Center:</p>
+<blockquote>
+<p>Due to the number of private test being administered, we do not have an accurate count of those being tested until numbers are reported to DPH. This number is only reported once a week. We will pass your feedback along to the web team, however.</p>
+</blockquote>
+<p>I would like to see the COVID19Tracking dashboard updated.  A &quot;B&quot; grade seems appropriate and the comment mentioning no negatives since 3/13 should be updated.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607263702">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 6:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/90#issuecomment-607263702" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Now 4/1 and DE has improved reporting of negative test counts but the COVIDTracking dashboard still says about DE</p>
+<blockquote>
+<p>Last reported negative number is from 3/13 News Report.</p>
+</blockquote>
+<p>Someone please remove that sentence!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607267245">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on April 1, 2020, 7:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/90#issuecomment-607267245" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We’re on it! It just changed last night, and we have to manually update grades and notes (for now).</p>
+<p>Alexis</p>
+<blockquote>
+<p>On Apr 1, 2020, at 6:54 AM, una-smith <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<p>Now 4/1 and DE has improved reporting of negative test counts but the COVIDTracking dashboard still says about DE</p>
+<p>Last reported negative number is from 3/13 News Report.</p>
+<p>Someone please remove that sentence!</p>
+<p>—
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly, view it on GitHub, or unsubscribe.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790176">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/90#issuecomment-623790176" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990023">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/90#issuecomment-628990023" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

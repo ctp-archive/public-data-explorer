@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>District of Columbia Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">District of Columbia</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">District of Columbia</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>February 8, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On February 8, 2021, the spreadsheet indicated 28,986 while the webpage indicated 26,986. We captured the information from the webpage as we routinely did. The following day the number of recoveries in the sheet went down to 27,121. Since there was no explanation, and the webpage time-series is continous, we assume that the spreadsheet number is a data entry error and we are correcting it.</p>
+
+      </div>
+    
+    <h2>February 23, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021, the District of Columbia's COVID-19 dashboard had a minor discrepancy between recovered values, with the text at the top of the dashboard showing 28,532 recoveries and the embedded dashboard showing 28,531. We reported 28,532 recoveries per our usual sourcing.</p>
+
+      </div>
+    
+    <h2>February 16, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 16, 2021, the District of Columbia announced that their testing data for the day would be delayed. As a result, we were unable to update their Total PCR tests (test encounters) or Total PCR tests (people).</p>
+
+      </div>
+    
+    <h2>February 14, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 14, 2021, the District of Columbia’s Total PCR Tests (people), dropped by 1,987 from 426,830 to 424,843 without explanation.</p>
+
+      </div>
+    
+    <h2>February 12, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 13, 2021, the District of Columbia's totalTestsPeopleViral fell by 751 without explanation.</p>
+
+      </div>
+    
+    <h2>February 12, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On February 12, 2021, the District of Columbia did not update their COVID-19 testing data by the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 13, 2021, the District of Columbia reported 426,830 **Total Test Encounters**, which is a decrease of 751 from the figure reported for the previous day. No explanation was available for this decrease.</p>
+
+      </div>
+    
+    <h2>January 30, 2021
+       to January 31, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 30, 2021 through January 31, 2021, the District of Columbia did not update Currently on ventilator on their data dashboard or data downloads.</p>
+
+      </div>
+    
+    <h2>December 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 27, 2020, the District of Columbia, Oklahoma, South Carolina, and South Dakota noted that their data for December 27, 2020 would include two days of data due to holiday related reporting cadence changes.</p>
+
+      </div>
+    
+    <h2>December 24, 2020
+       to December 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, the District of Columbia announced on their [COVID-19 page](https://coronavirus.dc.gov/data) that there would be no update to their data on December 25, 2020 due to the Christmas holiday. Additionally, they noted that the data reported on December 26, 2020 will include numbers from December 24, 2020 and the data reported on December 27, 2020 will include numbers from December 25, 2020 and December 26, 2020.</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Alaska, California, Connecticut, the District of Columbia, Idaho, Kansas, Louisiana, Massachusetts,  Michigan, Minnesota, North Carolina, North Dakota, New Hampshire, Ohio, Rhode Island, South Carolina, South Dakota, Utah, and Vermont did not update their data due to the Christmas holiday.</p>
+
+      </div>
+    
+    <h2>December 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 8th, 2020 District of Columbia did not update their data for <strong>Currently on ventilator</strong>.</p>
+
+      </div>
+    
+    <h2>November 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On November 22, 2020, the District of Columbia’s Total PCR tests (people) decreased by 128, from 288,452 to 288,324, without explanation.</p>
+
+      </div>
+    
+    <h2>November 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 19, 2020, District of Columbia did not update their Currently hospitalized and Currently on ventilator numbers.</p>
+
+      </div>
+    
+    <h2>November 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On November 8, 2020, District of Columbia did not update their current hospitalized numbers. We carried over values for Currently hospitalized, Currently in ICU, and Currently on ventilator.</p>
+
+      </div>
+    
+    <h2>November 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On November 8, 2020, District of Columbia did not update their current hospitalized numbers. We carried over values for Currently hospitalized, Currently in ICU, and Currently on ventilator.</p>
+
+      </div>
+    
+    <h2>October 31, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On October 31, 2020, District of Columbia did not update their total tests number, so we carried over Total negative tests (people) as well.</p>
+
+      </div>
+    
+    <h2>May 23, 2020
+       to May 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>On September 19, 2020, we corrected an error in our data for the DIstrict of Columbia's totalTestEncountersViral from May 23 to May 24, 2020.</p>
+
+      </div>
+    
+    <h2>May 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On May 23, 2020, The District of Columbia's numbers for totalTestEncountersViral dropped by 4,065 due to a review of the data.</p>
+
+      </div>
+    
+    <h2>May 23, 2020
+       to September 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Backfill of the total PCR tests (people) timeseries to reflect our understanding that this number is unique people according to outreach</p>
+
+      </div>
+    
+    <h2>September 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Multiple states were switched to use direct columns</p>
+
+      </div>
+    
+    <h2>March 5, 2020
+       to August 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>privateNotes</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP API / Logic Changes</span>
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>According to our outreach, the District of Columbia’s “total overall tested” figure on its dashboard represents test encounters, the number of unique individuals tested per day, with one exception: if an individual receives a positive and a negative test on the same day, they are counted twice rather than once.  Changed the annotations and moved the timeseries from people to testing encounters to match.</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>July 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Recoveries increased drastically by 7562 (from 2020 to 9582)</p>
+
+      </div>
+    
+    <h2>April 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On April 7, 2020, the District of Colombia's Deaths (confirmed and probable) decreased by 2 without explanation.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

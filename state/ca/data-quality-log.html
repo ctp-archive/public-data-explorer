@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>California Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">California</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">California</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 4, 2020
+       to April 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>We determined that California had always reported only Confirmed cases as their Total Cases, so we copied California's Total cases into Confirmed cases prior to April 29, 2020.</p>
+
+      </div>
+    
+    <h2>February 25, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 25, 2021, California announced that their deaths included a backlog of 806 deaths initially not reported as COVID019 deaths from Los Angeles County. As a result, many of the deaths reported on February 25, 2021 occurred between December 3, 2020 and February 3, 2021. We urge caution when interpreting numbers from this period, and encourage the use of 7 and 14-day averages as more reliable metrics than individual figures.</p>
+
+      </div>
+    
+    <h2>January 21, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">Other</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 21st, 2021, the website reporting current hospitalization and icu bugged out and could not deliver numbers. We used the number on the official state website instead, which usually matches up with the numbers on the website</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Alaska, California, Connecticut, the District of Columbia, Idaho, Kansas, Louisiana, Massachusetts,  Michigan, Minnesota, North Carolina, North Dakota, New Hampshire, Ohio, Rhode Island, South Carolina, South Dakota, Utah, and Vermont did not update their data due to the Christmas holiday.</p>
+
+      </div>
+    
+    <h2>December 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On December 16, 2020, California [announced](<a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-338.aspx">https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-338.aspx</a>) that their cases for December 16, 2020 include 15,337 cases from previous days due to a change in case processing. It appears this new process will regularly include a higher volume of cases that were not identified within the previous 24 hours.</p>
+
+      </div>
+    
+    <h2>December 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 8, 2020, our regular source for Currently in ICU did not update properly today, so we updated <strong>Currently hospitalized</strong> and <strong>Currently in ICU</strong> numbers using the state page, as they've historically matched time series.</p>
+
+      </div>
+    
+    <h2>November 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 18, 2020, California's Hospitalization Tableau dashboard did not update, so we updated their Currently hospitalized and Currently in ICU numbers from the state dashboard instead.</p>
+
+      </div>
+    
+    <h2>November 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On November 8, 2020 California updated after out publish time. Our data was updated from dashboards that evening.</p>
+
+      </div>
+    
+    <h2>October 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/23, CA reported a backlog of ~2000 cases, resulting in 6141 new cases for the day.</p>
+
+      </div>
+    
+    <h2>March 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>As of September 18, 2020, California's total test results are drawn from our `totalTestsViral` field instead of calculated via positive+negative.</p>
+
+      </div>
+    
+    <h2>September 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Multiple states were switched to use direct columns</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>August 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/11, a note on CA's state site read, &quot;Note: Today’s case counts include backlogged cases that would have been reported in earlier days and weeks and are not an accurate representation of cases reported in the prior 24 hours.&quot;</p>
+
+      </div>
+    
+    <h2>August 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/10, CA site annotation read, &quot;Note: The issue with the state’s electronic laboratory reporting system has been addressed and the system is now performing as expected. The entire backlog has been completely eliminated, and new cases attributed to the backlog will be reported over the next few days.&quot;</p>
+
+      </div>
+    
+    <h2>August 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>(1) On 8/4, we noticed a discrepancy for Total PCR Tests on the dashboard. The update for 8/4 at the top of the state page reports 8,302,713 PCR tests, but the testing section of the dash reports 8,305,713. We went with 8,305,713.
+(2) On 8/4, CDPH discovered an underreporting of COVID-19 cases due to technology issues with the electronic laboratory reporting system which reports into the state’s disease registry system, leading to likely under-counts of single day cases at the state and local levels.</p>
+
+      </div>
+    
+    <h2>July 23, 2020
+       to July 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 7/23 California has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system, so we froze the values. On 7/28, we unfroze the values. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+      </div>
+    
+    <h2>July 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Mistakenly entered Recovered number for 7/20 removed.</p>
+
+      </div>
+    
+    <h2>June 29, 2020
+       to July 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>From June 29 to July 5th, California made a few revisions to daily case numbers, on 7/17 we updated the values based on the most recent data from their dashboard.</p>
+
+      </div>
+    
+    <h2>July 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On July 8, 2020, California data included a backlog from Los Angeles County, which had not reported for several days. Approximately 1,000 of the 11,000 new cases were attributed to this backlog data.</p>
+
+      </div>
+    
+    <h2>April 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Starting April 22, 2020, California is reporting specimens tested instead of people tested. This caused an increase of over 165,000 tests on April 22, 2020, because some people are tested more than once and more than one specimens per person may be tested.</p>
+
+      </div>
+    
+    <h2>April 4, 2020
+       to April 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On April 4 and April 22, 2020, California reported large batches of backlogged **negative test** data.</p>
+
+      </div>
+    
+    <h2>March 4, 2020
+       to April 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Prior to April 1, 2020, The COVID Tracking Project used county data sources for more timely reporting of California's COVID-19 data. At the start of April, we switched to using the state dashboard. This led to a modest drop in <code>positive</code> and <code>death</code> as the state's data lagged behind the county sources.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

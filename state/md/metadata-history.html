@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Maryland Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Maryland</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Maryland</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-23T09:49:34.000-08:00">November 23, 2020, 9:49 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-16T12:03:32.000-07:00">October 16, 2020, 12:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-09T16:03:27.000-07:00">October 9, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-31T13:03:16.000-07:00">August 31, 2020, 1:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-31T12:02:34.000-07:00">July 31, 2020, 12:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T22:00:10.000-07:00">March 20, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T22:00:07.000-07:00">March 18, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_SerologyTests/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of October 16, 2020, Maryland’s total test results are drawn from our totalTestsViral field instead of calculated via positive+negative. This will result in TotalTestResults only going back to 3/24 instead of 3/5.</p>
+<p>On August 31, 2020, we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>.</p>
+<p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_SerologyTests/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of October 16, 2020, Maryland’s total test results are drawn from our totalTestsViral field instead of calculated via positive+negative. This will result in TotalTestResults only going back to 3/24 instead of 3/5.</p>
+<p>On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>.</p>
+<p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://coronavirus.maryland.gov/datasets/mdcovid19-serologytests/data</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of October 16, 2020, Maryland’s total test results are drawn from our totalTestsViral field instead of calculated via positive+negative. This will result in TotalTestResults only going back to 3/24 instead of 3/5.</p>
+<p>On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>.</p>
+<p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-23T09:49:34.000-08:00">November 23, 2020, 9:49 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of October 16, 2020, Maryland’s total test results are drawn from our totalTestsViral field instead of calculated via positive+negative. This will result in TotalTestResults only going back to 3/24 instead of 3/5.</p>
+<p>On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>.</p>
+<p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+<p>As of October 16, 2020, Maryland’s total test results are drawn from our totalTestsViral field instead of calculated via positive+negative. This will result in TotalTestResults only going back to 3/24 instead of 3/5.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-16T12:03:32.000-07:00">October 16, 2020, 12:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&amp;outFields=*&amp;outStatistics=[%7B%22statisticType%22%3A+%22sum%22%2C+%22onStatisticField%22%3A+%22number_of_positives%22%2C+%22outStatisticFieldName%22%3A+%22total_number_of_positives%22%7D]</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-09T16:03:27.000-07:00">October 9, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. On August 31 2020 , we updated Maryland's <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong>  prior to 8/16 to match state-provided &quot;Testing Volume&quot; data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-31T13:03:16.000-07:00">August 31, 2020, 1:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, 2020, Maryland did not report data for <strong>negative tests</strong>.</p>
+<p>On July 31, 2020, we began capturing Maryland's data for <strong>Positive PCR tests (specimens)</strong>. We plan to back-fill the state's historical time-series for this metric, which begins in March.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, Maryland did not report negative test numbers.</p>
+<p>On July 31, we began capturing MD's data for positive results of PCR tests in units of tests (as opposed to in units of persons tested). We will backfill the time series, which begins in March.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-31T12:02:34.000-07:00">July 31, 2020, 12:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Between March 12 and March 28, Maryland did not report negative test numbers.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Didn't report negatives between 3/12 and 3/28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Didn't report negatives between 3/12 and 3/28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://coronavirus.maryland.gov/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Didn't report negatives between 3/12 and 3/28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maryland does not report negative test results anymore. We are using the last negative provided as of 3/12.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maryland does not report negative test results anymore. We are using the last negative provided as of 3/12.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T22:00:10.000-07:00">March 20, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maryland does not report negative test results. We are using the last negative as of 3/12.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Last negative on 3/12.  Use time = 10:00. Deaths now reported on website.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Last negative on 3/12.  Use time = 10:00. Death reported <a href="https://www.washingtonpost.com/local/virginia-dc-maryland-coronavirus-news-wednesday/2020/03/18/9e49700a-6925-11ea-abef-020f086a3fab_story.html">by media</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T22:00:07.000-07:00">March 18, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Last negative on 3/12.  Use time = 10:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Last negative on 3/12.  No pending counts.  Use time = 00:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Last negative on 3/12.  No pending counts.  Use time = 00:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Last negative counts from 3/12  No pending counts.  Use time = 00:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The website says that the data is &quot;real time&quot; so we mark our data entries with the current date and time: 00:00. As of March 7th, Maryland stopped reporting &quot;pending tests&quot;.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://phpa.health.maryland.gov/Pages/Novel-coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

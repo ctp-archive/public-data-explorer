@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Tennessee Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Tennessee</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Tennessee</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-01T18:04:28.000-08:00">March 1, 2021, 6:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-01T16:18:52.000-08:00">January 1, 2021, 4:18 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-26T10:56:46.000-08:00">December 26, 2020, 10:56 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-19T13:03:29.000-08:00">December 19, 2020, 1:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-12T15:03:41.000-08:00">December 12, 2020, 3:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-03T15:02:16.000-07:00">July 3, 2020, 3:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-30T17:05:42.000-07:00">June 30, 2020, 5:05 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-07T10:01:45.000-07:00">June 7, 2020, 10:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T16:02:09.000-07:00">May 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-24T13:01:20.000-07:00">April 24, 2020, 1:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-05T09:00:01.000-07:00">April 5, 2020, 9:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-24T16:00:07.000-07:00">March 24, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-21T11:00:10.000-07:00">March 21, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T15:00:07.000-07:00">March 17, 2020, 3:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On March 7, 2021, Tennessee did not provide an update before the end of our daily publication shift.</p>
+<p>As of March 1, 2021, Tennessee's <code>totalTestResults</code> field is taken directly from <code>totalTestsViral</code> instead of calculated from positive + negative. We backfilled the data for March 24, 2020 through March 1, 2021 using the time-series posted in Tennessee's <a href="https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html">Downloadable Datasets</a>. We also cleared the history of Negative (people or cases) since it was calculated using mixed units.</p>
+<p>On January 1, 2021, the Tennessee Department of Health <a href="https://twitter.com/TNDeptofHealth/status/1345117770543996940?s=20">announced</a> that its update for January 2, 2021 would include data from both January 1 and January 2, presumably because of the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>.</p>
+<p>On December 25, 2020, Tennessee did not provide a data update, likely due to the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>. Additionally, they <a href="https://twitter.com/TNDeptofHealth/status/1342952651022086147">noted</a> that the data reported on December 26, 2020, included two days of data, and that the number of deaths reported were “limited” due to the holiday.</p>
+<p>On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>As of March 1, 2021, Tennessee's <code>totalTestResults</code> field is taken directly from <code>totalTestsViral</code> instead of calculated from positive + negative. We backfilled the data for March 24, 2020 through March 1, 2021 using the time-series posted in Tennessee's <a href="https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html">Downloadable Datasets</a>. We also cleared the history of Negative (people or cases) since it was calculated using mixed units.</p>
+<p>On January 1, 2021, the Tennessee Department of Health <a href="https://twitter.com/TNDeptofHealth/status/1345117770543996940?s=20">announced</a> that its update for January 2, 2021 would include data from both January 1 and January 2, presumably because of the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>.</p>
+<p>On December 25, 2020, Tennessee did not provide a data update, likely due to the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>. Additionally, they <a href="https://twitter.com/TNDeptofHealth/status/1342952651022086147">noted</a> that the data reported on December 26, 2020, included two days of data, and that the number of deaths reported were “limited” due to the holiday.</p>
+<p>On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-01T18:04:28.000-08:00">March 1, 2021, 6:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On January 1, 2021, the Tennessee Department of Health <a href="https://twitter.com/TNDeptofHealth/status/1345117770543996940?s=20">announced</a> that its update for January 2, 2021 would include data from both January 1 and January 2, presumably because of the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>.</p>
+<p>On December 25, 2020, Tennessee did not provide a data update, likely due to the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>. Additionally, they <a href="https://twitter.com/TNDeptofHealth/status/1342952651022086147">noted</a> that the data reported on December 26, 2020, included two days of data, and that the number of deaths reported were “limited” due to the holiday.</p>
+<p>On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-01T16:18:52.000-08:00">January 1, 2021, 4:18 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On January 1, 2021, the Tennessee Department of Health <a href="https://twitter.com/TNDeptofHealth/status/1345117770543996940?s=20">announced</a> that its update for January 2, 2021 would include data from both January 1 and January 2, presumably because of the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>.</p>
+<p>On December 25, 2020, Tennessee did not provide a data update by the time of our daily update, likely due to the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>. Additionally, they <a href="https://twitter.com/TNDeptofHealth/status/1342952651022086147">noted</a> that the data reported on December 26, 2020, included two days of data, and that the number of deaths reported were “limited” due to the holiday.
+On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On December 25, 2020, Tennessee did not provide a data update by the time of our daily update, likely due to the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee’s separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>. Additionally, they <a href="https://twitter.com/TNDeptofHealth/status/1342952651022086147">noted</a> that the data reported on December 26, 2020, included two days of data, and that the number of deaths reported were “limited” due to the holiday.
+On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-26T10:56:46.000-08:00">December 26, 2020, 10:56 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On December 25, 2020, Tennessee did not provide a data update by the time of our daily update, likely due to the holiday. We were able to update <strong>Now hospitalized</strong> from Tennessee's separate <a href="https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html">hospitalization source</a>.</p>
+<p>On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On December 19, 2020, Tennessee announced that due to the volume of tests being processed they will likely release a combined report with data from both December 19, 2020 and December 20, 2020 on December 20, 2020. As a result, we were unable to update their data on December 20, 2020.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-19T13:03:29.000-08:00">December 19, 2020, 1:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Total cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>On December 12, 2020, Tennessee <a href="https://twitter.com/tndeptofhealth/status/1337869853621964805?s=21">announced</a> via the official Tennessee Department of Heath twitter that the data for December 12, 2020 is incomplete and does not include all negative test results. Please exercise caution when looking at data from this time period and be aware that 7 day averages may be a more reliable metric than individual figures at this moment.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-12T15:03:41.000-08:00">December 12, 2020, 3:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>Tennessee continually updates its <strong>Currently hospitalized / Now hospitalized</strong> data which can cause differences between their historic data and ours.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://data.tn.gov/t/Public/views/HospitalizedPatients/HospitalizedPatients?:embed=y</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 5, 2020, Tennessee reported a decline in <strong>Recoveries</strong>.</p>
+<p>As of July 3, 2020, <strong>Now hospitalized</strong> data includes both positive and pending cases. We have updated hospitalizations for March 31–July 3 to include both positive and pending cases as well.</p>
+<p>As of June 10, 2020, <strong>Cases</strong> include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories.</p>
+<p>On April 5, the state reported a decline in recoveries.</p>
+<p>As of June 7, positives include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+<p>As of July 3, hospitalizations include both positive and pending cases.</p>
+<p>On July 3, we updated hospitalizations from March 31 through July 3 to include both positive and pending cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries.
+As of June 7, positives include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.
+As of July 3, hospitalizations include both positive and pending cases.
+On July 3, we updated hospitalizations from March 31 through July 3 to include both positive and pending cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries. As of June 7, positives include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health. As of July 3, hospitalizations include both positive and pending cases. On July 3, we updated hospitalizations from March 31 through July 3 to include both positive and pending cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-03T15:02:16.000-07:00">July 3, 2020, 3:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov/data/hospitalization-data/current-covid-hospitalizations.html</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries. As of June 7, positives include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-30T17:05:42.000-07:00">June 30, 2020, 5:05 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries. As of June 7, positives include both confirmed and probable cases of COVID-19 reported to or tested by the Tennessee Department of Health.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-07T10:01:45.000-07:00">June 7, 2020, 10:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T16:02:09.000-07:00">May 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On April 5, the state reported a decline in recoveries. As of April 27, Tennessee is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf#toolbar=0</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On 4/5, the state reported a decline in recoveries.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-24T13:01:20.000-07:00">April 24, 2020, 1:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories. On 4/5, the state reported a decline in recoveries.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-05T09:00:01.000-07:00">April 5, 2020, 9:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Tennessee now provides positive and negative test results from all laboratories.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-24T16:00:07.000-07:00">March 24, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count from state lab only. We don't have a total test number, but used one <a href="https://dailymemphian.com/article/11998/covid-19-testing-memphis-strickland">reported for Memphis</a> as a way to calculate a lower bound for negatives. We use 15:00 ET as the update time since the site indicates it's updated daily at 2pm CT.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-21T11:00:10.000-07:00">March 21, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count from state lab only, which reported 24/98 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count from state lab only, which reported 24/98 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count from state lab only, which reported 22/73 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count only from state lab, which reported 22/73 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T15:00:07.000-07:00">March 17, 2020, 3:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count only from state lab, which reported 19/52 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count only from state lab, which reported 19/52 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count only from state lab, which reported 17/39 total positives.  Use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative count only from state lab, which reported 14/32 total positives.  If no update time given, use time = 15:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data is in text. No update time given. Use current data and time = 00:00 for consistency with other data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.tn.gov/health/cedep/ncov.html</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

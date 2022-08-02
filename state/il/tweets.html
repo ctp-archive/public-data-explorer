@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Illinois Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Illinois</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Illinois</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 21, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>New York accelerated past Washington in per capita positive tests. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Massachusetts
+Colorado
+Rhode Island
+Illinois</p>
+
+    </div>
+  
+    <h2>March 22, 2020, 2:25 PM PDT</h2>
+    <div>
+      <p>New York continues to have the highest positive tests per capita, an indication of both the intensity of testing there and the severity of the outbreak. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Illinois
+Vermont
+Colorado
+Rhode Island</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 2:46 PM PDT</h2>
+    <div>
+      <p>Illinois showed a sharp increase in COVID-19 deaths today. The state now has 6,980 confirmed cases and 141 cumulative deaths. https://t.co/WSKWzX1IQ6</p>
+
+    </div>
+  
+    <h2>April 3, 2020, 8:46 AM PDT</h2>
+    <div>
+      <p>@hannahmeisel @IDPH FWIW, we’ve had some Illinois reporters wonder aloud about the IDPH numbers. We have not seen <em>more</em> reason to doubt them than for any other state, but just FWIW. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 5:50 PM PDT</h2>
+    <div>
+      <p>As of today, 8 states are reporting racial demographics for COVID cases:
+CT, IL, MI, MN, NC, NJ, SC, VA</p>
+<p>And 5 states are reporting racial demographics for COVID deaths:
+CT, IL, LA, MN, NC</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 2:14 PM PDT</h2>
+    <div>
+      <p>Update coming shortly. We're just getting in the first Illinois hospitalization numbers before the daily commit. https://t.co/PETKG0lkPA</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Illinois put out important new data today: confirmed and suspected current COVID-19 hospitalizations, ICU admissions, and ventilator usage. They are big numbers, comparable to California (which reports slightly differently). https://t.co/Bfn6cDv3qL</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Illinois put out important new data today: confirmed and suspected current COVID-19 hospitalizations, ICU admissions, and ventilator usage. They are big numbers, comparable to California (which reports slightly differently). https://t.co/Bfn6cDv3qL</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>This is just another indication that COVID-19, while it broke out on the east and west coasts, will not remain a coastal phenomenon, as Michigan, Louisiana, Illinois, Indiana, Colorado, and other states experience intense outbreaks.</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>One thing to note about hospitalization data: New Jersey, Illinois, and California are all including  different sets of people in their numbers. We are reporting the <em>lower</em> numbers where they are available (as in CA, which breaks out confirmed and suspected COVID-19 cases).</p>
+
+    </div>
+  
+    <h2>April 11, 2020, 2:24 PM PDT</h2>
+    <div>
+      <p>The death toll continues to be concentrated in New York and New Jersey, although Michigan, Illinois, and Pennsylvania continue to see substantial numbers of  deaths each day. https://t.co/GbJ5RNM0mc</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>Final shoutout to Kansas (@KDHE) and Illinois (@IDPH). Thus far, they are the only two states breaking out testing by race and ethnicity.</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>9 states reported over 50 deaths:</p>
+<p>California: 98
+Florida: 74
+Illinois: 102
+Indiana: 54
+Massachusetts: 130
+Michigan: 154
+New Jersey: 204
+New York: 299
+Pennsylvania: 64</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>1/2 A list of states/territories in which African American COVID deaths substantially exceed the community's share of the population:</p>
+<p>Alabama
+Arkansas
+California
+Colorado
+Connecticut
+D.C.
+Florida
+Georgia
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Maryland
+Michigan
+Mississippi</p>
+
+    </div>
+  
+    <h2>September 4, 2020, 3:59 PM PDT</h2>
+    <div>
+      <p>Today's testing numbers are the highest since the daily record on July 24. The uptick in tests and cases was partially due to a data dump in Illinois. https://t.co/94bQikmJVP</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>Cases nationwide are on the rise. Two states - Illinois and Texas - are each reporting over 5k cases. https://t.co/1sgCu73Piu</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:24 PM PDT</h2>
+    <div>
+      <p>TX, FL, and WI all reported over 5k cases today. IL reported a new daily record of over 8k cases. Here's how these states looked over the last two months for comparison. https://t.co/pQhRRDTkGQ</p>
+
+    </div>
+  
+    <h2>November 5, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>While the smaller Midwest states were the first to see case and hospitalization surges, the problems have begun to hit the populous states like Illinois. https://t.co/0wsch14tkA</p>
+
+    </div>
+  
+    <h2>November 5, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>While long-term care facility data continues to be patchy, what we do know is grim: Cases continued to rocket upward last week with 19,086 new cases and 1,839 new deaths among staff and residents. More than a quarter of these cases were in just three states: IL, OH, and TX.</p>
+
+    </div>
+  
+    <h2>November 6, 2020, 4:50 PM PST</h2>
+    <div>
+      <p>IL reported a record 12K cases today. 7 states reported over 5k cases. https://t.co/CBmvL91zT2</p>
+
+    </div>
+  
+    <h2>November 7, 2020, 4:28 PM PST</h2>
+    <div>
+      <p>Illinois reported an all-time high case count today—12k. Cases in the midwestern state have doubled in the past two weeks, pushing the per-capita case total to nearly 1,000. https://t.co/0NUSOGR4S6</p>
+
+    </div>
+  
+    <h2>November 9, 2020, 4:57 PM PST</h2>
+    <div>
+      <p>Illinois has reported over 10k daily cases for 4 consecutive days. https://t.co/1AWROviSaN</p>
+
+    </div>
+  
+    <h2>November 13, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>Illinois reported 15K cases today. A new record for the state. Cases in Texas are back over 10k. https://t.co/IRtsex4Ll0</p>
+
+    </div>
+  
+    <h2>November 16, 2020, 4:21 PM PST</h2>
+    <div>
+      <p>IL and WI both reported over 10k cases today. VA reported ~2.7k cases due to a technical issue over the weekend. https://t.co/Rzt6t2xe10</p>
+
+    </div>
+  
+    <h2>November 18, 2020, 5:33 PM PST</h2>
+    <div>
+      <p>26 states have over 1k people currently hospitalized with COVID-19. Hospitalizations in CA, TX, and IL account for almost a quarter of all COVID-19 current hospitalizations. https://t.co/E7aUzNBlmt</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:45 PM PST</h2>
+    <div>
+      <p>California just set a new single-day case high for any state at 15,442.</p>
+<p>Only Illinois and Florida have ever reported more than 15k: IL on Nov 13 and FL on July 12. https://t.co/SwoJxSJlKp</p>
+
+    </div>
+  
+    <h2>November 23, 2020, 4:38 PM PST</h2>
+    <div>
+      <p>Only 4 states—HI, ME, NH, VT—have fewer than 100 people per million hospitalized with COVID-19. South Dakota and Nebraska have the most people hospitalized per capita, with North Dakota, Illinois, and Indiana close behind. https://t.co/mxRLdjJQvH</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:16 AM PST</h2>
+    <div>
+      <p>Central to the Midwest’s surge is Illinois, which reported one of the highest numbers of new cases and deaths in the nation last week. The state was home to nearly 20% of the Midwest’s long-term care deaths and cases.  https://t.co/at3RarLewB https://t.co/ymgs13rFMW</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:48 PM PST</h2>
+    <div>
+      <p>The Midwest remains the epicenter of COVID-19 in long-term care facilities. The region has seen the highest number of reported LTC cases &amp; deaths every week since mid-November. Four states—IL, OH, IN &amp; MN—topped the nation in new reported LTC deaths last week. https://t.co/bp1sBO7RmF</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Seven states reported more than 10k cases today: CA, FL, IL, NY, PA, OH, and TX. https://t.co/L93HHx9vjH</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 2:01 PM PST</h2>
+    <div>
+      <p>As of today, vaccine data is readily available across 49 states and territories, but our team only found vaccine data on doses administered in LTCs in seven states: Arkansas, Illinois, Kentucky, Michigan, South Carolina, Tennessee, and Texas.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 8:22 AM PST</h2>
+    <div>
+      <p>For our API users: Yesterday, we switched totalTestResults to use values from totalTestsViral instead of being calculated from positive+negative in 4 states: IL, ME, MI, and SD.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 8:22 AM PST</h2>
+    <div>
+      <p>The changes in ME dropped totalTestResults by around 40k. The changes in IL made no impact to the value of totalTestResults at the topline but may have shifted earlier values.</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

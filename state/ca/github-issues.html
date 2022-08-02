@@ -1,0 +1,2780 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>California Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">California</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">California</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 8, 2020, 10:12 PM PST</td>
+          <td>940</td>
+          <td>
+            <a href="#issue-940">[CA] Backfilling 11/8 data because they did not update until after 5pm PT</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 27, 2020, 1:37 PM PDT</td>
+          <td>681</td>
+          <td>
+            <a href="#issue-681">[CA] 7/26 ICU freeze</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 25, 2020, 2:11 PM PDT</td>
+          <td>675</td>
+          <td>
+            <a href="#issue-675">[CA] 7/23 hospitalization freeze needs to be reflected in ICU data as well</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 20, 2020, 6:11 PM PDT</td>
+          <td>652</td>
+          <td>
+            <a href="#issue-652">[CA]Data entry error caused CA recoveries number to show up on 7/20. It should be deleted</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 7:45 AM PDT</td>
+          <td>615</td>
+          <td>
+            <a href="#issue-615">[CA] PCL Cases Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 2, 2020, 5:47 AM PDT</td>
+          <td>567</td>
+          <td>
+            <a href="#issue-567">[CA Historicals] 7/1 California backfilled test information from the last few days</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 17, 2020, 11:11 PM PDT</td>
+          <td>433</td>
+          <td>
+            <a href="#issue-433">CA 4/1 to current 5/17 - Data is off by one day from official CA press releases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 17, 2020, 11:00 PM PDT</td>
+          <td>432</td>
+          <td>
+            <a href="#issue-432">CA 3/18 - 3/31 - Data doesn&#39;t match CA official press releases </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 17, 2020, 8:27 PM PDT</td>
+          <td>431</td>
+          <td>
+            <a href="#issue-431">CA 3/11 - 3/17 - Data doesn&#39;t match CA official press releases/screenshots</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 6, 2020, 12:21 PM PDT</td>
+          <td>373</td>
+          <td>
+            <a href="#issue-373">CA daily Deaths data not correct since 4/26. How do we get the corrected data?</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 22, 2020, 10:29 PM PDT</td>
+          <td>270</td>
+          <td>
+            <a href="#issue-270">CA totalTestResults doesn&#39;t match state dashboard</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 20, 2020, 2:26 PM PDT</td>
+          <td>235</td>
+          <td>
+            <a href="#issue-235">CA deaths fix?</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 11, 2020, 3:24 PM PDT</td>
+          <td>183</td>
+          <td>
+            <a href="#issue-183">CA data for 4/11 appears incorrect</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 11, 2020, 2:57 PM PDT</td>
+          <td>181</td>
+          <td>
+            <a href="#issue-181">CA confusion</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 3, 2020, 7:32 AM PDT</td>
+          <td>154</td>
+          <td>
+            <a href="#issue-154">CA, NY &amp; RI inicuCumulative missing</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 4, 2020, 3:31 PM PDT</td>
+          <td>141</td>
+          <td>
+            <a href="#issue-141">CA recent numbers are strange</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2020, 6:28 AM PDT</td>
+          <td>100</td>
+          <td>
+            <a href="#issue-100">CA: public health website off the grid</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 5:44 PM PDT</td>
+          <td>96</td>
+          <td>
+            <a href="#issue-96">CA: Screenshots cut off</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 30, 2020, 6:17 PM PDT</td>
+          <td>87</td>
+          <td>
+            <a href="#issue-87">CA: Latent data updates - not updating for California Daily</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 20, 2020, 1:03 PM PDT</td>
+          <td>28</td>
+          <td>
+            <a href="#issue-28">Issue with testing data from CA</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-940">#940: [CA] Backfilling 11/8 data because they did not update until after 5pm PT</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            940</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 8, 2020, 10:12 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  Publish Time
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/940" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: California</p>
+<p>Problem: CA did not update it's dashboards on 11/8 until sometime after 5pm PT.</p>
+<p>Solution: Update today's values from the dashboards now that they've updated.
+Screenshots:
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CA/CA-secondary-20201109-051143.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CA/CA-tertiary-20201109-051148.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-723788714">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 8, 2020, 10:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/940#issuecomment-723788714" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1292" alt="Screen Shot 2020-11-08 at 10 14 11 PM" src="../../assets/github/images/66583275/98506475-730d3a80-2210-11eb-8cf2-3d12389b3d15.png"></p>
+<p>AFTER:
+<img width="1174" alt="Screen Shot 2020-11-08 at 10 22 55 PM" src="../../assets/github/images/66583275/98506756-11010500-2211-11eb-9801-aee96bfd3d27.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-681">#681: [CA] 7/26 ICU freeze</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            681</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 27, 2020, 1:37 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/681" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: California</p>
+<p><strong>Describe the problem</strong>
+CA is currently under a hospitalization/ICU collection freeze due to inconsistent reporting disruptions. ICU numbers were updated on 7/26.</p>
+<p><strong>Link to data source</strong>
+N/A</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-664626649">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 27, 2020, 1:40 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/681#issuecomment-664626649" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>7/26 ICU value was changed to 2284, the value used for the freeze.
+Before:
+<img width="786" alt="Screen Shot 2020-07-27 at 4 39 27 PM" src="../../assets/github/images/66738237/88589877-cc69a900-d027-11ea-948b-5ec1376f20bb.png">
+After:
+<img width="876" alt="Screen Shot 2020-07-27 at 4 39 39 PM" src="../../assets/github/images/66738237/88589893-d25f8a00-d027-11ea-9e6f-5daeaf10fe22.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-675">#675: [CA] 7/23 hospitalization freeze needs to be reflected in ICU data as well</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            675</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 25, 2020, 2:11 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/675" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: California</p>
+<p><strong>Describe the problem:</strong> On 7/23, it was decided that hospitalization coverage would be frozen. However, ICU coverage was not stopped until 7/25. ICU values should be carried forward until 7/25.</p>
+<p><strong>Link to data source:</strong> https://update.covid19.ca.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663906794">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 25, 2020, 2:13 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/675#issuecomment-663906794" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Only one data point (7/24 ICU) was affected. It was modified to reflect the data freeze.
+Before:
+<img width="783" alt="Screen Shot 2020-07-25 at 5 12 43 PM" src="../../assets/github/images/66738237/88466429-2472a500-ce9a-11ea-8938-bb7eae2164a9.png">
+After:
+<img width="784" alt="Screen Shot 2020-07-25 at 5 12 58 PM" src="../../assets/github/images/66738237/88466430-263c6880-ce9a-11ea-8c6f-0d20b2a2c75d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-652">#652: [CA]Data entry error caused CA recoveries number to show up on 7/20. It should be deleted</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            652</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 20, 2020, 6:11 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/652" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: CA</p>
+<p><strong>Describe the problem</strong>
+Data entry error caused CA recoveries number to show up on 7/20. It should be deleted</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-661526379">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 20, 2020, 6:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/652#issuecomment-661526379" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/62236447/88001578-57412580-cab5-11ea-9d67-55078fa730be.png" alt="Screenshot from 2020-07-20 18-07-47-1">
+Fix:
+<img src="../../assets/github/images/62236447/88001579-57d9bc00-cab5-11ea-8144-da9bfbe49856.png" alt="Screenshot from 2020-07-20 18-13-56-2"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-661534160">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 20, 2020, 6:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/652#issuecomment-661534160" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Site updated</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-615">#615: [CA] PCL Cases Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            615</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 13, 2020, 7:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/615" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>It appears CA has reported Confirmed-Cases using the phrase confirmed positive cases since their first report on Mar 15th.</p>
+<p>Please backfill Positive Cases (PCR) using archive of screenshots. http://covid-tracking-project-data.s3-website.us-east-1.amazonaws.com/state_screenshots/CA/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657819391">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 13, 2020, 3:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/615#issuecomment-657819391" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I took a quick look at this and the screenshots are kind of a mess before April. Some of them have no data, others are of the Los Angeles Times instead of a state source, etc. Maybe a better source is the California  health department press releases, which are nearly daily? https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx  However even there, we will have to decide how to deal with a bunch of old school issues like whether to include &quot;Federal repatriation flights&quot;.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-658287877">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 14, 2020, 9:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/615#issuecomment-658287877" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We can take all the dashboard data from CA's data portal.
+In the dataset we have, they do not separate it into citizens/non-citizens</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-659587202">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 16, 2020, 11:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/615#issuecomment-659587202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>PDF for comparison and DC:
+Link to work sheet: https://docs.google.com/spreadsheets/d/13tI18huMNKdVh7Rgqp2DWFWGPEHxz9V56jwYlP1d4IU/edit#gid=1153718346
+PDF for posterity:
+<a href="../../assets/github/files/4933381/CA.-.Analysis.615.pdf">CA - Analysis #615.pdf</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667292957">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 31, 2020, 11:38 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/615#issuecomment-667292957" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671565895">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 10, 2020, 1:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/615#issuecomment-671565895" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-567">#567: [CA Historicals] 7/1 California backfilled test information from the last few days</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            567</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 2, 2020, 5:47 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/567" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: California</p>
+<p><strong>Describe the problem</strong>
+On 7/1 CA reported ~9k tests;, but  actually some were from yesterday, some from the day before that etc.</p>
+<p><strong>Link to data source</strong>
+<img src="https://user-images.githubusercontent.com/1749380/86360510-7da33c00-bc40-11ea-9214-267872b6455e.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-653175249">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 2, 2020, 12:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/567#issuecomment-653175249" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We have 5 values that differ between what's currently reported by the state of California and CTPs data.</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>CA</th>
+<th>CTP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20200701</td>
+<td></td>
+<td>232657</td>
+</tr>
+<tr>
+<td>20200630</td>
+<td>232657</td>
+<td>222917</td>
+</tr>
+<tr>
+<td>20200629</td>
+<td><strong>226759</strong></td>
+<td>216550</td>
+</tr>
+<tr>
+<td>20200628</td>
+<td><strong>218539</strong></td>
+<td>211243</td>
+</tr>
+<tr>
+<td>20200627</td>
+<td><strong>211851</strong></td>
+<td>206433</td>
+</tr>
+<tr>
+<td>20200626</td>
+<td><strong>206731</strong></td>
+<td>200461</td>
+</tr>
+<tr>
+<td>20200625</td>
+<td><strong>200545</strong></td>
+<td>195571</td>
+</tr>
+<tr>
+<td>20200624</td>
+<td>195571</td>
+<td>190222</td>
+</tr>
+</tbody>
+</table>
+<p>We're also shifted by 1 day from CA's published data</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653313579">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 2, 2020, 8:04 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/567#issuecomment-653313579" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The numbers keep changing, we can patch now and repeat later, as needed. I don't know whether it's a process change from what they've been doing</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660251940">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 17, 2020, 10:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/567#issuecomment-660251940" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This stabilized now, so we'll backfill with the numbers displayed on the dashboard now.</p>
+<p>The fields that changed are: <code>Positive Cases (PCR)</code>,<code>Positive</code>, <code>Negative</code></p>
+<p>2020-07-05 | 260155 | 265985 |  
+-- | -- | -- | --
+2020-07-04 | 254745 | 257388 |  
+2020-07-03 | 248235 | 248235 |  
+2020-07-02 | 240195 | 242547 |  
+2020-07-01 | 232657 | 236139 |  
+2020-06-30 | 222917 | 228732 |  
+2020-06-29 | 216550 | 219252 |</p>
+<p><img src="../../assets/github/images/62236447/87815670-e979cd00-c81a-11ea-9b6a-6483bb6da6a3.png" alt="Screenshot from 2020-07-17 10-45-53"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-433">#433: CA 4/1 to current 5/17 - Data is off by one day from official CA press releases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            433</p>
+          <p>
+            <strong>scarson</strong> opened this issue on May 17, 2020, 11:11 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/433" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Starting on March 30th, the California reporting structure changed, displaying a “California COVID-19 By the Numbers” infographic. This image reports the data for the day according to the end-of-day values from the previous day. The CTP starts recording this data as a primary source on April 2nd, except it enters the data on the day the graphic is published, not the day referenced in the graphic. So the <a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-041.aspx">April 2nd graphic</a> matches the CTP data for April 2nd, however the graphic lists them as end-of-day numbers for April 1st.</p>
+<p>Need to shift <strong>all</strong> CA numbers so that they reflect CA's &quot;Numbers as of $date&quot;, not the press release date ($date+1). Day forward recording needs to be enter numbers for $date in the actual matching day as well.</p>
+<p>This change is important for consistency and modeling.</p>
+<p>For March fixes (which include similar off-by-one errors, among others), please see:
+#432
+#431</p>
+<p><strong>@thaynedye</strong>
+<strong>@dcmoyer</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-638193488">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 3, 2020, 6:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/433#issuecomment-638193488" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638217206">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 3, 2020, 7:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/433#issuecomment-638217206" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@scarson</strong>,
+Thanks for bringing this to our attention! CA updated its data after our publish time cutoff. If a state updates after that time, we catch that update on the following day. See my response to #431 and #432 for further discussion.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-432">#432: CA 3/18 - 3/31 - Data doesn&#39;t match CA official press releases </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            432</p>
+          <p>
+            <strong>scarson</strong> opened this issue on May 17, 2020, 11:00 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/432" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Quite a few issues here. Some typos in data entry and a running off-by-a-day issue.</p>
+<p>Because the screenshots are inconsistent, I reference the current official <a href="https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx">CA press release archive</a> instead.</p>
+<p>California started reporting total and pending test numbers on March 18th, so I'm including those here too. The CTP March CA numbers have &quot;N/A&quot; values for Pending through 3/23. It's unclear where some of the earlier Total test numbers come from.</p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-027.aspx">March 18 state data</a> &quot;As of March 18, 2020, 6 p.m. PDT&quot;
+<strong>3/18 should have 675 Positives instead of 611.</strong>
+<strong>3/18 should have 16 Deaths instead of 13.</strong>
+<strong>3/18 should have 6,300 Total [Tests] instead of 8,592.</strong>
+<strong>3/18 should have 10,000 Pending [Tests] instead of N/A.</strong>
+&quot;At least 6,300 results have been received and another 10,000+ are pending.&quot;</p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-028.aspx">March 19 state data</a> &quot;As of March 19, 2020, 6 p.m. PDT&quot;
+<strong>3/19 should have 1,006 Positives instead of 924.</strong>
+<strong>3/19 should have 19 Deaths instead of `18.</strong>
+<strong>3/19 should have 11,487 Total [Tests] instead of 9,711.</strong> This is currently an off-by-one for the 20th.
+<strong>3/19 should have 11,700 Pending [Tests] instead of N/A.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-029.aspx">March 20 state data</a> &quot;As of March 20, 2020, 6 p.m. PDT&quot;
+<strong>3/20 should have 1,224 Positives instead of 1,063.</strong>
+<strong>3/20 should have 23 Deaths instead of 20.</strong>
+<strong>3/20 should have 12,528 Total [Tests] instead of 9,711.</strong> This is currently an off-by-one for the 21st.
+<strong>3/20 should have 12,700 Pending [Tests] instead of N/A.</strong></p>
+<p>**Note: CA daily reporting cutoff moves up four hours from 6 p.m. to 2 p.m. PDT between 3/20 and 3/21.</p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-030.aspx">March 21 state data</a> &quot;As of March 21, 2020, 2 p.m. PDT&quot;
+<strong>3/21 should have 1,468 Positives instead of 1,279.</strong>
+<strong>3/21 should have 27 Deaths instead of 24.</strong>
+<strong>3/21 should have 13,467 Total [Tests] instead of 12,528.</strong> This is currently an off-by-one for the 22nd.
+<strong>3/21 should have 12,700 Pending [Tests] instead of N/A.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-031.aspx">March 22 state data</a> &quot;As of March 22, 2020, 2 p.m. PDT&quot;
+<strong>3/22 should have 1,733 Positives instead of 1,536.</strong>
+<strong>3/22 correctly lists deaths at 27.</strong>
+<strong>3/22 should have 14,317 Total [Tests] instead of 12,840.</strong> This is currently an off-by-one for the 23rd.
+<strong>3/22 should have 12,100 Pending [Tests] instead of N/A.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-032.aspx">March 23 state data</a> &quot;As of March 23, 2020, 2 p.m. PDT&quot; This is currently an off-by-one for the 24th.
+<strong>3/23 should have 2,102 Positives instead of 1,733.</strong>
+<strong>3/23 should have 40 Deaths instead of 27.</strong>
+<strong>3/23 should have 15,554 Total [Tests] instead of 14,300.</strong>
+<strong>3/23 correctly lists 12,100 Pending [Tests].</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-033.aspx">March 24 state data</a> &quot;As of March 24, 2020, 2 p.m. PDT&quot; This is currently an off-by-one for the 25th.
+<strong>3/24 should have 2,535 Positives instead of 2,102.</strong>
+<strong>3/24 should have 53 Deaths instead of 40.</strong>
+<strong>3/24 should have 18,276 Total [Tests] instead of 15,554.</strong>
+<strong>3/24 should have 48,600 Pending [Tests] instead of 12,100.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-034.aspx">March 25 state data</a> &quot;As of March 25 2020, 2 p.m. PDT&quot; This is currently an off-by-one for the 26th.
+<strong>3/25 should have 3,006 Positives instead of 2,355.</strong> This is both off-by-one and a typo of &quot;2,535&quot;.
+<strong>3/25 should have 65 Deaths instead of 53.</strong>
+<strong>3/25 should have 20,386 Total [Tests] instead of 18,276.</strong>
+<strong>3/25 should have 57,400 Pending [Tests] instead of 48,600.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-035.aspx">March 26 state data</a> &quot;As of March 26 2020, 2 p.m. PDT&quot; This is currently an off-by-one for the 27th.
+<strong>3/26 should have 3,801 Positives instead of 3,006.</strong>
+<strong>3/26 should have 78 Deaths instead of 65.</strong>
+<strong>3/26 should have 23,480 Total [Tests] instead of 20,386.</strong> Current number is wrong, not just off-by-one.
+<strong>3/26 should have 65,000 Pending [Tests] instead of 57,400.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-036.aspx">March 27 state data</a> &quot;As of March 27 2020, 2 p.m. PDT&quot;
+<strong>3/27 should have 4,643 Positives instead of 3,879.</strong> Current number is wrong, not just off-by-one.
+<strong>3/27 should have 101 Deaths instead of 78.</strong>
+<strong>3/27 should have 25,192 Total [Tests] instead of 21,259.</strong>
+<strong>3/27 should have 64,400 Pending [Tests] instead of 57,400.</strong></p>
+<p>March 28 state data is missing for positives and deaths. The next CA state data report is for the 29th. Unclear where CTP data comes from. Treat as non-reporting day for positives and deaths.
+CA notes &quot;***This week’s cumulative testing numbers are lower than last week due to an inadvertent over-reporting error discovered by one of the private labs.&quot;
+<a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-037.aspx">March 28 state data</a> &quot;As of March 28 2020, 2 p.m. PDT&quot;
+<strong>3/28 should have 27,251 Total [Tests] instead of 21,259.</strong>
+<strong>3/28 should have 56,550 Pending [Tests] instead of 57,400.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-037.aspx">March 29 state data</a> &quot;As of March 29 2020, 2 p.m. PDT&quot;. This report includes March 28th's total and pending test numbers. There are no reported total and pending numbers for March 29. Treat as non-reporting day.
+<strong>3/29 should have 5,763 Positives instead of 5,708.</strong> Current number is wrong, not just off-by-one.
+<strong>3/29 should have 135 Deaths instead of 123.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-038.aspx">March 30 state data</a>. CA stopped reporting a time cutoff starting with the March 31 press release w/ March 30 data.
+<strong>3/30  should have 6,932 Positives instead of 6,447.</strong>
+<strong>3/30  should have 150 Deaths instead of 133.</strong>
+<strong>3/30  should have 28,704 Total [Tests] instead of 26,996.</strong>
+<strong>3/30  should have 57,400 Pending [Tests] instead of 64,400.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-039.aspx">March 31 state data</a>.
+<strong>3/30  should have 8,155 Positives instead of 7,482.</strong>
+<strong>3/30  should have 171 Deaths instead of 153.</strong>
+<strong>3/30  should have 31,038 Total [Tests] instead of 29,254.</strong>
+<strong>3/30  should have 59,100 Pending [Tests] instead of 57,400.</strong></p>
+<p>Off-by-a-day errors aside, it makes sense to use official state reported confirmed case and death numbers for a date when those are higher than current CTP reported values. It is unlikely the state is making up higher positive case and death counts.</p>
+<p><strong>@thaynedye</strong>
+<strong>@dcmoyer</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-637299267">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 1, 2020, 11:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/432#issuecomment-637299267" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638206125">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 3, 2020, 6:43 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/432#issuecomment-638206125" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@scarson</strong>,
+Thanks again for bringing these discrepancies to our attention. For an explanation of why these numbers may differ from ours, see #431. You are 100% right that some of these discrepancies for 3/18-31 are big (we generally do not worry about off-by-one lags, so the pendings + days where the counts are different are the ones we'd like to correct). We have a team working to determine how and whether to update data from historical sources in event of discrepancies like this. I will flag this as a potential source of data to them.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-431">#431: CA 3/11 - 3/17 - Data doesn&#39;t match CA official press releases/screenshots</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            431</p>
+          <p>
+            <strong>scarson</strong> opened this issue on May 17, 2020, 8:27 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/431" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Quite a few issues here.</p>
+<p>Because the screenshots are inconsistent, I reference the current official <a href="https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx">CA press release archive</a> instead.</p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR-019.aspx">March 12 state data</a> &quot;As of March 13, 2020, 8 a.m. PDT&quot; (Taking early morning report as for previous day).
+<strong>3/12 should have 198 Positives instead of 202.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-022.aspx">March 13 state data</a> &quot;As of March 14, 2020, 8 a.m. PDT&quot; (Taking early morning report as for previous day).
+<strong>3/13 should have 288 Positives instead of 202.</strong>
+<strong>3/13 should have 5 Deaths instead of 4.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-023.aspx">March 14 state data</a> &quot;As of March 14, 2020, 6 p.m. PDT&quot;
+<strong>3/14 should have 335 Positives instead of 252.</strong>
+<strong>3/14 should have 6 Deaths instead of 5.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-024.aspx">March 15 state data</a> &quot;As of March 15, 2020, 6 p.m. PDT&quot;
+<strong>3/15 should have 392 Positives instead of 252.</strong>
+<strong>3/15 should have 6 Deaths instead of 5.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-025.aspx">March 16 state data</a> &quot;As of March 16, 2020, 6 p.m. PDT&quot;
+<strong>3/16 should have 472 Positives instead of 335.</strong>
+<strong>3/16 should have 11 Deaths instead of 6.</strong></p>
+<p><a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-026.aspx">March 17 state data</a> &quot;As of March 17, 2020, 6 p.m. PDT&quot;
+<strong>3/17 should have 598 Positives instead of 438.</strong>
+<strong>3/17 should have 13 Deaths instead of 11.</strong></p>
+<p>Starting March 18th California started reporting test data in their press releases, so I'm going to open a separate issue that picks up there.</p>
+<p>It makes sense to use official state reported confirmed case and death numbers for a date when those are higher than current CTP reported values. It is unlikely the state is making up higher positive case and death counts.</p>
+<p>Note 1: Original source for CTP deaths appears to be the <a href="https://github.com/datadesk/california-coronavirus-data/blob/master/latimes-state-totals.csv">L.A. Times Data Desk CA state totals</a>.</p>
+<p>Note 2:
+<a href="https://covidtracking.com/screenshots/CA/CA-20200317-180052.png">March 17 6:00 pm</a> screenshot is bad (image says &quot;Sorry, something went wrong&quot;) and should be removed.
+<a href="https://covidtracking.com/screenshots/CA/CA-20200318-140251.png">March 18 7:01 pm</a> screenshot is bad (image says &quot;Sorry, something went wrong&quot;) and should be removed.</p>
+<p><strong>@thaynedye</strong>
+<strong>@dcmoyer</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-637275878">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 1, 2020, 10:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/431#issuecomment-637275878" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638202887">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 3, 2020, 6:38 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/431#issuecomment-638202887" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@scarson</strong>,
+Thank you for bringing this to our attention. For those dates, we do not use the press releases to get case information, but the CA COVID homepage (see <a href="https://covidtracking.com/screenshots/CA/CA-20200316-105418.png">this screenshot</a> for an example). The press releases for CA seem to have come out later than we would check the website, explaining why the numbers are different than ours on these early days. We publish the daily stats every afternoon. If a state updates the number of tests or cases after that time, we catch that update on the following day. You can check the exact time we looked at the CA website in the &quot;lastUpdateET&quot; field of the API.
+I hope this is helpful!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-373">#373: CA daily Deaths data not correct since 4/26. How do we get the corrected data?</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            373</p>
+          <p>
+            <strong>grant-renier</strong> opened this issue on May 6, 2020, 12:21 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/373" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>CA daily Deaths data not correct since 4/26. How do we get the corrected data?
+2020/04/26 00:00:00,8187,59,8187
+2020/04/27 00:00:00,7276,7276,7276
+2020/04/28 00:00:00,3126,3126,3126
+2020/04/29 00:00:00,1332,1332,1332
+2020/04/30 00:00:00,3333,3333,3333
+2020/05/01 00:00:00,7450,7450,7450
+2020/05/02 00:00:00,2170,2170,2170
+2020/05/03 00:00:00,2870,2870,2870
+2020/05/04 00:00:00,3175,3175,3175
+2020/05/05 00:00:00,95,-95,-95</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632120311">
+          <div class="frontmatter">
+            <div>
+              <strong>schmian</strong> commented on May 21, 2020, 7:33 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/373#issuecomment-632120311" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@grant-renier</strong>,</p>
+<p>Thanks for reaching out about this! California's dashboard is not always up to date so we also pull data from the <a href="https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx">CDPH News Releases</a> which often provide more recent data.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-270">#270: CA totalTestResults doesn&#39;t match state dashboard</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            270</p>
+          <p>
+            <strong>johnrolfeellis</strong> opened this issue on April 22, 2020, 10:29 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/270" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>&quot;states_current&quot; doesn't match the state dashboard, and &quot;states_daily_4pm_et&quot; shows a huge jump in negative results:</p>
+<ul>
+<li>
+<p>states_cuirrent: totalTestResults = 465327 (dateModifed = 2020-04-21T04:00:00Z)</p>
+</li>
+<li>
+<p>dashboard: Lab Tests Conducted Statewide = 308,700 (last updated 4/21/2020) (see screenshot)</p>
+</li>
+<li>
+<p>states_daily_4pm_et: negativeIncrease = 163092 (dateChecked = 2020-04-22T20:00:00Z)</p>
+</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/6911504/80062066-b065e100-84e7-11ea-810c-04074f82162c.png" alt="dashboard"></p>
+<p><img src="https://user-images.githubusercontent.com/6911504/80062446-a1cbf980-84e8-11ea-9ec4-05e764ba9cb0.png" alt="graph"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-618710107">
+          <div class="frontmatter">
+            <div>
+              <strong>johnrolfeellis</strong> commented on April 23, 2020, 3:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/270#issuecomment-618710107" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The CA state public dashboard got updated this morning and it now shows the huge 61% increase in negative results on 4/22, with this footnote:</p>
+<blockquote>
+<p>Note: The increase in number of tests conducted on 4/22 is due to the addition of data sources to reflect a more complete count of testing in California.</p>
+</blockquote>
+<p>The positive rate dropped in one day from 11.1% to 7.6%.  The lack of any additional explanation doesn't inspire confidence.</p>
+<p>I guess this project must have an alternative path to the state data other than the public dashboard, since &quot;states_current&quot; was showing data for 4/22 yesterday evening while the dashboard said &quot;Last updated 4/21/2020&quot; and showed that day's data.</p>
+<p><img src="../../assets/github/images/6911504/80156850-c15f3280-8579-11ea-8d90-5f1c8b5accdf.png" alt="Untitled"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-235">#235: CA deaths fix?</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            235</p>
+          <p>
+            <strong>kissane</strong> opened this issue on April 20, 2020, 2:26 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/235" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <blockquote>
+<p>Hi. I'm REDACTED at The Sacramento Bee in California. I think the proper number for deaths in CA on Sat, April 11 is 609. (You have 541 two days in a row.) You can see 609 in the 9:03pm screenshot for Sat. April 11. Do you think someone could look at and adjust? We are huge fans of all work on this</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-616855653">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 20, 2020, 4:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/235#issuecomment-616855653" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@kissane</strong> :)</p>
+<p>We got this issue in github here https://github.com/COVID19Tracking/issues/issues/217 and fixed it.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-183">#183: CA data for 4/11 appears incorrect</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            183</p>
+          <p>
+            <strong>aztocas</strong> opened this issue on April 11, 2020, 3:24 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/183" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Same number of positives and deaths as previous day
+Hospitalizations up 80% and ICU up 40% in one day</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-612532455">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 11, 2020, 4:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/183#issuecomment-612532455" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Cf. #181.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612638081">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on April 12, 2020, 9:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/183#issuecomment-612638081" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hey, we have an explanation for this for you, which I put together in this thread:
+https://twitter.com/COVID19Tracking/status/1249366518950809602?s=20</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612649887">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 12, 2020, 10:31 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/183#issuecomment-612649887" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@realfuture</strong>, please reopen this. My observations have nothing to do with hospitalizations and half of what <strong>@aztocas</strong> mentions doesn’t wither. Please check #181.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-181">#181: CA confusion</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            181</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 11, 2020, 2:57 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Where are the CA numbers coming from?</p>
+<p>The last screenshot does not agree with the data in the API, and no place do I find any new numbers for April 11: the last screenshot shows April 9, and the &quot;best current data source&quot; (which the screenshots do <strong>not</strong> show) is April 10.</p>
+<p>Meanwhile the database now shows 0 positive cases for CA today.</p>
+<p>Can someone clarify for me?</p>
+<p>(This perhaps overlaps with the question of when to provide a daily update.)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-612652035">
+          <div class="frontmatter">
+            <div>
+              <strong>sluggo1133</strong> commented on April 12, 2020, 10:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-612652035" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Re: COVID 19 state data.  There is a probable data anomaly in California's &quot;Positive&quot; and &quot;Deaths&quot; numbers for 4/11/20.  These numbers are identical to those for 4/10/20 (19,472 and 541 respectively).  I'm new to this zoo so not sure exactly who, where or how to contact about this presumed error.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612680392">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 12, 2020, 2:43 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-612680392" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Again, the screenshots on April 12 show a date of April 10. And the numbers don't match those in the database. Where are those coming from?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612857233">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 13, 2020, 4:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-612857233" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>There seems to be a discrepancy between the <a href="https://covidtracking.com/data/state/california">text description</a> for CA on the state's data page and what's actually happening with the CA data. The former says:</p>
+<blockquote>
+<p>until 4/1, when we standardized on California's new data dashboards.</p>
+</blockquote>
+<p>But the current best data source and the screen shots (and the data) are still from <a href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx">the CDPH website</a>.</p>
+<p>The dashboard does seem to have more detailed data.</p>
+<p>PS Notice that the dashboard is reporting a whole string of nice even numbers for testing totals, which are therefore obviously not accurate. See #141.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-614276052">
+          <div class="frontmatter">
+            <div>
+              <strong>sluggo1133</strong> commented on April 15, 2020, 1:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-614276052" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I pulled the data from the California Health &amp; Home Service Agency (CHHS) site and compared it to the data for California coming from the Github site and found two discrepancies.  Note CHHS is only reporting data from April 1 2020.  If it is now the current source of record it must have been added on or after April 1.  Also, the two pieces of data coming from CHHS appear to be “Total Count Confirmed” which ends up in the “Positive” column on GitHub and “Total Count Deaths” which is in the “Deaths” column in GitHub.  The data from CHHS and GitHub for Positive and Deaths match perfectly with two exceptions.</p>
+<ol>
+<li>CHHS dates are not aligned with GitHub:  CHHS data begins on 4/1/20.  Data for 4/1/20 in the CHHS dataset appears in GitHub in 4/2/20 a day later.  Is there a good reason from this?  If not this should be fixed.</li>
+<li>Incorrect Data in GitHub for 1/11/20: Data for “Positive” 4/11/20 (current dating scheme) should be 20,615 vice 21,794.  Data for “Deaths” for that day should be 609 vice 651.</li>
+</ol>
+<p>This assumes, of course, that CHHS data is the preferred source for “Positive” and “Death” data for the GitHub DB.  I’m a newbie on GitHub so this is as much as I can do to rectify the data errors I see.</p>
+<p>Here is the URL for the CHHS dataset:  <a href="https://data.chhs.ca.gov/dataset/6882c390-b2d7-4b9a-aefa-2068cee63e47/resource/6cd8d424-dfaa-4bdd-9410-a3d656e1176e/download/covid19data.csv">https://data.chhs.ca.gov/dataset/6882c390-b2d7-4b9a-aefa-2068cee63e47/resource/6cd8d424-dfaa-4bdd-9410-a3d656e1176e/download/covid19data.csv</a> https://data.chhs.ca.gov/dataset/6882c390-b2d7-4b9a-aefa-2068cee63e47/resource/6cd8d424-dfaa-4bdd-9410-a3d656e1176e/download/covid19data.csv</p>
+<p>I hope this helps make the Github data more representative of the actual situation.</p>
+<p>Cheers,</p>
+<p>Stephen L Garry</p>
+<p>525 Valle Vista Ave.</p>
+<p>Oakland, CA 94610</p>
+<p>[M] 510.407.1320</p>
+<p>[H] 510.763.1455</p>
+<p>From: John Muccigrosso <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a>
+Sent: Monday, April 13, 2020 4:12 AM
+To: COVID19Tracking/issues <a href="mailto:issues<strong>@noreply.github.com</strong>">issues<strong>@noreply.github.com</strong></a>
+Cc: sluggo1133 <a href="mailto:slgarry<strong>@sonic.net</strong>">slgarry<strong>@sonic.net</strong></a>; Comment <a href="mailto:comment<strong>@noreply.github.com</strong>">comment<strong>@noreply.github.com</strong></a>
+Subject: Re: [COVID19Tracking/issues] CA confusion (#181)</p>
+<p>There seems to be a discrepancy between the text description <a href="https://covidtracking.com/data/state/california">https://covidtracking.com/data/state/california</a>  for CA on the state's data page and what's actually happening with the CA data. The former says:</p>
+<p>until 4/1, when we standardized on California's new data dashboards.</p>
+<p>But the current best data source and the screen shots (and the data) are still from the CDPH website <a href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx">https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/ncov2019.aspx</a> .</p>
+<p>The dashboard does seem to have more detailed data.</p>
+<p>PS Notice that the dashboard is reporting a whole string of nice even numbers for testing totals, which are therefore obviously not accurate. See #141 <a href="https://github.com/COVID19Tracking/issues/issues/141">https://github.com/COVID19Tracking/issues/issues/141</a> .</p>
+<p>—
+You are receiving this because you commented.
+Reply to this email directly, view it on GitHub <a href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-612857233">https://github.com/COVID19Tracking/issues/issues/181#issuecomment-612857233</a> , or unsubscribe <a href="https://github.com/notifications/unsubscribe-auth/APE4QKDBUFTHFTDTHZIGMBTRMLXPDANCNFSM4MGFB52A">https://github.com/notifications/unsubscribe-auth/APE4QKDBUFTHFTDTHZIGMBTRMLXPDANCNFSM4MGFB52A</a> .  <a href="https://github.com/notifications/beacon/APE4QKBCP3KSMULZGGIUKCLRMLXPDA5CNFSM4MGFB52KYY3PNVWWK3TUL52HS4DFVREXG43VMVBW63LNMVXHJKTDN5WW2ZLOORPWSZGOESDXLEI.gif">https://github.com/notifications/beacon/APE4QKBCP3KSMULZGGIUKCLRMLXPDA5CNFSM4MGFB52KYY3PNVWWK3TUL52HS4DFVREXG43VMVBW63LNMVXHJKTDN5WW2ZLOORPWSZGOESDXLEI.gif</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-617069997">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 21, 2020, 2:37 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-617069997" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The original issue is still occurring: What's the &quot;best data source&quot; for CA? The link and the screen shots on the data page are to the CA health dept page, but you say in the text that</p>
+<blockquote>
+<p>until 4/1, when we standardized on California's new data dashboards</p>
+</blockquote>
+<p>So which is it?</p>
+<p>Also 3 of the last 5 days have total tests as an even multiple of 100. Does anyone believe that? I think you're subtracting reported positives from reported tests to get negatives and the problem is that reported tests are <strong>always</strong> a multiple of 100, that is, they're approximations. That's pretty crappy reporting on the state's part.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-617458198">
+          <div class="frontmatter">
+            <div>
+              <strong>sluggo1133</strong> commented on April 21, 2020, 4:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-617458198" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>John,</p>
+<p>The frequency of results that are multiples of 100 does strain the appearance of credibility.  I’ve be concentrating on the “Positive Infection” and “Death” numbers both of which are cumulative. To me the number that is most suspect is the “Pending” tests.  If the information in the attached article is correct then then testing, particularly in California, is not well organized or managed and therefore the numbers coming out of that process are likely to be suspect.  This would include “positives” and “negatives” but most especially “pending”.</p>
+<p>If the testing process is opaque so are the criteria for placing a case in one or another of the categories.  For example, do people who died from COVID 19 but were never tested end up in the positive infection cume?  Do these criteria vary by county?  This is clearly our first rodeo but not our last.  I hope that there will be significant pressure to improve the timeliness and accuracy of the data and visibility to them as well.  It’s not just bookkeeping; actual “life and death” management decisions will be made based on these numbers.</p>
+<p>slg</p>
+<p>From: John Muccigrosso <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a>
+Sent: Tuesday, April 21, 2020 2:38 AM
+To: COVID19Tracking/issues <a href="mailto:issues<strong>@noreply.github.com</strong>">issues<strong>@noreply.github.com</strong></a>
+Cc: sluggo1133 <a href="mailto:slgarry<strong>@sonic.net</strong>">slgarry<strong>@sonic.net</strong></a>; Comment <a href="mailto:comment<strong>@noreply.github.com</strong>">comment<strong>@noreply.github.com</strong></a>
+Subject: Re: [COVID19Tracking/issues] CA confusion (#181)</p>
+<p>The original issue is still occurring: What's the &quot;best data source&quot; for CA? The link and the screen shots on the data page are to the CA health dept page, but you say in the text that</p>
+<p>until 4/1, when we standardized on California's new data dashboards</p>
+<p>So which is it?</p>
+<p>Also 3 of the last 5 days have total tests as an even multiple of 100. Does anyone believe that? I think you're subtracting reported positives from reported tests to get negatives and the problem is that reported tests are always a multiple of 100, that is, they're approximations. That's pretty crappy reporting on the state's part.</p>
+<p>—
+You are receiving this because you commented.
+Reply to this email directly, view it on GitHub <a href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-617069997">https://github.com/COVID19Tracking/issues/issues/181#issuecomment-617069997</a> , or unsubscribe <a href="https://github.com/notifications/unsubscribe-auth/APE4QKFZ5HCUVGGJAWVIC3DRNVSPBANCNFSM4MGFB52A">https://github.com/notifications/unsubscribe-auth/APE4QKFZ5HCUVGGJAWVIC3DRNVSPBANCNFSM4MGFB52A</a> .  <a href="https://github.com/notifications/beacon/APE4QKC5LMFIO5DGMM6CGVTRNVSPBA5CNFSM4MGFB52KYY3PNVWWK3TUL52HS4DFVREXG43VMVBW63LNMVXHJKTDN5WW2ZLOORPWSZGOETD33LI.gif">https://github.com/notifications/beacon/APE4QKC5LMFIO5DGMM6CGVTRNVSPBA5CNFSM4MGFB52KYY3PNVWWK3TUL52HS4DFVREXG43VMVBW63LNMVXHJKTDN5WW2ZLOORPWSZGOETD33LI.gif</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-617638326">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 22, 2020, 1:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-617638326" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@sluggo1133</strong> Yes, this great project has made it quite clear that testing and reporting in the US are a mess. CA is just one example. Hopefully one of the outcomes is the establishment of national standards.</p>
+<p>WRT CA, pending is clearly heavily rounded. What I don't understand is how &quot;tested&quot; is rounded as well. To my mind, it's clear that CA's negative numbers are fairly unreliable.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-619336622">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 25, 2020, 12:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-619336622" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Still happening. Screenshots and &quot;best data&quot; point to CDPH, not dashboards.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626290697">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 10, 2020, 1:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-626290697" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631336724">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 20, 2020, 1:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/181#issuecomment-631336724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-154">#154: CA, NY &amp; RI inicuCumulative missing</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            154</p>
+          <p>
+            <strong>xaminmo</strong> opened this issue on April 3, 2020, 7:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On 04-02, the inicuCumulative value is missing for CA, NY and RI.  These should be the greater of the last value, or the currently in ICU, but it is probably a data import error.</p>
+<p>This error affects the state and US, both for 04-02 and for &quot;current&quot;.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-608466813">
+          <div class="frontmatter">
+            <div>
+              <strong>xaminmo</strong> commented on April 3, 2020, 7:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-608466813" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is related to COVID19Tracking/covid-tracking-data#26</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608972495">
+          <div class="frontmatter">
+            <div>
+              <strong>julia326</strong> commented on April 3, 2020, 9:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-608972495" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@xaminmo</strong>! Forwarding to our data team</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-610128715">
+          <div class="frontmatter">
+            <div>
+              <strong>xaminmo</strong> commented on April 6, 2020, 6:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-610128715" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Also, Indiana just showed up missing cumulative ICU.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-611639428">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 9, 2020, 10:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-611639428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Duplicate of #132 and you can find the resolution process on that issue</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-141">#141: CA recent numbers are strange</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            141</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 4, 2020, 3:31 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/141" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Something seems odd with the recent CA numbers:</p>
+<ol>
+<li>They got 47,000 pending tests back today and they were effectively all negative. In fact their positive increase was lower than yesterday.</li>
+<li>Even ignoring the returned pending cases, they added 30k new test results when the most they've been able to do before is 7k (once, over a month ago).</li>
+<li>For the third straight day, their totalTestResults were an even multiple of 100.</li>
+<li>For the past two days, their totalTestResultsIncrease was likewise a multiple of 100.</li>
+<li>Their pending cases have also been -00, but I had figured that was just routine rounding.</li>
+</ol>
+<p>I feel a little conspiracy-addled even writing this, but #1 seems so incredible to me that the others seem worth mentioning as well. This isn't a direct issue for the project, but perhaps someone has a way to ask them about this.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-609422024">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 5, 2020, 7:06 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/141#issuecomment-609422024" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hello,</p>
+<p>We too have struggled with the numbers coming out of California.  Check out this <a href="https://www.theatlantic.com/health/archive/2020/03/next-covid-19-testing-crisis/609193/">great article by ALEXIS C. MADRIGALROBINSON MEYER</a>that digs into some of the issues.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-609423995">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 5, 2020, 7:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/141#issuecomment-609423995" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks, but how does CA rate a grade of B? They clearly have not been reporting negatives with any reliability. Is it clear where the other 30k test results came from?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-609430667">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on April 5, 2020, 8:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/141#issuecomment-609430667" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>In retrospect, California probably should not have had as high a grade as it did.</p>
+<p>We’re working on a system to attach grades to data on a daily basis, so you could go back and see that sort of thing.</p>
+<p>As it stands, we do not have that system in place. And for right now, I think California is now a B.</p>
+<blockquote>
+<p>On Apr 5, 2020, at 7:21 AM, John Muccigrosso <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<p>Thanks, but how does CA rate a grade of B? They clearly have not been reporting negatives with any reliability. Is it clear where the other 30k test results came from?</p>
+<p>—
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly, view it on GitHub, or unsubscribe.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-609430980">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 5, 2020, 8:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/141#issuecomment-609430980" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for the reply. My jury is still out. :-)</p>
+<p>If you will be adding grades like that, I'd suggest practical categories, like &quot;reliable for positive rate&quot; and so on.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-100">#100: CA: public health website off the grid</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            100</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 1, 2020, 6:28 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/100" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On the off chance that you haven't noticed, the CA DPH subdomain seems to have disappeared from the web. Not sure where the screw up is, but DNS are not finding the address. Perhaps you have some contact (when they wake up out there).</p>
+<p>EDIT: It seems like my Italy IP address is stopping this from loading for me. No idea why, but if I have a US address, it loads fine. Closing, but confused.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-96">#96: CA: Screenshots cut off</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            96</p>
+          <p>
+            <strong>toppsdown</strong> opened this issue on March 31, 2020, 5:44 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data pipeline
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/96" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>First off, thank you all for your hard work!</p>
+<p>I was looking at California data and was searching for where the testing numbers came from.  I noticed two things:</p>
+<ol>
+<li>
+<p>The screenshots for California are cut off.  They only show the top part of the page without scrolling. This is the most recent screenshot (March 31st <strong>@</strong> 6pm)
+<img src="https://user-images.githubusercontent.com/4970365/78087606-3bd7d080-7387-11ea-9ecd-65185fb3d574.png" alt="image"></p>
+</li>
+<li>
+<p>The linked &quot;Best Current Data Source&quot; website doesn't list the number of tests.  California has a different website that does have testing data: <a href="https://covid19.ca.gov/">https://covid19.ca.gov/</a></p>
+</li>
+</ol>
+<p>Thank you!
+-Ethan</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-609092127">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on April 4, 2020, 2:33 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/96#issuecomment-609092127" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>In case you missed it.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-609450048">
+          <div class="frontmatter">
+            <div>
+              <strong>julia326</strong> commented on April 5, 2020, 10:15 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/96#issuecomment-609450048" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CA screenshots fixed</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790127">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/96#issuecomment-623790127" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990068">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/96#issuecomment-628990068" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-87">#87: CA: Latent data updates - not updating for California Daily</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            87</p>
+          <p>
+            <strong>egharrison</strong> opened this issue on March 30, 2020, 6:17 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/87" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States Historical Data - /api/states/daily | CSV - California pending (64,400), Negative (20,549), and total (91,396) don't appear to have updated for the 3/30/2020 update Pending (56,550), Negative (21,488) and total (84,485)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623790202">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/87#issuecomment-623790202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628989987">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/87#issuecomment-628989987" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-28">#28: Issue with testing data from CA</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            28</p>
+          <p>
+            <strong>dkondras</strong> opened this issue on March 20, 2020, 1:03 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/28" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>It is taken from CDC site and incomplete.</p>
+<p>Better source is daily news release by CA department of public health
+that provides update for previous day at 6pm PCT,
+and includes testing results from private labs in addition to CDC.
+https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCOV2019.aspx.</p>
+<p>For example as of the time of writing, the total tests for CA is 9844,
+while CADPH &quot;Latest COVID-19 Facts 3-20&quot; news release gives</p>
+<p>&quot;As of 6 p.m. PDT on March 19, approximately 23,200 tests had been conducted in California. This includes the latest numbers California has received from commercial and private labs. At least 11,487 results have been received and another 11,700+ are pending.&quot;</p>
+<p><img src="https://user-images.githubusercontent.com/48700483/77202220-24593780-6aab-11ea-91f5-adeaf3ea8f66.png" alt="Screen Shot 2020-03-20 at 1 01 34 PM">
+<img src="https://user-images.githubusercontent.com/48700483/77202224-24f1ce00-6aab-11ea-81c8-485aba719ea0.png" alt="Screen Shot 2020-03-20 at 1 00 24 PM"></p>
+<p>Thanks.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-601905191">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 20, 2020, 1:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/28#issuecomment-601905191" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@dkondras</strong>! California's data has been very tricky for us to report accurately.</p>
+<p>Please read the notes we've written at https://covidtracking.com/data/state/california and let us know if you have any further questions:</p>
+<blockquote>
+<p>We report positives from the <a href="https://www.latimes.com/projects/california-coronavirus-cases-tracking-outbreak/">LA Times</a>, which is aggregated from county-level data and is ahead of the official California data site. When using LA Times data for positives, we do not add deaths back into the positive count, as they are already included. Previously, we were adding them back in because the California state site was not including them in the positive count. Negative numbers are inferred from Totals - Positives, taken from the <a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-028.aspx">latest press release</a>. We ignoring pending numbers when they are irregularly reported from a press conference/non-dashboard source. We're assuming 1 test=1 person, pending further guidance.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601923324">
+          <div class="frontmatter">
+            <div>
+              <strong>dkondras</strong> commented on March 20, 2020, 2:44 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/28#issuecomment-601923324" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Got it, thanks!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601905191">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 20, 2020, 1:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/28#issuecomment-601905191" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@dkondras</strong>! California's data has been very tricky for us to report accurately.</p>
+<p>Please read the notes we've written at https://covidtracking.com/data/state/california and let us know if you have any further questions:</p>
+<blockquote>
+<p>We report positives from the <a href="https://www.latimes.com/projects/california-coronavirus-cases-tracking-outbreak/">LA Times</a>, which is aggregated from county-level data and is ahead of the official California data site. When using LA Times data for positives, we do not add deaths back into the positive count, as they are already included. Previously, we were adding them back in because the California state site was not including them in the positive count. Negative numbers are inferred from Totals - Positives, taken from the <a href="https://www.cdph.ca.gov/Programs/OPA/Pages/NR20-028.aspx">latest press release</a>. We ignoring pending numbers when they are irregularly reported from a press conference/non-dashboard source. We're assuming 1 test=1 person, pending further guidance.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601923324">
+          <div class="frontmatter">
+            <div>
+              <strong>dkondras</strong> commented on March 20, 2020, 2:44 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/28#issuecomment-601923324" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Got it, thanks!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,2635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Washington Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Washington</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Washington</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>June 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On June 21, 2020 Washington's Total PCR Tests (People) decreased by about 8,000. We were unable to find an explanation for this.</p>
+
+      </div>
+    
+    <h2>February 28, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 28, Washington's Now hospitalized and Now in ICU metrics did not update.</p>
+
+      </div>
+    
+    <h2>February 10, 2021
+       to February 17, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 10, 2021 through February 17, 2021, Washington state did not update its **Currently hospitalized** and **Currently in ICU** metrics before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 15, 2021
+       to February 16, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 15, 2021, Washington and Idaho announced that there would be no update to their data due to the President’s day holiday. Because these states are on a one day lag in our timeseries, we were unable to update their data on February 16, 2021.</p>
+
+      </div>
+    
+    <h2>February 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 13, 2021, Washington is still advising: &quot;Total case counts may include up to 200 duplicates. Negative test results data from November 21–30, 2020, are incomplete. Thus, negative test results and percent positivity (Testing tab) for that period, and case counts should be interpreted with caution.&quot;</p>
+
+      </div>
+    
+    <h2>February 8, 2021
+       to February 11, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On February 8, 2021, we began capturing Negative PCR tests (specimens) and duplicated that column it into Negative PCR tests (people). However, this figure represents specimens, not people, and should not have been captured as Negative PCR tests (people). On February 12, 2021, we cleared our timeseries of Washington's Negative PCR tests (people).</p>
+
+      </div>
+    
+    <h2>February 11, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 10, 2021, Washington [announced](<a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20210211-123942.png">https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20210211-123942.png</a>) that their cumulative hospitalizations decreased by 14, noting that “in some cases, after a detailed information review, local health departments reclassify cases as not hospitalized or hospitalized for a reason other than COVID-19.” Because Washington’s data is on a one day lag in our timeseries, this affects our data for February 11, 2021.</p>
+
+      </div>
+    
+    <h2>February 10, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 9, 2021, Washington [announced](https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20210210-123423.png) that the higher number of deaths was due to a “data processing backlog” from February 8, 2021 being cleared. Because Washington’s data is on a one day lag in our timeseries, this affects our data for February 10, 2021.</p>
+
+      </div>
+    
+    <h2>February 9, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 8, 2021, Washington announced that &quot;Due to processing issues, deaths are not updated today&quot;. Because Washington's data is on a one day lag, this should affect our data for February 9, 2021. On February 9, 2021, Washington's deaths increased by 2, which may have been a lower number that otherwise due to the processing issues.</p>
+
+      </div>
+    
+    <h2>February 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 05, 2021, Washington did not update its **Currently hospitalized** or **Currently in ICU** before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 1, 2021
+       to February 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 3, 2021, Washington [reported](<a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20210204-064039.png">https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20210204-064039.png</a>) that the “higher number of new deaths is due to a data processing backlog cleared today from February 2, 2021”. Because Washington’s data is on a one day lag in our timeseries, this will affect our data for February 4, 2021.</p>
+
+      </div>
+    
+    <h2>February 1, 2021
+       to February 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 2, 2021, Washington [reported](https://covidtracking.com/screenshots/WA/WA-20210203-004235.png) that its death data would not be updated until February 3, 2021. Since WA is on a one-day lag in our time series, the death counts reported on February 4, 2021 will include two days of data. In addition, possibly because of its ongoing &quot;processing issues&quot; beginning November 21, 2021, Washington's cumulative death count decreased by two on February 3, 2021.</p>
+
+      </div>
+    
+    <h2>January 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 26, 2021, Washington noted that &quot;Total case counts are incomplete today due to an interruption in DOH’s data processes&quot;.</p>
+
+      </div>
+    
+    <h2>January 20, 2021
+       to January 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 20, 2021, Washington noted that there would be no update to their deaths due to “processing issues&quot;. On January 21, 2021, Washington's data processing backlog was cleared, causing a large increase in Deaths (confirmed and probable). Because their data is on a one day lag in our timeseries, this affects our data for January 21, 2021 and January 22, 2021.</p>
+
+      </div>
+    
+    <h2>January 20, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 20, 2021, Washington noted that the day’s reported hospitalization data is incomplete. Because Washington’s data is on a one day lag in our timeseries, this will affect the data for January 21, 2021.</p>
+
+      </div>
+    
+    <h2>January 18, 2021
+       to January 19, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 18, 2021, Idaho and Washington did not update their data due to the Martin Luther King Jr. Day holiday. Because Idaho and Washington are on a one day lag in our timeseries, we were unable to update their data on January 19, 2021.</p>
+
+      </div>
+    
+    <h2>January 17, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 16, 2021, Washington announced that they experienced “technical challenges processing COVID-19 data” and would not be able to update their dashboard. Because Washington’s data is on a one day lag in our timeseries, this affects our data for January 17, 2021.</p>
+
+      </div>
+    
+    <h2>January 15, 2021
+       to January 16, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 14, 2021, Washington announced that their hospitalization data was incomplete due to an interruption in their data reporting process. On January 15, 2021, they announced that their hospitalization data was “unusually high” due to a backlog from January 13, 2021 and January 14, 2021. Because their data is on a one day lag in our timeseries, this affects our data for January 15, 2021 and January 16, 2021. To avoid recording incomplete data, we did not update their Ever hospitalized on January 15, 2021 and urge caution when interpreting their hospital data from this time period.</p>
+
+      </div>
+    
+    <h2>January 14, 2021
+       to January 15, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 14, 2021, Washington state announced that their data on hospitalizations was incomplete due to an interruption in their data reporting process. As a result, Cumulative hospitalized was not updated on January 15, 2021; a complete update is expected on January 16, 2021.</p>
+
+      </div>
+    
+    <h2>January 10, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 10, 2021, Washington's Total Deaths decreased by 1, presumably due to correction of previous data entry error. Also, Currently Hospitalized and Currently in ICU numbers were not updated.</p>
+
+      </div>
+    
+    <h2>January 9, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 8, 2021, Washington noted that their hospitalization data for the day was incomplete due to a data processing issue, and their Ever hospitalized decreased by 11. Because Washington’s data is on a one day lag in our timeseries, this is reflected in our data for January 9, 2021.</p>
+
+      </div>
+    
+    <h2>January 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 4, 2021, Washington's deaths decreased from 3,461 to 3,459 without explanation.</p>
+
+      </div>
+    
+    <h2>January 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 2, 2021, Washington announced that there would be no update to their data dashboard due to “data processing challenges”. Because Washington’s data is on a one day lag in our timeseries, this affects the data for January 3, 2021 and January 4, 2021; they have also provided an update on January 4, 2021, which is atypical of their reporting schedule.</p>
+
+      </div>
+    
+    <h2>January 2, 2021
+       to January 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 3, 2021, Washington's DOH noted the following: <strong>January 2, 2021 Data Note</strong>: DOH will not update the dashboard today due to data processing challenges. We anticipate updating the dashboard tomorrow (January 3, 2021). [Note that because of the state's 1-day lag, this will affect their data for Monday January 4, 2021).</p>
+
+      </div>
+    
+    <h2>January 2, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Washington announced on their COVID-19 dashboard that there would be no update to their data on December 25, 2020 due to the Christmas holiday. On January 1, 2020, they noted that there would be no update to their data on January 1, 2021 due to the New Years holiday. Because Washington’s data is on a one day lag in our timeseries, we were unable to update their data on December 26, 2020 and January 2, 2021.</p>
+
+      </div>
+    
+    <h2>December 31, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 30, 2020, Washington noted that positive test results from December 29, 2020 are incomplete. Because their data is on a one day lag in out time series this affects our data for December 30, 2020 and December 31, 2020.</p>
+
+      </div>
+    
+    <h2>December 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 29, 2020, Washington announced that their death data included a “backlog of roughly 200 cases that were previously unreported due to a processing issue”. Because Washington’s data is on a one day lag in our timeseries, this affects our data for December 30, 2020.</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+       to December 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Washington announced on their [COVID-19 dashboard](<a href="https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard">https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard</a>) that there would be no update to their data on December 25, 2020 due to the Christmas holiday. Because Washington’s data is on a one day lag in our timeseries, we were unable to update their data on December 26, 2020.</p>
+
+      </div>
+    
+    <h2>December 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 23, 2020, Washington announced that due to an issue with their hospital reporting process, their hospital data was incomplete. Because Washington’s data is on a one day lag in our timeseries, this affects our data for December 24, 2020.</p>
+
+      </div>
+    
+    <h2>December 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>WA note about today's case counts and test results: &quot;December 22, 2020 data note: Today’s total case counts may include up to 180 duplicates. Negative test results data from November 21, 2020 through today are incomplete, thus testing and case numbers should be interpreted with caution. The COVID-19 Disease Activity tab is the most accurate representation of COVID activity and is updated daily as new cases are identified and duplicates are resolved.”</p>
+
+      </div>
+    
+    <h2>December 17, 2020
+       to December 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Data Note</span>
+            <span class="tag">CTP Process / Source Change</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On December 16, 2020, Washington added all Probable cases reported since June, 2020 to their data for December 16, 2020. Because Washington’s data is on a one day lag in our data, this affects our data for December 17, 2020. Because Washington's death data no longer includes only confirmed cases, we are clearing our time series of Deaths (confirmed) from 12/17 and onwards.</p>
+
+      </div>
+    
+    <h2>December 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 18, 2020, Washington announced on their COVID-19 data dashboard that due to a change in the way they report COVID-19 deaths, a timing error caused an artificial decrease of 13 Deaths (confirmed + probable) and Deaths (confirmed) on December 18, 2020. Because Washington’s data is on a one day lag in our time series due to late updates, this will affect our data for December 19, 2020.</p>
+
+      </div>
+    
+    <h2>December 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On December 18, 2020, Washington's Total PCR tests (test encounters) number dropped from the December 17, 2020 number of 3432892 to a much lower 2765404, before rising again on 12/19. Their Negative PCR tests (people), which are calculated as Total PCR tests (test encounters) minus Positive PCR tests (people) were also affected. To accurately report their data trends, we have decided to carry over this metric on December 18, 2020.</p>
+
+      </div>
+    
+    <h2>December 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On 12/18, Washington's Total Tests number dropped from the 12/17 number of 3432892 to a much lower 2765404, before rising again on 12/19. CTP collected the lower number on 12/18, which was clearly a temporarily blip in their data.</p>
+<p>The fix is to carry the 12/17 number forward to 12/18 in order to avoid a major spike in the curve.</p>
+
+      </div>
+    
+    <h2>December 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 18th, Washington revised down their total test numbers from 3,432,892 to 2,765,404. This might relate to the [current note](<a href="https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard">https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard</a>) on the dashboard, stating: &quot;Today’s total case counts may include up to 1,000 duplicates. Negative test results data from November 21, 2020 through today are incomplete, as are positive test results from December 16, 2020, thus testing and case numbers should be interpreted with caution. The Epidemiologic Curves tab is the most accurate representation of COVID activity and is updated daily as new cases are identified and duplicates are resolved.&quot; We are continuing to report the total tests figure on Washington's dashboard and will continue to investigate and adjust this figure if necessary</p>
+
+      </div>
+    
+    <h2>January 13, 2020
+       to December 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Backfill of historic cases time series with the breakdown to confirmed and positive cases, from WA's dashboard on Dec 17th, 2020, the day they started publishing probables.</p>
+
+      </div>
+    
+    <h2>December 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 16, 2020, Washington added all probable cases reported since June, 2020 to their data for December 16, 2020. Because Washington’s data is on a one day lag in our timeseries, this affects our data for December 17, 2020.</p>
+
+      </div>
+    
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 11, 2020, Washington **Deaths** decreased from 3016 to 2850. Washington [noted](https://covidtracking.com/screenshots/WA/WA-20201211-000612.png) that &quot;As of December 10, 2020, death counts on our dashboard reflect those in our official vital records database (the Washington Health and Life Events System) where the cause of death was confirmed or suspected to have been COVID-19. If COVID-19 is later ruled out as the official cause of death, we will remove these deaths from our dashboard. We no longer report preliminary death information recorded in other systems.&quot;</p>
+
+      </div>
+    
+    <h2>December 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>Washington continues to report data difficulties, as we've publicly noted previously. <strong>WA's December 15, 2020 data note:</strong> &quot;Today’s total case counts include up to 1,100 duplicates. Negative test results data from November 21, 2020 through today are incomplete, as are positive test results from December 11, 2020 - December 14, 2020, thus testing numbers should be interpreted with caution.&quot;</p>
+
+      </div>
+    
+    <h2>December 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>From November 21, 2020 through December 15, 2020, Washington has experienced a variety of technical difficulties and an increased laboratory report volume. As a result, their data for the above dates is incomplete and may include up to 2000 duplicate cases and other abnormalities.</p>
+
+      </div>
+    
+    <h2>December 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 12, 2020 Washington noted &quot;Today’s total case counts may include up to 2100 duplicates. Negative test results data from November 21, 2020 through today are incomplete, as are positive test results from November 30 - December 6, 2020, thus testing numbers should be interpreted with caution. The Epidemiologic Curves tab is the most accurate representation of COVID activity and is updated daily as new cases are identified and duplicates are resolved.&quot;</p>
+
+      </div>
+    
+    <h2>November 21, 2020
+       to March 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>From November 21, 2020 through March 7, 2021, Washington has experienced a variety of technical difficulties and an increased laboratory report volume. As a result, their data through these dates is incomplete and may include duplicate cases, missing negative test results, spikes due to backlog processing, and other abnormalities. Please exercise caution when looking at this data and be aware that 7 day averages are a more reliable metric than individual figures.</p>
+
+      </div>
+    
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 10, 2020, Washington released a note for which we have a standing public note for: &quot;Today’s total case counts may include up to 300 duplicates. Negative test results data from November 21, 2020 through today are incomplete, as are positive test results from November 30 - December 6, 2020, thus testing numbers should be interpreted with caution. The Epidemiologic Curves tab is the most accurate representation of COVID activity and is updated daily as new cases are identified and duplicates are resolved.&quot;</p>
+
+      </div>
+    
+    <h2>December 9, 2020
+       to December 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 10, 2020, Washington released a note for which we have a standing public note for: &quot;<strong>December 9, 2020 data note:</strong> Today’s total case counts may include up to 800 duplicates. Negative test results data from November 21, 2020 through today are incomplete, as are positive test results from November 30 - December 6, 2020, thus testing numbers should be interpreted with caution. The Epidemiologic Curves tab is the most accurate representation of COVID activity and is updated daily as new cases are identified and duplicates are resolved.&quot;</p>
+
+      </div>
+    
+    <h2>December 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 8, 2020, Washington's **Confirmed Cases **increased by nearly 7,000 today. We believe (and have previously noted) that Washington was processing a backlog of 1,800 cases. Regardless, this still appears to be a large jump.</p>
+
+      </div>
+    
+    <h2>December 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>From November 21, 2020 through December 7, 2020, Washington  experienced a variety of technical difficulties and an increased laboratory report volume. As a result, their data through these dates is incomplete and may include duplicate cases and other abnormalities. Please exercise caution when looking at this data and be aware that 7 day averages are a more reliable metric than individual figures at this moment.</p>
+
+      </div>
+    
+    <h2>December 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 6, 2020, Washington announced that up to 90 of the deaths reported “yesterday” were incorrectly classified and were not due to COVID-19. Because we capture Washington’s data on a one day lag due to late update times, this will affect our data for December 5, 2020</p>
+
+      </div>
+    
+    <h2>December 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 6, 2020, Washington's <strong>Currently Hospitalized,</strong> <strong>Currently in ICU,</strong> and **Deaths (confirmed and probable) **were not updated.</p>
+
+      </div>
+    
+    <h2>December 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Resumed Metric</span>
+        </p>
+      
+      <div>
+        <p>On December 5, 2020, Washington State reported roughly 226,000 new test encounters due to not reporting tests for 13 days.</p>
+
+      </div>
+    
+    <h2>May 13, 2020
+       to December 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Metric</span>
+            <span class="tag">New Dataset / Timeseries</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On December 3, 2020, we discovered a new source for Washington's <strong>Currently hospitalized</strong> and <strong>Currently in ICU</strong>. Starting on December 4, 2020, we will capture these metrics during our daily publish shifts, and apply this change retroactively going back to May 13, 2020 for <strong>Currently hospitalized</strong>, and September 19, 2020 for <strong>Currently in ICU</strong>.</p>
+
+      </div>
+    
+    <h2>December 2, 2020
+       to June 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 1, 2020, Washington announced that due to high laboratory report volumes, they have not been able to complete their deduplication processes for some cases. As a result, they reported about 650 duplicate **Cases **in their daily data dashboard update. This duplicate cases warning lasted until December 4, 2020.</p>
+
+      </div>
+    
+    <h2>December 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 1, 2020, Washington still did not provide an update for their <strong>Total PCR tests (test encounters)</strong>. Additionally, they included roughly 400 duplicated cases in their data.</p>
+
+      </div>
+    
+    <h2>November 28, 2020
+       to November 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On November 27, 2020, and November 29, 2020, Washington announced that due to high laboratory report volumes, they &quot;have not been able to complete their deduplication processes for some cases.&quot; This affects data for November 28, 2020, and November 30, 2020.</p>
+
+      </div>
+    
+    <h2>November 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 29, 2020, the listed states had a partial or missed update.</p>
+
+      </div>
+    
+    <h2>November 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 26, 2020, the listed states either released partial updates or did not update their data at all.</p>
+
+      </div>
+    
+    <h2>November 25, 2020
+       to November 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 25, 2020, Washington announced that the Department of Health will not be reporting new negative test results until November 30, 2020. As a result, Washington’s PCR testing data may be affected.</p>
+
+      </div>
+    
+    <h2>November 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 23, 2020, Washington announced that the department of health experienced multiple errors to their reporting process and would be unable to update their data dashboard.</p>
+
+      </div>
+    
+    <h2>November 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 12, 2020, Washington did not update their data. This marks two straight days with no update.</p>
+
+      </div>
+    
+    <h2>October 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/28/20, Washington's Test PCR tests (test encounters) dropped from 2372596 to 2362595. We could not find an explanation for this.</p>
+
+      </div>
+    
+    <h2>September 26, 2020
+       to October 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On 10/13, WA missed the cutoff time for our daily publication shift.</p>
+
+      </div>
+    
+    <h2>October 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateEt</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/11-12, WA was unable to update their dashboard. They expected to have it fixed by EOD 10/12. As of 1:19PM EST, the dashboard is not updated.</p>
+
+      </div>
+    
+    <h2>October 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/6, WA Cumulative Hospitalized decreased from 7628 to 7622 with no apparent explanation.</p>
+
+      </div>
+    
+    <h2>October 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/4, WA deaths decreased by 1.</p>
+
+      </div>
+    
+    <h2>September 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On 9/22, WA updated after the end of our publication shift.</p>
+
+      </div>
+    
+    <h2>September 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Multiple states were switched to use direct columns</p>
+
+      </div>
+    
+    <h2>September 5, 2020
+       to September 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On 9/12, WA had a late update and was backfilled. Since we do not have screenshots of current hosp/vent values, we're carrying over those values from the previous day. archive.org did not have a record of this site for those days, either.</p>
+
+      </div>
+    
+    <h2>August 31, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateEt</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/31, WA did not update their data. We're looking into a potential backfill.</p>
+
+      </div>
+    
+    <h2>August 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/29, WA released this statement: “The Washington State Department of Health will end the publication of COVID-19 death counts over the weekends starting the weekend of August 28-30. Regular publishing of COVID-19 death counts will occur Monday through Friday. While all deaths will continue to be reported, DOH will now add the counts generated from the weekend to the following Monday and Tuesday reports,”</p>
+
+      </div>
+    
+    <h2>August 6, 2020
+       to August 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Remove Total PCR Tests (People) values that CTP carried over from 8/5 onwards since WA replaced their total test counting method.</p>
+
+      </div>
+    
+    <h2>January 22, 2020
+       to August 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>privateNotes</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On August 26, 2020, Washington switched its total tests units to testing encounters, excluding future encounters from individuals who test positive. It also provided a full timeseries of the figure. This testing encounters figure is slightly different from how we define testing encounters in two ways: first, our definition of testing encounters includes encounters after a positive test, and second, it should be calculated not by summing resulted tests but by counting all daily tests in a separate reporting stream. Despite these differences, the historical and current values of Washington’s figure are still stored in our testing encounters field.</p>
+
+      </div>
+    
+    <h2>August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/12, WA DOH announced a &quot;new methodology for reporting testing and percent positive to better reflect the current status of the pandemic in Washington state.&quot; They are going to report total testing numbers as the total number of tests performed rather than the number of people tested. &quot;As a result, the preliminary testing data posted through August 11 will not be updated until our new methodology is operational. We estimate this will take at least one week.&quot; <a href="https://www.doh.wa.gov/Newsroom/Articles/ID/1331/Washington-state-changes-negative-test-reporting-for-COVID-19">https://www.doh.wa.gov/Newsroom/Articles/ID/1331/Washington-state-changes-negative-test-reporting-for-COVID-19</a></p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>August 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>WA testing numbers remain frozen effecting total test and negatives; today they also said the hospitalization data &quot;will be lower than expected&quot;. They expect the issues to resolve tomorrow.</p>
+
+      </div>
+    
+    <h2>August 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/6, due to issues with their reporting, our total test and negatives for WA are frozen for that day.</p>
+
+      </div>
+    
+    <h2>July 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>WA removed 39 deaths from its counts where, though the individual who died tested positive, COVID was not a contributing cause in their death.</p>
+
+      </div>
+    
+    <h2>June 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On June 18, 2020, Washington announced that they are adjusting their reporting of COVID-19 related deaths. The first step included removing deaths where COVID-19 did not contribute to the deaths.</p>
+
+      </div>
+    
+    <h2>June 12, 2020
+      
+    </h2>
+    
+      
+      <div>
+        <p>On June 12, 2020, Washington's reported COVID-19 patients in the ICU dropped from 63 to 8 without an explanation. On June 13, 2020, it went back up to 43.</p>
+
+      </div>
+    
+    <h2>May 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On May 21, 2020, Washington stopped reporting patients in the ICU, and started reporting ventilated patients.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

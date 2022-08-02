@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Florida Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Florida</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Florida</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 17, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>A few states reported shortly after our daily update: AL, FL, SC. https://t.co/uhD8fa6x8P</p>
+
+    </div>
+  
+    <h2>March 21, 2020, 2:30 PM PDT</h2>
+    <div>
+      <p>We’d also like to call attention to the incredible job Florida and @HealthyFla are doing releasing data. Not only do they provide hospitalization rates and lab-by-lab testing results, but a ton of other data: https://t.co/huWcCqGfgf</p>
+
+    </div>
+  
+    <h2>March 23, 2020, 7:18 AM PDT</h2>
+    <div>
+      <p>@Tack_in_FL @NickCRadio You can also download it or if you don’t trust us, we screenshot the public health websites 3x a day, and you can see those, too.</p>
+
+    </div>
+  
+    <h2>March 23, 2020, 11:31 PM PDT</h2>
+    <div>
+      <p>@OdoyleCharlotte @GovLarryHogan @GovRonDeSantis Just noting: @GovRonDeSantis and the Florida health department do actually put out the most complete statistics that we've seen from a state government. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 24, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>Across the 21 states who report them, we tracked 4,468 hospitalizations, the bulk in New York.</p>
+<p>But Louisiana and Florida also have growing numbers of hospitalizations.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 6:05 PM PDT</h2>
+    <div>
+      <p>@DeKoustav @dwagswpb I would be very surprised if Florida did not have substantial outbreaks—but is behind New York curve by a substantial number of days. Let’s hope not, though. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 20, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>Connecticut reported its single largest increase daily death toll.</p>
+<p>Other states we're watching for Tuesday: Massachusetts, Michigan, Georgia, Florida, Texas, Kentucky. https://t.co/iVJQMeS7yQ</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>9 states reported over 50 deaths:</p>
+<p>California: 98
+Florida: 74
+Illinois: 102
+Indiana: 54
+Massachusetts: 130
+Michigan: 154
+New Jersey: 204
+New York: 299
+Pennsylvania: 64</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>1/2 A list of states/territories in which African American COVID deaths substantially exceed the community's share of the population:</p>
+<p>Alabama
+Arkansas
+California
+Colorado
+Connecticut
+D.C.
+Florida
+Georgia
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Maryland
+Michigan
+Mississippi</p>
+
+    </div>
+  
+    <h2>June 10, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Let's take a look at California, Florida, and Texas. CA has a lot of cases, but it also has a lot of people and tests. Florida, though it had a larger outbreak earlier, looks much the same. (We only had a FL hospitalization number for a few days.) https://t.co/xVmyOdMLf8</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We saw 3 states report more than 2,000 cases today: California, Florida, and Texas. https://t.co/EqiqthVEp0</p>
+
+    </div>
+  
+    <h2>June 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>A few other states to keep an eye on: Arkansas, Florida, Alabama.</p>
+<p>(Note: Florida does not provide a &quot;currently hospitalized figure) https://t.co/dpSELg9SC0</p>
+
+    </div>
+  
+    <h2>June 16, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Florida's cases and positive percentage are both rising. That is to say: the rising case load is not <em>just</em> about a greater number of tests. Now would be a good time for the state to do the right thing and put out a reliable number of current hospitalizations. https://t.co/MiRVki0lMv</p>
+
+    </div>
+  
+    <h2>June 17, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Hospitalizations reflect the same trends. Arizona now has more people hospitalized than NY.</p>
+<p>(Note: Florida might be on the right-hand list, but it does not provide this metric.) https://t.co/6iAzGanQ6J</p>
+
+    </div>
+  
+    <h2>June 20, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>Florida continues not to report current hospitalizations, but it would not be a surprise if their numbers look a lot like the Texas chart. https://t.co/9dUA7wupH4</p>
+
+    </div>
+  
+    <h2>June 20, 2020, 8:06 PM PDT</h2>
+    <div>
+      <p>A common question: are coronavirus cases going up because we're testing so many more people?</p>
+<p>A: Certainly not in Florida, where testing slowed down 3% while new cases grew 88% over the last week. https://t.co/F6cxcSiHR5</p>
+
+    </div>
+  
+    <h2>June 21, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Here are six states with rapidly growing cases. We continue to wish Florida reported hospitalizations. https://t.co/8G2xkv3gET</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>6 states set new record highs today, including 3 of the 4 largest (California, Florida, Texas).</p>
+<p>13 states set new highs in the last 5 days. You can see that most of them are in the South (red) or West (orange). https://t.co/mha5IeUs6j</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>And again, this is not just about testing more. Here's an updated chart from the one in this post: https://t.co/0s9GsE5dxi</p>
+<p>Case growth is outstripping test growth in all of these states. And Florida has conducted fewer tests this week than last. https://t.co/rn5eWB6ip2</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Mississippi, Alabama, South Carolina, North Carolina, Georgia, and Florida all reported more than 1000 cases today. https://t.co/RysGHFrCF1</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>Here's a zoom in on those southern states.</p>
+<p>(Florida does not report current hospitalizations.) https://t.co/nZjuXxXI50</p>
+
+    </div>
+  
+    <h2>June 26, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>The big story among states today is Florida, which reported almost 9000 new cases.</p>
+<p>18% of the tests reported today by the state were positive.</p>
+<p>Florida <em>still</em> doesn't report the number of people currently hospitalized. https://t.co/kF2uC03Qzp</p>
+
+    </div>
+  
+    <h2>June 26, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>This chart looks at per-capita testing rates and the percent positive. Arizona is all by itself, but South Carolina and Florida are moving rightward. https://t.co/H1Yl7VxzIA</p>
+
+    </div>
+  
+    <h2>June 27, 2020, 3:04 PM PDT</h2>
+    <div>
+      <p>Florida also reported a record number of cases today—close to 10k.</p>
+<p>Florida remains one of the few states that does not report how many people are currently hospitalized. https://t.co/1k6DhZBtew</p>
+
+    </div>
+  
+    <h2>June 28, 2020, 3:55 PM PDT</h2>
+    <div>
+      <p>Florida’s refusal to report current COVID-19 hospitalization numbers leaves us without a critical data point for one of the worst outbreaks of the summer surge. https://t.co/XTzKg8cY7j</p>
+
+    </div>
+  
+    <h2>June 28, 2020, 4:22 PM PDT</h2>
+    <div>
+      <p>Here's the cartogram of the United States. Florida is currently dwarfing the other states. https://t.co/pFRhw7rwnq</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>The number of hospitalizations have taken off along with the case count in the South and West.</p>
+<p>(Florida would almost certainly increase the currently hospitalized number by thousands, if it reported this metric.) https://t.co/gTkVkk34ef</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:50 PM PDT</h2>
+    <div>
+      <p>While we’re in the Monday lull in data reporting, let’s look at a couple of concerning states outside AZ-CA-FL-TX outbreaks.</p>
+<p>Missouri’s percent positive rate has gone from 4.3% the week of June 14 to 6.5% this week, with hospitalizations rising. https://t.co/ahvI7Gdn7W</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 10:57 AM PDT</h2>
+    <div>
+      <p>Extremely important transparency here.</p>
+<p>We're extremely pleased to see this and thank the Florida reporters and residents pushing hard for this data. https://t.co/bgknb2owFw</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:19 PM PDT</h2>
+    <div>
+      <p>Hospitalizations continued to rise in the South and West.</p>
+<p>Florida’s hospital data is currently missing in the South region, though that should be changing soon. https://t.co/bgknb2owFw https://t.co/dUTGYQBWm4</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>Arizona, California, Florida, and Texas are still at the center of the current surge of new cases. Hospitalization for AZ, CA, and TX all climbing. We expect Florida's data has a similar shape. https://t.co/8G9RRQta6j</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>California, Texas, and Florida all reported over 6000 new cases today. https://t.co/9N1UNR4rCR</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:50 PM PDT</h2>
+    <div>
+      <p>Hospitalizations continue to spike in the South and West, as we await the number of currently hospitalized people in Florida, which the state says it will begin reporting in the next few days. https://t.co/slPaEvAOPW</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>Before we get to the daily numbers, here's our weekly look at the numbers.</p>
+<p>One topline: While Arizona, California, Florida, and Texas are dominating the headlines, many other areas also have serious problems.</p>
+<p>https://t.co/2eZOamhZla https://t.co/Qu70PjuDNO</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>Looking at new cases, the trends of the last couple weeks continue. Florida became the second state to record a day of over 10,000 new cases (after New York on April 15th). Georgia set a new record yesterday and broke it today. https://t.co/77LvPQIhyU</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>It should be obvious now, but the large numbers of new cases in these states are not just due to testing. Florida and Georgia have positivity rates well beyond 10%.</p>
+<p>Only Arizona has a higher positivity rate than Florida right now. https://t.co/ovxcUPtGpp</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 9:54 AM PDT</h2>
+    <div>
+      <p>Now, only a few states don't report this number, and the big one, Florida, has committed to providing it.</p>
+<p>https://t.co/JP65eSe8nd</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 9:56 AM PDT</h2>
+    <div>
+      <p>You can chart the data as it is in a variety of ways on the site now, but just know the South is undoubtedly higher because Florida's numbers are not in the dataset yet.</p>
+<p>https://t.co/cLsjitT4QK https://t.co/6UeEJsfEud</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>You can see the states that did not report here as well as Florida's new record high of 11,458 new cases, which dwarfs even the 8000+ cases reported by Texas. https://t.co/ifvE1YV5y5</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:34 PM PDT</h2>
+    <div>
+      <p>The South dominated new case counts today. Florida and Texas alone represented nearly 40% of new cases. https://t.co/3BKcVTUdOr</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>Arizona, Florida, and South Carolina remain the three states with the most troubling data. https://t.co/X7SgEXu0vq</p>
+
+    </div>
+  
+    <h2>July 5, 2020, 2:30 PM PDT</h2>
+    <div>
+      <p>Last data point today: Even with the holiday weekend, Florida’s numbers are alarming. The state has reported more than 10,000 new cases three of the last four days. Still no data on current COVID-19 hospitalizations in FL. https://t.co/3CQQ1eEjvG</p>
+
+    </div>
+  
+    <h2>July 6, 2020, 3:52 PM PDT</h2>
+    <div>
+      <p>Current COVID-19 hospitalizations continued to rise through the weekend.</p>
+<p>This trend persisted even though many states do not report complete numbers, and a few—Florida, Hawaii, Idaho, and Kansas—do not report any at all. https://t.co/53dFYurzdA</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>The national number of people currently hospitalized with COVID-19 is still climbing, even without data from the big outbreak in Florida.</p>
+<p>(Last week, FL said current hospitalization data was on the way, but we haven’t seen it reported yet. https://t.co/iR1r8xVIEM) https://t.co/yyREzTkPYz</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>California, Florida, and Texas combined accounted for 45% of all new cases today. https://t.co/Oi172TYX0q</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:44 PM PDT</h2>
+    <div>
+      <p>There’s been a lot of discussions about deaths continuing to trend down as cases have surged. This chart provides a partial answer to what’s been happening. The falling numbers in the NE were offsetting rising deaths in AZ, TX, FL. https://t.co/hmZkhZXTPS</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:49 PM PDT</h2>
+    <div>
+      <p>Sadly, cases are rising in many states beyond Florida, Texas, and Arizona. 23 states have seen their highest day of cases in the past 2 weeks. https://t.co/C5SC2UYLjg</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 7:19 AM PDT</h2>
+    <div>
+      <p>As Florida's outbreak surges, there have been a lot of questions about the state's data.</p>
+<p>Here's a very deep dive by @olivierlacan and @NotoriousRSG into what we know, what's wrong, and what's missing.</p>
+<p>https://t.co/saqsqrRlZu https://t.co/gbfLivkiER</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 7:21 AM PDT</h2>
+    <div>
+      <p>This is also the most extensive look that we've released about the specific difficulties that our project faces trying to compile comparable data from 56 different jurisdictions. Florida reports as much or more data than almost any state or territory, and still, problems abound.</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 7:27 AM PDT</h2>
+    <div>
+      <p>We know that public health officials are in an unprecedented situation and we deeply appreciate their dedication. We know putting out up-to-date COVID data is difficult.</p>
+<p>And we've identified six changes Florida could make to maximize the usefulness of their data. https://t.co/Hu3AJ4DQ76</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>This rise in deaths is concentrated in states with large outbreaks. Texas, California, and Florida all reported their single highest day of deaths for the entire pandemic today.</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 2:51 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported a record number of tests (823k) and cases (67k), possibly reflecting holiday weekend backlog. We saw a large jump in hospitalizations due, in part, to Florida beginning to report. States logged 200 more deaths than last Friday. https://t.co/J7Dwwgeh4f</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 2:53 PM PDT</h2>
+    <div>
+      <p>The biggest change in the data is in the number of COVID-19 patients who are currently hospitalized. With the addition of Florida's 7k hospitalizations, we’re now over 51,000. We have not seen those numbers since the first week of May—and they do not seem likely to decline soon. https://t.co/tRvO4ypKGF</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Florida’s data is for “hospitalizations with primary diagnosis of COVID.” We're unsure how this definition compares to other states' reporting. Many of the local FL journalists who pushed so hard for this data release are trying to get clarity about which patients that includes.</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>The upward trend holds for death data. Though the data is less smooth, between June 10 and July 10, the seven-day average of deaths reported by Arizona, California, Florida, South Carolina, and Texas has almost doubled. https://t.co/POzXF5GJG7</p>
+
+    </div>
+  
+    <h2>July 11, 2020, 2:53 PM PDT</h2>
+    <div>
+      <p>Our update is published. Testing plateaued this week for the first time since mid-May. Cases rose to record levels anyway. Hospitalizations increased; Florida's new  reporting made the numbers jump. Deaths moved up this week—the first time we’ve seen a weekly rise since April. https://t.co/uwA2PClNGr</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 2:46 PM PDT</h2>
+    <div>
+      <p>Florida reported an astounding 15k cases today. No state has ever reported so many infections.</p>
+<p>It’s worth remembering how few tests were available in April, which suppressed New York’s confirmed cases.</p>
+<p>(Florida started reporting current hospitalizations this week.) https://t.co/k7mQFVETRn</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Florida didn't just break the record for reported cases. It also shattered the mark for cases per million population. New York, at peak, hit 595. Today, Florida reported 712 cases per million. Arkansas also entered the 500+ tier, where we've only seen FL, AZ, and LA. https://t.co/KeQmHMA9as</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>In Florida, reporting on tests, cases, and deaths dropped as expected from the weekend, but the brand-new current COVID-19 hospitalization number broke 8,000 today and provides a stable snapshot of the outbreak in the state. https://t.co/K1dw5NqG3N</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Florida broke New York’s 7-day average record for cases per million population today. Testing capacity is obviously much, much greater now than in spring. However, it’s still stunning to see that record fall. https://t.co/VGzrM6uWGW</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:03 PM PDT</h2>
+    <div>
+      <p>We generally report deaths on the day the state reports them. Some states also provide data about the date of death. We compared the two to see how well the data matches up. And it does, at least for Florida, where this data is available. https://t.co/MKbZVkiCcq</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>Six states saw a rise of over 100 (FL, CA, TX, AZ, GA, TN) in their number of currently hospitalized COVID-19 patients. All six set new record highs for their states. https://t.co/1qvm9AEdMh</p>
+
+    </div>
+  
+    <h2>July 16, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>South Carolina reported 72 new deaths, 30 more than the state has ever reported in a day, and a very large number for a state that has a quarter of the population of Florida. https://t.co/f2UaRqErdb</p>
+
+    </div>
+  
+    <h2>July 16, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>Eight Southern states outside Texas and Florida currently have over 1,000 patients hospitalized with COVID-19. https://t.co/3JDRdkdvTk</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>Current COVID-19 hospitalization is one of the most useful data points we have for measuring the pandemic’s effects. This figure has been rising for the last month, and now includes Florida’s hospital data. https://t.co/TRrpKtmquj</p>
+
+    </div>
+  
+    <h2>July 19, 2020, 2:45 PM PDT</h2>
+    <div>
+      <p>Our hospitalization data became very solid with the inclusion of Florida’s numbers on July 10. Then came the new HHS guidelines. Since then, some individual states' numbers have become more erratic. See, for example, Alabama today. https://t.co/G5zOAVA7kg</p>
+
+    </div>
+  
+    <h2>July 29, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>The hotspot states remain hotspots, even as their cases plateau a little or even decline. However, we’re now seeing more deaths reported in these states. Today, 773 deaths were reported by Arizona, California, Florida, and Texas alone. https://t.co/wv3NWzsJxk</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>But there is good news to report as well. The 7-day new-case average is declining in all four of our major hotspot states: AZ, CA, FL, and TX. https://t.co/6c3MJLCLLl</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Mississippi and Oklahoma have seen rapid growth in cases. Mississippi now rivals Florida for the highest number of cases per million population. https://t.co/S01vrOmo42</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>The 7-day rolling average of deaths for Texas and Florida has now surpassed some early hotspots like Michigan and Massachusetts.</p>
+<p>The trajectory looks more like harder hit states like New Jersey. https://t.co/D49edXZKXT</p>
+
+    </div>
+  
+    <h2>August 3, 2020, 3:34 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 731k tests. An important caveat is that we’re missing some testing data from Florida due to the hurricane. There were 50k cases reported and 519 deaths. Keep in mind, it’s Monday so weekend delays will be filled out later this week. https://t.co/p4zsch8jmQ</p>
+
+    </div>
+  
+    <h2>August 3, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>Florida has shut down many testing sites due to the storm, but here’s a post to help break down the differences between the Florida outbreak and what we saw in New York back in the spring. https://t.co/VTw86CFW8X</p>
+
+    </div>
+  
+    <h2>August 4, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>Testing sites in parts of Florida remain closed due to Hurricane Isaias, which is affecting the national testing figure.</p>
+<p>https://t.co/9AbjHsZgcd https://t.co/xfdR0E1za1</p>
+
+    </div>
+  
+    <h2>August 4, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Even with the uncertainty of testing in Florida and elsewhere, cases nationwide have trended down for the past week. Deaths, however, continue to climb towards a 7-day average of 1,100. https://t.co/90hCt2XfJn</p>
+
+    </div>
+  
+    <h2>August 5, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Some of the testing fall off is attributable to IT trouble in MA today and storm-related closures in FL. Still, the problem is broader. Weekly testing declined for the first time ever in our dataset. https://t.co/50oeo4GU0l</p>
+
+    </div>
+  
+    <h2>August 5, 2020, 3:39 PM PDT</h2>
+    <div>
+      <p>There are widespread problems right now in the top-level data. In different ways, California and Florida have had trouble reporting complete data because of storms and IT problems. Because they are populous states with large outbreaks, that influences the national numbers.</p>
+
+    </div>
+  
+    <h2>August 5, 2020, 3:43 PM PDT</h2>
+    <div>
+      <p>The recent storm impaired Florida’s ability to do tests and therefore to confirm cases. Also, a large gap has opened between the total number of tests the state is reporting and the number of unique people who are being tested. We report the latter.</p>
+
+    </div>
+  
+    <h2>August 7, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Georgia has consistently reported thousands of new cases each day—and has the fourth-largest number of hospitalized COVID-19 patients today, trailing only much larger states (CA, FL, TX). https://t.co/xtINB3o8bx</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>We’ve mentioned data and testing reporting problems in CA and FL this week, and should also flag that WA is having IT trouble that has prevented the state from reporting negative results since 8/1 and is lowering hosp. numbers. https://t.co/nKEg5t7i1g https://t.co/g45EJgWSBQ</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>It’s difficult to understand what’s happening with COVID-19 data right now, but we’re hoping to see better data soon as CA reporting problems are fixed, FL testing gets back up to speed, and hospital data improves nationally.</p>
+
+    </div>
+  
+    <h2>August 11, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Florida reported a record 277 deaths today. Given the reporting problems there over the last week, there may be more deaths from further in the past than on a standard day. https://t.co/IwSDY25ItE</p>
+
+    </div>
+  
+    <h2>August 12, 2020, 4:42 PM PDT</h2>
+    <div>
+      <p>Florida also had a major problem with a case backlog in Miami, which added 4,000 cases to the state's totals.</p>
+<p>https://t.co/drHk80BHve</p>
+
+    </div>
+  
+    <h2>August 13, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>Testing numbers have begun to rise again in California. Texas seems to have begun solving their test issues, reporting over 124k tests today alone. Florida testing remains far from peak numbers in July. https://t.co/0GIsmgooup</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>Nearly 22,000 deaths have occurred in long-term facilities in the South—almost 14,000 in June, July, and August. Georgia and Florida have seen their highest death tolls in the past four weeks—over 350 a week in Florida, and over 100 a week in Georgia. https://t.co/RC56clVQ1e</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 3:38 PM PDT</h2>
+    <div>
+      <p>Florida's numbers today include a large number of backlogged tests, the state said. https://t.co/esoLo6GPGN</p>
+
+    </div>
+  
+    <h2>October 10, 2020, 4:30 PM PDT</h2>
+    <div>
+      <p>Florida did not report today for the first time since March. The state received test results from a new private lab and is ingesting them before they resume reporting tomorrow.</p>
+
+    </div>
+  
+    <h2>October 11, 2020, 4:19 PM PDT</h2>
+    <div>
+      <p>Florida’s daily data includes two days of data today. The state did not report yesterday bc a private lab submitted 400k previously submitted results, which required extra deduplication time. https://t.co/UpK6xHVGSH</p>
+
+    </div>
+  
+    <h2>October 21, 2020, 4:37 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 870k tests, 57k cases, 40k currently hospitalized, and 994 COVID-19 deaths. Note: Updates were not available from FL, GA, and AL. https://t.co/W7soJvLKw5</p>
+
+    </div>
+  
+    <h2>October 22, 2020, 4:26 PM PDT</h2>
+    <div>
+      <p>We’re still compiling data on COVID-19’s spread through long-term care facilities. Complicating the effort recently: Florida went nearly three weeks without releasing long-term care death data, and Louisiana’s cumulative counts appeared to drop with facilities marked as “closed.”</p>
+
+    </div>
+  
+    <h2>October 27, 2020, 4:08 PM PDT</h2>
+    <div>
+      <p>We made a major improvement to our Florida data. We switched our TotalTestResults field to use a newly posted timeseries of testing encounters. This makes FL's data more comparable with other states—and captures a more comprehensive view of FL's testing utilization and strategy.</p>
+
+    </div>
+  
+    <h2>October 27, 2020, 4:15 PM PDT</h2>
+    <div>
+      <p>Overall, Florida now accounts for ~7% of total tests now, as you can see in the chart below. This change will affect the numbers of API users who use the TotalTestResults field. We have a deeper explanation of these changes available, too: https://t.co/0QQNuqQ9ij https://t.co/EqbOxOltl9</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:24 PM PDT</h2>
+    <div>
+      <p>TX, FL, and WI all reported over 5k cases today. IL reported a new daily record of over 8k cases. Here's how these states looked over the last two months for comparison. https://t.co/pQhRRDTkGQ</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:45 PM PST</h2>
+    <div>
+      <p>California just set a new single-day case high for any state at 15,442.</p>
+<p>Only Illinois and Florida have ever reported more than 15k: IL on Nov 13 and FL on July 12. https://t.co/SwoJxSJlKp</p>
+
+    </div>
+  
+    <h2>November 26, 2020, 4:01 PM PST</h2>
+    <div>
+      <p>The following jurisdictions did not report today: AS, CT, FL, KS, KY, LA, MA, MI, MN, MP, NC, NH, OH, RI, SC, SD, UT, VI, VT, WY. 10 more reported partial data. Some will report two days of data tomorrow.</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 3:40 PM PST</h2>
+    <div>
+      <p>Hospitalizations in the 4 most populous states—CA, FL, NY, and TX—are rising quickly. California in particular has seen a steep hospitalization increase over the past few weeks. https://t.co/ul9K4nQUGz</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Seven states reported more than 10k cases today: CA, FL, IL, NY, PA, OH, and TX. https://t.co/L93HHx9vjH</p>
+
+    </div>
+  
+    <h2>December 22, 2020, 5:27 PM PST</h2>
+    <div>
+      <p>But this view masks the seriousness of the situation in the three largest southern states. Hospitalizations are rapidly rising in Texas, Florida, and Georgia. https://t.co/MerIVz8tIF</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>California, Florida, and Texas alone reported 80 thousand cases today. https://t.co/NuCJYqmCC8</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:46 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 in the US is now below 100k for the first time since December 1. Almost all US states are seeing hospitalizations decline or flatten, and CA, FL, and TX all posted big drops today. https://t.co/ZbV4kUoiWh</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

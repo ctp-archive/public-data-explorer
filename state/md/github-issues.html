@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Maryland Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Maryland</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Maryland</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>October 17, 2020, 9:40 PM PDT</td>
+          <td>900</td>
+          <td>
+            <a href="#issue-900">[MD] Backfilling Total, Positive, and Negative Antibody Tests from 7/29-10/15</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 7:30 AM PDT</td>
+          <td>711</td>
+          <td>
+            <a href="#issue-711">[MD] Backfill data for Positive Tests (PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 6:37 AM PDT</td>
+          <td>688</td>
+          <td>
+            <a href="#issue-688">[MD] PCL Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 28, 2020, 5:46 PM PDT</td>
+          <td>554</td>
+          <td>
+            <a href="#issue-554">MD 3/16 wrong historical value</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 4, 2020, 5:12 PM PDT</td>
+          <td>474</td>
+          <td>
+            <a href="#issue-474">MD Historical Data update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 21, 2020, 8:52 AM PDT</td>
+          <td>246</td>
+          <td>
+            <a href="#issue-246">MD: data added for hospitalized and ICU </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 24, 2020, 5:28 PM PDT</td>
+          <td>48</td>
+          <td>
+            <a href="#issue-48">MD case: consider removing no- longer- reported stats</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-900">#900: [MD] Backfilling Total, Positive, and Negative Antibody Tests from 7/29-10/15</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            900</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on October 17, 2020, 9:40 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/900" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Maryland</p>
+<p>Issue: Maryland has a weekly report of Total, Positive, and Negative Antibody Tests going back to 7/29/2020. Adding the values to our data.</p>
+<p>Source: https://coronavirus.maryland.gov/datasets/mdcovid19-serologytests</p>
+<p><a href="https://github.com/COVID19Tracking/issues/files/5397058/MDCOVID19_SerologyTests.xlsx">MDCOVID19_SerologyTests.xlsx</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-711115798">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on October 17, 2020, 9:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/900#issuecomment-711115798" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="257" alt="Screen Shot 2020-10-17 at 9 27 11 PM" src="../../assets/github/images/66583275/96358930-7013a400-10c1-11eb-8423-2de5a6c0cc50.png"></p>
+<p>AFTER (full values in xlsx posted above):
+<img width="271" alt="Screen Shot 2020-10-17 at 9 39 47 PM" src="../../assets/github/images/66583275/96358933-74d85800-10c1-11eb-91b2-4a04c7e90349.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-711">#711: [MD] Backfill data for Positive Tests (PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            711</p>
+          <p>
+            <strong>amandafrench</strong> opened this issue on July 31, 2020, 7:30 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/711" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong>
+<strong>Overview:</strong> Currently we do not report <em>positiveTestsViral</em> for Maryland. MD publishes this data at https://coronavirus.maryland.gov/datasets/mdcovid19-testingvolume/data?orderBy=date&amp;orderByAsc=false in a downloadable spreadsheet and in its API. I have entered a new value (July 31, 2020) for this data as of July 29, 2020 an guidance to checkers on updating it subsequently, but we need to backfill the time series.
+<strong>Contribution to milestone:</strong> Not related to current milestone but is related to &quot;People vs. Tests&quot; breakout
+<strong>Other benefits:</strong> new data
+<strong>Potential challenges:</strong> Backfilling
+<strong>Editorial:</strong> Public note about new <em>positiveTestsViral</em> data available for MD</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-674435737">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 15, 2020, 11:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/711#issuecomment-674435737" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-684014684">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 31, 2020, 1:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/711#issuecomment-684014684" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We backfilled Total-PCR-tests and Positive-PCR-tests from MD's &quot;Testing Volume&quot; ArcGIS dataset, as it was captured on Aug-16th.
+The backfill included only Aug-16th and earlier dates, going all the way back to March-24</p>
+<p><a href="../../assets/github/files/5152455/post_update.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">post_update[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a>
+<a href="../../assets/github/files/5152456/pre_update_.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">pre_update_[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a>
+<img src="../../assets/github/images/62236447/91764449-2c55f100-eb8c-11ea-82cd-9982064a5a40.png" alt="Screenshot from 2020-08-31 13-12-49">
+<img src="../../assets/github/images/62236447/91764450-2d871e00-eb8c-11ea-88ca-b6020c0952f0.png" alt="Screenshot from 2020-08-31 13-14-10"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-688">#688: [MD] PCL Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            688</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 29, 2020, 6:37 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/688" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Maryland</p>
+<p><strong>Describe the problem</strong>
+Maryland's <strong>&quot;Positive Cases (PCR)</strong>&quot; column has values starting on 4/14. Since MD only reports lab-confirmed PCR cases, we are going to copy all the values from &quot;<strong>Cases (Confirmed and Probable)</strong>&quot; into &quot;<strong>Positive Cases (PCR)</strong>&quot; before 4/14</p>
+<p><strong>Link to data source</strong>
+Previous Capture of cases from MD's website/dash</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666077528">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 29, 2020, 8:40 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/688#issuecomment-666077528" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The MD Positive Cases (PCR) column was previously empty prior to 4/14 so it can easily be restored without a screenshot, but here are before/afters for the point where it previously ended.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/88877913-9fb6bc80-d1f4-11ea-9d19-b1be80518f7a.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/88878022-eb696600-d1f4-11ea-803a-06698f1b5f80.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-554">#554: MD 3/16 wrong historical value</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            554</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 28, 2020, 5:46 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/554" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>In the MD csv file the entry on 3/16 for positive cases is 2895. This is much larger than that for 3/15 or 3/17. It also doesn't match the MD department of health value for that day of 37. I think the 3/16 value is in error.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_259sh">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-650850891">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on June 28, 2020, 6:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/554#issuecomment-650850891" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Here's what I'm downloading now from CTP:</p>
+<pre><code>$ curl -s https://covidtracking.com/api/v1/states/md/daily.csv | cut -d, -f1-3 | grep -A 1 -B 2 20200316
+20200318,MD,85
+20200317,MD,57
+20200316,MD,37
+20200315,MD,31
+</code></pre>
+<p>The 16th is 37 cases, just like in MD's published time series. If it was something else in the past, it's no longer there now.</p>
+<p>This issue if good to close</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650860591">
+          <div class="frontmatter">
+            <div>
+              <strong>dmv6002</strong> commented on June 28, 2020, 6:52 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/554#issuecomment-650860591" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Agree with space-buzzer. The csv file I was using was from  6/20/20 and I had only gotten around to to using it a day or two ago while testing some data reduction software. The 3/16 entry must have been corrected in the interim.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651388956">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 29, 2020, 2:52 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/554#issuecomment-651388956" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was addressed by <strong>@muamichali</strong> on 24 June</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-474">#474: MD Historical Data update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            474</p>
+          <p>
+            <strong>careeningspace</strong> opened this issue on June 4, 2020, 5:12 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/474" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Maryland</strong> [MD]</p>
+<p><strong>Historical Update</strong> from state graph</p>
+<p>Cumulative fatality (total) | Cumulative fatality (confirmed) | Cumulative fatality (probable)
+2668 | 2546 | 122
+2666 | 2544 | 122
+2646 | 2525 | 121
+2625 | 2505 | 120
+2596 | 2476 | 120
+2562 | 2444 | 118
+2538 | 2421 | 117
+2501 | 2386 | 115
+2458 | 2343 | 115
+2417 | 2302 | 115
+2379 | 2267 | 112
+2341 | 2229 | 112
+2306 | 2197 | 109
+2274 | 2169 | 105
+2221 | 2116 | 105
+2198 | 2093 | 105
+2164 | 2061 | 103
+2122 | 2020 | 102
+2090 | 1989 | 101
+2040 | 1943 | 97
+1991 | 1896 | 95
+1935 | 1840 | 95
+1881 | 1787 | 94
+1834 | 1742 | 92
+1788 | 1698 | 90
+1739 | 1652 | 87
+1692 | 1609 | 83
+1643 | 1561 | 82
+1580 | 1500 | 80
+1520 | 1444 | 76
+1476 | 1402 | 74
+1424 | 1353 | 71
+1372 | 1302 | 70
+1323 | 1258 | 65
+1276 | 1214 | 62
+1226 | 1167 | 59
+1168 | 1110 | 58
+1099 | 1042 | 57
+1045 | 990 | 55
+1001 | 950 | 51
+948 | 900 | 48
+899 | 853 | 46
+831 | 789 | 42
+779 | 738 | 41
+732 | 692 | 40
+683 | 644 | 39
+626 | 592 | 34
+582 | 550 | 32
+541 | 512 | 29
+499 | 471 | 28
+469 | 441 | 28
+421 | 396 | 25
+384 | 360 | 24
+335 | 317 | 18
+298 | 286 | 12
+255 | 244 | 11
+221 | 210 | 11
+191 | 181 | 10
+160 | 152 | 8
+138 | 131 | 7
+122 | 115 | 7
+101 | 94 | 7
+84 | 79 | 5
+64 | 60 | 4
+52 | 50 | 2
+43 | 42 | 1
+35 | 34 | 1
+24 | 23 | 1
+17 | 17 |  
+10 | 10 |  
+7 | 7 |  
+5 | 5 |  
+5 | 5 |  
+4 | 4 |  
+4 | 4 |  
+3 | 3 |  
+3 | 3 |  
+2 | 2 |  
+2 | 2 |</p>
+<p><strong>CTP Data</strong>
+<img src="https://user-images.githubusercontent.com/43073915/83822559-5f790900-a69f-11ea-8bb4-ce6d1549438e.png" alt="Screen Shot 2020-06-04 at 8 02 11 PM">
+<img src="https://user-images.githubusercontent.com/43073915/83822625-8df6e400-a69f-11ea-8572-5ceaf04bb7d2.png" alt="Screen Shot 2020-06-04 at 8 02 48 PM"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-639185235">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on June 4, 2020, 5:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/474#issuecomment-639185235" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I pulled the data from the state website’s table and put it into a table in the Dev sheet</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-643256801">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 12, 2020, 5:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/474#issuecomment-643256801" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Is this done <strong>@careeningspace</strong> ?</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-246">#246: MD: data added for hospitalized and ICU </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            246</p>
+          <p>
+            <strong>nfritts</strong> opened this issue on April 21, 2020, 8:52 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/246" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Announcement:
+https://twitter.com/MDHealthDept/status/1252601187586772993</p>
+<p>Data is now present on the current &quot;Best source&quot; page now as well:
+https://coronavirus.maryland.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-617287543">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 21, 2020, 10:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/246#issuecomment-617287543" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for letting us know about this <strong>@nfritts</strong></p>
+<p>We will make sure and check the source for the added data starting today.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-617498262">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on April 21, 2020, 6:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/246#issuecomment-617498262" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is good to hear. Thanks!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-48">#48: MD case: consider removing no- longer- reported stats</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            48</p>
+          <p>
+            <strong>gmurray3</strong> opened this issue on March 24, 2020, 5:28 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/48" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Greetings and thanks for tbe important work you and your teams are doing.</p>
+<p>Im reaching out to request removal of Maryland's negative and pending cases counts because they are no longer being published by Maryland.</p>
+<p>Keeping those data from 3/12 while tbe positive reported cases climb artificially skew rates and metrics being reported from your Maryland data.  This is a disservice to tbe people here who are getting disheartened and not trusting the measures are working or that health officials are working and doing tests.</p>
+<p>Please consider treating all data for states no longer reporting this way.  You may consider providing guidance for estimating or imputing pendings and negatives based on area observed averages or something.  I appreciate this will effectively limit the power of your data,  but reporting in this way can be harmful and hurtful to the public who look to you for facts during this crisis.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-604667127">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on March 26, 2020, 1:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/48#issuecomment-604667127" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Maryland has an order out requiring weekly updates of negatives. The order went out 3/23, so new numbers should be available by 3/30.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604815834">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 26, 2020, 9:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/48#issuecomment-604815834" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>W</p>
+<p><strong>@gmurray3</strong> you are highlighting a very important aspect/duty of all citizens: Demand more from your government. If CDC was doing its job, we would not be having this discussion. Fortunately, we are seeing states everywhere stepping up and delivering the data that the people deserve.</p>
+<p>Elections Matter.</p>
+<p>We have a standing policy - once a negative, always a negative. When more data come available, all of COVID Dataville will rejoice.</p>
+<p>With Pending data, we do discontinue reporting it when it is no longer available.<br>
+Here is our MD Data:
+<img src="../../assets/github/images/43073915/77722956-74f9f480-6fc5-11ea-8fbe-842cc56de0be.png" alt="Screen Shot 2020-03-27 at 12 52 52 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-605342276">
+          <div class="frontmatter">
+            <div>
+              <strong>gmurray3</strong> commented on March 27, 2020, 3:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/48#issuecomment-605342276" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Unfortunate you take that position.  This has nothing to do with CDC
+policy.  I demand more of people who publish health statistics to generate
+generate panic.  This is good news though,  for my own writing and
+dissertation as I collect data sources like yours as examples of
+irresponsible data practices in times of crisis.</p>
+<p>All tbe best,
+Gordon Murray</p>
+<p>On Fri, Mar 27, 2020, 12:59 AM Elliott Klug &lt;notifications<strong>@github.com</strong> wrote:</p>
+<blockquote>
+<p>W</p>
+<p><strong>@gmurray3</strong> <a href="https://github.com/gmurray3">https://github.com/gmurray3</a> you are highlighting a very
+important aspect/duty of all citizens: Demand more from your government. If
+CDC was doing its job, we would not be having this discussion. Fortunately,
+we are seeing states everywhere stepping up and delivering the data that
+the people deserve.</p>
+<p>Elections Matter.</p>
+<p>We have a standing policy - once a negative, always a negative. When more
+data come available, all of COVID Dataville will rejoice.</p>
+<p>With Pending data, we do discontinue reporting it when it is no longer
+available.
+Here is our MD Data:
+[image: Screen Shot 2020-03-27 at 12 52 52 AM]
+&lt;../../assets/github/images/43073915/77722956-74f9f480-6fc5-11ea-8fbe-842cc56de0be.png&gt;</p>
+<p>—
+You are receiving this because you were mentioned.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/48#issuecomment-604815834">https://github.com/COVID19Tracking/issues/issues/48#issuecomment-604815834</a>,
+or unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/AO52FQI6E6L3D6ASVIA5UQTRJQXDNANCNFSM4LTCVBFQ">https://github.com/notifications/unsubscribe-auth/AO52FQI6E6L3D6ASVIA5UQTRJQXDNANCNFSM4LTCVBFQ</a>
+.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-605360575">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 27, 2020, 4:53 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/48#issuecomment-605360575" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hey <strong>@gmurray3</strong> we explicitly note that Maryland no longer reports negatives on the <a href="https://covidtracking.com/data/#MD">Maryland state page</a> and we document our policy on how we handle negatives in our <a href="https://covidtracking.com/newsroom-expert-faq/">Newsroom FAQ</a>.</p>
+<p>Reasonable people can disagree about the right way to handle this data; when we make decisions we try our best to document them.</p>
+<p><strong>@careeningspace</strong> and others are volunteering their time to produce a data set critical for decision making in the US. We are all quite stressed right now but your accusation that we are trying to &quot;generate panic&quot; is not appreciated.</p>
+<p>While we have not made time to create a code of conduct for our repos yet, I'm going to lock conversation on this issue and block you from filing further issues on this repo.</p>
+<p>Please try to stay positive in the future when commenting on a project run by volunteers.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

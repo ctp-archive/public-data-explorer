@@ -1,0 +1,3317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Arizona Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Arizona</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Arizona</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>March 7, 2021, 9:56 AM PST</td>
+          <td>1135</td>
+          <td>
+            <a href="#issue-1135">[AZ] Move total antibody tests (specimens) timeseries into Total antibody tests (people) and backfill Total antibody tests (speicmens) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 7, 2021, 9:56 AM PST</td>
+          <td>1135</td>
+          <td>
+            <a href="#issue-1135">[AZ] Move total antibody tests (specimens) timeseries into Total antibody tests (people) and backfill Total antibody tests (speicmens) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 10, 2020, 9:38 AM PST</td>
+          <td>1002</td>
+          <td>
+            <a href="#issue-1002">[AZ] Backfill timeseries of Total Tests PCR</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 23, 2020, 6:35 AM PST</td>
+          <td>969</td>
+          <td>
+            <a href="#issue-969">[AZ] Patch 11/5 Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 25, 2020, 6:24 AM PDT</td>
+          <td>867</td>
+          <td>
+            <a href="#issue-867">[AZ] Switch specimens to unique people, switch totalTestResults to unique people</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 28, 2020, 5:33 PM PDT</td>
+          <td>801</td>
+          <td>
+            <a href="#issue-801">[AZ] Change errant value of Total Tests (PCR) on 5/13 from  165,810 to 127.750 in AZ </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 7, 2020, 7:07 AM PDT</td>
+          <td>741</td>
+          <td>
+            <a href="#issue-741">[AZ] Probables Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 9:15 AM PDT</td>
+          <td>715</td>
+          <td>
+            <a href="#issue-715">[AZ] Negatives was input incorrectly on 7/30 which caused the total test number to be incorrect</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 15, 2020, 10:10 AM PDT</td>
+          <td>630</td>
+          <td>
+            <a href="#issue-630">[AZ] No cum. hosp update between 6/21-6/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 7:40 AM PDT</td>
+          <td>614</td>
+          <td>
+            <a href="#issue-614">[AZ] PCL Cases Historical</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 8, 2020, 4:23 PM PDT</td>
+          <td>589</td>
+          <td>
+            <a href="#issue-589">[AZ] 7/6 Positive Cases (PCR) misreported as Negative Tests (PCR)?</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 22, 2020, 9:32 AM PDT</td>
+          <td>511</td>
+          <td>
+            <a href="#issue-511">[AZ] Data mismatch</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 17, 2020, 1:18 PM PDT</td>
+          <td>498</td>
+          <td>
+            <a href="#issue-498">AZ historical data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 9, 2020, 8:17 AM PDT</td>
+          <td>398</td>
+          <td>
+            <a href="#issue-398">Tracking antibody test data in AZ</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2020, 2:11 PM PDT</td>
+          <td>115</td>
+          <td>
+            <a href="#issue-115">AZ counts still don&#39;t seem to reflect Navajo Nation </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 11, 2020, 7:02 AM PDT</td>
+          <td>2</td>
+          <td>
+            <a href="#issue-2">AZ: Need a tableau proxy</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1135">#1135: [AZ] Move total antibody tests (specimens) timeseries into Total antibody tests (people) and backfill Total antibody tests (speicmens) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1135</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on March 7, 2021, 9:56 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1135" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AZ</p>
+<p><strong>Dates affected:</strong> 05/07/20 - 03/07/21</p>
+<p><strong>Describe the issue:</strong> The Total antibody tests (specimens) figure we have been capturing for Arizona is actuall Total antibody tests (people). Arizona also provides a true Total antibody tests (specimens) number on their dashboard. We are moving our Total antibody tests (specimens) timeseries into Total antibody tests (specimens), and will begin capturing Total antibody tests (specimens) from their data dashboard, and backfill this timeseries through 07/16/20 from the graph on Arizona's dashboard.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-804495628">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 22, 2021, 5:32 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1135#issuecomment-804495628" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-811904114">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 1, 2021, 6:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1135#issuecomment-811904114" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 368</p>
+<p>AZ 2021-03-06
+totalTestsAntibody: 580318 (was None)
+AZ 2021-03-05
+totalTestsAntibody: 579560 (was None)
+AZ 2021-03-04
+totalTestsAntibody: 578537 (was None)
+AZ 2021-03-03
+totalTestsAntibody: 577188 (was None)
+AZ 2021-03-02
+totalTestsAntibody: 576217 (was None)
+AZ 2021-03-01
+totalTestsAntibody: 575979 (was None)
+AZ 2021-02-28
+totalTestsAntibody: 575378 (was None)
+AZ 2021-02-27
+totalTestsAntibody: 574247 (was None)
+AZ 2021-02-26
+totalTestsAntibody: 572668 (was None)
+AZ 2021-02-25
+totalTestsAntibody: 570842 (was None)
+AZ 2021-02-24
+totalTestsAntibody: 568862 (was None)
+AZ 2021-02-23
+totalTestsAntibody: 567459 (was None)
+AZ 2021-02-22
+totalTestsAntibody: 566978 (was None)
+AZ 2021-02-21
+totalTestsAntibody: 566114 (was None)
+AZ 2021-02-20
+totalTestsAntibody: 564619 (was None)
+AZ 2021-02-19
+totalTestsAntibody: 562963 (was None)
+AZ 2021-02-18
+totalTestsAntibody: 560865 (was None)
+AZ 2021-02-17
+totalTestsAntibody: 559074 (was None)
+AZ 2021-02-16
+totalTestsAntibody: 557794 (was None)
+AZ 2021-02-15
+totalTestsAntibody: 557403 (was None)
+AZ 2021-02-14
+totalTestsAntibody: 556629 (was None)
+AZ 2021-02-13
+totalTestsAntibody: 554886 (was None)
+AZ 2021-02-12
+totalTestsAntibody: 552818 (was None)
+AZ 2021-02-11
+totalTestsAntibody: 551406 (was None)
+AZ 2021-02-10
+totalTestsAntibody: 549670 (was None)
+AZ 2021-02-09
+totalTestsAntibody: 548188 (was None)
+AZ 2021-02-08
+totalTestsAntibody: 547915 (was None)
+AZ 2021-02-07
+totalTestsAntibody: 547275 (was None)
+AZ 2021-02-06
+totalTestsAntibody: 545719 (was None)
+AZ 2021-02-05
+totalTestsAntibody: 543935 (was None)
+AZ 2021-02-04
+totalTestsAntibody: 541820 (was None)
+AZ 2021-02-03
+totalTestsAntibody: 539976 (was None)
+AZ 2021-02-02
+totalTestsAntibody: 538419 (was None)
+AZ 2021-02-01
+totalTestsAntibody: 538066 (was None)
+AZ 2021-01-31
+totalTestsAntibody: 537315 (was None)
+AZ 2021-01-30
+totalTestsAntibody: 535655 (was None)
+AZ 2021-01-29
+totalTestsAntibody: 533935 (was None)
+AZ 2021-01-28
+totalTestsAntibody: 531723 (was None)
+AZ 2021-01-27
+totalTestsAntibody: 529787 (was None)
+AZ 2021-01-26
+totalTestsAntibody: 528280 (was None)
+AZ 2021-01-25
+totalTestsAntibody: 527775 (was None)
+AZ 2021-01-24
+totalTestsAntibody: 526923 (was None)
+AZ 2021-01-23
+totalTestsAntibody: 525195 (was None)
+AZ 2021-01-22
+totalTestsAntibody: 523200 (was None)
+AZ 2021-01-21
+totalTestsAntibody: 521618 (was None)
+AZ 2021-01-20
+totalTestsAntibody: 519466 (was None)
+AZ 2021-01-19
+totalTestsAntibody: 517937 (was None)
+AZ 2021-01-18
+totalTestsAntibody: 517482 (was None)
+AZ 2021-01-17
+totalTestsAntibody: 516750 (was None)
+AZ 2021-01-16
+totalTestsAntibody: 514886 (was None)
+AZ 2021-01-15
+totalTestsAntibody: 513006 (was None)
+AZ 2021-01-14
+totalTestsAntibody: 511180 (was None)
+AZ 2021-01-13
+totalTestsAntibody: 509039 (was None)
+AZ 2021-01-12
+totalTestsAntibody: 507483 (was None)
+AZ 2021-01-11
+totalTestsAntibody: 507098 (was None)
+AZ 2021-01-10
+totalTestsAntibody: 506459 (was None)
+AZ 2021-01-09
+totalTestsAntibody: 504461 (was None)
+AZ 2021-01-08
+totalTestsAntibody: 502366 (was None)
+AZ 2021-01-07
+totalTestsAntibody: 500180 (was None)
+AZ 2021-01-06
+totalTestsAntibody: 498185 (was None)
+AZ 2021-01-05
+totalTestsAntibody: 496403 (was None)
+AZ 2021-01-04
+totalTestsAntibody: 495894 (was None)
+AZ 2021-01-03
+totalTestsAntibody: 495218 (was None)
+AZ 2021-01-02
+totalTestsAntibody: 494862 (was None)
+AZ 2021-01-01
+totalTestsAntibody: 493757 (was None)
+AZ 2020-12-31
+totalTestsAntibody: 491918 (was None)
+AZ 2020-12-30
+totalTestsAntibody: 490174 (was None)
+AZ 2020-12-29
+totalTestsAntibody: 488839 (was None)
+AZ 2020-12-28
+totalTestsAntibody: 488550 (was None)
+AZ 2020-12-27
+totalTestsAntibody: 488191 (was None)
+AZ 2020-12-26
+totalTestsAntibody: 488056 (was None)
+AZ 2020-12-25
+totalTestsAntibody: 487302 (was None)
+AZ 2020-12-24
+totalTestsAntibody: 485476 (was None)
+AZ 2020-12-23
+totalTestsAntibody: 483451 (was None)
+AZ 2020-12-22
+totalTestsAntibody: 481747 (was None)
+AZ 2020-12-21
+totalTestsAntibody: 481340 (was None)
+AZ 2020-12-20
+totalTestsAntibody: 480619 (was None)
+AZ 2020-12-19
+totalTestsAntibody: 478903 (was None)
+AZ 2020-12-18
+totalTestsAntibody: 477028 (was None)
+AZ 2020-12-17
+totalTestsAntibody: 475090 (was None)
+AZ 2020-12-16
+totalTestsAntibody: 473513 (was None)
+AZ 2020-12-15
+totalTestsAntibody: 471973 (was None)
+AZ 2020-12-14
+totalTestsAntibody: 471658 (was None)
+AZ 2020-12-13
+totalTestsAntibody: 470894 (was None)
+AZ 2020-12-12
+totalTestsAntibody: 469285 (was None)
+AZ 2020-12-11
+totalTestsAntibody: 467314 (was None)
+AZ 2020-12-10
+totalTestsAntibody: 465235 (was None)
+AZ 2020-12-09
+totalTestsAntibody: 463284 (was None)
+AZ 2020-12-08
+totalTestsAntibody: 461682 (was None)
+AZ 2020-12-07
+totalTestsAntibody: 461323 (was None)
+AZ 2020-12-06
+totalTestsAntibody: 460621 (was None)
+AZ 2020-12-05
+totalTestsAntibody: 459090 (was None)
+AZ 2020-12-04
+totalTestsAntibody: 457196 (was None)
+AZ 2020-12-03
+totalTestsAntibody: 455091 (was None)
+AZ 2020-12-02
+totalTestsAntibody: 452708 (was None)
+AZ 2020-12-01
+totalTestsAntibody: 450648 (was None)
+AZ 2020-11-30
+totalTestsAntibody: 449973 (was None)
+AZ 2020-11-29
+totalTestsAntibody: 448883 (was None)
+AZ 2020-11-28
+totalTestsAntibody: 447812 (was None)
+AZ 2020-11-27
+totalTestsAntibody: 447576 (was None)
+AZ 2020-11-26
+totalTestsAntibody: 445594 (was None)
+AZ 2020-11-25
+totalTestsAntibody: 443634 (was None)
+AZ 2020-11-24
+totalTestsAntibody: 441838 (was None)
+AZ 2020-11-23
+totalTestsAntibody: 441256 (was None)
+AZ 2020-11-22
+totalTestsAntibody: 440171 (was None)
+AZ 2020-11-21
+totalTestsAntibody: 438044 (was None)
+AZ 2020-11-20
+totalTestsAntibody: 436592 (was None)
+AZ 2020-11-19
+totalTestsAntibody: 434419 (was None)
+AZ 2020-11-18
+totalTestsAntibody: 432134 (was None)
+AZ 2020-11-17
+totalTestsAntibody: 430364 (was None)
+AZ 2020-11-16
+totalTestsAntibody: 429493 (was None)
+AZ 2020-11-15
+totalTestsAntibody: 428367 (was None)
+AZ 2020-11-14
+totalTestsAntibody: 426466 (was None)
+AZ 2020-11-13
+totalTestsAntibody: 424886 (was None)
+AZ 2020-11-12
+totalTestsAntibody: 423350 (was None)
+AZ 2020-11-11
+totalTestsAntibody: 421428 (was None)
+AZ 2020-11-10
+totalTestsAntibody: 419691 (was None)
+AZ 2020-11-09
+totalTestsAntibody: 418900 (was None)
+AZ 2020-11-08
+totalTestsAntibody: 417658 (was None)
+AZ 2020-11-07
+totalTestsAntibody: 415900 (was None)
+AZ 2020-11-06
+totalTestsAntibody: 414437 (was None)
+AZ 2020-11-05
+totalTestsAntibody: 412908 (was None)
+AZ 2020-11-04
+totalTestsAntibody: 411072 (was None)
+AZ 2020-11-03
+totalTestsAntibody: 409383 (was None)
+AZ 2020-11-02
+totalTestsAntibody: 408714 (was None)
+AZ 2020-11-01
+totalTestsAntibody: 407735 (was None)
+AZ 2020-10-31
+totalTestsAntibody: 405894 (was None)
+AZ 2020-10-30
+totalTestsAntibody: 403989 (was None)
+AZ 2020-10-29
+totalTestsAntibody: 402085 (was None)
+AZ 2020-10-28
+totalTestsAntibody: 399841 (was None)
+AZ 2020-10-27
+totalTestsAntibody: 398028 (was None)
+AZ 2020-10-26
+totalTestsAntibody: 397342 (was None)
+AZ 2020-10-25
+totalTestsAntibody: 396285 (was None)
+AZ 2020-10-24
+totalTestsAntibody: 394092 (was None)
+AZ 2020-10-23
+totalTestsAntibody: 392396 (was None)
+AZ 2020-10-22
+totalTestsAntibody: 390954 (was None)
+AZ 2020-10-21
+totalTestsAntibody: 389111 (was None)
+AZ 2020-10-20
+totalTestsAntibody: 387436 (was None)
+AZ 2020-10-19
+totalTestsAntibody: 386709 (was None)
+AZ 2020-10-18
+totalTestsAntibody: 385544 (was None)
+AZ 2020-10-17
+totalTestsAntibody: 383829 (was None)
+AZ 2020-10-16
+totalTestsAntibody: 382075 (was None)
+AZ 2020-10-15
+totalTestsAntibody: 380398 (was None)
+AZ 2020-10-14
+totalTestsAntibody: 378395 (was None)
+AZ 2020-10-13
+totalTestsAntibody: 376656 (was None)
+AZ 2020-10-12
+totalTestsAntibody: 375886 (was None)
+AZ 2020-10-11
+totalTestsAntibody: 374816 (was None)
+AZ 2020-10-10
+totalTestsAntibody: 372442 (was None)
+AZ 2020-10-09
+totalTestsAntibody: 370643 (was None)
+AZ 2020-10-08
+totalTestsAntibody: 368482 (was None)
+AZ 2020-10-07
+totalTestsAntibody: 366319 (was None)
+AZ 2020-10-06
+totalTestsAntibody: 364637 (was None)
+AZ 2020-10-05
+totalTestsAntibody: 364033 (was None)
+AZ 2020-10-04
+totalTestsAntibody: 362622 (was None)
+AZ 2020-10-03
+totalTestsAntibody: 360730 (was None)
+AZ 2020-10-02
+totalTestsAntibody: 359060 (was None)
+AZ 2020-10-01
+totalTestsAntibody: 357414 (was None)
+AZ 2020-09-30
+totalTestsAntibody: 355410 (was None)
+AZ 2020-09-29
+totalTestsAntibody: 353517 (was None)
+AZ 2020-09-28
+totalTestsAntibody: 352876 (was None)
+AZ 2020-09-27
+totalTestsAntibody: 351862 (was None)
+AZ 2020-09-26
+totalTestsAntibody: 349938 (was None)
+AZ 2020-09-25
+totalTestsAntibody: 348167 (was None)
+AZ 2020-09-24
+totalTestsAntibody: 346495 (was None)
+AZ 2020-09-23
+totalTestsAntibody: 344432 (was None)
+AZ 2020-09-22
+totalTestsAntibody: 342782 (was None)
+AZ 2020-09-21
+totalTestsAntibody: 342299 (was None)
+AZ 2020-09-20
+totalTestsAntibody: 341668 (was None)
+AZ 2020-09-19
+totalTestsAntibody: 339866 (was None)
+AZ 2020-09-18
+totalTestsAntibody: 338768 (was None)
+AZ 2020-09-17
+totalTestsAntibody: 337526 (was None)
+AZ 2020-09-16
+totalTestsAntibody: 336133 (was None)
+AZ 2020-09-15
+totalTestsAntibody: 334680 (was None)
+AZ 2020-09-14
+totalTestsAntibody: 334187 (was None)
+AZ 2020-09-13
+totalTestsAntibody: 333533 (was None)
+AZ 2020-09-12
+totalTestsAntibody: 331886 (was None)
+AZ 2020-09-11
+totalTestsAntibody: 330810 (was None)
+AZ 2020-09-10
+totalTestsAntibody: 329718 (was None)
+AZ 2020-09-09
+totalTestsAntibody: 328275 (was None)
+AZ 2020-09-08
+totalTestsAntibody: 327779 (was None)
+AZ 2020-09-07
+totalTestsAntibody: 327217 (was None)
+AZ 2020-09-06
+totalTestsAntibody: 326608 (was None)
+AZ 2020-09-05
+totalTestsAntibody: 325245 (was None)
+AZ 2020-09-04
+totalTestsAntibody: 324138 (was None)
+AZ 2020-09-03
+totalTestsAntibody: 323046 (was None)
+AZ 2020-09-02
+totalTestsAntibody: 321549 (was None)
+AZ 2020-09-01
+totalTestsAntibody: 319986 (was None)
+AZ 2020-08-31
+totalTestsAntibody: 319534 (was None)
+AZ 2020-08-30
+totalTestsAntibody: 318906 (was None)
+AZ 2020-08-29
+totalTestsAntibody: 317139 (was None)
+AZ 2020-08-28
+totalTestsAntibody: 315723 (was None)
+AZ 2020-08-27
+totalTestsAntibody: 314349 (was None)
+AZ 2020-08-26
+totalTestsAntibody: 312454 (was None)
+AZ 2020-08-25
+totalTestsAntibody: 310714 (was None)
+AZ 2020-08-24
+totalTestsAntibody: 310224 (was None)
+AZ 2020-08-23
+totalTestsAntibody: 309582 (was None)
+AZ 2020-08-22
+totalTestsAntibody: 307676 (was None)
+AZ 2020-08-21
+totalTestsAntibody: 305925 (was None)
+AZ 2020-08-20
+totalTestsAntibody: 304283 (was None)
+AZ 2020-08-19
+totalTestsAntibody: 302087 (was None)
+AZ 2020-08-18
+totalTestsAntibody: 300007 (was None)
+AZ 2020-08-17
+totalTestsAntibody: 299451 (was None)
+AZ 2020-08-16
+totalTestsAntibody: 298808 (was None)
+AZ 2020-08-15
+totalTestsAntibody: 296673 (was None)
+AZ 2020-08-14
+totalTestsAntibody: 294763 (was None)
+AZ 2020-08-13
+totalTestsAntibody: 292825 (was None)
+AZ 2020-08-12
+totalTestsAntibody: 290414 (was None)
+AZ 2020-08-11
+totalTestsAntibody: 288276 (was None)
+AZ 2020-08-10
+totalTestsAntibody: 287773 (was None)
+AZ 2020-08-09
+totalTestsAntibody: 287117 (was None)
+AZ 2020-08-08
+totalTestsAntibody: 284895 (was None)
+AZ 2020-08-07
+totalTestsAntibody: 282598 (was None)
+AZ 2020-08-06
+totalTestsAntibody: 280696 (was None)
+AZ 2020-08-05
+totalTestsAntibody: 278398 (was None)
+AZ 2020-08-04
+totalTestsAntibody: 276051 (was None)
+AZ 2020-08-03
+totalTestsAntibody: 275562 (was None)
+AZ 2020-08-02
+totalTestsAntibody: 274873 (was None)
+AZ 2020-08-01
+totalTestsAntibody: 272439 (was None)
+AZ 2020-07-31
+totalTestsAntibody: 269923 (was None)
+AZ 2020-07-30
+totalTestsAntibody: 267105 (was None)
+AZ 2020-07-29
+totalTestsAntibody: 264215 (was None)
+AZ 2020-07-28
+totalTestsAntibody: 261430 (was None)
+AZ 2020-07-27
+totalTestsAntibody: 260983 (was None)
+AZ 2020-07-26
+totalTestsAntibody: 260351 (was None)
+AZ 2020-07-25
+totalTestsAntibody: 257551 (was None)
+AZ 2020-07-24
+totalTestsAntibody: 255150 (was None)
+AZ 2020-07-23
+totalTestsAntibody: 252884 (was None)
+AZ 2020-07-22
+totalTestsAntibody: 249837 (was None)
+AZ 2020-07-21
+totalTestsAntibody: 246810 (was None)
+AZ 2020-07-20
+totalTestsAntibody: 246336 (was None)
+AZ 2020-07-19
+totalTestsAntibody: 245671 (was None)
+AZ 2020-07-18
+totalTestsAntibody: 242837 (was None)
+AZ 2020-07-17
+totalTestsAntibody: 240534 (was None)
+AZ 2020-07-16
+totalTestsAntibody: 238219 (was None)
+AZ 2020-07-15
+totalTestsAntibody: 235288 (was None)
+AZ 2020-07-14
+totalTestsAntibody: 232343 (was None)
+AZ 2020-07-13
+totalTestsAntibody: 231791 (was None)
+AZ 2020-07-12
+totalTestsAntibody: 230956 (was None)
+AZ 2020-07-11
+totalTestsAntibody: 227933 (was None)
+AZ 2020-07-10
+totalTestsAntibody: 225140 (was None)
+AZ 2020-07-09
+totalTestsAntibody: 222446 (was None)
+AZ 2020-07-08
+totalTestsAntibody: 219114 (was None)
+AZ 2020-07-07
+totalTestsAntibody: 216268 (was None)
+AZ 2020-07-06
+totalTestsAntibody: 215791 (was None)
+AZ 2020-07-05
+totalTestsAntibody: 215183 (was None)
+AZ 2020-07-04
+totalTestsAntibody: 214173 (was None)
+AZ 2020-07-03
+totalTestsAntibody: 210982 (was None)
+AZ 2020-07-02
+totalTestsAntibody: 207746 (was None)
+AZ 2020-07-01
+totalTestsAntibody: 204412 (was None)
+AZ 2020-06-30
+totalTestsAntibody: 200303 (was None)
+AZ 2020-06-29
+totalTestsAntibody: 199719 (was None)
+AZ 2020-06-28
+totalTestsAntibody: 198787 (was None)
+AZ 2020-06-27
+totalTestsAntibody: 194641 (was None)
+AZ 2020-06-26
+totalTestsAntibody: 190579 (was None)
+AZ 2020-06-25
+totalTestsAntibody: 186691 (was None)
+AZ 2020-06-24
+totalTestsAntibody: 182563 (was None)
+AZ 2020-06-23
+totalTestsAntibody: 179185 (was None)
+AZ 2020-06-22
+totalTestsAntibody: 178473 (was None)
+AZ 2020-06-21
+totalTestsAntibody: 177548 (was None)
+AZ 2020-06-20
+totalTestsAntibody: 173613 (was None)
+AZ 2020-06-19
+totalTestsAntibody: 170096 (was None)
+AZ 2020-06-18
+totalTestsAntibody: 167002 (was None)
+AZ 2020-06-17
+totalTestsAntibody: 163007 (was None)
+AZ 2020-06-16
+totalTestsAntibody: 159813 (was None)
+AZ 2020-06-15
+totalTestsAntibody: 159138 (was None)
+AZ 2020-06-14
+totalTestsAntibody: 158218 (was None)
+AZ 2020-06-13
+totalTestsAntibody: 154757 (was None)
+AZ 2020-06-12
+totalTestsAntibody: 151020 (was None)
+AZ 2020-06-11
+totalTestsAntibody: 147343 (was None)
+AZ 2020-06-10
+totalTestsAntibody: 141708 (was None)
+AZ 2020-06-09
+totalTestsAntibody: 137700 (was None)
+AZ 2020-06-08
+totalTestsAntibody: 137046 (was None)
+AZ 2020-06-07
+totalTestsAntibody: 135958 (was None)
+AZ 2020-06-06
+totalTestsAntibody: 132191 (was None)
+AZ 2020-06-05
+totalTestsAntibody: 128552 (was None)
+AZ 2020-06-04
+totalTestsAntibody: 124976 (was None)
+AZ 2020-06-03
+totalTestsAntibody: 120814 (was None)
+AZ 2020-06-02
+totalTestsAntibody: 116283 (was None)
+AZ 2020-06-01
+totalTestsAntibody: 115519 (was None)
+AZ 2020-05-31
+totalTestsAntibody: 113623 (was None)
+AZ 2020-05-30
+totalTestsAntibody: 109543 (was None)
+AZ 2020-05-29
+totalTestsAntibody: 105486 (was None)
+AZ 2020-05-28
+totalTestsAntibody: 101232 (was None)
+AZ 2020-05-27
+totalTestsAntibody: 96842 (was None)
+AZ 2020-05-26
+totalTestsAntibody: 96266 (was None)
+AZ 2020-05-25
+totalTestsAntibody: 95583 (was None)
+AZ 2020-05-24
+totalTestsAntibody: 93312 (was None)
+AZ 2020-05-23
+totalTestsAntibody: 88847 (was None)
+AZ 2020-05-22
+totalTestsAntibody: 84064 (was None)
+AZ 2020-05-21
+totalTestsAntibody: 79108 (was None)
+AZ 2020-05-20
+totalTestsAntibody: 74087 (was None)
+AZ 2020-05-19
+totalTestsAntibody: 68912 (was None)
+AZ 2020-05-18
+totalTestsAntibody: 67571 (was None)
+AZ 2020-05-17
+totalTestsAntibody: 65780 (was None)
+AZ 2020-05-16
+totalTestsAntibody: 60776 (was None)
+AZ 2020-05-15
+totalTestsAntibody: 56355 (was None)
+AZ 2020-05-14
+totalTestsAntibody: 52083 (was None)
+AZ 2020-05-13
+totalTestsAntibody: 47603 (was None)
+AZ 2020-05-12
+totalTestsAntibody: 42820 (was None)
+AZ 2020-05-11
+totalTestsAntibody: 42352 (was None)
+AZ 2020-05-10
+totalTestsAntibody: 41318 (was None)
+AZ 2020-05-09
+totalTestsAntibody: 35782 (was None)
+AZ 2020-05-08
+totalTestsAntibody: 30842 (was None)
+AZ 2020-05-07
+totalTestsAntibody: 25887 (was None)
+AZ 2020-05-06
+totalTestsAntibody: 20997 (was None)
+AZ 2020-05-05
+totalTestsAntibody: 16134 (was None)
+AZ 2020-05-04
+totalTestsAntibody: 15730 (was None)
+AZ 2020-05-03
+totalTestsAntibody: 15195 (was None)
+AZ 2020-05-02
+totalTestsAntibody: 11014 (was None)
+AZ 2020-05-01
+totalTestsAntibody: 7495 (was None)
+AZ 2020-04-30
+totalTestsAntibody: 4225 (was None)
+AZ 2020-04-29
+totalTestsAntibody: 1901 (was None)
+AZ 2020-04-28
+totalTestsAntibody: 411 (was None)
+AZ 2020-04-27
+totalTestsAntibody: 404 (was None)
+AZ 2020-04-26
+totalTestsAntibody: 382 (was None)
+AZ 2020-04-25
+totalTestsAntibody: 221 (was None)
+AZ 2020-04-24
+totalTestsAntibody: 154 (was None)
+AZ 2020-04-23
+totalTestsAntibody: 124 (was None)
+AZ 2020-04-22
+totalTestsAntibody: 106 (was None)
+AZ 2020-04-21
+totalTestsAntibody: 75 (was None)
+AZ 2020-04-20
+totalTestsAntibody: 72 (was None)
+AZ 2020-04-19
+totalTestsAntibody: 68 (was None)
+AZ 2020-04-18
+totalTestsAntibody: 53 (was None)
+AZ 2020-04-17
+totalTestsAntibody: 43 (was None)
+AZ 2020-04-16
+totalTestsAntibody: 36 (was None)
+AZ 2020-04-15
+totalTestsAntibody: 30 (was None)
+AZ 2020-04-14
+totalTestsAntibody: 20 (was None)
+AZ 2020-04-13
+totalTestsAntibody: 18 (was None)
+AZ 2020-04-12
+totalTestsAntibody: 17 (was None)
+AZ 2020-04-11
+totalTestsAntibody: 13 (was None)
+AZ 2020-04-10
+totalTestsAntibody: 7 (was None)
+AZ 2020-04-09
+totalTestsAntibody: 5 (was None)
+AZ 2020-04-08
+totalTestsAntibody: 3 (was None)
+AZ 2020-04-07
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-06
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-05
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-04
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-03
+totalTestsAntibody: 0 (was None)
+AZ 2020-04-02
+totalTestsAntibody: 0 (was None)
+AZ 2020-04-01
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-31
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-30
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-29
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-28
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-27
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-26
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-25
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-24
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-23
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-22
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-21
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-20
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-19
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-18
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-17
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-16
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-15
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-14
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-13
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-12
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-11
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-10
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-09
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-08
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-07
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-06
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-05
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-04
+totalTestsAntibody: 0 (was None)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1135">#1135: [AZ] Move total antibody tests (specimens) timeseries into Total antibody tests (people) and backfill Total antibody tests (speicmens) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1135</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on March 7, 2021, 9:56 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1135" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AZ</p>
+<p><strong>Dates affected:</strong> 05/07/20 - 03/07/21</p>
+<p><strong>Describe the issue:</strong> The Total antibody tests (specimens) figure we have been capturing for Arizona is actuall Total antibody tests (people). Arizona also provides a true Total antibody tests (specimens) number on their dashboard. We are moving our Total antibody tests (specimens) timeseries into Total antibody tests (specimens), and will begin capturing Total antibody tests (specimens) from their data dashboard, and backfill this timeseries through 07/16/20 from the graph on Arizona's dashboard.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-804495628">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 22, 2021, 5:32 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1135#issuecomment-804495628" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-811904114">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 1, 2021, 6:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1135#issuecomment-811904114" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 368</p>
+<p>AZ 2021-03-06
+totalTestsAntibody: 580318 (was None)
+AZ 2021-03-05
+totalTestsAntibody: 579560 (was None)
+AZ 2021-03-04
+totalTestsAntibody: 578537 (was None)
+AZ 2021-03-03
+totalTestsAntibody: 577188 (was None)
+AZ 2021-03-02
+totalTestsAntibody: 576217 (was None)
+AZ 2021-03-01
+totalTestsAntibody: 575979 (was None)
+AZ 2021-02-28
+totalTestsAntibody: 575378 (was None)
+AZ 2021-02-27
+totalTestsAntibody: 574247 (was None)
+AZ 2021-02-26
+totalTestsAntibody: 572668 (was None)
+AZ 2021-02-25
+totalTestsAntibody: 570842 (was None)
+AZ 2021-02-24
+totalTestsAntibody: 568862 (was None)
+AZ 2021-02-23
+totalTestsAntibody: 567459 (was None)
+AZ 2021-02-22
+totalTestsAntibody: 566978 (was None)
+AZ 2021-02-21
+totalTestsAntibody: 566114 (was None)
+AZ 2021-02-20
+totalTestsAntibody: 564619 (was None)
+AZ 2021-02-19
+totalTestsAntibody: 562963 (was None)
+AZ 2021-02-18
+totalTestsAntibody: 560865 (was None)
+AZ 2021-02-17
+totalTestsAntibody: 559074 (was None)
+AZ 2021-02-16
+totalTestsAntibody: 557794 (was None)
+AZ 2021-02-15
+totalTestsAntibody: 557403 (was None)
+AZ 2021-02-14
+totalTestsAntibody: 556629 (was None)
+AZ 2021-02-13
+totalTestsAntibody: 554886 (was None)
+AZ 2021-02-12
+totalTestsAntibody: 552818 (was None)
+AZ 2021-02-11
+totalTestsAntibody: 551406 (was None)
+AZ 2021-02-10
+totalTestsAntibody: 549670 (was None)
+AZ 2021-02-09
+totalTestsAntibody: 548188 (was None)
+AZ 2021-02-08
+totalTestsAntibody: 547915 (was None)
+AZ 2021-02-07
+totalTestsAntibody: 547275 (was None)
+AZ 2021-02-06
+totalTestsAntibody: 545719 (was None)
+AZ 2021-02-05
+totalTestsAntibody: 543935 (was None)
+AZ 2021-02-04
+totalTestsAntibody: 541820 (was None)
+AZ 2021-02-03
+totalTestsAntibody: 539976 (was None)
+AZ 2021-02-02
+totalTestsAntibody: 538419 (was None)
+AZ 2021-02-01
+totalTestsAntibody: 538066 (was None)
+AZ 2021-01-31
+totalTestsAntibody: 537315 (was None)
+AZ 2021-01-30
+totalTestsAntibody: 535655 (was None)
+AZ 2021-01-29
+totalTestsAntibody: 533935 (was None)
+AZ 2021-01-28
+totalTestsAntibody: 531723 (was None)
+AZ 2021-01-27
+totalTestsAntibody: 529787 (was None)
+AZ 2021-01-26
+totalTestsAntibody: 528280 (was None)
+AZ 2021-01-25
+totalTestsAntibody: 527775 (was None)
+AZ 2021-01-24
+totalTestsAntibody: 526923 (was None)
+AZ 2021-01-23
+totalTestsAntibody: 525195 (was None)
+AZ 2021-01-22
+totalTestsAntibody: 523200 (was None)
+AZ 2021-01-21
+totalTestsAntibody: 521618 (was None)
+AZ 2021-01-20
+totalTestsAntibody: 519466 (was None)
+AZ 2021-01-19
+totalTestsAntibody: 517937 (was None)
+AZ 2021-01-18
+totalTestsAntibody: 517482 (was None)
+AZ 2021-01-17
+totalTestsAntibody: 516750 (was None)
+AZ 2021-01-16
+totalTestsAntibody: 514886 (was None)
+AZ 2021-01-15
+totalTestsAntibody: 513006 (was None)
+AZ 2021-01-14
+totalTestsAntibody: 511180 (was None)
+AZ 2021-01-13
+totalTestsAntibody: 509039 (was None)
+AZ 2021-01-12
+totalTestsAntibody: 507483 (was None)
+AZ 2021-01-11
+totalTestsAntibody: 507098 (was None)
+AZ 2021-01-10
+totalTestsAntibody: 506459 (was None)
+AZ 2021-01-09
+totalTestsAntibody: 504461 (was None)
+AZ 2021-01-08
+totalTestsAntibody: 502366 (was None)
+AZ 2021-01-07
+totalTestsAntibody: 500180 (was None)
+AZ 2021-01-06
+totalTestsAntibody: 498185 (was None)
+AZ 2021-01-05
+totalTestsAntibody: 496403 (was None)
+AZ 2021-01-04
+totalTestsAntibody: 495894 (was None)
+AZ 2021-01-03
+totalTestsAntibody: 495218 (was None)
+AZ 2021-01-02
+totalTestsAntibody: 494862 (was None)
+AZ 2021-01-01
+totalTestsAntibody: 493757 (was None)
+AZ 2020-12-31
+totalTestsAntibody: 491918 (was None)
+AZ 2020-12-30
+totalTestsAntibody: 490174 (was None)
+AZ 2020-12-29
+totalTestsAntibody: 488839 (was None)
+AZ 2020-12-28
+totalTestsAntibody: 488550 (was None)
+AZ 2020-12-27
+totalTestsAntibody: 488191 (was None)
+AZ 2020-12-26
+totalTestsAntibody: 488056 (was None)
+AZ 2020-12-25
+totalTestsAntibody: 487302 (was None)
+AZ 2020-12-24
+totalTestsAntibody: 485476 (was None)
+AZ 2020-12-23
+totalTestsAntibody: 483451 (was None)
+AZ 2020-12-22
+totalTestsAntibody: 481747 (was None)
+AZ 2020-12-21
+totalTestsAntibody: 481340 (was None)
+AZ 2020-12-20
+totalTestsAntibody: 480619 (was None)
+AZ 2020-12-19
+totalTestsAntibody: 478903 (was None)
+AZ 2020-12-18
+totalTestsAntibody: 477028 (was None)
+AZ 2020-12-17
+totalTestsAntibody: 475090 (was None)
+AZ 2020-12-16
+totalTestsAntibody: 473513 (was None)
+AZ 2020-12-15
+totalTestsAntibody: 471973 (was None)
+AZ 2020-12-14
+totalTestsAntibody: 471658 (was None)
+AZ 2020-12-13
+totalTestsAntibody: 470894 (was None)
+AZ 2020-12-12
+totalTestsAntibody: 469285 (was None)
+AZ 2020-12-11
+totalTestsAntibody: 467314 (was None)
+AZ 2020-12-10
+totalTestsAntibody: 465235 (was None)
+AZ 2020-12-09
+totalTestsAntibody: 463284 (was None)
+AZ 2020-12-08
+totalTestsAntibody: 461682 (was None)
+AZ 2020-12-07
+totalTestsAntibody: 461323 (was None)
+AZ 2020-12-06
+totalTestsAntibody: 460621 (was None)
+AZ 2020-12-05
+totalTestsAntibody: 459090 (was None)
+AZ 2020-12-04
+totalTestsAntibody: 457196 (was None)
+AZ 2020-12-03
+totalTestsAntibody: 455091 (was None)
+AZ 2020-12-02
+totalTestsAntibody: 452708 (was None)
+AZ 2020-12-01
+totalTestsAntibody: 450648 (was None)
+AZ 2020-11-30
+totalTestsAntibody: 449973 (was None)
+AZ 2020-11-29
+totalTestsAntibody: 448883 (was None)
+AZ 2020-11-28
+totalTestsAntibody: 447812 (was None)
+AZ 2020-11-27
+totalTestsAntibody: 447576 (was None)
+AZ 2020-11-26
+totalTestsAntibody: 445594 (was None)
+AZ 2020-11-25
+totalTestsAntibody: 443634 (was None)
+AZ 2020-11-24
+totalTestsAntibody: 441838 (was None)
+AZ 2020-11-23
+totalTestsAntibody: 441256 (was None)
+AZ 2020-11-22
+totalTestsAntibody: 440171 (was None)
+AZ 2020-11-21
+totalTestsAntibody: 438044 (was None)
+AZ 2020-11-20
+totalTestsAntibody: 436592 (was None)
+AZ 2020-11-19
+totalTestsAntibody: 434419 (was None)
+AZ 2020-11-18
+totalTestsAntibody: 432134 (was None)
+AZ 2020-11-17
+totalTestsAntibody: 430364 (was None)
+AZ 2020-11-16
+totalTestsAntibody: 429493 (was None)
+AZ 2020-11-15
+totalTestsAntibody: 428367 (was None)
+AZ 2020-11-14
+totalTestsAntibody: 426466 (was None)
+AZ 2020-11-13
+totalTestsAntibody: 424886 (was None)
+AZ 2020-11-12
+totalTestsAntibody: 423350 (was None)
+AZ 2020-11-11
+totalTestsAntibody: 421428 (was None)
+AZ 2020-11-10
+totalTestsAntibody: 419691 (was None)
+AZ 2020-11-09
+totalTestsAntibody: 418900 (was None)
+AZ 2020-11-08
+totalTestsAntibody: 417658 (was None)
+AZ 2020-11-07
+totalTestsAntibody: 415900 (was None)
+AZ 2020-11-06
+totalTestsAntibody: 414437 (was None)
+AZ 2020-11-05
+totalTestsAntibody: 412908 (was None)
+AZ 2020-11-04
+totalTestsAntibody: 411072 (was None)
+AZ 2020-11-03
+totalTestsAntibody: 409383 (was None)
+AZ 2020-11-02
+totalTestsAntibody: 408714 (was None)
+AZ 2020-11-01
+totalTestsAntibody: 407735 (was None)
+AZ 2020-10-31
+totalTestsAntibody: 405894 (was None)
+AZ 2020-10-30
+totalTestsAntibody: 403989 (was None)
+AZ 2020-10-29
+totalTestsAntibody: 402085 (was None)
+AZ 2020-10-28
+totalTestsAntibody: 399841 (was None)
+AZ 2020-10-27
+totalTestsAntibody: 398028 (was None)
+AZ 2020-10-26
+totalTestsAntibody: 397342 (was None)
+AZ 2020-10-25
+totalTestsAntibody: 396285 (was None)
+AZ 2020-10-24
+totalTestsAntibody: 394092 (was None)
+AZ 2020-10-23
+totalTestsAntibody: 392396 (was None)
+AZ 2020-10-22
+totalTestsAntibody: 390954 (was None)
+AZ 2020-10-21
+totalTestsAntibody: 389111 (was None)
+AZ 2020-10-20
+totalTestsAntibody: 387436 (was None)
+AZ 2020-10-19
+totalTestsAntibody: 386709 (was None)
+AZ 2020-10-18
+totalTestsAntibody: 385544 (was None)
+AZ 2020-10-17
+totalTestsAntibody: 383829 (was None)
+AZ 2020-10-16
+totalTestsAntibody: 382075 (was None)
+AZ 2020-10-15
+totalTestsAntibody: 380398 (was None)
+AZ 2020-10-14
+totalTestsAntibody: 378395 (was None)
+AZ 2020-10-13
+totalTestsAntibody: 376656 (was None)
+AZ 2020-10-12
+totalTestsAntibody: 375886 (was None)
+AZ 2020-10-11
+totalTestsAntibody: 374816 (was None)
+AZ 2020-10-10
+totalTestsAntibody: 372442 (was None)
+AZ 2020-10-09
+totalTestsAntibody: 370643 (was None)
+AZ 2020-10-08
+totalTestsAntibody: 368482 (was None)
+AZ 2020-10-07
+totalTestsAntibody: 366319 (was None)
+AZ 2020-10-06
+totalTestsAntibody: 364637 (was None)
+AZ 2020-10-05
+totalTestsAntibody: 364033 (was None)
+AZ 2020-10-04
+totalTestsAntibody: 362622 (was None)
+AZ 2020-10-03
+totalTestsAntibody: 360730 (was None)
+AZ 2020-10-02
+totalTestsAntibody: 359060 (was None)
+AZ 2020-10-01
+totalTestsAntibody: 357414 (was None)
+AZ 2020-09-30
+totalTestsAntibody: 355410 (was None)
+AZ 2020-09-29
+totalTestsAntibody: 353517 (was None)
+AZ 2020-09-28
+totalTestsAntibody: 352876 (was None)
+AZ 2020-09-27
+totalTestsAntibody: 351862 (was None)
+AZ 2020-09-26
+totalTestsAntibody: 349938 (was None)
+AZ 2020-09-25
+totalTestsAntibody: 348167 (was None)
+AZ 2020-09-24
+totalTestsAntibody: 346495 (was None)
+AZ 2020-09-23
+totalTestsAntibody: 344432 (was None)
+AZ 2020-09-22
+totalTestsAntibody: 342782 (was None)
+AZ 2020-09-21
+totalTestsAntibody: 342299 (was None)
+AZ 2020-09-20
+totalTestsAntibody: 341668 (was None)
+AZ 2020-09-19
+totalTestsAntibody: 339866 (was None)
+AZ 2020-09-18
+totalTestsAntibody: 338768 (was None)
+AZ 2020-09-17
+totalTestsAntibody: 337526 (was None)
+AZ 2020-09-16
+totalTestsAntibody: 336133 (was None)
+AZ 2020-09-15
+totalTestsAntibody: 334680 (was None)
+AZ 2020-09-14
+totalTestsAntibody: 334187 (was None)
+AZ 2020-09-13
+totalTestsAntibody: 333533 (was None)
+AZ 2020-09-12
+totalTestsAntibody: 331886 (was None)
+AZ 2020-09-11
+totalTestsAntibody: 330810 (was None)
+AZ 2020-09-10
+totalTestsAntibody: 329718 (was None)
+AZ 2020-09-09
+totalTestsAntibody: 328275 (was None)
+AZ 2020-09-08
+totalTestsAntibody: 327779 (was None)
+AZ 2020-09-07
+totalTestsAntibody: 327217 (was None)
+AZ 2020-09-06
+totalTestsAntibody: 326608 (was None)
+AZ 2020-09-05
+totalTestsAntibody: 325245 (was None)
+AZ 2020-09-04
+totalTestsAntibody: 324138 (was None)
+AZ 2020-09-03
+totalTestsAntibody: 323046 (was None)
+AZ 2020-09-02
+totalTestsAntibody: 321549 (was None)
+AZ 2020-09-01
+totalTestsAntibody: 319986 (was None)
+AZ 2020-08-31
+totalTestsAntibody: 319534 (was None)
+AZ 2020-08-30
+totalTestsAntibody: 318906 (was None)
+AZ 2020-08-29
+totalTestsAntibody: 317139 (was None)
+AZ 2020-08-28
+totalTestsAntibody: 315723 (was None)
+AZ 2020-08-27
+totalTestsAntibody: 314349 (was None)
+AZ 2020-08-26
+totalTestsAntibody: 312454 (was None)
+AZ 2020-08-25
+totalTestsAntibody: 310714 (was None)
+AZ 2020-08-24
+totalTestsAntibody: 310224 (was None)
+AZ 2020-08-23
+totalTestsAntibody: 309582 (was None)
+AZ 2020-08-22
+totalTestsAntibody: 307676 (was None)
+AZ 2020-08-21
+totalTestsAntibody: 305925 (was None)
+AZ 2020-08-20
+totalTestsAntibody: 304283 (was None)
+AZ 2020-08-19
+totalTestsAntibody: 302087 (was None)
+AZ 2020-08-18
+totalTestsAntibody: 300007 (was None)
+AZ 2020-08-17
+totalTestsAntibody: 299451 (was None)
+AZ 2020-08-16
+totalTestsAntibody: 298808 (was None)
+AZ 2020-08-15
+totalTestsAntibody: 296673 (was None)
+AZ 2020-08-14
+totalTestsAntibody: 294763 (was None)
+AZ 2020-08-13
+totalTestsAntibody: 292825 (was None)
+AZ 2020-08-12
+totalTestsAntibody: 290414 (was None)
+AZ 2020-08-11
+totalTestsAntibody: 288276 (was None)
+AZ 2020-08-10
+totalTestsAntibody: 287773 (was None)
+AZ 2020-08-09
+totalTestsAntibody: 287117 (was None)
+AZ 2020-08-08
+totalTestsAntibody: 284895 (was None)
+AZ 2020-08-07
+totalTestsAntibody: 282598 (was None)
+AZ 2020-08-06
+totalTestsAntibody: 280696 (was None)
+AZ 2020-08-05
+totalTestsAntibody: 278398 (was None)
+AZ 2020-08-04
+totalTestsAntibody: 276051 (was None)
+AZ 2020-08-03
+totalTestsAntibody: 275562 (was None)
+AZ 2020-08-02
+totalTestsAntibody: 274873 (was None)
+AZ 2020-08-01
+totalTestsAntibody: 272439 (was None)
+AZ 2020-07-31
+totalTestsAntibody: 269923 (was None)
+AZ 2020-07-30
+totalTestsAntibody: 267105 (was None)
+AZ 2020-07-29
+totalTestsAntibody: 264215 (was None)
+AZ 2020-07-28
+totalTestsAntibody: 261430 (was None)
+AZ 2020-07-27
+totalTestsAntibody: 260983 (was None)
+AZ 2020-07-26
+totalTestsAntibody: 260351 (was None)
+AZ 2020-07-25
+totalTestsAntibody: 257551 (was None)
+AZ 2020-07-24
+totalTestsAntibody: 255150 (was None)
+AZ 2020-07-23
+totalTestsAntibody: 252884 (was None)
+AZ 2020-07-22
+totalTestsAntibody: 249837 (was None)
+AZ 2020-07-21
+totalTestsAntibody: 246810 (was None)
+AZ 2020-07-20
+totalTestsAntibody: 246336 (was None)
+AZ 2020-07-19
+totalTestsAntibody: 245671 (was None)
+AZ 2020-07-18
+totalTestsAntibody: 242837 (was None)
+AZ 2020-07-17
+totalTestsAntibody: 240534 (was None)
+AZ 2020-07-16
+totalTestsAntibody: 238219 (was None)
+AZ 2020-07-15
+totalTestsAntibody: 235288 (was None)
+AZ 2020-07-14
+totalTestsAntibody: 232343 (was None)
+AZ 2020-07-13
+totalTestsAntibody: 231791 (was None)
+AZ 2020-07-12
+totalTestsAntibody: 230956 (was None)
+AZ 2020-07-11
+totalTestsAntibody: 227933 (was None)
+AZ 2020-07-10
+totalTestsAntibody: 225140 (was None)
+AZ 2020-07-09
+totalTestsAntibody: 222446 (was None)
+AZ 2020-07-08
+totalTestsAntibody: 219114 (was None)
+AZ 2020-07-07
+totalTestsAntibody: 216268 (was None)
+AZ 2020-07-06
+totalTestsAntibody: 215791 (was None)
+AZ 2020-07-05
+totalTestsAntibody: 215183 (was None)
+AZ 2020-07-04
+totalTestsAntibody: 214173 (was None)
+AZ 2020-07-03
+totalTestsAntibody: 210982 (was None)
+AZ 2020-07-02
+totalTestsAntibody: 207746 (was None)
+AZ 2020-07-01
+totalTestsAntibody: 204412 (was None)
+AZ 2020-06-30
+totalTestsAntibody: 200303 (was None)
+AZ 2020-06-29
+totalTestsAntibody: 199719 (was None)
+AZ 2020-06-28
+totalTestsAntibody: 198787 (was None)
+AZ 2020-06-27
+totalTestsAntibody: 194641 (was None)
+AZ 2020-06-26
+totalTestsAntibody: 190579 (was None)
+AZ 2020-06-25
+totalTestsAntibody: 186691 (was None)
+AZ 2020-06-24
+totalTestsAntibody: 182563 (was None)
+AZ 2020-06-23
+totalTestsAntibody: 179185 (was None)
+AZ 2020-06-22
+totalTestsAntibody: 178473 (was None)
+AZ 2020-06-21
+totalTestsAntibody: 177548 (was None)
+AZ 2020-06-20
+totalTestsAntibody: 173613 (was None)
+AZ 2020-06-19
+totalTestsAntibody: 170096 (was None)
+AZ 2020-06-18
+totalTestsAntibody: 167002 (was None)
+AZ 2020-06-17
+totalTestsAntibody: 163007 (was None)
+AZ 2020-06-16
+totalTestsAntibody: 159813 (was None)
+AZ 2020-06-15
+totalTestsAntibody: 159138 (was None)
+AZ 2020-06-14
+totalTestsAntibody: 158218 (was None)
+AZ 2020-06-13
+totalTestsAntibody: 154757 (was None)
+AZ 2020-06-12
+totalTestsAntibody: 151020 (was None)
+AZ 2020-06-11
+totalTestsAntibody: 147343 (was None)
+AZ 2020-06-10
+totalTestsAntibody: 141708 (was None)
+AZ 2020-06-09
+totalTestsAntibody: 137700 (was None)
+AZ 2020-06-08
+totalTestsAntibody: 137046 (was None)
+AZ 2020-06-07
+totalTestsAntibody: 135958 (was None)
+AZ 2020-06-06
+totalTestsAntibody: 132191 (was None)
+AZ 2020-06-05
+totalTestsAntibody: 128552 (was None)
+AZ 2020-06-04
+totalTestsAntibody: 124976 (was None)
+AZ 2020-06-03
+totalTestsAntibody: 120814 (was None)
+AZ 2020-06-02
+totalTestsAntibody: 116283 (was None)
+AZ 2020-06-01
+totalTestsAntibody: 115519 (was None)
+AZ 2020-05-31
+totalTestsAntibody: 113623 (was None)
+AZ 2020-05-30
+totalTestsAntibody: 109543 (was None)
+AZ 2020-05-29
+totalTestsAntibody: 105486 (was None)
+AZ 2020-05-28
+totalTestsAntibody: 101232 (was None)
+AZ 2020-05-27
+totalTestsAntibody: 96842 (was None)
+AZ 2020-05-26
+totalTestsAntibody: 96266 (was None)
+AZ 2020-05-25
+totalTestsAntibody: 95583 (was None)
+AZ 2020-05-24
+totalTestsAntibody: 93312 (was None)
+AZ 2020-05-23
+totalTestsAntibody: 88847 (was None)
+AZ 2020-05-22
+totalTestsAntibody: 84064 (was None)
+AZ 2020-05-21
+totalTestsAntibody: 79108 (was None)
+AZ 2020-05-20
+totalTestsAntibody: 74087 (was None)
+AZ 2020-05-19
+totalTestsAntibody: 68912 (was None)
+AZ 2020-05-18
+totalTestsAntibody: 67571 (was None)
+AZ 2020-05-17
+totalTestsAntibody: 65780 (was None)
+AZ 2020-05-16
+totalTestsAntibody: 60776 (was None)
+AZ 2020-05-15
+totalTestsAntibody: 56355 (was None)
+AZ 2020-05-14
+totalTestsAntibody: 52083 (was None)
+AZ 2020-05-13
+totalTestsAntibody: 47603 (was None)
+AZ 2020-05-12
+totalTestsAntibody: 42820 (was None)
+AZ 2020-05-11
+totalTestsAntibody: 42352 (was None)
+AZ 2020-05-10
+totalTestsAntibody: 41318 (was None)
+AZ 2020-05-09
+totalTestsAntibody: 35782 (was None)
+AZ 2020-05-08
+totalTestsAntibody: 30842 (was None)
+AZ 2020-05-07
+totalTestsAntibody: 25887 (was None)
+AZ 2020-05-06
+totalTestsAntibody: 20997 (was None)
+AZ 2020-05-05
+totalTestsAntibody: 16134 (was None)
+AZ 2020-05-04
+totalTestsAntibody: 15730 (was None)
+AZ 2020-05-03
+totalTestsAntibody: 15195 (was None)
+AZ 2020-05-02
+totalTestsAntibody: 11014 (was None)
+AZ 2020-05-01
+totalTestsAntibody: 7495 (was None)
+AZ 2020-04-30
+totalTestsAntibody: 4225 (was None)
+AZ 2020-04-29
+totalTestsAntibody: 1901 (was None)
+AZ 2020-04-28
+totalTestsAntibody: 411 (was None)
+AZ 2020-04-27
+totalTestsAntibody: 404 (was None)
+AZ 2020-04-26
+totalTestsAntibody: 382 (was None)
+AZ 2020-04-25
+totalTestsAntibody: 221 (was None)
+AZ 2020-04-24
+totalTestsAntibody: 154 (was None)
+AZ 2020-04-23
+totalTestsAntibody: 124 (was None)
+AZ 2020-04-22
+totalTestsAntibody: 106 (was None)
+AZ 2020-04-21
+totalTestsAntibody: 75 (was None)
+AZ 2020-04-20
+totalTestsAntibody: 72 (was None)
+AZ 2020-04-19
+totalTestsAntibody: 68 (was None)
+AZ 2020-04-18
+totalTestsAntibody: 53 (was None)
+AZ 2020-04-17
+totalTestsAntibody: 43 (was None)
+AZ 2020-04-16
+totalTestsAntibody: 36 (was None)
+AZ 2020-04-15
+totalTestsAntibody: 30 (was None)
+AZ 2020-04-14
+totalTestsAntibody: 20 (was None)
+AZ 2020-04-13
+totalTestsAntibody: 18 (was None)
+AZ 2020-04-12
+totalTestsAntibody: 17 (was None)
+AZ 2020-04-11
+totalTestsAntibody: 13 (was None)
+AZ 2020-04-10
+totalTestsAntibody: 7 (was None)
+AZ 2020-04-09
+totalTestsAntibody: 5 (was None)
+AZ 2020-04-08
+totalTestsAntibody: 3 (was None)
+AZ 2020-04-07
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-06
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-05
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-04
+totalTestsAntibody: 1 (was None)
+AZ 2020-04-03
+totalTestsAntibody: 0 (was None)
+AZ 2020-04-02
+totalTestsAntibody: 0 (was None)
+AZ 2020-04-01
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-31
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-30
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-29
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-28
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-27
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-26
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-25
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-24
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-23
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-22
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-21
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-20
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-19
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-18
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-17
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-16
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-15
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-14
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-13
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-12
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-11
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-10
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-09
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-08
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-07
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-06
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-05
+totalTestsAntibody: 0 (was None)
+AZ 2020-03-04
+totalTestsAntibody: 0 (was None)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1002">#1002: [AZ] Backfill timeseries of Total Tests PCR</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1002</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on December 10, 2020, 9:38 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1002" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Arizona</p>
+<p><strong>Describe the problem</strong>
+Arizona started publishing in tests in specimens units on 12/8. This backfills the timeseries from the data that was available on their tableau dashboard on that day. We had to scrape the tableau data since the information is not available in downloadable format.</p>
+<p><strong>Link to data source</strong>
+Arizona's website.
+<img src="https://user-images.githubusercontent.com/1749380/101808681-a16a8800-3ae4-11eb-8f14-3f5ee4aef5af.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-742769776">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on December 10, 2020, 12:12 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1002#issuecomment-742769776" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<a href="../../assets/github/files/5675375/AZ-Before.xlsx">AZ-Before.xlsx</a></p>
+<p><strong>After</strong>
+<a href="../../assets/github/files/5675373/AZ-After.xlsx">AZ-After.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-969">#969: [AZ] Patch 11/5 Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            969</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 23, 2020, 6:35 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/969" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AZ</p>
+<p><strong>Dates affected:</strong> 11/5</p>
+<p><strong>Describe the issue:</strong> On 11/5, Negative PCR tests (people), was incorrectly calculated as {Total PCR tests (people) - Cases (confirmed plus probable)} instead of {Total PCR tests (people) - Positive PCR tests (people)}. We should patch this mistake.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-732202181">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 23, 2020, 6:37 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/969#issuecomment-732202181" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="180" alt="Screen Shot 2020-11-23 at 9 36 31 AM" src="../../assets/github/images/68712382/99974753-5f64e680-2d6f-11eb-8b73-1e358ed849bd.png"></p>
+<p>AFTER:
+<img width="181" alt="Screen Shot 2020-11-23 at 9 37 23 AM" src="../../assets/github/images/68712382/99974864-7f94a580-2d6f-11eb-9080-a1ae0874d2b8.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-867">#867: [AZ] Switch specimens to unique people, switch totalTestResults to unique people</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            867</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on September 25, 2020, 6:24 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/867" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: AZ</p>
+<p><strong>Describe the problem</strong>
+According to outreach, the timeseries that we store in Arizona's specimens field represents unique people.
+We should switch it, switch the charts, and switch <em>totalTestResults.</em></p>
+<p><strong>Link to data source</strong>
+Our own timeseries for Total Tests (PCR)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698930877">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on September 25, 2020, 6:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/867#issuecomment-698930877" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before
+<img src="../../assets/github/images/15933271/94273106-f77e5500-ff11-11ea-98c9-f27d30cdf2df.png" alt="Screen Shot 2020-09-25 at 9 31 45 AM">
+After
+<img src="../../assets/github/images/15933271/94273196-1250c980-ff12-11ea-8a2f-b26f9b56f951.png" alt="Screen Shot 2020-09-25 at 9 32 33 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-699078665">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on September 25, 2020, 11:15 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/867#issuecomment-699078665" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Switched totalTestResults, website building</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-801">#801: [AZ] Change errant value of Total Tests (PCR) on 5/13 from  165,810 to 127.750 in AZ </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            801</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 28, 2020, 5:33 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/801" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Arizona</p>
+<p><strong>Describe the problem</strong>
+It seems like a data entry mistake</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/AZ/AZ-20200513-182651.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-683882211">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 31, 2020, 9:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/801#issuecomment-683882211" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1749380/91742462-4ee40c00-eb84-11ea-8414-cbe85060ddb7.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-741">#741: [AZ] Probables Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            741</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on August 7, 2020, 7:07 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/741" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Arizona</p>
+<p><strong>Describe the problem</strong>
+CTP started reporting probable cases on 7/28. The states historical probables can be calculated from total cases - confirmed cases. We can back-fill these values back to 6/11, when AZ first reported probable cases (https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1591901671447700?thread_ts=1591901671.447700)</p>
+<p>***Note: AZ hover feature to get confirmed/probable breakdown was broken on 6/12 (https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1591987052058800) and 7/18 - 8/4 (https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1595101365055300?thread_ts=1595101365.055300) For these cases, we're carrying over the probable cases value like we did with the confirmed cases value.</p>
+<p><strong>Link to data source</strong>
+https://www.azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/covid-19/dashboards/index.php</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-670537112">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 7, 2020, 7:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/741#issuecomment-670537112" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/89654247-36cae680-d87d-11ea-83be-39815169664f.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670541062">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 7, 2020, 7:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/741#issuecomment-670541062" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/89655054-64645f80-d87e-11ea-9ef0-c39baa768548.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-715">#715: [AZ] Negatives was input incorrectly on 7/30 which caused the total test number to be incorrect</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            715</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 31, 2020, 9:15 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/715" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Arizona</p>
+<p><strong>Describe the problem</strong>
+<img src="https://user-images.githubusercontent.com/1749380/89057136-2372c500-d32b-11ea-8939-add2be5a8851.png" alt="image"></p>
+<p>7/30 data entry entered the wrong value in the negatives column which caused the total test numbers reported to be lower than AZ reported</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/AZ/AZ-20200730-180359.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-667210683">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 31, 2020, 9:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/715#issuecomment-667210683" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/89055527-857dfb00-d328-11ea-9018-3c165988f4cb.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/89055597-a6dee700-d328-11ea-9f0f-bea253fc1924.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674423144">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 15, 2020, 9:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/715#issuecomment-674423144" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-630">#630: [AZ] No cum. hosp update between 6/21-6/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            630</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 15, 2020, 10:10 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/630" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>AZ did not update cum. hospitalizations at 4225 during this time. AZ habitually updates, even during weekends, so it is unusual that such is the case. Screenshot history and Slack threads were unavailable, further investigation may be needed.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_266xd">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666576596">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 30, 2020, 11:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/630#issuecomment-666576596" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671088940">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 9, 2020, 12:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/630#issuecomment-671088940" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-812551333">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 2, 2021, 7:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/630#issuecomment-812551333" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We don't have screenshots, and web archive isn't loading this section of the page, so I am going to close the issue, as it seems unlikely that we'll be able to patch it, and log it in the DQ log.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-614">#614: [AZ] PCL Cases Historical</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            614</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 13, 2020, 7:40 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/614" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <ol>
+<li>On June 11, CTP began tracking confirmed and probable values separately in AZ. Previously, we captured lumped values. However, Arizona has reported confirmed values separately prior to June 11. We should check to see if we can backfill these values separately.</li>
+</ol>
+<img width="1460" alt="Screen Shot 2020-07-13 at 7 18 58 AM" src="https://user-images.githubusercontent.com/67423649/87317551-04c3a000-c4dc-11ea-80b1-cbc747634d6e.png">
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-661884548">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 21, 2020, 7:09 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/614#issuecomment-661884548" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Note from 7/20: The epi-curve cannot be used to accurately backfill, as it refers to specimen collection data instead of date of test result report.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666367021">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 30, 2020, 6:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/614#issuecomment-666367021" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Update (7/30):</strong></p>
+<ul>
+<li>The GH issue says that we can potentially backfill prior to June 11 with the epi curve. Like Brian added, this graphic collects data for <strong>specimens, not people</strong>. Fundamentally, we cannot compare these units and thus <em>we are unsure whether to backfill unless the units are uniform.</em></li>
+<li>During the data enhancements shift, we looked for possible statements on AZ's website that would help us decide whether we could backfill. <strong><em>We could not find a source that would provide backfill-able values for positive cases (PCR) prior to June 11.</em></strong> We also did not find any specific answers or resources in outreach's AnswerLog/QuestionLog.</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674089805">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 14, 2020, 7:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/614#issuecomment-674089805" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-679152766">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 24, 2020, 7:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/614#issuecomment-679152766" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-589">#589: [AZ] 7/6 Positive Cases (PCR) misreported as Negative Tests (PCR)?</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            589</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on July 8, 2020, 4:23 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/589" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: AZ</p>
+<p><strong>Describe the problem</strong>
+AZ's &quot;Positive Cases (PCR) is sourced from a tooltip on their dashboard, so it isn't visible via screenshots, so I'm not sure this can be <em>proven</em>, however the presence of &quot;Negative Tests (PCR)&quot; value here seems surely to be a mistake:
+<img src="https://user-images.githubusercontent.com/404503/86979347-11986a80-c14f-11ea-8b0d-b7ddb3704077.png" alt="image"></p>
+<p>There's no discussion of a one-off negative number (and corresponding missing positive number) in the private notes or the pub discussions for 7/6 and 7/7. And the number certainly <em>looks</em> like it fits in there...</p>
+<p><strong>Link to data source</strong>
+No historical source that I know of</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-655819484">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 8, 2020, 5:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/589#issuecomment-655819484" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>After:
+<img src="../../assets/github/images/404503/86982046-51168500-c156-11ea-9712-3fbf6139a81b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-511">#511: [AZ] Data mismatch</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            511</p>
+          <p>
+            <strong>shorebound1336</strong> opened this issue on June 22, 2020, 9:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/511" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>When reviewing daily admissions, there are big discrepancies between state reported and covid project data; specifically on 5/28 (53 vs 817). https://azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/covid-19/dashboards/index.php</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-648467299">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 23, 2020, 3:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/511#issuecomment-648467299" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@shorebound1336</strong>, thanks for reporting this issue! Each day, CTP records data like &quot;cumulative hospitalization&quot; based on the current number provided by state sources. This can result in reporting artifacts like the huge jump you mentioned as the state reports a big bunch of past hospitalizations all on the same day. AZ's &quot;hospitalized by date admitted&quot; chart shows there are some major lags in the reporting of this data...the most recent is a few days old and from day to day they revise the number for older days. Between yesterday and today, for example, they added a hospitalization to May 9th!</p>
+<p>I've updated our historical data to match what they provide as of tonight. This should be live on the website within an hour. Unfortunately, we don't yet have a way to make historical updates every day for states like AZ that do this so there will be divergence again as we go forward. We are looking at how best to improve our process to handle situations like this.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-648563899">
+          <div class="frontmatter">
+            <div>
+              <strong>shorebound1336</strong> commented on June 23, 2020, 8:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/511#issuecomment-648563899" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for the clarification. I did notice after I sent this that the
+totals reconcile despite the count discrepancies day to day.</p>
+<p>On Tue, Jun 23, 2020, 3:47 PM Matt Hilliard <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a>
+wrote:</p>
+<blockquote>
+<p><strong>@shorebound1336</strong> <a href="https://github.com/shorebound1336">https://github.com/shorebound1336</a>, thanks for reporting
+this issue! Each day, CTP records data like &quot;cumulative hospitalization&quot;
+based on the current number provided by state sources. This can result in
+reporting artifacts like the huge jump you mentioned as the state reports a
+big bunch of past hospitalizations all on the same day. AZ's &quot;hospitalized
+by date admitted&quot; chart shows there are some major lags in the reporting of
+this data...the most recent is a few days old and from day to day they
+revise the number for older days. Between yesterday and today, for example,
+they added a hospitalization to May 9th!</p>
+<p>I've updated our historical data to match what they provide as of tonight.
+This should be live on the website within an hour. Unfortunately, we don't
+yet have a way to make historical updates every day for states like AZ that
+do this so there will be divergence again as we go forward. We are looking
+at how best to improve our process to handle situations like this.</p>
+<p>—
+You are receiving this because you were mentioned.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/511#issuecomment-648467299">https://github.com/COVID19Tracking/issues/issues/511#issuecomment-648467299</a>,
+or unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/AQBKVANN7MRSJWTCAMGNTMDRYEWJDANCNFSM4OE27NEA">https://github.com/notifications/unsubscribe-auth/AQBKVANN7MRSJWTCAMGNTMDRYEWJDANCNFSM4OE27NEA</a>
+.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-498">#498: AZ historical data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            498</p>
+          <p>
+            <strong>saijanai</strong> opened this issue on June 17, 2020, 1:18 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/498" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>[AZ]</p>
+<p>The hospitalizedIncrease in arizona says 817 increase on 28 May, but the actual figure is an increase of 34 according to the currentlyHospitalized numbers.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/api/v1/states/az/daily.csv</p>
+<p>See:</p>
+<p>20200528,AZ,17763,185151,,<strong>945</strong>,2848,374,,222,,4452,A+,5/28/2020 00:00,2020-05-28T00:00:00Z,05/27 20:00,857,2848,2020-05-28T00:00:00Z,202914,,,,04,501,6147,202914,202914,6648,202914,26,<strong>817</strong>,c51ec45ecd5a03739295f1a37edb330f2d8a63a0,0,0,0,0,0,
+20200527,AZ,17262,179004,,<strong>911</strong>,2031,375,,237,,4361,A+,5/27/2020 00:00,2020-05-27T00:00:00Z,05/26 20:00,831,2031,2020-05-27T00:00:00Z,196266,,,,04,479,5056,196266,196266,5535,196266,24,43,894e69524aefc2edd5da2c2ca6945ec57a7d16ed,0,0,0,0,0,</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-645674329">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 17, 2020, 4:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/498#issuecomment-645674329" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@saijanai</strong></p>
+<p>The hospitalizedIncrease is reflecting the change in cumulative hospitalizations (from 2031 to 2848) as reported by AZ</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-645679533">
+          <div class="frontmatter">
+            <div>
+              <strong>saijanai</strong> commented on June 17, 2020, 4:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/498#issuecomment-645679533" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>But 817 is a nonsensical figure no matter what AZ says about it as it doesn't jibe with the hospitalizedCurrently figure.</p>
+<p>In other words it is useless data</p>
+<p>In fact, the entire 10 days surrounding that figure are in error. The rest of the days seem to match between the current and accumulated, but not that 10 day period.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-398">#398: Tracking antibody test data in AZ</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            398</p>
+          <p>
+            <strong>WilliamsLisa</strong> opened this issue on May 9, 2020, 8:17 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/398" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Arizona is now mixing antibody tests with PCR tests. Covid Tracking is showing a large increase in new tests on Thursday May 7. That increase is due to adding in serological tests. Covid Tracking should pull the &quot;Total COVID-19 PCR Tests&quot; rather than &quot;Number of COVID-19 Tests&quot;. The latter number reflects PCR + Serological tests.
+Serological tests cannot be counted as cases without PCR confirmation. So Covid19 Tracking is making it look like there is a very large increase in PCR testing of infection that does not exist.
+<img src="https://user-images.githubusercontent.com/65079133/81477609-855cdc00-91cd-11ea-9fe8-24d24f0ad198.png" alt="Screenshot from 2020-05-09 07-54-21"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626235268">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 9, 2020, 2:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/398#issuecomment-626235268" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for your input <strong>@</strong>WilliamsLisa! We are aware of the testing changes and have tracked these numbers. We're also working internally to best represent these numbers in our next update. Our biggest concern at this point is whether AZ had been reporting combined antibody and PCR tests even before 5/8. Unfortunately, as states change their data definitions, we have to make difficult choices to keep our data consistent. We are working our best to seek clarification on these issues and work towards a solution. We'll keep in touch!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626239862">
+          <div class="frontmatter">
+            <div>
+              <strong>WilliamsLisa</strong> commented on May 9, 2020, 2:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/398#issuecomment-626239862" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The answer is no. They were not reporting combined serology tests prior to 5/5. Here is the blog post of the first day that they began reporting it on 5/5.
+https://directorsblog.health.azdhs.gov/covid-19-dashboard-now-includes-data-about-antibody-testing/
+Look at you data difference between 5/6 and 5/7. 14k new tests were added. The change is very obvious. Look at your screenshot differences between those days. This is a very simple and obvious change. I am not sure why you dismissed and closed this so easily.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626241902">
+          <div class="frontmatter">
+            <div>
+              <strong>WilliamsLisa</strong> commented on May 9, 2020, 3:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/398#issuecomment-626241902" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>You can see a relatively constant 3-4k new test per day. Then on 5/7 19k new tests. That is when all of the serology tests came in. The next day there was 8k tests because about half are serology.
+<img src="../../assets/github/images/65079133/81486075-392e8d80-9207-11ea-8522-1470f8730fa1.png" alt="Screenshot from 2020-05-09 15-08-10"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626959931">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 11, 2020, 1:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/398#issuecomment-626959931" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@</strong>WilliamsLisa! We're sorry that we made it seem that this is being dismissed. The issue is very much under discussion and we're approaching a solution for our reporting. We want to report data as consistently as possible across all states. We'd prefer to keep reporting these numbers and fix our historicals later once we're sure of a solution. We definitely do not want to mix PCR and antibody tests, so expect a fix soon.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-627452840">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 12, 2020, 9:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/398#issuecomment-627452840" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Here is an update: We have revised historicals accordingly for AZ, and have implemented (since 5/7) new data entry procedures to separate out and capture both data types.
+Before:
+<img src="../../assets/github/images/25627274/81720217-1a6d0880-944c-11ea-88be-48336e4a843f.JPG" alt="Before">
+After:
+<img src="../../assets/github/images/25627274/81720237-20fb8000-944c-11ea-82f8-5d521b1f3c3f.JPG" alt="after_1">
+It took a while but we want to be sure of our information, while additionally also trying to standardize this reporting across all states. Thank you very much for your input and look for a more meaty update on our website.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-115">#115: AZ counts still don&#39;t seem to reflect Navajo Nation </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            115</p>
+          <p>
+            <strong>justaveragejane</strong> opened this issue on April 1, 2020, 2:11 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/62451322/78187031-93774a00-7422-11ea-92e0-1c708137750d.jpg" alt="Screenshot_20200401-140246_Chrome">
+<img src="https://user-images.githubusercontent.com/62451322/78187081-a7bb4700-7422-11ea-9257-e389bfa14cc8.jpg" alt="Screenshot_20200401-135923_Chrome"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607531549">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 4:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607531549" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>States generally do not report tribal data;  generally they do not even receive tribal data.</p>
+<p>I am in New Mexico and am involved but not currently employed in emergency management.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607536655">
+          <div class="frontmatter">
+            <div>
+              <strong>justaveragejane</strong> commented on April 1, 2020, 4:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607536655" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was the reply from when I opened the first issue.  I don't think it's correct.</p>
+<p>&quot;<strong>@careeningspace</strong> careeningspace commented 8 hours ago
+We have found through our investigative team that Navajo Nation numbers are reported to their respective states, but there may be a lag in the timing.:</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607538489">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 1, 2020, 4:26 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607538489" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I can get direct feedback from the Reporting team who investigated it.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607541128">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 4:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607541128" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>4/1/2020:  <a href="https://www.krqe.com/health/coronavirus-new-mexico/navajo-nation-reports-174-covid-19-cases-7-deaths/">Navajo Nation reports 174 COVID-19 cases, 7 deaths</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607542851">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 4:42 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607542851" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>All NM cases from NMDOH current as of 4/1/2020:</p>
+<p>Bernalillo County: 148
+Catron County: 1
+Chaves County: 10
+Cibola County: 4 (of which 1 Navajo?)
+Curry County: 5
+Doña Ana County: 21
+Eddy County: 4
+Grant County: 1
+Lea County: 2
+McKinley County: 20 (of which 10 Navajo?)
+Otero County: 1
+Rio Arriba County: 4
+Roosevelt County: 1
+Sandoval County: 32
+San Juan County: 37 (of which 15 Navajo?)
+San Miguel County: 1
+Santa Fe County: 48
+Socorro County: 3
+Taos County: 12
+Torrance County: 3
+Valencia County: 5</p>
+<p>Parentheses are mine, matching the media report of Navajo Nation cases against the NMDOH list.  Apparently none of the 6 deaths in NM are Navajo Nation.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607543434">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 4:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607543434" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>So, what I said before stands:  states do not get data from Navajo Nation.  Navajo Nation gets data from states.  Navajo Nation reports numbers extracted from state reports (states AZ, NM, and UT, potentially also CO).  All these numbers are all duplicates.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607549468">
+          <div class="frontmatter">
+            <div>
+              <strong>justaveragejane</strong> commented on April 1, 2020, 5:08 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-607549468" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AZ does get numbers from NN but they aren't broken out by state.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790139">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-623790139" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990049">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/115#issuecomment-628990049" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-2">#2: AZ: Need a tableau proxy</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            2</p>
+          <p>
+            <strong>joshuaellinger</strong> opened this issue on March 11, 2020, 7:02 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>AZ uses Tableau.  We can fetch the page but we don't alert when the numbers change.</p>
+<p>This might work with a captive browser model or you might be able to sniff out a data link in the chrome developer tools.</p>
+<p>https://www.azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/index.php#novel-coronavirus-home</p>
+<p>Please create a stand-a-lone endpoint such as http://mysite.org/proxy-tableau?state=AZ and return the data as an HTML table</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-598012543">
+          <div class="frontmatter">
+            <div>
+              <strong>joshellington</strong> commented on March 11, 2020, 10:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2#issuecomment-598012543" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>FYI, there are &quot;Download&quot; links to simpler output structures for these Tableau embeds if you remove the <code>showAppBanner=false</code> and <code>toolbar=no</code> query params. For example, here are a few simple tables (still not directly embedded data):</p>
+<ul>
+<li><em>Cases</em>: https://tableau.azdhs.gov/vizql/w/COVID-19Table/v/COVID-19table/viewData/sessions/ECAEFF86A8224E18A4020737CB4BE181-1:3/views/8275719771277684273_10329084236957726728?maxrows=200&amp;viz=%7B%22worksheet%22%3A%22Cases%22%2C%22dashboard%22%3A%22COVID-19%20table%22%7D</li>
+<li><em>Tests</em>: https://tableau.azdhs.gov/vizql/w/COVID-19Table/v/COVID-19table/viewData/sessions/520DDAEDDAC74525A2DCC58659B97800-1:0/views/8275719771277684273_2738315765867498942?maxrows=200&amp;viz=%7B%22worksheet%22%3A%22Testing%22%2C%22dashboard%22%3A%22COVID-19%20table%22%7D</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-598835696">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 13, 2020, 10:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2#issuecomment-598835696" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I'm providing a updating screenshot at http://covid19-api.exemplartech.com/github-data/captive-browser/az_tableau.html.</p>
+<p>Can you confirm that either my approach or yours above is live in production and close the issue?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601933118">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 20, 2020, 3:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2#issuecomment-601933118" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Resolved</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-598012543">
+          <div class="frontmatter">
+            <div>
+              <strong>joshellington</strong> commented on March 11, 2020, 10:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2#issuecomment-598012543" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>FYI, there are &quot;Download&quot; links to simpler output structures for these Tableau embeds if you remove the <code>showAppBanner=false</code> and <code>toolbar=no</code> query params. For example, here are a few simple tables (still not directly embedded data):</p>
+<ul>
+<li><em>Cases</em>: https://tableau.azdhs.gov/vizql/w/COVID-19Table/v/COVID-19table/viewData/sessions/ECAEFF86A8224E18A4020737CB4BE181-1:3/views/8275719771277684273_10329084236957726728?maxrows=200&amp;viz=%7B%22worksheet%22%3A%22Cases%22%2C%22dashboard%22%3A%22COVID-19%20table%22%7D</li>
+<li><em>Tests</em>: https://tableau.azdhs.gov/vizql/w/COVID-19Table/v/COVID-19table/viewData/sessions/520DDAEDDAC74525A2DCC58659B97800-1:0/views/8275719771277684273_2738315765867498942?maxrows=200&amp;viz=%7B%22worksheet%22%3A%22Testing%22%2C%22dashboard%22%3A%22COVID-19%20table%22%7D</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-598835696">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 13, 2020, 10:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2#issuecomment-598835696" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I'm providing a updating screenshot at http://covid19-api.exemplartech.com/github-data/captive-browser/az_tableau.html.</p>
+<p>Can you confirm that either my approach or yours above is live in production and close the issue?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601933118">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 20, 2020, 3:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/2#issuecomment-601933118" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Resolved</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

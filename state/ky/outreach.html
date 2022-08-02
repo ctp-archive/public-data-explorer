@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Kentucky Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Kentucky</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Kentucky</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 1, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We notice that the number of positive antigen tests that KY reports is much lower than the number of probable cases. On March 22, for example, there were 99,758 probable cases vs. only 39,304 antigen positive tests.
+In most other states reporting both figures using the most recent case definition as KY does, the values track very closely.
+Why are KY’s antigen positive tests so much lower than its probable cases?</p>
+
+    </div>
+    
+  
+    <h2>October 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting &quot;Total PCR Tests&quot; in your daily report as the total number of specimens tested, and we interpret the PCR value under &quot;Total Tested&quot; to be the same. Is this correct? If so, do you have plans to release the total number of unique individuals tested?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, the “total” figures are for total number of tests reported, not individuals tested.  No.  We don’t have any way to accurately combine all the historical data so that we can sort it out and de-duplicate to get to person level for overall data.  Some was submitted electronically, a large portion through flat file submission, and some (mostly positive results) through fax submission, and many negative results were never reported by many labs for the first several months. So, the total tests performed would be inaccurate by a large margin.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Other states are providing their COVID-19 testing and outcomes in a machine readable format, but as far as we are aware Kentucky does not at this time. Do you have plans to release this data in an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We haven’t planned on this, but will discuss.  We have the data posted in pdf format on our KYCOVID19 website.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is your deduplication process to reach the &quot;Total PCR Tests?&quot;(i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)? When reporting testing results, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Until recently, there was no deduplication process for tests performed because we had to depend only on aggregate test reporting by labs through an online survey that we created in order to quantify the number of tests performed and number of positive results.  That is still how we acquire total testing numbers since we don’t have any way to get that full testing data otherwise because not all test report data is received electronically (somewhere around 60% for PCR data).  This past Monday, however, we transitioned to calculating our test positivity rate through only electronic data from laboratories that are verified to be submitting all positive and negative test results through our Kentucky Health Information Exchange.  We chose to base the positivity rate only on PCR tests because they are the most heavily reported and don’t suffer from some of the limitations of the antigen tests.  In order to do this, we do deduplicate tests performed on the same day, by the same facility with the same result.  If truly different facilities (not just duplicate submission of the same test via a healthcare facility and its contract lab), report the same result, both are counted.  If divergent results are reported for the same person on the same day, both are counted. If results are received for the same person on consecutive dates, all are counted. Please note, however, that this deduplication process is only applied to the data used to calculate our daily and rolling 7-day average positivity rate.  It does not occur with our overall test number reporting because we are unable to apply that same deduplication process to antigen and antibody testing, which are also reported daily.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’re interested in testing data in units of “testing encounters”, which can be defined as “the number of unique people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two tests, however, if the same person has two samples tested at a testing center visit, then that only counts as one testing encounter. Are you willing to or are you planning to release testing encounters? If so, will you be able to provide historical data consistently in an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We don’t have any plans to make that kind of data available, nor do I think it would be valid data at this point.  All the data we get electronically could be analyzed and parsed this way, but that clearly doesn’t include all testing being done (missing negatives mostly, but less now than before, for sure).  Frankly, Kentucky DPH doesn’t have adequate staff or time to take on additional tasks such as this while still trying to get the basic data flowing into the state system consistently and reliably.</p>
+<p>Re: automation:
+Due to the above, the answer is again, “no.”</p>
+
+        </div>
+      
+    
+  
+    <h2>August 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On Kentucky’s Long-Term Care and Other Congregate Facilities Update spreadsheet, there is a category for “# of Active Cases”.  What is the definition and timeframe for these Active cases? How do “active cases” end up on this spreadsheet? How long are they in the “active cases” category? When are they removed? If a facility has “active cases,” is that considered an outbreak?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>- A cluster is defined as two or more cases with a confirmed epi link.
+- Active cases are those that have not been released from isolation using the Kentucky Isolation and Quarantine guidance. Some cases may be active for 10 days (if asymptomatic). If symptomatic, isolation may be longer.
+- Showing up on the spreadsheet of active cases is preceded by a facility reporting cases which have not been released or counted as a death on the daily survey.
+- Active cases retain the “active” status until the person who has tested positive is released from isolation or passes away. This could be as few as 10 days, if asymptomatic, or weeks or months symptomatic.
+- An active case is removed when guidance is met to be released from isolation or the person who tested positive passes away.
+- We have not been considering facilities with active cases in outbreak status for COVID-19.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What challenges are you facing in adjusting to the new HHS guidelines?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>With regard to challenges associated with the new HHS guidelines, we have had a long-standing process for bed reporting and essential elements of information during a disaster and/or emergency incident. During the initial response phases, the Kentucky Department for Public Health (KDPH) and Kentucky Emergency Management (KEM) were able to adapt this to the pandemic and later, to the new reporting requirements. As the reporting requirements have changed, we have been able to quickly adapt, largely due to prior planning and strong teamwork between KYEM, KDPH and our Hospital Preparedness Program (HPP) health care coalitions. The major challenges were streamlining the process for the hospitals to report more efficiently. We have also had challenges with standardizing and defining the data fields, as some hospitals interpreted data asks differently.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Which metrics that you report were affected or could be affected by HHS procedure changes?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Changes from cumulative to daily data in reference to COVID-19 patients have the potential to be affected by HHS procedure changes.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How does this affect the reporting relationship between hospitals and DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>With regard to how this affects the reporting relationship between hospitals and KDPH, on occasion, a change or new data request may require the hospital to change internal procedures for gathering data for accurate reporting. The hospitals have been very cooperative and the strong cooperative relationships built over many years during our Hospital Preparedness Program (HPP) have made our response efforts and the data reporting piece of this response noteworthy.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are there changes in regulations on which hospitals are now required or not required to report to state DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are not familiar with the exact CMS rules and/or other regulations that mandate reporting. Our hospitals have fully cooperated with reporting requirements.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is Kentucky's definition for current positives for residents and staff?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Kentucky defines current positives for residents and staff after counting all people as cases if they meet the Kentucky COVID-19 case definition. This is based on the CSTE Interim COVID-19 Case Definition recommended by the Centers for Disease Control and Prevention. It includes PCR- and antigen-positive cases, and antibody-positive cases. This is true whether the person tested is displaying symptoms of COVID-19 or has had close contact with a known case or whether the person exhibits symptoms and was in close contact with a known case, but had no test. Additionally, if the death certificate lists COVID-19 as a primary or contributing cause of death, this would be counted as a current positive. For residents and staff, both are counted as current cases based on the case definition.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How long do those cases(residents and staff) remain on the list?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Once a person is classified as a &quot;case,&quot; they remain in the cumulative count of cases. No one is removed without reason to believe that their results were not accurate.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does this fit within your definition of an outbreak, and what is your definition of an outbreak?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>An outbreak is defined as more cases of a disease than is typically seen in a given population. For some diseases that are rare, (measles or Ebola), one case can be classified as an outbreak. For more common diseases, we usually say that at least two cases of the disease must be linked epidemiologically (by geography or contact with another case) to be classified as such. COVID-19 fits within the definition of an outbreak because the incidence of cases is greater than we would usually see.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>In the pie charts on the state dashboard, race, ethnicity, and sex are shown as percentages(it also looks like it shows a rough estimate number).  Whereas you can calculate the numbers for sex by taking the percentage of the total number of cases or deaths, the race and ethnicity numbers show that the percentages are out of cases where race or ethnicity is known.  What are the percentages of cases or deaths out of(total, confirmed, something else?), and is there a place where we can find this exact number?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The percentages of race/ethnicity for cases and deaths are taken out of total cases (defined by case definition), and total deaths, but there is a large proportion of data (about 34-36% of race and ethnicity for cases and 8-12% for deaths, respectively) is missing for these variables. So, we only give the percentage for those that have the variable included in their data. The actual numbers of people missing both race and ethnicity can be calculated using available data in the KY COVID-19 Daily Report at <a href="http://kycovid19.ky.gov/">KYCOVID19.ky.gov</a> in the Daily Report archives. For Race/Ethnicity it shows the percentage where these variables are known. This is arrived at by multiplying the percentage times the total number of cases listed for that date, and that indicates how many were connected with race or ethnicity data.  Subtract that from the total number of case to find out for how many race or ethnicity was not reported.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 19, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>When you look at the total number of Cases and then subtract the total number from the Cases by Race box, there are almost a third missing as there were a few weeks ago.  At that time, you informed us that it is because for whatever reason, that information doesn't get reported to you. You said the reasons could be the provider not asking the person's race or forgetting to check the boxes, or the patient declining to give information on their race.  We'd like to know what are the current factors leading to this missing data?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 19, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>t is a common occurrence for race and/or ethnicity not to be reported in disease reporting. This data is often not included in the report forms submitted by clinicians for COVID-19. This could be because the patient declines to report it; they are never asked, or the provider feels it shouldn't be shared with the state.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Kentucky performing pool testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>we are unaware of COVID-19 pool testing being conducted.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are you conducting antigen tests? If so, are those test results included in your state COVID portal?  And how many antigen tests have you conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The state is not conducting antigen testing, although several Kentucky-based providers are doing so. Positive antigen test results reported in Kentucky are included as cases in the data the state is reporting if the person who tests positive has symptoms and/or a link to a confirmed case. The state has not conducted antigen tests. Currently, the percentage of antigen-positive cases we have recorded is very low.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We've noticed that Kentucky has &quot;Number of patients Currently Hospitalized&quot; and &quot;Number of patients Currently in ICU&quot; listed as greater than or equal to.  How are these numbers to be interpreted, and what led to listing them this way?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>the “Number of Patients Currently Hospitalized” and “Number of Patients Currently in the ICU” are based on hospitals reporting these numbers daily. As such, this data can vary, depending on the number of hospitals reporting. We believe the &gt;= signs were added recently when there was a switch in the data collection tool for hospital data, so that there were more hospitals than usual not reporting as we transition to a more accurate, efficient system.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 30, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>When you look at the total number of Cases and then subtract the total number from the Cases by Race box, there are almost a third missing.  Currently, that would be 14,363 as the total Cases minus 9874 Cases by Race, resulting in approximately 4489 cases missing.  What are some of the factors leading to missing a third of data for cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Almost a third of this data is not being reported to us. This could be attributed to the provider not asking; forgetting to check the boxes, or the patient declining to answer.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can we confirm that KY is still reporting its tests in a unit of &quot;people&quot;? The outreach note we have is old.</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>June 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The total tested is an aggregate number from labs that have tested Kentucky residents and represents the total number of tests performed on Kentucky residents, not people tested. The case count represents the total number of positive cases identified, and we strive to remove duplicates, but this can be a</p>
+
+        </div>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The testing data relates to the actual number of tests completed not number of people.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What does the state define as an LTC?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Kentucky defines long term care facilities as family care home, personal care home, intermediate care facilities, nursing facilities, nursing homes, and intermediate care facilities for individuals with intellectual disabilities</p>
+
+        </div>
+      
+    
+  
+    <h2>May 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Could KY report an n= (number of cases / deaths from which the percentage is calculated)? Could KY report the number of unknown cases?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>June 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The total number is reported daily in the total number of cases reported.  (Further down in the email is this response from someone in the Epidemiology team, which after answering this question, also says: &quot;We could also report the total number that have race and the total number that have ethnicity recorded if that is what you all would like us to present on the dashboard.&quot;)</p>
+
+        </div>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Race statistics include both probable and confirmed cases. Race and ethnicity are reported as a percentage of known cases.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

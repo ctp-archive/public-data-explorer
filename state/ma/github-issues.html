@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Massachusetts Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Massachusetts</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Massachusetts</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>November 2, 2020, 10:09 PM PST</td>
+          <td>923</td>
+          <td>
+            <a href="#issue-923">[MA] Update Total tests (in people) value for 11/2 because it was not available for publish shift</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 24, 2020, 3:52 PM PDT</td>
+          <td>866</td>
+          <td>
+            <a href="#issue-866">[MA] 9/23 Update was made after Pub Shift</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 31, 2020, 3:07 PM PDT</td>
+          <td>806</td>
+          <td>
+            <a href="#issue-806">[MA] Total PCR tests backfill (and positive PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 12, 2020, 7:34 PM PDT</td>
+          <td>758</td>
+          <td>
+            <a href="#issue-758">[MA] Missed 8/12 Update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 2, 2020, 9:15 AM PDT</td>
+          <td>722</td>
+          <td>
+            <a href="#issue-722">[MA] Missed 8/1 and 8/5 Update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 2:03 PM PDT</td>
+          <td>708</td>
+          <td>
+            <a href="#issue-708">[MA] 7/29 incomplete update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 7:40 AM PDT</td>
+          <td>695</td>
+          <td>
+            <a href="#issue-695">[MA] Historical antibody totals needs to be moved from Total Antibody Tests to Total Antibody Tests (People)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 6:51 AM PDT</td>
+          <td>689</td>
+          <td>
+            <a href="#issue-689">[MA] PCL Historicals (&amp; Total Test Historicals)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 27, 2020, 9:31 AM PDT</td>
+          <td>680</td>
+          <td>
+            <a href="#issue-680">[MA] 7/23 missed update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 25, 2020, 7:45 AM PDT</td>
+          <td>673</td>
+          <td>
+            <a href="#issue-673">[MA] Missed 7/23 Update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 14, 2020, 4:43 PM PDT</td>
+          <td>657</td>
+          <td>
+            <a href="#issue-657">[MA] New tests being misreported as total molecular + postive antibody</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 15, 2020, 3:24 PM PDT</td>
+          <td>497</td>
+          <td>
+            <a href="#issue-497">MA 6/1 Data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 15, 2020, 11:00 AM PDT</td>
+          <td>496</td>
+          <td>
+            <a href="#issue-496">MA positive cases inaccurate for June 1st</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 12, 2020, 9:24 AM PDT</td>
+          <td>490</td>
+          <td>
+            <a href="#issue-490">MA updated backlog of presumed cases from March 1</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 4, 2020, 2:09 PM PDT</td>
+          <td>473</td>
+          <td>
+            <a href="#issue-473">[Historical MA] Data is missing/incorrect for 6/1-6/2 in states_daily_4pm_et.csv</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 31, 2020, 6:30 PM PDT</td>
+          <td>470</td>
+          <td>
+            <a href="#issue-470">[Historical MA] Data is missing/incorrect for 5/27-5/28 in states_daily_4pm_et.csv</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 28, 2020, 6:57 AM PDT</td>
+          <td>460</td>
+          <td>
+            <a href="#issue-460">MA Historical 4/25-3/20 - Deaths don&#39;t match MA Archive</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 25, 2020, 1:30 PM PDT</td>
+          <td>455</td>
+          <td>
+            <a href="#issue-455">[Historical MA] Data is missing/incorrect for 5/18-5/19 in states_daily_4pm_et.csv</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 15, 2020, 5:35 PM PDT</td>
+          <td>425</td>
+          <td>
+            <a href="#issue-425">[Historical MA] Data from MA 5/14 were duplicated from 5/13 as the state reported late.</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 23, 2020, 3:09 PM PDT</td>
+          <td>275</td>
+          <td>
+            <a href="#issue-275">[States Daily CSV] Totals for MA data lower 2020-04-23 than 2020-04-22</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 21, 2020, 2:17 PM PDT</td>
+          <td>251</td>
+          <td>
+            <a href="#issue-251">MA historical data incorrect for 4/20/20</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 20, 2020, 8:48 PM PDT</td>
+          <td>243</td>
+          <td>
+            <a href="#issue-243">MA has changed reporting methodology for cumulative hospitalized from 4/13 onward</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 16, 2020, 6:19 PM PDT</td>
+          <td>203</td>
+          <td>
+            <a href="#issue-203">MA Hospitalization Number Inconsistent</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 15, 2020, 5:59 AM PDT</td>
+          <td>196</td>
+          <td>
+            <a href="#issue-196">MA: current covid hospitalizations=3400, icu=970 </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 22, 2020, 2:57 PM PDT</td>
+          <td>38</td>
+          <td>
+            <a href="#issue-38">MA data parsing incorrectly</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-923">#923: [MA] Update Total tests (in people) value for 11/2 because it was not available for publish shift</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            923</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 2, 2020, 10:09 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/923" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Massachusetts</p>
+<p>Problem: MA redesigned the dashboard and removed the Total tests (in people) metric from it. However, this metric is still available from the Raw Data MA provides so we will be updating the metric from the data downloads going forward.</p>
+<p>Solution: Backfill todays Total tests (in people) metric.</p>
+<p>Source: This metric comes from the Testing2.csv included in the zip file
+<a href="https://github.com/COVID19Tracking/issues/files/5479446/covid-19-dashboard_11-2-2020_REV.zip">covid-19-dashboard_11-2-2020_REV.zip</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-720924450">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 2, 2020, 10:10 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/923#issuecomment-720924450" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="362" alt="Screen Shot 2020-11-02 at 10 06 59 PM" src="../../assets/github/images/66583275/97954351-229d6500-1d58-11eb-913c-27ed75492bec.png"></p>
+<p>AFTER:
+<img width="413" alt="Screen Shot 2020-11-02 at 10 09 22 PM" src="../../assets/github/images/66583275/97954361-27faaf80-1d58-11eb-84e4-c8e646a6a322.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-866">#866: [MA] 9/23 Update was made after Pub Shift</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            866</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 24, 2020, 3:52 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  Publish Time
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/866" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Massachusetts</p>
+<p>Problem: MA did not post the 9/23 daily and weekly &quot;dashboards&quot; until after the usual 6pmET update time. Thus, they were missed by our publish shift.</p>
+<p>Daily Dashboard:
+<a href="https://github.com/COVID19Tracking/issues/files/5279641/covid-19-dashboard-9-23-2020_REV.PDF">covid-19-dashboard-9-23-2020_REV.PDF</a></p>
+<p>Weekly Dashboard:
+<a href="https://github.com/COVID19Tracking/issues/files/5279642/WEEKLY.20covid-19-dashboard-9-23-2020.20REV2.pdf">WEEKLY%20covid-19-dashboard-9-23-2020%20REV2.pdf</a></p>
+<p>Raw Data:
+<a href="https://github.com/COVID19Tracking/issues/files/5279747/covid-19-dashboard-9-23-2020.zip">covid-19-dashboard-9-23-2020.zip</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698643165">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 24, 2020, 4:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/866#issuecomment-698643165" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1028" alt="MA 9-23 before" src="../../assets/github/images/66583275/94211091-59dd4400-fe85-11ea-9480-21f6545eff29.png"></p>
+<p>AFTER:
+<img width="1026" alt="ma 9-23 after" src="../../assets/github/images/66583275/94211098-5f3a8e80-fe85-11ea-9429-afe065a4850f.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-806">#806: [MA] Total PCR tests backfill (and positive PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            806</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on August 31, 2020, 3:07 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/806" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We started collecting Total tests PCR from MAs data on the 16-06-2020
+On 12-08-2020 MA published a full time series going back to 22-01-2020 for Total tests PCR (and positive PCR test results).
+We should backfill the Total PCR tests and Positive PCR test results from the available data</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-684068876">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 31, 2020, 3:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/806#issuecomment-684068876" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>we backfilled our Total PCR tests time series from the &quot;TestingByDate.csv&quot; file as captured on 12-08-2020
+We'll not fill Positive PCR test results at this time as this value does not yet appear on the PDF document represeting MAs dashboard. We will fill it in the same manner (12-Aug data for the historic values, and daily values from MAs raw datasets for daily updates).</p>
+<p><img src="../../assets/github/images/62236447/91773453-a93c9700-eb9b-11ea-9992-1f19fc31e6cf.png" alt="Screenshot from 2020-08-31 15-03-17"></p>
+<p><img src="../../assets/github/images/62236447/91773450-a8a40080-eb9b-11ea-955e-b31197d0a2e4.png" alt="Screenshot from 2020-08-31 15-00-21">
+<a href="../../assets/github/files/5152858/ma_pre_20200831.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">ma_pre_20200831[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a>
+<a href="../../assets/github/files/5152857/ma_post_20200831.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">ma_post_20200831[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691277321">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 11, 2020, 12:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/806#issuecomment-691277321" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Filled <code>Positive Tests (PCR)</code> column with data published on Aug-12th and every day since (except 23rd-Aug, no data was published on that day).
+Updated range: 2020-01-22 - 2020-09-10</p>
+<p><img src="../../assets/github/images/62236447/92965741-2cc37700-f42b-11ea-8fe8-034596535adf.png" alt="Screenshot from 2020-09-11 12-34-17"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-758">#758: [MA] Missed 8/12 Update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            758</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on August 12, 2020, 7:34 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/758" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>MA's Daily and Weekly &quot;dashboards&quot; published after the time CTP publishes data. Update 8/12 with data from dashboards</p>
+<p>Daily:
+<a href="https://github.com/COVID19Tracking/issues/files/5066854/covid-19-dashboard-8-12-2020.pdf">covid-19-dashboard-8-12-2020.pdf</a>
+Weekly:
+<a href="https://github.com/COVID19Tracking/issues/files/5066857/WEEKLY-covid-19-dashboard-8-12-2020.pdf">WEEKLY-covid-19-dashboard-8-12-2020.pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-673270800">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 12, 2020, 10:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/758#issuecomment-673270800" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE
+<img width="1435" alt="MA BEFORE 8-12" src="../../assets/github/images/66583275/90098030-318df180-dcec-11ea-9f96-7079a2eb4d77.png"></p>
+<p>AFTER
+<img width="1494" alt="MA AFTER 8-12" src="../../assets/github/images/66583275/90098040-394d9600-dcec-11ea-818c-ace2728b5736.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-722">#722: [MA] Missed 8/1 and 8/5 Update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            722</p>
+          <p>
+            <strong>andrewghaly</strong> opened this issue on August 2, 2020, 9:15 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  Publish Time
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/722" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Massachusetts</p>
+<p><strong>Describe the problem</strong>
+Due to late update, 8/1 data from MA was not entered.</p>
+<p><strong>Link to data source</strong>
+https://www.mass.gov/doc/covid-19-dashboard-august-1-2020/download - August 1 data</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-669607717">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 5, 2020, 5:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/722#issuecomment-669607717" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Adding the missed 8/5 update to this issue. Link to 8/5 update: https://www.mass.gov/doc/covid-19-dashboard-august-5-2020/download</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669630154">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 5, 2020, 6:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/722#issuecomment-669630154" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Aug 01 BEFORE
+<img width="1454" alt="Aug 01 BEFORE" src="../../assets/github/images/66583275/89480254-b8b9f300-d749-11ea-94a6-65847ece0483.png">
+Aug 01 AFTER
+<img width="1312" alt="Aug 01 AFTER" src="../../assets/github/images/66583275/89480257-ba83b680-d749-11ea-8348-da6e4b254c71.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669630364">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 5, 2020, 6:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/722#issuecomment-669630364" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Aug 05 BEFORE
+<img width="1629" alt="Aug 05 BEFORE" src="../../assets/github/images/66583275/89480296-d25b3a80-d749-11ea-8a3d-1195c50cdf36.png">
+Aug 05 AFTER
+<img width="1610" alt="Aug 05 After" src="../../assets/github/images/66583275/89480300-d424fe00-d749-11ea-9b8c-5109d69c3d95.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669928126">
+          <div class="frontmatter">
+            <div>
+              <strong>andrewghaly</strong> commented on August 6, 2020, 6:31 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/722#issuecomment-669928126" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@jaclyde</strong>, #673 is also a similar issue.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-708">#708: [MA] 7/29 incomplete update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            708</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 30, 2020, 2:03 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/708" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MA</p>
+<p><strong>Describe the problem</strong>
+7/29 testing numbers were not fully updated. The numbers were retroactively backfilled on 7/30, and States Daily should be updated accordingly.</p>
+<p><strong>Link to data source</strong>
+https://www.mass.gov/info-details/covid-19-response-reporting</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666868513">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 30, 2020, 6:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/708#issuecomment-666868513" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Main source: https://www.mass.gov/doc/covid-19-dashboard-july-29-2020/download
+&quot;Recovered&quot; number: https://www.mass.gov/doc/weekly-covid-19-public-health-report-july-29-2020/download</p>
+<p>Before (2 screenshots to get the whole row):
+<img src="../../assets/github/images/404503/88991502-db15c180-d2ae-11ea-99a6-69392c6db4e4.png" alt="image">
+<img src="../../assets/github/images/404503/88991544-f1bc1880-d2ae-11ea-8eda-aad51132d418.png" alt="image"></p>
+<p>After (also two screenshots):
+<img src="../../assets/github/images/404503/88991623-25973e00-d2af-11ea-8166-8ad7e24a2c07.png" alt="image">
+<img src="../../assets/github/images/404503/88991666-4790c080-d2af-11ea-884a-29320bee2680.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-695">#695: [MA] Historical antibody totals needs to be moved from Total Antibody Tests to Total Antibody Tests (People)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            695</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on July 29, 2020, 7:40 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/695" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MA</p>
+<p><strong>Describe the problem</strong>
+We need to move MA's historicals to the new Total Antibody Tests (People) column, since they report people rather than specimens.<br>
+<img src="https://user-images.githubusercontent.com/15933271/88814328-eb7f4c80-d187-11ea-86db-62f62e6e22bb.png" alt="Screen Shot 2020-07-29 at 10 21 22 AM"></p>
+<p><strong>Link to data source</strong>
+We can use our captured data</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665716804">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 29, 2020, 7:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/695#issuecomment-665716804" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<img src="../../assets/github/images/15933271/88816625-97299c00-d18a-11ea-878f-6cbbb119d5c3.png" alt="Screen Shot 2020-07-29 at 10 58 50 AM">
+<strong>After</strong>
+<img src="../../assets/github/images/15933271/88816655-9f81d700-d18a-11ea-8854-cbaa8906b1eb.png" alt="Screen Shot 2020-07-29 at 10 59 19 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-689">#689: [MA] PCL Historicals (&amp; Total Test Historicals)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            689</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 29, 2020, 6:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Massachusetts</p>
+<p><strong>Describe the problem</strong>
+On 6/1, MA began reporting confirmed and probable cases. Our coverage of Positive Cases (PCR) began on 4/29. However, before 4/29, our entries in Positives does not match confirmed case counts from the daily PDF archive.</p>
+<p><strong>Link to data source</strong>
+https://www.mass.gov/info-details/archive-of-covid-19-cases-in-massachusetts</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666849747">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 30, 2020, 5:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-666849747" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@brianskli</strong> I spot checked three days and they looked correct:
+https://www.mass.gov/doc/covid-19-dashboard-may-15-2020/download
+https://www.mass.gov/doc/covid-19-dashboard-may-10-2020/download
+https://www.mass.gov/doc/covid-19-dashboard-may-5-2020/download</p>
+<p>I know it's been a day but do you remember where you saw discrepancies?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666853825">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 30, 2020, 6:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-666853825" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I believe this applies to some dates before 4/29. For example, on 4/20, 39643 was given on the PDF as opposed to 41416 from States Daily.</p>
+<p>I believe somebody noticed that MA can occasionally retroactively update data.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666858203">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 30, 2020, 6:22 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-666858203" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oh, you did say before 4/29. Except we don't have Positive Cases (PCR) before 4/29. So this issue is for the <strong>Positives</strong> column not matching confirmed cases, I see.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666858632">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 30, 2020, 6:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-666858632" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Yes, my apologies for being unclear. I've cleaned up the issue description as well.</p>
+<p>I think a second issue that has arisen is that the terminology (&quot;Confirmed Cases&quot;) used before 4/29 was also clear enough to move the copy over the columns.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666861845">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 30, 2020, 6:33 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-666861845" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>It looks like this is the result of the backfill done here: https://github.com/COVID19Tracking/issues/issues/251</p>
+<p>I will discuss with the other people on the backfill team and decide whether we want to undo that change. I assume the ultimate goal here is to feel comfortable enough to copy the pre-4/29 Positives into Positive Cases (PCR).</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666862028">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 30, 2020, 6:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-666862028" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667305689">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 31, 2020, 12:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-667305689" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>MattHilliard let's use this ticket for all our in progress MA back-fill work</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667393386">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 31, 2020, 2:42 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-667393386" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>31st July:</p>
+<blockquote>
+<p>&quot;*PLEASE NOTE: Delays in the reporting of test results to DPH from multiple laboratories, including large national commercial laboratories, are reflected in today’s case counts. However, these positive test results have been assigned retrospectively to the appropriate date of test.&quot;</p>
+</blockquote>
+<p>Another reason to backfill, past numbers were changed to fill a backlock fill MA did</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674451008">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 15, 2020, 2:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-674451008" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-679295056">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 24, 2020, 11:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-679295056" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We're planning on backfilling total and positive tests from MA's data, but in order to do this we need MA to add positive PCR tests to their dashboard. (so that their dashboard contains data for ongoing data collection) We're reaching out to them with that request.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-689567900">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 9, 2020, 6:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-689567900" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694416978">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on September 17, 2020, 11:25 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-694416978" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <blockquote>
+<p>We're planning on backfilling total and positive tests from MA's data, but in order to do this we need MA to add positive PCR tests to their dashboard. (so that their dashboard contains data for ongoing data collection) We're reaching out to them with that request.</p>
+</blockquote>
+<p>Removing stale tag</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-702929113">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 2, 2020, 12:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-702929113" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-707345648">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 12, 2020, 2:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/689#issuecomment-707345648" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-680">#680: [MA] 7/23 missed update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            680</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 27, 2020, 9:31 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/680" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Massachusetts</p>
+<p><strong>Describe the problem</strong>
+Due to a late after-shift PDF update, we did not capture MA numbers on 7/23.</p>
+<p><strong>Link to data source</strong>
+https://www.mass.gov/doc/covid-19-dashboard-july-23-2020/download</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-664504027">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 27, 2020, 9:33 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/680#issuecomment-664504027" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Duplicate issue found, merged with #673</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-673">#673: [MA] Missed 7/23 Update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            673</p>
+          <p>
+            <strong>andrewghaly</strong> opened this issue on July 25, 2020, 7:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/673" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Data is missing for 7/23. Will require backfill as well</p>
+<p>https://www.mass.gov/doc/covid-19-dashboard-july-23-2020/download - July 23 data</p>
+<p><img src="https://user-images.githubusercontent.com/8738663/88459463-b6ab8680-ce63-11ea-870e-ca305d137595.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-670629572">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 7, 2020, 10:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/673#issuecomment-670629572" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MA updated their website after our publication shift on 7/23 which resulted in the missed update. On 7/24, MA updated late again, and we used the 7/23 dashboard to fill in numbers on 7/24. Filling in the numbers with their proper dates now:</p>
+<p>7/23 dashboard: https://www.mass.gov/doc/covid-19-dashboard-july-23-2020/download
+7/24 dashboard: https://www.mass.gov/doc/covid-19-dashboard-july-24-2020/download</p>
+<p>BEFORE:
+<img src="../../assets/github/images/67408226/89672622-d1392300-d899-11ea-8ebe-0b7c14eb7fe6.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670635678">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 7, 2020, 10:52 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/673#issuecomment-670635678" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/89673868-00509400-d89c-11ea-9f9c-b1294bf9c8f2.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-657">#657: [MA] New tests being misreported as total molecular + postive antibody</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            657</p>
+          <p>
+            <strong>airhadoken</strong> opened this issue on July 14, 2020, 4:43 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/657" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Output from covid19-datafetch for Massachusetts yields this table (null columns removed for brevity):</p>
+<table>
+<thead>
+<tr>
+<th>STATE</th>
+<th>FETCH_TIMESTAMP</th>
+<th>POSITIVE</th>
+<th>TOTAL</th>
+<th>CURR_HOSP</th>
+<th>HOSP</th>
+<th>CURR_ICU</th>
+<th>CURR_VENT</th>
+<th>DEATH_PROBABLE</th>
+<th>DEATH_CONFIRMED</th>
+<th>PROBABLE</th>
+<th>DATE</th>
+<th>ANTIBODY_TOTAL</th>
+<th>SPECIMENS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MA</td>
+<td>1594767517.597360</td>
+<td>105986</td>
+<td>972070</td>
+<td>560</td>
+<td>11625</td>
+<td>93</td>
+<td>37</td>
+<td>215</td>
+<td>8125</td>
+<td>6144</td>
+<td>7/14/2020</td>
+<td>81525</td>
+<td>1241465</td>
+</tr>
+</tbody>
+</table>
+<p>And here's today's corresponding output:</p>
+<table>
+<thead>
+<tr>
+<th>date</th>
+<th>state</th>
+<th>positive</th>
+<th>negative</th>
+<th>pending</th>
+<th>hospitalizedCurrently</th>
+<th>hospitalizedCumulative</th>
+<th>inIcuCurrently</th>
+<th>inIcuCumulative</th>
+<th>onVentilatorCurrently</th>
+<th>onVentilatorCumulative</th>
+<th>recovered</th>
+<th>dataQualityGrade</th>
+<th>lastUpdateEt</th>
+<th>dateModified</th>
+<th>checkTimeEt</th>
+<th>death</th>
+<th>hospitalized</th>
+<th>dateChecked</th>
+<th>totalTestsViral</th>
+<th>positiveTestsViral</th>
+<th>negativeTestsViral</th>
+<th>positiveCasesViral</th>
+<th>deathConfirmed</th>
+<th>deathProbable</th>
+<th>fips</th>
+<th>positiveIncrease</th>
+<th>negativeIncrease</th>
+<th>total</th>
+<th>totalTestResults</th>
+<th>totalTestResultsIncrease</th>
+<th>posNeg</th>
+<th>deathIncrease</th>
+<th>hospitalizedIncrease</th>
+<th>hash</th>
+<th>commercialScore</th>
+<th>negativeRegularScore</th>
+<th>negativeScore</th>
+<th>positiveScore</th>
+<th>score</th>
+<th>grade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20200714</td>
+<td>MA</td>
+<td>112130</td>
+<td>866084</td>
+<td></td>
+<td>560</td>
+<td>11625</td>
+<td>93</td>
+<td></td>
+<td>37</td>
+<td></td>
+<td>94347</td>
+<td>A+</td>
+<td>7/14/2020 10:00</td>
+<td>2020-07-14T10:00:00Z</td>
+<td>07/14 06:00</td>
+<td>8340</td>
+<td>11625</td>
+<td>2020-07-14T10:00:00Z</td>
+<td>1241465</td>
+<td></td>
+<td></td>
+<td>105986</td>
+<td>8125</td>
+<td>215</td>
+<td>25</td>
+<td>303</td>
+<td>11768</td>
+<td>978214</td>
+<td>978214</td>
+<td>12071</td>
+<td>978214</td>
+<td>10</td>
+<td>14</td>
+<td>223685fc192453cac71c42ba8e03d499630ee80e</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>As far as I understand from reading over the code, the total test results in the output are calculated from <code>positive + negative + probable</code> from the datafetch input (where <code>negative = total - positive</code>, so <code>total + probable</code>). For reference, the value from the output table above is 978214.</p>
+<p>This count leaves out negative antibody tests.  A correct count for <code>total</code> in the public api should be <code>positive + negative + antibody_total</code>, which would total 1053595 in the example.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-662734768">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 22, 2020, 3:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/657#issuecomment-662734768" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@airhadoken</strong></p>
+<p>The total test numbers we report, by design, include only viral/diagnostic tests.
+We do capture Antibody tests as well separately and plan to publish them in the future.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-665308043">
+          <div class="frontmatter">
+            <div>
+              <strong>airhadoken</strong> commented on July 28, 2020, 3:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/657#issuecomment-665308043" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> Thanks for clarifying.  However, in the case you are describing, you should not be including Probable cases for Massachusetts at all -- the count of probable cases specifically excludes the results of molecular tests.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-497">#497: MA 6/1 Data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            497</p>
+          <p>
+            <strong>schmian</strong> opened this issue on June 15, 2020, 3:24 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/497" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Our data for Massachusetts on 6/1 was not updated from 5/31. https://www.mass.gov/doc/covid-19-dashboard-june-1-2020/download has the new data for 6/1</p>
+<p>&quot;I was reading an article in The NY Times which referenced your database in an analysis of incidence per state and resulting risk. I live in MA Which was ranked as high risk so I went to look at that data. There is a day (around 6/1) where there is an uncharacteristically high number of tears and positives, and the ratio is also unusually high. I went to the historic tracking at mass.gov and couldn’t replicate that data. Can you share your source please?&quot;</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24qz5">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-646006156">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 18, 2020, 6:09 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/497#issuecomment-646006156" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@schmian</strong></p>
+<p>I think this was fixed by Issue #473</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-496">#496: MA positive cases inaccurate for June 1st</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            496</p>
+          <p>
+            <strong>salmasian</strong> opened this issue on June 15, 2020, 11:00 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/496" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MA</p>
+<p><strong>Describe the problem</strong>
+The number of confirmed cases in Massachusetts on June 1st is shown as 96,965 which is the same as the day before. This is inaccurate. The 6:34 PM update (linked <a href="https://covidtracking.com/screenshots/MA/MA-20200601-183437.png">here</a> and on the COVIDtracking project) shows the number was 100,805. This also impacts the positiveIncrease column for June 2nd, where currently a jump of more than 4000 cases is shown, but in reality it was two smaller jumps of ~2000 cases in the two days.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/MA/MA-20200601-183437.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-646006540">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 18, 2020, 6:10 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/496#issuecomment-646006540" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi salmasian,</p>
+<p>Thanks for letting us know. We fixed it via #473 last night.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-490">#490: MA updated backlog of presumed cases from March 1</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            490</p>
+          <p>
+            <strong>erfgottlieb</strong> opened this issue on June 12, 2020, 9:24 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/490" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>MA</p>
+<p>On June 1, Massachusetts reported a backlog of unconfirmed presumed cases from March 1. Need to update CTP data.</p>
+<p>Raw data cases by date:
+https://www.mass.gov/info-details/covid-19-response-reporting</p>
+<p>Worksheet:
+https://docs.google.com/spreadsheets/d/1M6dx2tYAhTT45uJ9gAF0ZiW4cEk0H7Sw8jzo9Cspopo/edit#gid=1681653028</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-650597555">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 27, 2020, 11:25 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/490#issuecomment-650597555" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655057634">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 7, 2020, 11:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/490#issuecomment-655057634" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-662777315">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 22, 2020, 6:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/490#issuecomment-662777315" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667617705">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 1, 2020, 7:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/490#issuecomment-667617705" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667642328">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 2, 2020, 12:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/490#issuecomment-667642328" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We have an ongoing issue for MA for cases and tests -- #689, so this one should be OK to close</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-473">#473: [Historical MA] Data is missing/incorrect for 6/1-6/2 in states_daily_4pm_et.csv</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            473</p>
+          <p>
+            <strong>andrewghaly</strong> opened this issue on June 4, 2020, 2:09 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/473" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Data is missing for 6/01 and incorrect for 6/02</p>
+<p>https://www.mass.gov/doc/covid-19-dashboard-june-1-2020/download - June 1 data</p>
+<p>https://www.mass.gov/doc/covid-19-dashboard-june-2-2020/download - June 2 data</p>
+<p><img src="https://user-images.githubusercontent.com/8738663/83810369-03ee5180-a686-11ea-8c69-d70c47527772.png" alt="image"></p>
+<p>Note, that MA changed how they recorded cases on June 1st so it is expected to have that spike, but it looks like it should be slightly less</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-645699657">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 17, 2020, 5:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/473#issuecomment-645699657" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@andrewghaly</strong> for letting us know. MA's update on 6/1 probably came too late for our 4pm publication time. I've updated our historical data for 6/1. It should show up on our site within an hour. The data for 6/2 looked good other than deltas, which should now be accurate with the fix to 6/1.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-646070981">
+          <div class="frontmatter">
+            <div>
+              <strong>andrewghaly</strong> commented on June 18, 2020, 7:52 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/473#issuecomment-646070981" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@</strong>MattHilliard, I believe the same issue for #455 as well.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-470">#470: [Historical MA] Data is missing/incorrect for 5/27-5/28 in states_daily_4pm_et.csv</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            470</p>
+          <p>
+            <strong>andrewghaly</strong> opened this issue on May 31, 2020, 6:30 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/470" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Data is missing for 5/27 and incorrect for 5/28</p>
+<p>https://www.mass.gov/doc/covid-19-dashboard-may-27-2020/download - May 27 data</p>
+<p>https://www.mass.gov/doc/covid-19-dashboard-may-28-2020/download - May 28 data</p>
+<p><img src="https://user-images.githubusercontent.com/8738663/83368196-f1260500-a385-11ea-86ce-64f76a1c9c19.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-636573185">
+          <div class="frontmatter">
+            <div>
+              <strong>andrewghaly</strong> commented on May 31, 2020, 6:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/470#issuecomment-636573185" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/8738663/83369209-92628a80-a389-11ea-81db-4cc4b02e2c5c.png" alt="image"></p>
+<p>Please review</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638207080">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 3, 2020, 6:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/470#issuecomment-638207080" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi Andrew! Thanks. We will look into it ASAP.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638234290">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 3, 2020, 7:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/470#issuecomment-638234290" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@andrewghaly</strong>,
+Thanks for bringing this to our attention! It looks like we updated our data before MA posted its update on 5/27, and instead carried over the numbers from 5/26. I have adjusted all the numbers to reflect to the PDF report on 5/27.
+However, I double checked everything on 5/28 and it all looked correct to me, so I left our data as is.</p>
+<p>Before:
+<img src="../../assets/github/images/15933271/83648685-56474980-a584-11ea-9623-0aefdd689451.png" alt="Screen Shot 2020-06-03 at 10 21 34 AM"></p>
+<p>After:
+<img src="../../assets/github/images/15933271/83648990-b50cc300-a584-11ea-9524-564ec461164e.png" alt="Screen Shot 2020-06-03 at 10 26 16 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638900904">
+          <div class="frontmatter">
+            <div>
+              <strong>andrewghaly</strong> commented on June 4, 2020, 7:52 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/470#issuecomment-638900904" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@karaschechtman</strong>, the 28th was only incorrect in the totals due to the previous day so that could be why. I opened a similar issue #455, for a different date.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-460">#460: MA Historical 4/25-3/20 - Deaths don&#39;t match MA Archive</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            460</p>
+          <p>
+            <strong>schmian</strong> opened this issue on May 28, 2020, 6:57 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/460" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The reported deaths are not consistent with the MA historical information from 3/20-4/25.</p>
+<p>The states archived data is found here: https://www.mass.gov/info-details/archive-of-covid-19-cases-in-massachusetts</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24btd">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-643285449">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 12, 2020, 6:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/460#issuecomment-643285449" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647571168">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 7:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/460#issuecomment-647571168" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647574443">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 22, 2020, 8:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/460#issuecomment-647574443" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@schmian</strong></p>
+<p>We patched MA data after this ticket, so it should have been fixed</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-455">#455: [Historical MA] Data is missing/incorrect for 5/18-5/19 in states_daily_4pm_et.csv</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            455</p>
+          <p>
+            <strong>andrewghaly</strong> opened this issue on May 25, 2020, 1:30 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/455" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Data can be sourced from here:
+https://www.mass.gov/doc/covid-19-dashboard-may-18-2020/download</p>
+<p><img src="https://user-images.githubusercontent.com/8738663/82841699-0cd06d80-9ea5-11ea-92e0-e5fb738e6151.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-633708111">
+          <div class="frontmatter">
+            <div>
+              <strong>andrewghaly</strong> commented on May 25, 2020, 1:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/455#issuecomment-633708111" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Please assign to me</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-633737159">
+          <div class="frontmatter">
+            <div>
+              <strong>andrewghaly</strong> commented on May 25, 2020, 3:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/455#issuecomment-633737159" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Could this please be reviewed:
+Before:
+<img src="../../assets/github/images/8738663/82841699-0cd06d80-9ea5-11ea-92e0-e5fb738e6151.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/8738663/82847027-cd604c00-9eb9-11ea-8aec-b38507559437.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-634026428">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 26, 2020, 6:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/455#issuecomment-634026428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@andrewghaly</strong>
+Thanks for making all the information available.  We will make the necessary updated to the data and post it when it is done.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-642023450">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 10, 2020, 6:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/455#issuecomment-642023450" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-646360177">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 18, 2020, 4:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/455#issuecomment-646360177" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@andrewghaly</strong> for reporting this (and reminding me on the other issue). I've corrected the historical data for 6/18. It should show up on the web site within the hour.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-425">#425: [Historical MA] Data from MA 5/14 were duplicated from 5/13 as the state reported late.</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            425</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on May 15, 2020, 5:35 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/425" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Data from MA on 5/14 was not added to the tally. This is because the state was late in delivering data at the estimated reporting time of 4:00 pm EST.</p>
+<p>Data from 5/14 can be retrieved from the pdf link here: https://www.mass.gov/doc/covid-19-dashboard-may-14-2020/download</p>
+<p>Backfill this data when available.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-630827681">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 19, 2020, 6:43 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/425#issuecomment-630827681" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MA data has been backfilled according to the link above.
+Before:
+<img src="../../assets/github/images/25627274/82333734-1ba2b600-99b5-11ea-8a79-29cb312dbfb6.JPG" alt="Before">
+After:
+<img src="../../assets/github/images/25627274/82333758-21989700-99b5-11ea-8633-2c0cbb558077.JPG" alt="after"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638231615">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 3, 2020, 7:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/425#issuecomment-638231615" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-275">#275: [States Daily CSV] Totals for MA data lower 2020-04-23 than 2020-04-22</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            275</p>
+          <p>
+            <strong>hrushka</strong> opened this issue on April 23, 2020, 3:09 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/275" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Source: https://covidtracking.com/api/v1/states/daily.csv</p>
+<p>Fields: <strong>totalTestResults</strong>, <strong>positive</strong>, <strong>negative</strong>, <strong>pending</strong>, <strong>deaths</strong>
+<em>2020-04-23</em>, all lower than <em>2020-04-22</em></p>
+<p>Reference: https://c19.dev/d/4S5AN4CZz/covid-19-us-state-data?orgId=1&amp;from=now-45d&amp;to=now&amp;var-state=MA&amp;var-population=6892503&amp;var-density=1698.0492133692858&amp;var-total_cases=42944&amp;var-total_deaths=2182</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-619281065">
+          <div class="frontmatter">
+            <div>
+              <strong>hrushka</strong> commented on April 24, 2020, 4:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/275#issuecomment-619281065" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Closing. Found an error in my import process.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-251">#251: MA historical data incorrect for 4/20/20</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            251</p>
+          <p>
+            <strong>paulkelley</strong> opened this issue on April 21, 2020, 2:17 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/251" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The States Historical Data [api/v1/dates.daily.json] has incorrect data for MA on 4/20/20.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-620086155">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 27, 2020, 9:15 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/251#issuecomment-620086155" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hello,</p>
+<p>We have found that MA has updated its reporting and we have completely updated CTP data to match.</p>
+<p>State Date:  <a href="https://www.mass.gov/doc/covid-19-dashboard-april-26-2020/download">COVID-19 Dashboard - April 26, 2020</a></p>
+<p><strong>Before Update:</strong></p>
+<p>Date | State | Positive | Negative
+20200426 | MA | 54938 | 181162
+20200425 | MA | 53348 | 173497
+20200424 | MA | 46023 | 149053
+20200423 | MA | 46023 | 149053
+20200422 | MA | 42944 | 137518
+20200421 | MA | 41199 | 134173
+20200420 | MA | 38077 | 124164
+20200419 | MA | 38077 | 124164
+20200418 | MA | 36372 | 120434
+20200417 | MA | 34402 | 114342
+20200416 | MA | 32181 | 108592
+20200415 | MA | 29918 | 102105
+20200414 | MA | 28163 | 98388
+20200413 | MA | 26867 | 95182
+20200412 | MA | 25475 | 91255
+20200411 | MA | 22860 | 85916
+20200410 | MA | 20974 | 81398
+20200409 | MA | 18941 | 76017
+20200408 | MA | 16790 | 70721
+20200407 | MA | 15202 | 66142
+20200406 | MA | 13837 | 62592
+20200405 | MA | 12500 | 59437
+20200404 | MA | 11736 | 57064
+20200403 | MA | 10402 | 52560
+20200402 | MA | 8966 | 47642
+20200401 | MA | 7738 | 44000
+20200331 | MA | 6620 | 40315
+20200330 | MA | 5752 | 37041
+20200329 | MA | 4955 | 34111
+20200328 | MA | 4257 | 30792
+20200327 | MA | 3240 | 26131
+20200326 | MA | 2417 | 21204
+20200325 | MA | 1838 | 17956
+20200324 | MA | 1159 | 12590
+20200323 | MA | 777 | 8145
+20200322 | MA | 646 | 5459
+20200321 | MA | 525 | 4752
+20200320 | MA | 413 | 3678
+20200319 | MA | 328 | 2804
+20200318 | MA | 256 | 2015
+20200317 | MA | 218 | 1541
+20200316 | MA | 164 | 352
+20200315 | MA | 138 | 352
+20200314 | MA | 138 | 352
+20200313 | MA | 123 | 92
+20200312 | MA | 95 |  
+20200311 | MA | 92 |  
+20200310 | MA | 92 |  
+20200309 | MA | 41 |  
+20200308 | MA | 13 |  
+20200307 | MA | 13 |  
+20200306 | MA | 8 |  
+20200305 | MA | 2 |  
+20200304 | MA | 2 |  
+<img src="../../assets/github/images/43073915/80395081-ba3d6a80-8880-11ea-9ddc-d4894f4aec38.png" alt="Screen Shot 2020-04-27 at 10 49 53 AM"></p>
+<p><strong>After Update</strong>
+<img src="../../assets/github/images/43073915/80395105-c0cbe200-8880-11ea-890d-58fe9d7d5762.png" alt="Screen Shot 2020-04-27 at 12 14 17 PM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-243">#243: MA has changed reporting methodology for cumulative hospitalized from 4/13 onward</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            243</p>
+          <p>
+            <strong>camille-le</strong> opened this issue on April 20, 2020, 8:48 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/243" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hello, reporting a change in MA's count for hospitalized. They are now including suspected and confirmed.</p>
+<ul>
+<li>Prior to 4/13 only confirmed cases were included in the hospitalization count data</li>
+<li>Starting 4/13 both confirmed and suspected cases are included</li>
+</ul>
+<p>Source, page 6:
+https://www.mass.gov/doc/covid-19-dashboard-april-20-2020/download</p>
+<p>Can we update 4/13 data - 4/19? Note, 4/20 is being updated now.</p>
+<p>Thanks!
+Camille</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-617473182">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 21, 2020, 5:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/243#issuecomment-617473182" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Source PDF
+<img width="991" alt="MA Hospitalizations Source" src="../../assets/github/images/1749380/79926591-52fc6200-840b-11ea-8674-e06a9ce08acf.png"></p>
+<p>MA Hosp Before
+<img width="404" alt="MA Hospitalizations Before" src="../../assets/github/images/1749380/79926609-5c85ca00-840b-11ea-94ea-48fb9d5a434d.png"></p>
+<p>MA Hosp After
+<img width="357" alt="MA Hospitzalitions After" src="../../assets/github/images/1749380/79926620-61e31480-840b-11ea-98ec-f247d05a6a1f.png"></p>
+<p>Hi Camille,
+The spreadsheet was updated based on the data in the PDF. I am assigning to AFG to double check before closing the ticket.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-203">#203: MA Hospitalization Number Inconsistent</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            203</p>
+          <p>
+            <strong>enkiddo</strong> opened this issue on April 16, 2020, 6:19 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/203" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>For several days, cumulative hospitalizations in MA have been stuck at 2340.  The most recent current figure for hospitalizations is over 3400.  It is implausible that hospitalizations have been zero for the last 3 days, and impossible for the cumulative number to be less than the current number.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-619628176">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 26, 2020, 2:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/203#issuecomment-619628176" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@enkiddo</strong></p>
+<p>Thanks for your feedback</p>
+<p>MA is now reporting cumulative hospitalizations on their dashboard, and we are regularly updating them based on the information they provide.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-196">#196: MA: current covid hospitalizations=3400, icu=970 </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            196</p>
+          <p>
+            <strong>catawbasam</strong> opened this issue on April 15, 2020, 5:59 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/196" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The Boston Globe published initial data, but the story says the state will be providing regular updates.  The counts are for confirmed+suspected cases.
+Details are at:
+https://www.bostonglobe.com/2020/04/15/nation/state-releases-list-current-massachusetts-coronavirus-hospitalizations/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-614718322">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on April 16, 2020, 8:18 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/196#issuecomment-614718322" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Mass. current counts have been added to Covid Tracker</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-38">#38: MA data parsing incorrectly</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            38</p>
+          <p>
+            <strong>duncanhowes</strong> opened this issue on March 22, 2020, 2:57 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/38" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Massachusetts testing data for the last two days is incorrectly attributed.</p>
+<p>The current and correct total for 3/22 is 646 but is labeled as 3/21 in the table.
+The correct data for 3/21 is 525 and labeled as 3/22.</p>
+<p>None of the current screenshots include the current number (site usually updates around 4pm so 2pm screenshot is correctly from the previous day). Potentially when that is added it will correctly attribute to the correct day.</p>
+<p><img src="https://user-images.githubusercontent.com/43069496/77261665-71cdd400-6c66-11ea-9145-6c38ba0a6cd4.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-603852864">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 25, 2020, 6:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/38#issuecomment-603852864" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MA has been corrected:
+<img src="../../assets/github/images/43073915/77543920-b5028f80-6e7e-11ea-9482-b85157949d96.png" alt="Screen Shot 2020-03-25 at 9 54 52 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

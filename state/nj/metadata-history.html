@@ -1,0 +1,3231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>New Jersey Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">New Jersey</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">New Jersey</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-07T09:08:23.000-08:00">March 7, 2021, 9:08 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-24T06:47:37.000-08:00">February 24, 2021, 6:47 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-10T22:27:25.000-08:00">February 10, 2021, 10:27 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-08T17:15:35.000-08:00">February 8, 2021, 5:15 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-15T15:09:21.000-08:00">January 15, 2021, 3:09 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-09T15:21:41.000-08:00">January 9, 2021, 3:21 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-08T15:21:58.000-08:00">January 8, 2021, 3:21 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T17:18:37.000-08:00">December 18, 2020, 5:18 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-01T09:30:31.000-08:00">November 1, 2020, 9:30 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-29T08:03:59.000-07:00">October 29, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-11T16:00:06.000-07:00">October 11, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-06T08:34:46.000-07:00">October 6, 2020, 8:34 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-28T13:03:48.000-07:00">September 28, 2020, 1:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-01T15:03:12.000-07:00">September 1, 2020, 3:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-28T16:01:32.000-07:00">August 28, 2020, 4:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-07T09:02:46.000-07:00">August 7, 2020, 9:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-06T14:42:17.000-07:00">August 6, 2020, 2:42 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-05T14:02:23.000-07:00">August 5, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-04T14:02:37.000-07:00">August 4, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T14:02:46.000-07:00">July 29, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-26T16:02:17.000-07:00">July 26, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-22T14:02:19.000-07:00">July 22, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-22T10:02:18.000-07:00">July 22, 2020, 10:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-20T10:02:09.000-07:00">July 20, 2020, 10:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-16T10:02:17.000-07:00">July 16, 2020, 10:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-08T16:02:23.000-07:00">July 8, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-25T19:02:13.000-07:00">June 25, 2020, 7:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-25T13:02:07.000-07:00">June 25, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T16:02:09.000-07:00">May 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-01T10:01:10.000-07:00">May 1, 2020, 10:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-10T09:13:23.000-07:00">April 10, 2020, 9:13 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-06T03:00:02.000-07:00">April 6, 2020, 3:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-30T14:37:59.000-07:00">March 30, 2020, 2:37 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-24T16:00:07.000-07:00">March 24, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-21T16:00:07.000-07:00">March 21, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T16:00:09.000-07:00">March 20, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T15:00:07.000-07:00">March 17, 2020, 3:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>New Jersey does not update their <strong>Total PCR tests (specimens)</strong> everyday. If <strong>Total PCR tests (specimens)</strong> is not updated, we are unable to update their <strong>Negative PCR tests (specimens)</strong>, which is calculated as <strong>Total PCR tests (specimens)</strong> minus <strong>Confirmed cases</strong>.</p>
+<p>On March 6, 2021, New Jersey’s Ever hospitalized decreased by 916 without explanation.</p>
+<p>On February 8, 2021, New Jersey <a href="https://twitter.com/GovMurphy/status/1358841345859870721">reported</a> that today's data is artificially low due to electronic lab reporting issues. Data reported on February 9, 2021 is expected to correct the backlog.</p>
+<p>On January 15, 2021, New Jersey’s Probable cases decreased from 59,881 to 31,717 on their <a href="https://covid19.nj.gov/#live-updates">data dashboard</a> without explanation. We believe this decrease may have been a mistake and sourced this data point from the <a href="https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/Feat%5B%E2%80%A6%5D27%2C+%27onStatisticField%27%3A+%27TOTAL_AG_CASES%27%7D%5D">underlying data layer</a> (today's value is 60,791) in order to avoid the decrease.</p>
+<p>On January 8, 2021 New Jersey’s Probable cases increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Confirmed cases plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on January 8, 2021 was a mistake, and have corrected the number in our timeseries.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-07T09:08:23.000-08:00">March 7, 2021, 9:08 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>New Jersey does not update their <strong>Total PCR tests (specimens)</strong> everyday. If <strong>Total PCR tests (specimens)</strong> is not updated, we are unable to update their <strong>Negative PCR tests (specimens)</strong>, which is calculated as <strong>Total PCR tests (specimens)</strong> minus <strong>Confirmed cases</strong>.</p>
+<p>On February 8, 2021, New Jersey <a href="https://twitter.com/GovMurphy/status/1358841345859870721">reported</a> that today's data is artificially low due to electronic lab reporting issues. Data reported on February 9, 2021 is expected to correct the backlog.</p>
+<p>On January 15, 2021, New Jersey’s Probable cases decreased from 59,881 to 31,717 on their <a href="https://covid19.nj.gov/#live-updates">data dashboard</a> without explanation. We believe this decrease may have been a mistake and sourced this data point from the <a href="https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/Feat%5B%E2%80%A6%5D27%2C+%27onStatisticField%27%3A+%27TOTAL_AG_CASES%27%7D%5D">underlying data layer</a> (today's value is 60,791) in order to avoid the decrease.</p>
+<p>On January 8, 2021 New Jersey’s Probable cases increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Confirmed cases plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on January 8, 2021 was a mistake, and have corrected the number in our timeseries.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-24T06:47:37.000-08:00">February 24, 2021, 6:47 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On February 8, 2021, New Jersey <a href="https://twitter.com/GovMurphy/status/1358841345859870721">reported</a> that today's data is artificially low due to electronic lab reporting issues. Data reported on February 9, 2021 is expected to correct the backlog.</p>
+<p>On January 15, 2021, New Jersey’s Probable cases decreased from 59,881 to 31,717 on their <a href="https://covid19.nj.gov/#live-updates">data dashboard</a> without explanation. We believe this decrease may have been a mistake and sourced this data point from the <a href="https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/Feat%5B%E2%80%A6%5D27%2C+%27onStatisticField%27%3A+%27TOTAL_AG_CASES%27%7D%5D">underlying data layer</a> (today's value is 60,791) in order to avoid the decrease.</p>
+<p>On January 8, 2021 New Jersey’s Probable cases increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Confirmed cases plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on January 8, 2021 was a mistake, and have corrected the number in our timeseries.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-10T22:27:25.000-08:00">February 10, 2021, 10:27 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On February 8, 2021, New Jersey <a href="https://twitter.com/GovMurphy/status/1358841345859870721">reported</a> that today's data is artificially low due to electronic lab reporting issues. Data reported on February 9, 2021 is expected to correct the backlog.</p>
+<p>On January 15, 2021, New Jersey’s Probable cases decreased from 59,881 to 31,717 on their <a href="https://covid19.nj.gov/#live-updates">data dashboard</a> without explanation. We believe this decrease may have been a mistake and sourced this data point from the <a href="https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/Feat%5B%E2%80%A6%5D27%2C+%27onStatisticField%27%3A+%27TOTAL_AG_CASES%27%7D%5D">underlying data layer</a> (today's value is 60,791) in order to avoid the decrease.</p>
+<p>On January 8, 2021 New Jersey’s Probable cases increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Confirmed cases plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on January 8, 2021 was a mistake, and are correcting the number in our timeseries.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-08T17:15:35.000-08:00">February 8, 2021, 5:15 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On January 15, 2021, New Jersey’s Probable cases decreased from 59,881 to 31,717 on their <a href="https://covid19.nj.gov/#live-updates">data dashboard</a> without explanation. We believe this decrease may have been a mistake and sourced this data point from the <a href="https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/Feat%5B%E2%80%A6%5D27%2C+%27onStatisticField%27%3A+%27TOTAL_AG_CASES%27%7D%5D">underlying data layer</a> (today's value is 60,791) in order to avoid the decrease.</p>
+<p>On January 8, 2021 New Jersey’s Probable cases increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Confirmed cases plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on January 8, 2021 was a mistake, and are correcting the number in our timeseries.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-15T15:09:21.000-08:00">January 15, 2021, 3:09 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On January 8, 2021 New Jersey’s Probable cases increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Confirmed cases plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on January 8, 2021 was a mistake, and are correcting the number in our timeseries.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-09T15:21:41.000-08:00">January 9, 2021, 3:21 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On January 8, 2021 New Jersey’s <strong>Probable cases</strong> increased from 53,967 to 72,123 without explanation. This also affects their Cases (confirmed + probable), which is calculated as Positive PCR tests (people) plus Probable cases in the absence of an explicit total case number.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-08T15:21:58.000-08:00">January 8, 2021, 3:21 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T17:18:37.000-08:00">December 18, 2020, 5:18 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregular reporting.</p>
+<p>On August 4, 2020, New Jersey's <strong>Now hospitalized</strong> number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On October 23, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On October 22, New Jersey's reported <strong>Ever hospitalized</strong> value increased dramatically from 24,517 to 37,222 with no explanation we could find: this was probably a one-time addition of backlogged data.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191,160 to 192,290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://njhealth.maps.arcgis.com/apps/opsdashboard/index.html#/81a17865cb1a44db92eb8eb421703635</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-01T09:30:31.000-08:00">November 1, 2020, 9:30 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=3</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-29T08:03:59.000-07:00">October 29, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=4</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=3</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=3</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25ischarge%25Excluding+Deaths%25%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-11T16:00:06.000-07:00">October 11, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=3</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>The <strong>Recovered</strong> data point we report for New Jersey reflects the number of COVID-19 patients discharged from the hospital and therefore does not represent the total number of people who have recovered from COVID-19, since many people with COVID are never hospitalized.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-06T08:34:46.000-07:00">October 6, 2020, 8:34 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=3</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-28T13:03:48.000-07:00">September 28, 2020, 1:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>On September 1, New Jersey did not update their total PCR test figure by the time of our update, however total cases increased from 191160 to 192290.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-01T15:03:12.000-07:00">September 1, 2020, 3:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-28T16:01:32.000-07:00">August 28, 2020, 4:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On May 16, 2020, a backfill effort by New Jersey caused the state's data for <strong>Recovered</strong> to rise by approximately 7,000 people.</p>
+<p>On July 16, 2020, New Jersey's <strong>Recovered</strong> figure decreased.</p>
+<p>On July 19, 2020, New Jersey's <strong>Total cases</strong> decreased, perhaps due to reclassification of probable cases.</p>
+<p>On August 4, 2020, New Jersey's <em>Now hospitalized</em>* number decreased by 268 people.</p>
+<p>On August 7, 2020, we back-filled New Jersey's <strong>Probable deaths</strong> with data provided by the state. This removed apparent spikes in deaths due to the state's irregulat reporting.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>&quot;Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.</p>
+<p>On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+<p>On July 16, New Jersey decreased the number of cumulative recoveries.</p>
+<p>On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.</p>
+<p>On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+<p>On August 4, New Jersey reported current hospitalizations of 470, down from the previous report of 738 on August 3</p>
+<p>Beginning on August 5, New Jersey is not publishing the PDF in which it usually reports Cumulative Hospitalized.&quot;</p>
+<p>On August 7th, we backfilled New Jersey's probable deaths based on a state-provided time series of probable deaths by death date. We also updated historical values for the total death column so that it combines confirmed deaths by date reported on the NJ dashboard with probable deaths by death date. This removed some previous dramatic changes in the total death number that were due to sporadic reporting of probable deaths (e.g. 1854 all reported on June 25, decreases in deaths on 7/22 and 7/29, etc.).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-07T09:02:46.000-07:00">August 7, 2020, 9:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.</p>
+<p>On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+<p>On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.</p>
+<p>On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.</p>
+<p>On July 16, New Jersey decreased the number of cumulative recoveries.</p>
+<p>On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.</p>
+<p>On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+<p>On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On July 29, New Jersey reported 45 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On August 4, New Jersey reported current hospitalizations of 470, down from the previous report of 738 on August 3</p>
+<p>Beginning on August 5, New Jersey is not publishing the PDF in which it usually reports Cumulative Hospitalized.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-06T14:42:17.000-07:00">August 6, 2020, 2:42 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.</p>
+<p>On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+<p>On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.</p>
+<p>On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.</p>
+<p>On July 16, New Jersey decreased the number of cumulative recoveries.</p>
+<p>On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.</p>
+<p>On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+<p>On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On July 29, New Jersey reported 45 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On August 4, New Jersey reported current hospitalizations of 470, down from the previous report of 738 on August 3</p>
+<p>On August 5, New Jersey did not publish the PDF in which it usually reports Cumulative Hospitalized.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-05T14:02:23.000-07:00">August 5, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.</p>
+<p>On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+<p>On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.</p>
+<p>On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.</p>
+<p>On July 16, New Jersey decreased the number of cumulative recoveries.</p>
+<p>On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.</p>
+<p>On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+<p>On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On July 29, New Jersey reported 45 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On August 4, New Jersey reported current hospitalizations of 470, down from the previous report of 738 on August 3</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-04T14:02:37.000-07:00">August 4, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.</p>
+<p>On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+<p>On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.</p>
+<p>On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.</p>
+<p>On July 16, New Jersey decreased the number of cumulative recoveries.</p>
+<p>On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.</p>
+<p>On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+<p>On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+<p>On July 29, New Jersey reported 45 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.
+On July 16, New Jersey decreased the number of cumulative recoveries.
+On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.
+On July 20, New Jersey decreased the number of cumulative hospitalizations.
+On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.
+On July 29, New Jersey reported 45 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T14:02:46.000-07:00">July 29, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.
+On July 16, New Jersey decreased the number of cumulative recoveries.
+On July 19, New Jersey reported 31 fewer cases than the preceding day. We believe this drop was due to reclassifying probable cases.
+On July 20, New Jersey decreased the number of cumulative hospitalizations.
+On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-26T16:02:17.000-07:00">July 26, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.
+On July 16, New Jersey decreased the number of cumulative recoveries.
+On July 20, New Jersey decreased the number of cumulative hospitalizations.
+On July 22, New Jersey reported 54 fewer probable deaths than the preceding day. These deaths may have been reclassified as either due to COVID or not due to COVID.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-22T14:02:19.000-07:00">July 22, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25, New Jersey reported 1854 probable deaths that occurred in the past. This causes a perceived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.
+On July 16, New Jersey decreased the number of cumulative recoveries.
+On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-22T10:02:18.000-07:00">July 22, 2020, 10:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25th, New Jersey reported 1854 probable deaths that occured in the past. This causes a perecived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.
+On July 16, New Jersey decreased the number of cumulative recoveries.
+On July 20, New Jersey decreased the number of cumulative hospitalizations.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-20T10:02:09.000-07:00">July 20, 2020, 10:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25th, New Jersey reported 1854 probable deaths that occured in the past. This causes a perecived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.
+On July 16, New Jersey decreased the number of cumulative recoveries.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-16T10:02:17.000-07:00">July 16, 2020, 10:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25th, New Jersey reported 1854 probable deaths that occured in the past. This causes a perecived increase in the daily number of deaths.
+On July 8, New Jersey reported another 89 probable deaths that occurred previously. This again artificially inflated the day's reported death toll. We are waiting to receive a dated time series from NJ to properly backfill the data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-08T16:02:23.000-07:00">July 8, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25th, New Jersey reported 1854 probable deaths that occured in the past. This causes a perecived increase in the daily number of deaths.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-25T19:02:13.000-07:00">June 25, 2020, 7:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.
+On June 25th, New Jersey started reporting probable deaths. This will increase the daily new tests</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-25T13:02:07.000-07:00">June 25, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of May 11, New Jersey is reporting total PCR specimens tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T16:02:09.000-07:00">May 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of April 27, New Jersey is reporting people tested.
+On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of April 27, New Jersey is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-01T10:01:10.000-07:00">May 1, 2020, 10:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation. As of April 27, New Jersey is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Hospitalization + ICU counts include both positive cases and persons under investigation.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-10T09:13:23.000-07:00">April 10, 2020, 9:13 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives now include all laboratories. Hospitalizations sometimes provided at press conferences. <a href="https://www.bloomberg.com/news/articles/2020-04-04/n-j-has-lost-more-people-from-covid-19-than-from-9-11-attacks">Current number from 4/4</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-06T03:00:02.000-07:00">April 6, 2020, 3:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives now include all laboratories</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-30T14:37:59.000-07:00">March 30, 2020, 2:37 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://covid19.nj.gov/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives now include all laboratories. There's a <a href="covid19.nj.gov">dashboard available</a> but the testing data there is not as comprehensive as <a href="www.nj.gov/health">this table</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://covid19.nj.gov/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives now include all laboratories. There's a <a href="covid19.nj.gov">dashboard available</a> but the testing data there is not as comprehensive as <a href="www.nj.gov/health">this table</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://covid19.nj.gov/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives now include all laboratories. There's a <a href="covid19.nj.gov">dashboard available</a> but the testing data there is not as comprehensive as <a href="www.nj.gov/health">this table</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-24T16:00:07.000-07:00">March 24, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://covid19.nj.gov/#live-updates</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://covid19.nj.gov/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives + pending from State Lab only. Pending = PUI. State may be changing how it reports negatives: there was a drop in negative count on 3/16. There's a new ArcGIS dashboard available on a new site (covid19.nj.gov) but the testing data there is not as comprehensive as the table on www.nj.gov/health</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-21T16:00:07.000-07:00">March 21, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://covid19.nj.gov/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive count includes deaths. Negatives + pending from State Lab only. Pending = PUI. State may be changing how it reports negatives: there was a drop in negative count on 3/16. There's a new ArcGIS dashboard available on a new site (covid19.nj.gov) but the testing data there is not as comprehensive as the table on www.nj.gov/health</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T16:00:09.000-07:00">March 20, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Pending = PUI. Positive count includes deaths. Negatives + pending from State Lab only. State may be changing how it reports negatives: there was a drop in negative count on 3/16.
+Data is in a table in the Spotlight section.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Pending = PUI. Positive count includes deaths. Negatives + pending from State Lab only. State may be changing how it reports negatives: there was a drop in negative count on 3/16.
+Data is in a table in the Spotlight section.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data in a table in the Spotlight section. Positive count includes deaths. State apears to be changing the way it reports negatives, as there was a drop in negative count on 3/16. Negative numbers from State Lab only now. Pending = PUI.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T15:00:07.000-07:00">March 17, 2020, 3:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data in a table in the Spotlight section. Positive count includes deaths. State apears to be changing the way it reports negatives, as there was a drop in negative count on 3/16. Pending = PUI.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data in a table in the Spotlight section. Positive count includes deaths. State apears to be changing the way it reports negatives, as there was a drop in negative count on 3/16. Pending = PUI.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data in a table in the Spotlight section. Positive count includes deaths. No longer reporting negatives. Pending = PUI.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data in a table in the Spotlight section. Deaths included in their total positive count. No longer reporting negative counts. Pending = PUI.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Data in a table in the Spotlight section. New Jersey reports full results (positives, negatives, pending, and total) AND (as of 3/10) deaths. Pending tests are listed as “Tests in Process”</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.nj.gov/health/cd/topics/ncov.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

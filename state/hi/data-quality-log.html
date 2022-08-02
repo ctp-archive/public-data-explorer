@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Hawaii Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Hawaii</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Hawaii</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>May 23, 2020
+       to June 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Carry over the number of people tested for the period when we did not have a source for it, as a lower bound.</p>
+
+      </div>
+    
+    <h2>June 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On June 1, 2020 we began calculating Negatives from Total tests (People) - Total cases, instead of fromTotal tests (specimens) - Total cases. This caused a decrease of about 6,000 in Negative.</p>
+
+      </div>
+    
+    <h2>March 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On March 5, 2021, Hawaii did not update its **Currently hospitalized**, **Cumulative hospitalized**, **Currently in ICU**, or **Currently on ventilator** before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>March 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On March 4, 2021, Hawaii’s Cumulative hospitalized decreased by 1 from 2,226 to 2,225.</p>
+
+      </div>
+    
+    <h2>February 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 27, 2021, Hawaii's dashboard showed 1 current hospitalization, a decrease from 30 on February 26, 2021. We suspect this may be an error, and carried over the prior value from February 26, 2021.</p>
+
+      </div>
+    
+    <h2>February 15, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 15, 2021, Hawaii did not update its **Currently hospitalized**, **Cumulative hospitalized**, **Currently in ICU**, or **Currently on ventilator** before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 14, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 14, 2021, Hawaii's **Now hospitalized,** **Now in ICU,** and **Now on ventilator** metrics did not update in time for our publication.</p>
+
+      </div>
+    
+    <h2>February 10, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 10, 2021, Hawaii's **Cumulative hospitalized** decreased by 1 without explanation.</p>
+
+      </div>
+    
+    <h2>April 1, 2020
+       to February 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On February 3, 2021, we learned via outreach that Hawaii's &quot;Total fatalities&quot; include only covid confirmed deaths which are confirmed through PCR testing. As a result, we are able to capture Deaths (confirmed) for Hawaii, and are duplicating our Deaths (confirmed + probable) timeseries to Deaths (confirmed), as only confirmed deaths are included.</p>
+
+      </div>
+    
+    <h2>February 3, 2021
+       to February 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 2, 2021, Hawaii's **Total PCR Tests (Test Encounters)** decreased by more than 15,000 and **Positive PCR Tests (specimens)** decreased by more than 150 without explanation.</p>
+
+      </div>
+    
+    <h2>January 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 26, 2021, Hawaii reported 60 Deaths (confirmed + probable), the many of which may be due to a death record review. As a result, not all new deaths reported on January 26, 2021 may have been reported in the previous 24 hour period.</p>
+
+      </div>
+    
+    <h2>January 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 4, 2021, Hawaii did not update their hospitalization or deaths metrics.</p>
+
+      </div>
+    
+    <h2>December 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 29, 2020, Hawaii's <strong>Cumulative Hospitalized</strong> dropped from 1,751 to 1,746.</p>
+
+      </div>
+    
+    <h2>December 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 26, 2020, hospitalization metrics did not update for these states.</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Hawaii’s Total PCR tests (test encounters) decreased by 6184 without explanation.</p>
+
+      </div>
+    
+    <h2>December 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 23, 2020, Hawaii's Positive PCR Tests (people) did not update by our publication time.</p>
+
+      </div>
+    
+    <h2>December 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 14, 2020 Hawaii did not provide updated values for several hospitalization metrics including: Currently Hospitalized, Cumulative Hospitalizations, Currently in ICU, and Currently on Ventilators.</p>
+
+      </div>
+    
+    <h2>December 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 7, 2020, Hawaii and South Carolina did not update their <strong>Currently hospitalized</strong>, <strong>Currently in ICU</strong>, or **Currently on Ventilator **before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>December 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 6, 2020, Hawaii's hospitalization data points were not updated. This includes <strong>Currently hospitalized</strong>; <strong>Cumulative Hospitalized</strong>; **Currently in ICU **and <strong>Currently on Ventilator.</strong></p>
+
+      </div>
+    
+    <h2>November 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 30, 2020, Hawaii did not update their numbers for Currently hospitalized, Ever hospitalized,</p>
+
+      </div>
+    
+    <h2>November 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 23, 2020, Hawaii did not provide updates for **Currently hospitalized**, **Currently in ICU**, and **Currently on ventilator**. Additionally, Hawaii reported 17,354 for **Cumulative hospitalizations**, which we interpreted as a typo. We carried over the previous day's values.</p>
+
+      </div>
+    
+    <h2>November 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 22, 2020, Hawaii still reported 0 deaths on their main dashboard. We used a secondary dashboard to update the number.</p>
+
+      </div>
+    
+    <h2>November 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 21, 2020, Hawaii reported 17 fewer Confirmed cases. They also reported 0 total deaths on their main dashboard, so we updated that number using a secondary dashboard.</p>
+
+      </div>
+    
+    <h2>November 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 20, 2020, Hawaii updated their Currently in ICU number to be the same number as their Currently hospitalized number. This would have been an increase of more than 50 ICU-admitted patients. We interpreted this to be a typo because the Currently hospitalized number did not change nearly as much, and we carried over the previous day's value.</p>
+
+      </div>
+    
+    <h2>November 10, 2020
+       to November 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 17, 2020, we discovered that the hospitalization, ICU, and ventilation graphs on HI's dashboard, are updated more frequently than the donut numbers on the dashboard. We backfilled values from November 10, 2020 through November 17, 2020 for Currently hospitalized, Currently in ICU, and Currently on Ventilator, to ensure our time series is as accurate as possible.</p>
+
+      </div>
+    
+    <h2>November 16, 2020
+       to November 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 17, 2020, we discovered a new timestamp for HI with &quot;data as of&quot; language, which is our preferred timestamp. This language had been on the page since November 16, 2020, so we patched the Last check time (ET) for for November 16, 2020 through November 17, 2020.</p>
+
+      </div>
+    
+    <h2>November 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 16, 2020, Hawaii did not provide updates for Currently hospitalized, Cumulative hospitalized, Currently on ICU, and Currently on ventilator.</p>
+
+      </div>
+    
+    <h2>November 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 10, 2020, Hawaii did not update Cumulative hospitalized, Currently hospitalized, Currently in ICU, and Currently on ventilator.</p>
+
+      </div>
+    
+    <h2>November 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 10, 2020, we switched the source for Hawaii’s Currently Hospitalized to the Hawaii Emergency Management Agency’s COVID-19 dashboard. As a result, current hospitalizations decreased by 14.</p>
+
+      </div>
+    
+    <h2>November 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On November 6, 2020, we carried over the value for Recovered because Hawaii removed this metric from their dashboard.</p>
+
+      </div>
+    
+    <h2>March 31, 2020
+       to April 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>Remove cumulative hospitalization/icu that we collected in April from reporting and carried over for a few days</p>
+
+      </div>
+    
+    <h2>October 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateEt</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On October 23, 2020, we input an incorrect timestamp for Last Update (ET). On October 26, 2020, we corrected this value.</p>
+
+      </div>
+    
+    <h2>October 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On October 29, 2020, Hawaii's Total and Confirmed Deaths decreased by 2. Additionally, Currently hospitalized, Currently in ICU, and Currently on ventilator values did not update.</p>
+
+      </div>
+    
+    <h2>October 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateEt</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/23, we updated HI using screenshots due to it being checked late.</p>
+
+      </div>
+    
+    <h2>October 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/19, HI did not update their Currently Hospitalized, Currently in ICU, and Currently on Ventilator numbers.</p>
+
+      </div>
+    
+    <h2>March 4, 2020
+       to October 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Metric</span>
+            <span class="tag">New Dataset / Timeseries</span>
+        </p>
+      
+      <div>
+        <p>Adding PCR test encounters to HI and also positive tests PCR</p>
+
+      </div>
+    
+    <h2>October 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/8, HI removed their source for Total PCR Tests (People). Additionally, they decreased their negatives by ~1.5k tests.</p>
+
+      </div>
+    
+    <h2>March 7, 2020
+       to October 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>Today, we continue our changes to the values in our original totalTestResults API field, resulting in a ~3.4k increase in daily new tests and a ~131k cumulative increase. We updated the totals for Hawaii.</p>
+
+      </div>
+    
+    <h2>September 9, 2020
+       to October 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Metric</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On 9/9, HI began to release the number of probable cases (updated weekly). They also updated the annotation on their state page to be just confirmed cases. Backfilling Confirmed/Probable and Lumped Cases columns through 9/9.</p>
+
+      </div>
+    
+    <h2>September 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/27, HI's recoveries nearly doubled due to a new reporting system. This may be the beginning of a larger backlog.</p>
+
+      </div>
+    
+    <h2>September 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateEt</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/5, HI released a new dashboard that now includes hospitalization data, resulting in a number of source changes. Hospitalization data for 9/5 was still taken from Lt. Gov. Josh's Instagram.</p>
+
+      </div>
+    
+    <h2>September 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On <strong>September 3, 2020</strong>, Hawaii included cases which had been previously diagnosed in their daily update due to an electronic laboratory reporting error.&quot; As a result, new cases reported may not have been diagnosed in the previous 24 hours.</p>
+
+      </div>
+    
+    <h2>August 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On August 20, 2020, Hawaii noted &quot;that today’s higher case count is partially due to transmission issues with a mainland laboratory’s Electronic Lab Reporting (ELR), over the past two days. Those issues have now been resolved.&quot;</p>
+
+      </div>
+    
+    <h2>August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/13, HI page was not updated, carried over people tested and neg. calc.</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>August 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>As of 8/8, Hawaii no longer publishes data on the current number of patients in its hospitals, ICUs, or on mechanical ventilation. Per HI Lt. Governor Josh Green's instructions, we are once again collecting this data from <a href="https://www.hawaiidata.org/covid19">https://www.hawaiidata.org/covid19</a></p>
+
+      </div>
+    
+    <h2>August 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/5, we decided to use the Lt. Gov.'s Instagram for hospitalization updates. On 8/5, the data was released on Instagram after our publish shift time, so backfilling 8/5 hospitalization numbers.</p>
+
+      </div>
+    
+    <h2>July 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 7/28, we miscalculated negatives. We used the total PCR tests (people) value from the previous day (7/27) to calculate negatives instead of the total PCR tests (people) value from 7/28. This was corrected in States Daily.</p>
+
+      </div>
+    
+    <h2>August 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>HI case data on 8/1 will be incomplete due to a reporting lag</p>
+
+      </div>
+    
+    <h2>July 14, 2020
+       to July 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 7/23 we back-filled Hawaii's currentlyHospitalized numbers for 7/14-7/23 from Hawai‘i COVID-19 Daily News Digest</p>
+
+      </div>
+    
+    <h2>April 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Positives for 4/22 were incorrectly entered at the time, resulting in an apparent decline. This has been corrected</p>
+
+      </div>
+    
+    <h2>May 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On May 15, 2020, Hawaii revised down its Negative (people or cases) by 104 due to a technical error in electronic laboratory reporting. It also revised down its case count by one.</p>
+
+      </div>
+    
+    <h2>May 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On May 9, 2020, Hawaii's Negative (people or cases) decreased by 356 without explanation.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

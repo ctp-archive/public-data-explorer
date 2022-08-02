@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>North Carolina Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">North Carolina</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">North Carolina</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>March 25, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We have a question regarding COVID fatality reporting. In comparing North Carolina's figure for &quot;total deaths&quot; reported on the state dashboard to the figure reported by the National Center for Health Statistics for North Carolina's &quot;all deaths involving COVID-19&quot; (https://www.cdc.gov/nchs/nvss/vsrr/covid19/index.htm) we notice that the numbers track each other closely up until the beginning of December, at which point they diverge. Currently the state dashboard reports 11,894 total deaths while the NCHS reports 6,042 deaths. Additionally, the most recent week the NCHS is reporting data for is 2/20/21. We're wondering whether this is the result of a reporting lag or whether there are any other factors or glitches which might shed light on this difference.</p>
+
+    </div>
+    
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>NC provides a breakdown by race of people vaccinated, but this breakdown is given in percentages, and those percentages add up to more than 100%. Is this due to people being double counted in multiple categories (i.e. if they’re multiracial, being listed once each in the multiple categories they selected), or due to rounding errors?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 16, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Thanks for reaching out. Here’s the information we have about this listed on the <a href="https://covid19.ncdhhs.gov/dashboard/vaccinations">dashboard</a>: Numbers may not add up to 100% due to rounding.</p>
+
+        </div>
+      
+    
+  
+    <h2>December 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>NC has recently combined the Native Hawaiian or Other Pacific Islander (NHOPI) category with the Asian category, moving away from the OMB categories described in the federal census. Why was this category removed? Will it be added back, and if so, when?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our population data aligns with the Bridged-Race Population Estimates data. This link provides an overview of the data and how the different demographic categories are broken out: <a href="https://wonder.cdc.gov/wonder/help/bridged-race.html#About%201990-2019">https://wonder.cdc.gov/wonder/help/bridged-race.html#About 1990-2019</a></p>
+
+        </div>
+      
+    
+  
+    <h2>September 25, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>NC reached out to us</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 25, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Today NCDHHS announced the following:
+Starting Sept. 25, 2020, the NCDHHS began reporting on two new measures on the NC COVID-19 Data Dashboards: 1) Antigen-positive cases and deaths and 2) Antigen tests completed. The <a href="https://files.nc.gov/covid/documents/dashboard/Antigen-Testing-Frequently-Asked-Questions.pdf">Antigen Positive Cases Data: FAQ</a> explains data elements on the dashboards that have been updated and provides additional information on antigen and molecular testing. In addition our About the Data section now includes two new tabs; testing totals and county demographics. Thank you for having a critical eye on our dashboards.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 25, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We requested a full time-series of 1) Antigen-positive cases and deaths and 2) Antigen tests completed.</p>
+
+    </div>
+    
+  
+    <h2>September 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting Completed Tests as referring to the total number of tests conducted. Is this correct? If so, do you have plans to release the total number of unique individuals tested?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes. Note that this total refers to molecular tests only and does not include antigen or antibody testing results. We have no current plans to publish the number of unique individuals tested in our dashboards.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have plans to release a full historical time-series of all testing and results? We have been capturing the total test results in Completed Tests since 5/13/2020. Do you plan to release a historical time series of that number? Will this historical data set be available consistently and in an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>This is already downloadable as CSV here (scroll way down to the middle of the page):  <a href="https://covid19.ncdhhs.gov/dashboard/about-data">https://covid19.ncdhhs.gov/dashboard/about-data</a>.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware North Carolina Department of Health and Human Services does not at this time. Do you have plans to release this data in a machine readable format, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p><a href="https://covid19.ncdhhs.gov/dashboard/about-data">https://covid19.ncdhhs.gov/dashboard/about-data</a>
+See above; already available.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach the Completed Tests? If so, how? (i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)? When reporting testing results, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our “Total Completed Tests” figure currently relies on aggregate reporting. However, the &quot;Percent Positive&quot; is calculated using only those tests submitted by labs through &quot;Electronic Lab Reporting&quot; for which we have detailed information on both their positive and negative test results.</p>
+<p>For &quot;Percent Positive,&quot; we only include one result per person per day, but we do include results (positive and negative) from the same person in the calculations for subsequent days if they are retested.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 12, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What challenges are you facing in adjusting to the new HHS guidelines? Which metrics that you report were impacted, or could be impacted by HHS procedure changes? How does this affect the reporting relationship between hospitals and DOH? Are there changes in regulations on which hospitals are now required or not required to report to state DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 12, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Primarily the challenge is adjusting our processes to go from 32 data elements to 96 elements on such short notice. HHS also has provided clarification twice since the July 15th rollout, and Tuesday they made 3 additional data element changes - resulting in delays in reaching a finalized product. Our hospitals are working towards automation of all elements but these changes, clarifications and data changes move the automation target, thereby creating more manual work and challenges to work through. We hope to have all automated processes finalized by end of August as long as no more changes occur.No elements for the state dashboard have been impacted.We work closely with our hospital partners and do a daily stand up call with our hospitals to collaboratively work towards reaching the goal on data reporting elements. NC DHHS has advocated for our hospitals direct to HHS Protect to get clarification on elements and has been reporting direct to HHS Protect on their behalf. Due to this strong relationship and ongoing collaboration, this has only strengthened the relationship between NC DHHS and our hospitals.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 12, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What's the current figure for the number of COVID-19 patients on ventilators in NC? Is the state planning on publishing those numbers on the NC COVID-19 dashboard?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 12, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>This information will not be collected fully until end of August as we are working to update to meet all the new requirements.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What types of tests is NC using?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The State Laboratory of Public Health is using multiple molecular diagnostic tests and implementing multiple serological tests. Clinical laboratories in North Carolina are also utilizing multiple molecular diagnostic tests and multiple serological tests. Some health care providers are also using antigen tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is North Carolina performing pool testing? If so, how it that testing reported?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The State Laboratory of Public Health is not pooling specimens. We are not aware of clinical laboratories pooling in North Carolina.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are you conducting antigen tests? If so, are those test results included in North Carolina’s COVID portal?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The State Laboratory of Public Health is not conducting antigen testing. Some health care providers are using antigen tests. Antigen results are being collected and used to implement control measures and initiate contact tracing. We are making plans to incorporate antigen test information on the public dashboard, but that information is not currently displayed.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On NC’s COVID-19 dashboard, there’s a category for “total tests&quot; – could you clarify what is meant by the term? Does it refers to the number of people tested or the number of specimens tested overall?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The tests count does include all positive tests for people who have been tested more than once. In the total of laboratory-confirmed cases, each person is counted only once. If a person tested positive more than once (for example, if they were using the test-based criteria for discontinuation of isolation and had 3 total positive tests), they would be included in our case count only once.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Also, does that number include results from both antibody and PCR tests? Do you have plans to provide separate totals for PCR and antibody tests in the future?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Antibody tests are not included in our total test numbers. We are examining strategies for collecting and adding antibody testng to our surveillance.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>I see that NC is reporting outbreaks in 81 nursing home facilities – is that the total number of nursing homes in the state? I understand that some states, including North Carolina, are only reporting outbreaks in facilities with more than 10 residents? We are asking states to publish the number of cases and deaths at all long term care facilities – broken down by staff and residents.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>North Carolina has more than 400 licensed nursing homes and more than 1,000 licensed adult care and family care homes. The data <a href="https://covid19.ncdhhs.gov/dashboard/congregate-living-settngs">https://covid19.ncdhhs.gov/dashboard/congregate-living-settngs</a> are the total number of lab-confirmed COVID-19 cases and deaths among residents or staff of the congregate living settings.  The COVID-19 Ongoing Outbreaks in Congregate Living Settngs reports names of facilities and states numbers of cases and deaths by staff and residents. For this report, we only report on facilities with more than 10 residents to protect patient confidentiality.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’re hearing from states that reporting from labs, hospitals, and other entities varies according to their in-house practices. This has made it difficult for some states to acquire demographic information on race and ethnicity in particular. Now that the HHS has released its new guidelines on COVID-19 lab results, will that make it easier for NC to track cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, as we have laid out in our “About the Data” tab, our demographics information is currently limited by what is reported through lab reporting, and then what is collected through follow up case investigations. Increasing the number of labs that report demographic information directly as part of lab reporting would help reduce the number of cases for which we’re missing demographic information.
+More information about North Carolina’s data is available on our data on the dashboard at <a href="https://covid19.ncdhhs.gov/dashboard/about-data">https://covid19.ncdhhs.gov/dashboard/about-data</a> and by hovering over each “i” on the charts, graphs and maps.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

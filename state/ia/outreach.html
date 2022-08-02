@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Iowa Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Iowa</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Iowa</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 7, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is all your data nursing home?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 7, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes &quot;These are just skilled nursing facilities, not assisted living facilities. &quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For cases, we want to confirm that 100% is the number reported as <code>Total Individuals Positive.</code></p>
+<p>Would it be possible to report the numbers rather than the percentages; we are missing a lot of data due to rounding.</p>
+<p>As an interim step, would it be possible to report more decimal places for cases – deaths are reported with two decimal places (2.34) but cases are only whole numbers, so even more information is being missed due to rounding.</p>
+<p>Thank you.</p>
+
+    </div>
+    
+  
+    <h2>October 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Why is there such a large jump in COVID cases this last week?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Starting September 1, the Centers for Medicare and Medicaid Services (CMS) began requiring aggressive routine testing of all staff and residents of long-term care facilities. That requirement and additional testing is contributing to the increase in identified long term care outbreaks</p>
+
+        </div>
+      
+    
+  
+    <h2>September 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Total Res Cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Cumulative Resident Cases as of 9/9: 2,461</p>
+
+        </div>
+      
+    
+  
+    <h2>September 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Now that the state reports antigen tests and PCR tests separately, we'd like to clarify which &quot;Individuals Positive&quot; metric we should use when looking at the percentages of cases for race and ethnicity at https://coronavirus.iowa.gov/pages/case-counts. Do &quot;Positive Cases by Race&quot; and &quot;Positive Cases by Ethnicity&quot; refer to the the Total Individuals Positive for PCR and Antigen tests combined or does it refer to only PCR tests?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>September 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>They are not reported separately at <a href="http://coronavirus.iowa.gov">coronavirus.iowa.gov</a> - they are in the positive case analysis.</p>
+
+        </div>
+      
+        <h4>September 11, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The demographics on the Positive Case - Analysis page are for total &quot;Individual Positive&quot; - this would include both PCR and Antigen positives. We do not breakout demographics by test type.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting Individuals Tested as referring to the total number of unique individuals tested. Is this correct? If so, do you have plans to release the total number of tests conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, unique individuals currently. However, we continue to have the conversation within our teams and with national partners about how we share testing results, including what role should total testing play moving forward.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach the total persons tested? If so, how? (i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)? When reporting testing results, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, we de-duplicate based upon a case number assigned by our surveillance system. Multiple negative results are carried forward and displayed at the collection date of the most recent negative. If an individual who was previously negative tests positive, they will no longer be included in the negative count but be moved to positive at the time of the positive collection date. Based on CDC guidance, a person may be counted twice if they are positive again 90 or more days after their first positive.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have plans to release a full historical time-series for this metric? Furthermore, other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware, Iowa does not at this time. Do you plan to release a historical time series of these numbers in formats such as json or csv?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No plans at the moment.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What was the impact of the switch to reporting hospitalizations to the HHS instead of NHSN?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>All Iowa hospitals have been required to report hospitalization information since April 3, 2020. In response to the July HHS's directive, Iowa updated its mandatory reporting order (July 27, 2020) and is using that reporting to fulfill the HHS requirements. These data sets are collected at the same time each day. The hospital data displayed on the Iowa coronavirus.iowa.gov website is supported by the original Iowa mandate from April 3, 2020. The data collected as part of the July HHS directive is being reviewed to consider what additional data may be added to the public website. In addition, Iowa has obtained authority from HHS to conduct reporting on behalf of Iowa hospitals, which is helpful in reducing the number of agencies that Iowa hospitals must report to.</p>
+<p>You can find the mandatory reporting order and the data dictionary at our webpage:
+Mandatory Reporting Order 7.27.20</p>
+<p>Data Dictionary for EMResource Mandatory Reporting 8.4.20</p>
+
+        </div>
+      
+    
+  
+    <h2>July 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is cumulative on the dashboard? Will you release cumulative data?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 27, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Among all LTC outbreaks including both staff and residents there have been 2,355 cases and this does not include LTC facilities that did not meet the outbreak definition. Deaths among facilities that are not outbreaks are included in the LTC death count.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Why do you define an outbreak by 3 or more cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 27, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Using three cases among long-term care residents allows us to be confident that we have confirmed an outbreak associated with a facility setting rather than detecting cases associated with another potential risk factor or source. However, we continue to follow-up on any report of two or more respiratory illnesses in any long-term care facility to assess whether COVID-19, flu or other illnesses might be affecting a facility. We have recommended control measures for all facilities regardless of whether there are ill persons identified or not. IDPH or local public health investigate and implement additional support and control measures as soon as any single COVID-19 case is identified in a facility.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are you conducting pooling testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No</p>
+
+        </div>
+      
+    
+  
+    <h2>July 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do death values include only lab confirmed cases or probables? If they encompass both, how does IA define probables?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>COVID-19 is a reportable condition, so our health care, coroner and other partners report deaths that have a confirmed COVID-19 test to us right away so that we can share as much information as possible as the situation with COVID develops.
+- A certifier or medical examiner may use the terms of probable or likely when a clinical diagnosis of COVID-19 is made and testing is/was not possible. Testing can be done pre- or post-mortem.</p>
+<p>For the official death records:
+- Funeral directors, medical certifiers (DO, MD, PA, and ARNP) and medical examiners document and certify the decedent demographics and cause of death in IVES through secure online access.
+- Iowa follows CDC guidelines for documenting cause of death on death records.
+- We adjust reporting at coronavirus.iowa.gov as needed to accurately reflect what becomes available through the official death records process.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 4, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What categories are included in &quot;Other&quot;?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 4, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The other category includes individuals who reported multiple races.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 4, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Most states are reporting a large unknown percentage in race/ethnicity data, have you run into this in your reporting? If so, how is it impacting how you are sharing it on the dashboard?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 4, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our disease investigators make every effort to obtain race and ethnicity information, but we still find that some cases do not have a race identified. **Unknown race is currently not displayed. **</p>
+
+        </div>
+      
+    
+  
+    <h2>June 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can Asian and Pacific Islander be separated out for cases (they are reported separately for deaths)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 4, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are looking to separate into two 'Asian' and 'Native Hawiian or other Pacific Islander' and hope to have a final decision soon.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

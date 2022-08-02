@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Indiana Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Indiana</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Indiana</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 21, 2020
+       to March 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>We recorded a 1 for Indiana's Ever hospitalized from March 21, 2020 to March 25, 2020, but then did not record additional values until May 8, 2020. Additionally we were unable to verify the source for the value. Removing the values from Ever hospitalized from March 21, 2020 to March 25, 2020.</p>
+
+      </div>
+    
+    <h2>March 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On March 6, 2021, Indiana announced that a new testing facility had been added to their electronic reporting system, resulting in 1241 Total PCR tests (people), 3769 Total PCR tests (specimens), and 445 Cases (confirmed in probable) reported on March 6, 2021. Additionally, their Ever in ICU decreased by 2 without explanation.</p>
+
+      </div>
+    
+    <h2>February 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 26, 2021, Indiana announced that due to a historic load of negative tests, 663 older **Total PCR tests (people)** and 2,150 **Total PCR tests (specimens)** would be included in their data for the day.&quot;</p>
+
+      </div>
+    
+    <h2>May 31, 2020
+       to February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Clearing duplicate recoveries field after switch to hosp. discharges.</p>
+
+      </div>
+    
+    <h2>May 31, 2020
+       to February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">Other</span>
+        </p>
+      
+      <div>
+        <p>unclearing duplicate recoveries field until full switch to hosp. discharges.</p>
+
+      </div>
+    
+    <h2>May 31, 2020
+       to February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Clearing duplicate recoveries field after switch to hosp. discharges.</p>
+
+      </div>
+    
+    <h2>February 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 4, 2021, Indiana [reported](https://www.coronavirus.in.gov/2393.htm) the following: “Today’s total deaths includes 1,507 historical deaths identified through an audit of 2020 and 2021 COVID death records and test results.”</p>
+
+      </div>
+    
+    <h2>January 25, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 25, 2021, Indiana's Cumulative in ICU metric decreased by 1 with no explanation.</p>
+
+      </div>
+    
+    <h2>January 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 5, 2021, Indiana’s Currently in ICU decreased by 9 without explanation.</p>
+
+      </div>
+    
+    <h2>December 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 4, 2020, Indiana's dashboard experienced technical issues, and they released the following public note, &quot;The latest dashboard refresh occurred on December 3, 2020 at 12pm. We are currently experiencing technical issues and expect the dashboard to update by December 4 at 8pm.&quot;</p>
+
+      </div>
+    
+    <h2>December 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On <strong>December 3, 2020,</strong> Indiana posted a note on the dashboard page: “A historic load of labs resulted in the addition of 1,058 historical <strong>tested individuals</strong>, 2,153 historical <strong>tests administered</strong> and 443 historical <strong>cases</strong> to today’s counts.&quot;</p>
+
+      </div>
+    
+    <h2>November 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On November 29, 2020, Indiana announced that a historical backlog of roughly 2200 Total PCR tests (people) and about 4000 Total PCR tests (specimens) would be included in their data for November 29, 2020. Negative PCR tests (people), which are calculated as Total PCR tests (people) minus Cases (confirmed + probable) will also be affected. As a result, new tests reported on November 29, 2020 were not all reported in the previous 24 hour period.</p>
+
+      </div>
+    
+    <h2>November 13, 2020
+       to November 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>On November 13, 2020 through November 15, 2020, the Last Update ET for Indiana was incorrectly input as 11:59 instead of 23:59. On November 25, 2020, these errors were corrected.</p>
+
+      </div>
+    
+    <h2>November 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On November 12, 2020, Indiana released a &quot;historic load of negative labs&quot; resulting in increases of 2,735 Total PCR tests (people) and 5,688 Total PCR tests (specimens)</p>
+
+      </div>
+    
+    <h2>May 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill Mistake Correction</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Carry over removed (due to staleness) cumulative hospitalized patients</p>
+
+      </div>
+    
+    <h2>October 31, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On October 30, 2020, Indiana released a backlog of &quot;50 historical cases, 519 historical tested individuals, and 8,296 historical tests.&quot;</p>
+
+      </div>
+    
+    <h2>February 27, 2020
+       to March 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill Mistake Correction</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Update &quot;last updated time&quot; for the newly added dates (and 4 more days)</p>
+
+      </div>
+    
+    <h2>February 27, 2020
+       to March 5, 2020
+      
+    </h2>
+    
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>Update dates before the beginning of our existing time series (set state/date correctly)</p>
+
+      </div>
+    
+    <h2>March 6, 2020
+       to October 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Dataset / Timeseries</span>
+        </p>
+      
+      <div>
+        <p>Update Positive Tests PCR, and with this update, also update Total Tests PCR (so the dates and collected values match on both).
+The series now goes back as far as end of Feb.</p>
+
+      </div>
+    
+    <h2>February 27, 2020
+       to October 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Switch TotalTestResults for IN to use Total Tests (PCR) instead of positive+negative. 918k  tests will be added to the total tests in the world and 18.9k tests will be added to the latest test day.</p>
+
+      </div>
+    
+    <h2>September 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/12, IN's dashboard featured the following notice: an additional testing facility has been newly onboarded into the electronic reporting system. This onboarding resulted in the addition of 11,552 tested individuals and 20,764 tests administered to today’s counts.</p>
+
+      </div>
+    
+    <h2>August 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/24, the state of  IN started lumping antigen tests and positives into cumulative tests and positive figures. They will start to backfill numbers prior to 7/28 slowly.</p>
+
+      </div>
+    
+    <h2>August 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/21, IN revised down their cumulative hosp. cumulative ICU values from 10132 to 10145 (-13) and from 2051 to 2069 (-2), respectively.</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>August 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On August 5, 2020, Indiana did not update their cumulative hospitalized number (9148), and their recoveries spiked from 43535 (8/4) to 51709 (8/5).</p>
+
+      </div>
+    
+    <h2>August 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/3, the value of recoveries (43,535) went DOWN from the value for yesterday (47,355). To avoid the drop, we carried over the previous day's value. We currently don't have screenshots to check the hospitalization dashboard, but we just filed an issue to get that screenshot.</p>
+
+      </div>
+    
+    <h2>July 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>IN started reporting &quot;Tests Administered&quot; in addition to &quot;Total Individuals Tested&quot; starting on 7/30</p>
+
+      </div>
+    
+    <h2>July 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>IN Regenstreif Dashboard did not update any hospitalization figures</p>
+
+      </div>
+    
+    <h2>June 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On June 20, 2020, the number of <code>hospitalizedCumulative</code> in Indiana dropped from 1465 to 1444 without explanation.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

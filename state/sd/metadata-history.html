@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>South Dakota Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">South Dakota</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">South Dakota</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-04T20:27:08.000-08:00">March 4, 2021, 8:27 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-04T18:06:47.000-08:00">March 4, 2021, 6:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-11T15:38:25.000-08:00">February 11, 2021, 3:38 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-07T18:38:41.000-08:00">December 7, 2020, 6:38 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-26T14:03:36.000-08:00">November 26, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-07T17:10:27.000-07:00">October 7, 2020, 5:10 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T12:03:13.000-07:00">September 18, 2020, 12:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-27T15:02:22.000-07:00">August 27, 2020, 3:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-27T15:53:18.000-07:00">July 27, 2020, 3:53 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-23T11:00:07.000-07:00">March 23, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/COVID/Dashboard.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of March 4, 2021, South Dakota's <code>totalTestResults</code> field is taken directly from <code>totalTestsViral</code> instead of calculated from positive + negative.</p>
+<p>On March 4, 2021, we backfilled South Dakota's <strong>Total Tests (Specimens)</strong> and <strong>Positive Tests (PCR)</strong> with data from the &quot;PCR Test Positivity Rate by Date Reported to SD-DOH&quot; on the state's dashboard. The updated time series includes only PCR tests.</p>
+<p>On February 11, 2021, South Dakota <a href="https://twitter.com/SDDOH/status/1359925746219814916?s=20">announced</a> on the official South Dakota Department of Health twitter that “a large number of COVID-19 test results are reported in today’s update due to IT system updates completed on one of several reporting methods”. As a result, not all new tests reported on February 11, 2021 were reported in the previous 24 hour period.</p>
+<p>On December 24, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1342173217918746626">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on December 25, 2020 due to the holiday. Additionally, they noted that the data reported on December 26, 2020, would be the data which normally would have been reported on December 25, 2020, and the data reported on December 27, 2020 would include two days of data. On December 31, 2020, they noted that there would be no update to their data on January 1, 2021 due to the New Years holiday, and that the data reported on January 2, 2021, would be the data which normally would have been reported on January 1, 2021, and the data reported on January 3, 2021 would include two days of data.</p>
+<p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-04T20:27:08.000-08:00">March 4, 2021, 8:27 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/COVID/Dashboard.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On February 11, 2021, South Dakota <a href="https://twitter.com/SDDOH/status/1359925746219814916?s=20">announced</a> on the official South Dakota Department of Health twitter that “a large number of COVID-19 test results are reported in today’s update due to IT system updates completed on one of several reporting methods”. As a result, not all new tests reported on February 11, 2021 were reported in the previous 24 hour period.</p>
+<p>On December 24, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1342173217918746626">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on December 25, 2020 due to the holiday. Additionally, they noted that the data reported on December 26, 2020, would be the data which normally would have been reported on December 25, 2020, and the data reported on December 27, 2020 would include two days of data. On December 31, 2020, they noted that there would be no update to their data on January 1, 2021 due to the New Years holiday, and that the data reported on January 2, 2021, would be the data which normally would have been reported on January 1, 2021, and the data reported on January 3, 2021 would include two days of data.</p>
+<p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-04T18:06:47.000-08:00">March 4, 2021, 6:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/COVID/Dashboard.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On March 4, 2021, we backfilled South Dakota's <strong>Total Tests (Specimens)</strong> and <strong>Positive Tests (PCR)</strong> with data from the &quot;PCR Test Positivity Rate by Date Reported to SD-DOH&quot; on the state's dashboard. The updated time series includes only PCR tests.</p>
+<p>On February 11, 2021, South Dakota <a href="https://twitter.com/SDDOH/status/1359925746219814916?s=20">announced</a> on the official South Dakota Department of Health twitter that “a large number of COVID-19 test results are reported in today’s update due to IT system updates completed on one of several reporting methods”. As a result, not all new tests reported on February 11, 2021 were reported in the previous 24 hour period.</p>
+<p>On December 24, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1342173217918746626">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on December 25, 2020 due to the holiday. Additionally, they noted that the data reported on December 26, 2020, would be the data which normally would have been reported on December 25, 2020, and the data reported on December 27, 2020 would include two days of data. On December 31, 2020, they noted that there would be no update to their data on January 1, 2021 due to the New Years holiday, and that the data reported on January 2, 2021, would be the data which normally would have been reported on January 1, 2021, and the data reported on January 3, 2021 would include two days of data.</p>
+<p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-11T15:38:25.000-08:00">February 11, 2021, 3:38 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/COVID/Dashboard.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 24, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1342173217918746626">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on December 25, 2020 due to the holiday. Additionally, they noted that the data reported on December 26, 2020, would be the data which normally would have been reported on December 25, 2020, and the data reported on December 27, 2020 would include two days of data. On December 31, 2020, they noted that there would be no update to their data on January 1, 2021 due to the New Years holiday, and that the data reported on January 2, 2021, would be the data which normally would have been reported on January 1, 2021, and the data reported on January 3, 2021 would include two days of data.</p>
+<p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/COVID/Dashboard.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 24, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1342173217918746626">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on December 25, 2020 due to the holiday. Additionally, they noted that the data reported on December 26, 2020, would be the data which normally would have been reported on December 25, 2020, and the data reported on December 27, 2020 would include two days of data.</p>
+<p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/COVID/Dashboard.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-07T18:38:41.000-08:00">December 7, 2020, 6:38 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On November 26, 2020, South Dakota <a href="https://twitter.com/SDDOH/status/1332017785560576001?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet">announced</a> via the official South Dakota Department of Health twitter that there would be no update to their data on November 26, 2020. Additionally, data for both November 26, 2020 and November 27, 2020, will be published on November 27, 2020.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-26T14:03:36.000-08:00">November 26, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+<p>On October, 7, 2020 South Dakota started reporting <strong>Probable cases</strong>. This added 473 new cases to South Dakota's <strong>Total cases</strong> number.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-07T17:10:27.000-07:00">October 7, 2020, 5:10 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total PCR Tests (People)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+<p>As of September 18, 2020, South Dakota's total test results are drawn from our <code>totalTestsPeopleViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T12:03:13.000-07:00">September 18, 2020, 12:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+<p>On August 27, the South Dakota Department of Health included cases from August 25 and 26 in their update due to a reporting aberration, resulting in a 343 case increase. They have provided historical case counts, and we are working to backfill our data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-27T15:02:22.000-07:00">August 27, 2020, 3:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, 2020, <strong>Negative PCR tests</strong> decreased by 148 for unclear reasons.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 27, South Dakota reduced the count of negative tests from 98531 to 98383.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-27T15:53:18.000-07:00">July 27, 2020, 3:53 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-23T11:00:07.000-07:00">March 23, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use time = 00:00</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use time = 00:00</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No update time given. Use time = 00:00</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No update time given. Use time = 00:00</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No update time given. Use current date and time = 00:00 for consistency with other data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://doh.sd.gov/news/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

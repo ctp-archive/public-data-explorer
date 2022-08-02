@@ -1,0 +1,3955 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Idaho Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Idaho</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Idaho</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 16, 2020, 10:06 PM PDT</h2>
+    <div>
+      <p>What a solid update by @HealthyFla to their COVID-19 data reporting. Thank you.</p>
+<p>https://t.co/Oleet5NkWk https://t.co/ucfnXpdBS4</p>
+
+    </div>
+  
+    <h2>March 27, 2020, 10:06 PM PDT</h2>
+    <div>
+      <p>Some open questions: when a state says &quot;hospitalized,&quot; does that mean currently or cumulatively? What does recovered mean and how is that tracked? Some states are showing ICU numbers, but it's not clear if they are COVID related. It's gonna be tough to nail all this down.</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 2:46 PM PDT</h2>
+    <div>
+      <p>Illinois showed a sharp increase in COVID-19 deaths today. The state now has 6,980 confirmed cases and 141 cumulative deaths. https://t.co/WSKWzX1IQ6</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 11:34 PM PDT</h2>
+    <div>
+      <p>One crucial addendum to this piece by @DrIbram: the most important piece of missing data would be breakouts by race for COVID-19 deaths, not just cases.</p>
+<p>Not a single state reports that yet.</p>
+<p>https://t.co/aMJ53mcln1</p>
+
+    </div>
+  
+    <h2>April 2, 2020, 9:42 AM PDT</h2>
+    <div>
+      <p>There's also intense competition for samples from confirmed COVID-19 cases so that new vendors can validate their tests.</p>
+<p>We need a nationwide clearinghouse for samples and tests.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>Some unexpected numbers came from Indiana today. Despite only having ~5000 confirmed cases, the state said today it has 924 COVID patients in the ICU and 500 on ventilators. That's not too far from California's ICU count and closing in on Pennsylvania and Louisiana's vent usage.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>The nation passed 10,000 deaths today.</p>
+<p>New York stands at 4,758 deaths.  New Jersey passed 1,000.</p>
+<p>16 states have lost more than 100 people to COVID-19.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 5:50 PM PDT</h2>
+    <div>
+      <p>As of today, 8 states are reporting racial demographics for COVID cases:
+CT, IL, MI, MN, NC, NJ, SC, VA</p>
+<p>And 5 states are reporting racial demographics for COVID deaths:
+CT, IL, LA, MN, NC</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Illinois put out important new data today: confirmed and suspected current COVID-19 hospitalizations, ICU admissions, and ventilator usage. They are big numbers, comparable to California (which reports slightly differently). https://t.co/Bfn6cDv3qL</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Illinois put out important new data today: confirmed and suspected current COVID-19 hospitalizations, ICU admissions, and ventilator usage. They are big numbers, comparable to California (which reports slightly differently). https://t.co/Bfn6cDv3qL</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>This is just another indication that COVID-19, while it broke out on the east and west coasts, will not remain a coastal phenomenon, as Michigan, Louisiana, Illinois, Indiana, Colorado, and other states experience intense outbreaks.</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>One thing to note about hospitalization data: New Jersey, Illinois, and California are all including  different sets of people in their numbers. We are reporting the <em>lower</em> numbers where they are available (as in CA, which breaks out confirmed and suspected COVID-19 cases).</p>
+
+    </div>
+  
+    <h2>April 9, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Total deaths reached 16,399.</p>
+<p>States reported 1,904 COVID-19 deaths today, about the same level as the past two days. https://t.co/xiwdUw42BF</p>
+
+    </div>
+  
+    <h2>April 10, 2020, 2:33 PM PDT</h2>
+    <div>
+      <p>New York continues to dominate the numbers, as you can see in these tiny charts of COVID-19 deaths in hard-hit states. https://t.co/79VARUjNxE</p>
+
+    </div>
+  
+    <h2>April 10, 2020, 2:38 PM PDT</h2>
+    <div>
+      <p>Here's the comparison between New York and the rest of the states and territories.</p>
+<p>43% of the known lives lost due to COVID-19 have come in New York. https://t.co/cf4tTXbd4Y</p>
+
+    </div>
+  
+    <h2>April 11, 2020, 2:13 PM PDT</h2>
+    <div>
+      <p>Known COVID-19 deaths also remained near the level they've been at for the past week. https://t.co/Mf5aQmV0Tj</p>
+
+    </div>
+  
+    <h2>April 12, 2020, 8:59 AM PDT</h2>
+    <div>
+      <p>So, yesterday, we made the tough decision to begin to standardize the way we capture state data to sum testing-confirmed cases of COVID-19 and suspected cases in our &quot;currently hospitalized&quot; numbers.</p>
+
+    </div>
+  
+    <h2>April 12, 2020, 8:59 AM PDT</h2>
+    <div>
+      <p>This is not an across-the-board methodological change. For cases, like Wyoming, where the state reports confirmed and suspected ~cases~ of COVID-19, we will report only the &quot;confirmed&quot; in our case count. This is just about current hospitalizations.</p>
+
+    </div>
+  
+    <h2>April 15, 2020, 9:35 AM PDT</h2>
+    <div>
+      <p>We have an announcement. We’re joining up with our @TheAtlantic colleague @DrIbram and his @AntiracismCtr to begin tracking racial data about COVID-19 in the US. https://t.co/EaCC48mrQh</p>
+
+    </div>
+  
+    <h2>April 15, 2020, 9:35 AM PDT</h2>
+    <div>
+      <p>In the next couple weeks, we will have a dedicated page, the COVID Racial Data Tracker, that will allow anyone to explore these dynamics of the outbreak, using both the data we collect and other datasets that enrich our understanding of the disparities that we’re seeing.</p>
+
+    </div>
+  
+    <h2>April 15, 2020, 9:35 AM PDT</h2>
+    <div>
+      <p>We’ll also continue to do our own analyses and publish them in ongoing coverage @TheAtlantic. One early example was Vann Newkirk's look at COVID-19's threat to the south: https://t.co/tjsinZqc9U</p>
+
+    </div>
+  
+    <h2>April 20, 2020, 10:53 PM PDT</h2>
+    <div>
+      <p>@rosnovsky @cdc The main discrepancy is in how New York City and New York State are reporting presumed COVID deaths. Both methods are defensible, just different. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 21, 2020, 2:21 PM PDT</h2>
+    <div>
+      <p>Unlike previous highs, this spike was <em>not</em> driven by New York data, but the rest of the country.</p>
+<p>Note, too, this data does not include <em>presumptive</em> deaths from COVID in New York City (as the state has not provided that number yet). https://t.co/25cQIoGCkY</p>
+
+    </div>
+  
+    <h2>April 22, 2020, 2:46 PM PDT</h2>
+    <div>
+      <p>However, when comparing COVID-19 deaths to flu deaths, it's important to make sure the comparison is rigorous.</p>
+<p>These two threads explain more:</p>
+<p>https://t.co/0leqxE1CUv</p>
+<p>https://t.co/cC5azpcOwk</p>
+
+    </div>
+  
+    <h2>April 24, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>States reported 1,772 new COVID-19 deaths today, and you can see a familiar falling curve in the reported death data over the week.</p>
+<p>The outbreak in New York again made up less than a quarter of US deaths for the day, down from a high of around 50% of the US daily deaths. https://t.co/cdi93XJtHK</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:33 PM PDT</h2>
+    <div>
+      <p>Deaths rose today in our dataset by 2,194 to 47,980.</p>
+<p><em><strong>Note</strong></em> New York City is reporting 4,453 more confirmed and probable COVID-19 deaths than the state government is for the city.</p>
+<p>If you add those deaths into our dataset, our count (52k) falls between the CDC and JHU. https://t.co/dznPM4bhln</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 4:06 PM PDT</h2>
+    <div>
+      <p>In collaboration with our partners at the @AntiracismCtr,  we'd like to announce the beta release of race and ethnicity data for the COVID Racial Data Tracker.</p>
+<p>https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 4:06 PM PDT</h2>
+    <div>
+      <p>We're working on other presentations, but in the meantime, we wanted to share the COVID-19 data that we've been gathering.</p>
+<p>Here's the easiest way to see it:
+https://t.co/xkBw1tDMZg</p>
+
+    </div>
+  
+    <h2>April 29, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>However, the death toll also reached a new daily high of 2,700. The cumulative number of deaths in our dataset have reached over 55,000.</p>
+<p>That does not include 5,302 probable COVID-19 deaths reported by New York City but not New York State. https://t.co/mhQucj2n7V</p>
+
+    </div>
+  
+    <h2>April 29, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>We also wanted to call your attention to the beta release of the COVID Racial Data Tracker, in collaboration with @AntiracismCtr. We're actively taking feedback, building systems, and should have a fuller site soon.</p>
+<p>https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>April 29, 2020, 9:41 PM PDT</h2>
+    <div>
+      <p>We just updated the race and ethnicity data in the COVID Racial Data Tracker and we're happy to report progress.
+Only four states do not report some kind of race/ethnicity data.</p>
+<p>They are: North Dakota, Nebraska, Nevada, and South Dakota.</p>
+<p>https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:34 PM PDT</h2>
+    <div>
+      <p>1,651 deaths were reported, bringing the total in our dataset to 60,710. This does not include 5,126 probable COVID-19 deaths reported by NYC, but not by New York State.</p>
+<p>We're working on separate accounting of lab-confirmed and probable deaths for all states where we can do so. https://t.co/J7rBzYS4RZ</p>
+
+    </div>
+  
+    <h2>May 6, 2020, 4:17 PM PDT</h2>
+    <div>
+      <p>As part of our work tracking COVID-19, we assiduously record which states report what data. We've turned this into a comprehensive grading system, which you see mapped below.</p>
+<p>And here is the data the map is based on:
+https://t.co/gLduTdL9FY https://t.co/Gxko9E01k9</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 11:45 AM PDT</h2>
+    <div>
+      <p>In Nebraska: Hall, Dakota, Colfax, and Dawson counties all have COVID-19 hotspots. Local reporting has tied these outbreaks to meatpacking plants.</p>
+<p>Hall, Dawson, and Dakota:
+https://t.co/y2gNSInW7J</p>
+<p>Colfax: https://t.co/zBAODGPUw5</p>
+
+    </div>
+  
+    <h2>May 9, 2020, 2:03 PM PDT</h2>
+    <div>
+      <p>There were 1,529 newly reported deaths, pushing cumulative deaths over 73k in our dataset. This does not  include 5,313 probable COVID-19 deaths reported by New York City, but not New York State.</p>
+<p>We will have more details on how we'll be tracking deaths going forward this week. https://t.co/xQ91OaysOy</p>
+
+    </div>
+  
+    <h2>May 10, 2020, 2:47 PM PDT</h2>
+    <div>
+      <p>Reported deaths were quite low—979—as they have been on Sundays and Mondays in recent weeks.</p>
+<p>In this dataset, which does not include 5,178 probable COVID-19 deaths reported by New York City but not New York State, we've tracked 74,270 deaths. https://t.co/UR6jPlo3wh</p>
+
+    </div>
+  
+    <h2>May 11, 2020, 2:54 PM PDT</h2>
+    <div>
+      <p>The daily death toll fell to its lowest since March: 837.</p>
+<p>As you can see, Monday data tends to be low, then the numbers tick back up Tuesday.</p>
+<p>Note: this chart does not include 5,178 probable COVID-19 deaths, reported by NYC, but not reported by New York State. https://t.co/pNxNB306XB</p>
+
+    </div>
+  
+    <h2>May 12, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>The  death toll today is 1,510. That brings the total deaths in our dataset over ~77 thousand.</p>
+<p>This does not include 5,136 probable COVID-19 deaths reported by NYC, but not New York State, nor does it address excess mortality as reported by the CDC here:
+https://t.co/4ybLKisg6u https://t.co/upQWMTFN37</p>
+
+    </div>
+  
+    <h2>May 17, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>It's important to recognize that death data lags, in some cases more than 10 days.</p>
+<p>And given how long COVID-19 takes to kill people, these low death numbers are probably a reflection of the infections that occurred 3-4-5 weeks ago (i.e. mid-to-late April).</p>
+
+    </div>
+  
+    <h2>May 21, 2020, 12:10 PM PDT</h2>
+    <div>
+      <p>In partnership with the @AntiracismCtr, we’re proud to announce the first official release of our COVID Racial Data Tracker: https://t.co/Ek3yOTKBgq</p>
+<p>The site provides a snapshot of the disparities that we’re seeing reported by states. The whole dataset is also available. https://t.co/fwK4rSS6D6</p>
+
+    </div>
+  
+    <h2>May 21, 2020, 2:41 PM PDT</h2>
+    <div>
+      <p>Over 1500 deaths were reported. The 7-day average fell under 1300 deaths for the first time since April 7.</p>
+<p>Still, the nation is likely to pass 100,000 probable and confirmed COVID-19 deaths within a week. https://t.co/DB7sbjGSGa</p>
+
+    </div>
+  
+    <h2>May 21, 2020, 2:52 PM PDT</h2>
+    <div>
+      <p>Finally, we launched the first real version of the COVID Racial Data Tracker in partnership with @DrIbram and the @AntiracismCtr.</p>
+<p>This has been a major effort by our project's volunteers—and we hope it will be useful to communities across the country.</p>
+<p>https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>May 23, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>So far, keeping in mind caveats about the accuracy of these tests... 9% of the antibody tests have been positive.</p>
+<p>This does not mean that 9% of the population has had COVID.</p>
+<p>Perhaps the best interpretation is:
+9% of people who thought they had COVID at some point actually did.</p>
+
+    </div>
+  
+    <h2>May 23, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>1,178 deaths were reported. States have now reported 91,261 deaths.</p>
+<p>New York City also reports 4,735 probable COVID-19 deaths that New York State still does not record. https://t.co/9KeTXrUbOD</p>
+
+    </div>
+  
+    <h2>May 27, 2020, 9:19 AM PDT</h2>
+    <div>
+      <p>You can get the latest from The COVID Tracking Project delivered straight to your inbox.</p>
+<p>Sign up to get updates and our weekly newsletter here: https://t.co/aaJlWd6YUZ</p>
+
+    </div>
+  
+    <h2>May 27, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>Deaths rose to 1259, but the 7-day average fell under 1000 for the first time since 4/4.</p>
+<p>States have reported 94,352 deaths. New York City reports an additional 4,752 probable COVID-19 deaths. Together, that's 99,104 people.</p>
+<ul>
+<li>For comparison *</li>
+</ul>
+<p>Hopkins: 100,407
+NYT: 100,046 https://t.co/PM69D2mQLy</p>
+
+    </div>
+  
+    <h2>June 1, 2020, 3:17 PM PDT</h2>
+    <div>
+      <p>For six weeks, we've been tracking COVID race and ethnicity data. Not all states report all the data, but we know this:</p>
+<p>At a minimum, 21,750 Black lives have been lost.</p>
+<p>And just look at the counties with the highest death rates.</p>
+<p>https://t.co/hTyV0MA5tA https://t.co/Xk3x77QX7z</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>1/2 A list of states/territories in which African American COVID deaths substantially exceed the community's share of the population:</p>
+<p>Alabama
+Arkansas
+California
+Colorado
+Connecticut
+D.C.
+Florida
+Georgia
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Maryland
+Michigan
+Mississippi</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>For the full details, see our COVID Racial Data Tracker, a partnership with @DrIbram's @AntiracismCtr:</p>
+<p>https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 3:12 PM PDT</h2>
+    <div>
+      <p>States reported just under 1000 deaths, not far from the 7-day average.</p>
+<p>Our data set shows over 101 thousand deaths reported by states, not including 5,783 probable and confirmed COVID deaths reported by NYC but not (yet) by NY state. https://t.co/UcyaqRRq2M</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>In partnership with the @AntiracismCtr, we've been gathering data race and ethnicity data.</p>
+<p>The early upshot: &quot;COVID-19 outcomes have been much worse for Black people nationally and in many states where we have enough data to draw initial conclusions.&quot;</p>
+<p>https://t.co/PO4rd5EpYF</p>
+
+    </div>
+  
+    <h2>June 5, 2020, 8:37 AM PDT</h2>
+    <div>
+      <p>Sign up for our newsletter to get updates from The COVID Tracking Project and opportunities to take action for better data: https://t.co/aaJlWd6YUZ</p>
+
+    </div>
+  
+    <h2>June 11, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>A weekly look at what we're seeing in the COVID data by @kissane and @PeterJ_Walker: https://t.co/Z9UluhCtsm https://t.co/SUYZ3zqCXV</p>
+
+    </div>
+  
+    <h2>June 12, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>States reported 751 new deaths, right about the 7-day average.</p>
+<p>A reminder that this chart does not include ~6k probable and confirmed COVID-19 deaths reported by New York City, but not yet by New York State. https://t.co/C9QvtUX5zV</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We are seeing new hospitalization highs in Texas, Arizona, and North Carolina. We're showing Louisiana here as well for context, since it had an early COVID-19 outbreak. https://t.co/BvbW8DYEyt</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>States reported 695 new deaths, trending down slightly.</p>
+<p>A reminder that this chart does not include ~6k probable and confirmed COVID-19 deaths reported by New York City, but not yet by New York State. https://t.co/iFdrYzwafW</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 10:37 AM PDT</h2>
+    <div>
+      <p>Sign up here for newsletter updates from The COVID Tracking Project and opportunities to get involved: https://t.co/aaJlWd6YUZ</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 1:37 PM PDT</h2>
+    <div>
+      <p>Here's your weekly update on what we're seeing in the COVID-19 data:
+https://t.co/XiDqdOUlAS https://t.co/boUf0j95ey</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>In COVID-19 metrics, &quot;probable&quot; cases are one of the most complex data points. We took a very close look at the official guidelines and the numbers to date and turned up some interesting details.</p>
+<p>https://t.co/vlTWx0a8b3</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 2:20 PM PDT</h2>
+    <div>
+      <p>That is a lot of cases. So are these just antibody tests? Nope. A positive antibody test gets you only halfway to being an official probable case. The definition is actually quite strict and requires more than one kind of evidence unless a doctor decides that you died of COVID-19</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:51 AM PDT</h2>
+    <div>
+      <p>Instead, we’ll be highlighting Black-led organizations doing the work to understand and respond to COVID. Give attention, give money, celebrate the hard work of keeping the people safe and healthy in a society structured by anti-Blackness.</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:51 AM PDT</h2>
+    <div>
+      <p>First, shoutout to our colleagues right here on the COVID Racial Data Tracker—@dribram, @jsssms, and Adeline Gutierrez Nuñez, and the team at the new BU Center for Antiracist Research.
+https://t.co/eF4c90UL2b</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:52 AM PDT</h2>
+    <div>
+      <p>The whole crew @data4blacklives led by @yeshican have been on COVID since the beginning, and have released important arguments about how to frame the disproportionate impacts of the disease on Black communities.
+https://t.co/EHjQlGhjDu
+https://t.co/rKpjlPEFna</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:53 AM PDT</h2>
+    <div>
+      <p>@BlackDigitalHum leads @Black_COVID, “a rapid response task force &amp; a critical Black Digital Humanities Collective that connects Black Diasporic communities impacted by the pandemic to their data.” They have a bunch of worthwhile projects in the works. https://t.co/ncTzcIGwyT</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:54 AM PDT</h2>
+    <div>
+      <p>@sandylocks is a celebrated legal scholar. She’s been hosting Under the Blacklight at the @AAPolicyForum to look at “the intersectional vulnerabilities that COVID lays bare.” https://t.co/QGrwVHYbmM</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:55 AM PDT</h2>
+    <div>
+      <p>@policylink, founded by @agb4equity and now led by @mikemcafee06, has been working to focus attention on “the racial implications of the crisis” and advance policy solutions in their COVID-19 &amp; Race project https://t.co/y819CO1zZK</p>
+
+    </div>
+  
+    <h2>June 19, 2020, 11:56 AM PDT</h2>
+    <div>
+      <p>And thank you also to the individual essential @covid19tracking volunteers who go out and get all the data for us every day, holiday or not. Without their labor, so many projects and organizers would lack the data needed to understand how COVID affects communities.</p>
+
+    </div>
+  
+    <h2>June 21, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>@Aintropy Per-capita numbers are obviously important—and we use them in some cases. But because COVID can spread quickly, absolute numbers are also important.</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 4:02 PM PDT</h2>
+    <div>
+      <p>Here's the continuing best news: deaths have not turned upward.</p>
+<p>And the death numbers today and yesterday have been too high as they reflect Delaware (yesterday) and Arizona (today) rectifying undercounting of COVID-19 deaths from previous days. https://t.co/lvzuaLEs18</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:38 PM PDT</h2>
+    <div>
+      <p>The 7-day average of COVID-19 deaths is now 560.</p>
+<p>But with this many cases piling up, it seems unlikely to keep falling for much longer. https://t.co/9rhtuXcwPj</p>
+
+    </div>
+  
+    <h2>June 27, 2020, 1:39 PM PDT</h2>
+    <div>
+      <p>It's not entirely clear how the record numbers of new cases will translate into deaths from COVID-19.</p>
+<p>Here's why it's complicated:
+https://t.co/ZXFERIyS6I https://t.co/BgyADNSieh</p>
+
+    </div>
+  
+    <h2>June 28, 2020, 3:55 PM PDT</h2>
+    <div>
+      <p>Florida’s refusal to report current COVID-19 hospitalization numbers leaves us without a critical data point for one of the worst outbreaks of the summer surge. https://t.co/XTzKg8cY7j</p>
+
+    </div>
+  
+    <h2>June 28, 2020, 4:27 PM PDT</h2>
+    <div>
+      <p>And finally, the only good chart in the deck.</p>
+<p>The 7-day average for COVID-19 deaths is now nearly down to 500.</p>
+<p>For a deeper understanding of these numbers, see this post:
+https://t.co/ZXFERIyS6I https://t.co/DyiKjmUW6S</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 9:00 AM PDT</h2>
+    <div>
+      <p>Percent positive has been a critically important COVID-19 metric, but flipping the fraction can help us communicate more persuasively. @juledurg @jessicamalaty and @twang0518 explain why tests-per-positive is such a valuable metric.</p>
+<p>https://t.co/cqICNEbV7V https://t.co/bNTAXx9APF</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 5:08 PM PDT</h2>
+    <div>
+      <p>The number of currently hospitalized COVID patients in Texas surpassed California today. https://t.co/O4Kqm7zD7V</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. New cases and tests were near the record highs set yesterday.</p>
+<p>But the biggest milestone today is that the 7-day average for COVID-19 deaths reported by states fell below 500. https://t.co/EX1mLr1dQ0</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>That said, the dynamics of COVID-19 deaths in this second surge remain complicated.</p>
+<p>Deaths are not falling everywhere. In Arizona, for example, daily average deaths have tripled since June. https://t.co/8VQEnFCUKR</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:04 PM PDT</h2>
+    <div>
+      <p>In Texas, too, daily average deaths have risen ~50% in the last two weeks.</p>
+<p>Read more on the complexities of lag times, changing demographics, and COVID-19 deaths here: https://t.co/ZXFERIyS6I https://t.co/mVKwD3RdbM</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 9:45 AM PDT</h2>
+    <div>
+      <p>To understand the severity of the COVID surge in the United States, we need more than data about deaths, which lags.</p>
+<p>We also need hospitalization data, which was spotty in the spring. Now, the data is much more complete, @whet and @cohokelly explain:</p>
+<p>https://t.co/eNW4nlKcDX https://t.co/qa7bL1t23w</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 9:52 AM PDT</h2>
+    <div>
+      <p>Back on 4/5, only 13 states reported how many people were hospitalized with confirmed COVID infections. A bunch of others reported &quot;cumulative hospitalizations,&quot; which is useful but different. We couldn't assemble the numbers into a national statistic.</p>
+<p>https://t.co/mOFkfErBg9</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:28 PM PDT</h2>
+    <div>
+      <p>Texas, meanwhile, set a new record for the number of patients currently hospitalized with COVID-19. https://t.co/EtGME0RyqA</p>
+
+    </div>
+  
+    <h2>July 5, 2020, 2:30 PM PDT</h2>
+    <div>
+      <p>Last data point today: Even with the holiday weekend, Florida’s numbers are alarming. The state has reported more than 10,000 new cases three of the last four days. Still no data on current COVID-19 hospitalizations in FL. https://t.co/3CQQ1eEjvG</p>
+
+    </div>
+  
+    <h2>July 6, 2020, 3:52 PM PDT</h2>
+    <div>
+      <p>Current COVID-19 hospitalizations continued to rise through the weekend.</p>
+<p>This trend persisted even though many states do not report complete numbers, and a few—Florida, Hawaii, Idaho, and Kansas—do not report any at all. https://t.co/53dFYurzdA</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>The national number of people currently hospitalized with COVID-19 is still climbing, even without data from the big outbreak in Florida.</p>
+<p>(Last week, FL said current hospitalization data was on the way, but we haven’t seen it reported yet. https://t.co/iR1r8xVIEM) https://t.co/yyREzTkPYz</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>Lastly, apologies to the great state of Idaho, which is indeed publishing current COVID-19 hospitalization data, and which we unfairly criticized yesterday. Thank you, Idaho! https://t.co/dTyhn7pZJC</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 5:04 PM PDT</h2>
+    <div>
+      <p>California set a new record for cases, but some of it was backlog from LA County. COVID-19 hospitalizations are at an all-time high, too. https://t.co/9joV9UASP0</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 7:27 AM PDT</h2>
+    <div>
+      <p>We know that public health officials are in an unprecedented situation and we deeply appreciate their dedication. We know putting out up-to-date COVID data is difficult.</p>
+<p>And we've identified six changes Florida could make to maximize the usefulness of their data. https://t.co/Hu3AJ4DQ76</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:48 PM PDT</h2>
+    <div>
+      <p>We have released two new API fields, breaking COVID-19 death counts into probable and confirmed categories for the 24 states that offer them.<br>
+https://t.co/Nmy4J3uAAc</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:48 PM PDT</h2>
+    <div>
+      <p>While doing the research for this change, we learned more about the two different ways states determine COVID-19 deaths. Both have merits: one is a little more accurate, the other is a lot faster. CDC advises one, but uses both. States are in a bind.</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>On the other end of the country, South Carolina is showing a clear trend of increasing numbers of COVID deaths. https://t.co/CYxgFrOx3G</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 2:53 PM PDT</h2>
+    <div>
+      <p>The biggest change in the data is in the number of COVID-19 patients who are currently hospitalized. With the addition of Florida's 7k hospitalizations, we’re now over 51,000. We have not seen those numbers since the first week of May—and they do not seem likely to decline soon. https://t.co/tRvO4ypKGF</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Florida’s data is for “hospitalizations with primary diagnosis of COVID.” We're unsure how this definition compares to other states' reporting. Many of the local FL journalists who pushed so hard for this data release are trying to get clarity about which patients that includes.</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 2:59 PM PDT</h2>
+    <div>
+      <p>For the record, we compile current hospitalizations for 48 states and DC now. There are variations in how states count their COVID-19 patients. Because these numbers measure strain on the hospital system, we record both confirmed and suspected COVID-19 hospitalizations.</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>A better milestone. New York City saw at least one COVID-19 death on every day since mid March. That's 120+ days. Yesterday, after months of communal effort by the people of the city, New York City finally reported 0 new deaths.</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>In Texas, the number of currently hospitalized COVID-19 patients has been over 10k for the last three days. New York, at its peak, had 18.8k hospitalized COVID-19 patients. https://t.co/vhn6Z512DU</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 2:50 PM PDT</h2>
+    <div>
+      <p>Our update is published. As expected, most numbers were lower over the last 2 days. Current hospitalizations, however, do not display the same weekend effect. There are almost 54k COVID-19 patients in hospitals across the US. The 7-day average for daily deaths increased modestly. https://t.co/rh0ZzUsh1m</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>In Florida, reporting on tests, cases, and deaths dropped as expected from the weekend, but the brand-new current COVID-19 hospitalization number broke 8,000 today and provides a stable snapshot of the outbreak in the state. https://t.co/K1dw5NqG3N</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>The recent rise in deaths is not equally distributed across the US. Where cases have risen most rapidly, deaths have followed suit.</p>
+<p>Note: the West’s death number is impacted by Washington State removing 39 deaths from their counts that they determined were not from COVID-19. https://t.co/Feh8IVK6Oh</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>Six states saw a rise of over 100 (FL, CA, TX, AZ, GA, TN) in their number of currently hospitalized COVID-19 patients. All six set new record highs for their states. https://t.co/1qvm9AEdMh</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:29 PM PDT</h2>
+    <div>
+      <p>The COVID Racial Data Tracker lets you break down the numbers by race and ethnicity, which is crucial for understanding what's happening with the pandemic in the US: https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>July 15, 2020, 2:58 PM PDT</h2>
+    <div>
+      <p>Alabama set a new record for deaths (47), breaking their previous record, which was set yesterday. Oklahoma set a new record for cases today, breaking 1000 for the first time. Both states also set new records for hospitalized COVID-19 patients. https://t.co/pbOJ2T5wLi</p>
+
+    </div>
+  
+    <h2>July 16, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Our updates is published. States reported a record number of tests (831k) and cases (71k). At 977, the reported death count is the highest since May 29. Patients hospitalized with COVID-19 rose to a level we haven’t seen since April 23. https://t.co/wiybSfnetX</p>
+
+    </div>
+  
+    <h2>July 16, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>Eight Southern states outside Texas and Florida currently have over 1,000 patients hospitalized with COVID-19. https://t.co/3JDRdkdvTk</p>
+
+    </div>
+  
+    <h2>July 17, 2020, 11:36 AM PDT</h2>
+    <div>
+      <p><em><strong>An announcement for our data users</strong></em></p>
+<p>We're proposing a new, versioned API for our COVID data that improves time-to-release of data, prevents changes from breaking well-built applications, and gives space for things like computed fields. RFC here:</p>
+<p>https://t.co/rW3tyGSrUB</p>
+
+    </div>
+  
+    <h2>July 17, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>As of today, we’re still not sure how much the new HHS guidelines for hospital data reporting will affect the data states report. So far, it looks like two states, Idaho and Missouri, have run into trouble. Here’s what the MO Hospital Assoc. had to say:
+https://t.co/ukf3jezpos https://t.co/2kYAMZPnqz</p>
+
+    </div>
+  
+    <h2>July 17, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>The Idaho Statesman has more on the situation with Idaho’s state-level access to hospital data. Their most recent hospital data was entered yesterday, though it reflects 7/13—this is a standard lag for this ID data point.
+https://t.co/SVoIDrIF72</p>
+
+    </div>
+  
+    <h2>July 17, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>Our national current COVID-19 hospitalizations number did not go down today, but it also didn’t go up as much as it has over the last few days. We won’t really know how much this number is being affected by changes to the reporting guidelines for several more days. https://t.co/xSJOqgM73L</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. 762k tests recorded today in the US. 65k new cases. 57k people currently reported to be hospitalized with COVID-19. (More on that shortly.)</p>
+<p>States reported 872 COVID-19 deaths today. https://t.co/uNlkVon7jI</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>Here’s the weekly look. 5.4m tests this week in the US, and states reported 461k new cases.</p>
+<p>5,194 COVID-19 deaths were reported this week. https://t.co/fzGUxKFYNK</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>Current COVID-19 hospitalization is one of the most useful data points we have for measuring the pandemic’s effects. This figure has been rising for the last month, and now includes Florida’s hospital data. https://t.co/TRrpKtmquj</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>Unfortunately, today’s current hospitalization number is missing quite a few states.</p>
+<p>Yesterday we noted that Idaho and Missouri had stopped updating hospital data while working to comply with the new HHS reporting directive https://t.co/DXKeDH4HP7</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>Today, ID is back, but we’re missing hospitalization updates from states including AL, AR, CT, IA, LA, MI, MO, MS, NH, OR, RI, SC, and WY. Some due to the new HHS directive, others because it’s the weekend.</p>
+<p>We will keep reporting on the availability of this data.</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:57 PM PDT</h2>
+    <div>
+      <p>This week, 19 states posted their highest number of new COVID-19 cases reported in a single day. Three of them hit those record highs today. https://t.co/FhWsXisX3U</p>
+
+    </div>
+  
+    <h2>July 19, 2020, 2:45 PM PDT</h2>
+    <div>
+      <p>Most of you know this by now, but there is a very strong weekend effect that hits on Sundays and Mondays, especially in the reporting of COVID-19 deaths. Sundays are highlighted in red below. https://t.co/fpaDhxolj0</p>
+
+    </div>
+  
+    <h2>July 19, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Here’s your look at new COVID-19 cases around the nation. The overall trends haven’t changed much this week. https://t.co/u7kUUWG1TJ</p>
+
+    </div>
+  
+    <h2>July 20, 2020, 11:11 AM PDT</h2>
+    <div>
+      <p>UPDATE: Alabama’s reporting returned to normal, indicating that its hospitalizations did not drastically fall yesterday. Once the error was fixed, the national number of patients hospitalized with COVID-19 rose. https://t.co/vcM9C9CctX</p>
+
+    </div>
+  
+    <h2>July 20, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Populous states can generate large case counts, but if you look at the new cases per million today, 9 smaller states are showing more cases per million than California or Texas: AL, AR, ID, KS, KY, LA, MS, NV, and SC. https://t.co/1pYW6cWRaS</p>
+
+    </div>
+  
+    <h2>July 21, 2020, 2:50 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 63k new cases, about the same number as last Tuesday. They also recorded more than 1,000 deaths for the first time since May 29th. Today’s number of currently hospitalized (59k) COVID-19 patients is the third-highest in our data. https://t.co/Ekjdh0rtJV</p>
+
+    </div>
+  
+    <h2>July 21, 2020, 2:52 PM PDT</h2>
+    <div>
+      <p>The South continues to drive the rising number of COVID-19 deaths. Today, 58% of deaths reported were in that region. https://t.co/GtfhBPMXAM</p>
+
+    </div>
+  
+    <h2>July 22, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 70k cases today, the third-highest number we’ve seen. The country is nearing the peak level of COVID-19 patients hospitalized (~60k). States reported 1,126 deaths, and the 7-day average is now over 800, back to the levels of June. https://t.co/YZbulLnCvw</p>
+
+    </div>
+  
+    <h2>July 22, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>A note: we found a better official source of Alabama data. This pushed up the historical numbers of hospitalizations by ~400 in mid-April. Without that backfill, today would have set the new peak for hospitalized COVID-19 patients the U.S. Even so, today’s figure is 3rd all-time.</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 4:02 PM PDT</h2>
+    <div>
+      <p>Texas moved into the top 10 in the total number of COVID-19 deaths that the state has reported this year. Washington, hit hard early, has now fallen out of the top 20. https://t.co/XFiutAyId6</p>
+
+    </div>
+  
+    <h2>July 24, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>Some states continue to have issues reporting hospitalization data. We’ll touch on those problems later on in this thread. But in at least 16 states, more than 1,000 people are hospitalized with COVID-19. https://t.co/iyrbRKTFwV</p>
+
+    </div>
+  
+    <h2>July 24, 2020, 4:33 PM PDT</h2>
+    <div>
+      <p>Yesterday’s problems with COVID-19 hospitalization data continue today in CA and TX. Both states still warn that their hospitalization data is incomplete due to the changeover to HHS systems. We’ve carried over their hosp. data from Wednesday, before the warnings went up.</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 798k tests and 65k new cases of COVID-19.</p>
+<p>States reported 1,037 deaths today, which was our fifth day in a row of more than 1,000 COVID-19 deaths in the United States. https://t.co/g3dYnZZapt</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:43 PM PDT</h2>
+    <div>
+      <p>Here’s the weekly view. Test growth and especially case growth has slowed this week. Current hospitalizations rose this week despite problems getting the data from hospitals. States reported 6,297 COVID-19 deaths this week, up more than 1,000 from last week. https://t.co/aYDWeWA2bJ</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Another day of uneven current COVID-19 hospitalizations data. California and Texas are still not getting complete data from hospitals due to the HHS changeover. We’ve frozen their figures for now.</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>But here’s some great news about hospitalization data: We now have figures for current COVID-19 hospitalizations for 50 states and DC  + Guam and Puerto Rico. Once the data settles down from the systems changeover, this should be a very solid national number.</p>
+
+    </div>
+  
+    <h2>July 27, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>(*) Texas has begun using death certificates to count COVID-19 deaths, and has added 675 deaths to their cumulative total, only 44 of which are meant to be associated with today’s data update. https://t.co/WgUUlCBiJL</p>
+
+    </div>
+  
+    <h2>July 27, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>Once again, the state data on current COVID-19 hospitalizations is unstable. CA, SC, and TX have all posted notices stating their hosp. data is incomplete because of the HHS changeover. We’ve maintained the freeze on their hospitalization data again. More on that tomorrow.</p>
+
+    </div>
+  
+    <h2>July 28, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>Data on current COVID-19 hospitalizations has been unstable since July 15. We’ve written up everything we know about the problems hospitals and states are having, and about some unexpected discrepancies in the state and federal data:</p>
+<p>https://t.co/wLbFSPAfZW</p>
+
+    </div>
+  
+    <h2>July 28, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>COVID-19 data is complicated and easy to misunderstand. It's important to note that the HHS directive requiring hospitals to change reporting systems has <em>not</em> affected case and testing data, which comes from state health departments, not hospitals. More in the blog post above.</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 3:51 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 70k new cases of COVID-19, a solid 819k tests, and 1,529 COVID-19 deaths today.</p>
+<p>Our 7-day average for deaths is now over 1,000. https://t.co/P0L4w8Y6oq</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Our number of newly reported COVID-19 deaths includes 322 deaths in Texas, as the state reported today. However, Texas also removed 200+ deaths from its cumulative totals due to an “automation error,” so the cumulative counts on https://t.co/PZrmH4bl5Y reflect this adjustment.</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Texas recently changed the way it counts COVID-19 deaths, and also retroactively adjusts death counts by day of death. We report by date reported for all jurisdictions we track. Blog post with details coming later this week.</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>California is now #3 in the United States for total COVID-19 deaths, behind New York and New Jersey. We hope that declining case counts in CA will be reflected in falling deaths within the next 2-3 weeks. https://t.co/iGGokUAjGB</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>It’s the last day of July, which has seen a staggering resurgence of COVID-19 in America. It’s the worst month ever for cases and the average number of hospitalized people. And unsurprisingly, after declining since April, deaths rose this month. https://t.co/rVXTBAiHzG</p>
+
+    </div>
+  
+    <h2>August 1, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>We wrote up the change here—and will be watching for improvements to the data states collect, especially on the COVID Racial Data Tracker team.</p>
+<p>https://t.co/5oJOozYOX6 https://t.co/JKgCBLZPY0</p>
+
+    </div>
+  
+    <h2>August 3, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Texas did not report yesterday, so their numbers are for 2 days. They’ve also changed their method of counting deaths to a more comprehensive, but slower method. Read more about the complex accounting of COVID-19 deaths in our most recent blog post: https://t.co/J8sdFTYlug</p>
+
+    </div>
+  
+    <h2>August 4, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 696k tests and 52k cases. This marks the first time since July 13 that states reported fewer than 700k tests. There were 1,176 COVID-19 deaths reported. https://t.co/I4l8untf5A</p>
+
+    </div>
+  
+    <h2>August 4, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>Over two-thirds of national COVID-19 deaths were reported in the South today. The Northeast and Midwest each accounted for less than 10% of reported deaths. https://t.co/w4nzTXKNzZ</p>
+
+    </div>
+  
+    <h2>August 4, 2020, 3:29 PM PDT</h2>
+    <div>
+      <p>Data on current hospitalizations remains iffy. Today we saw hospitalization numbers in ID and NJ drop by ~50%, which seems unlikely to reflect reality. Some states with rising cases have dropping hosp. figures.</p>
+<p>Last week's post is likely still relevant: https://t.co/wLbFSPAfZW</p>
+
+    </div>
+  
+    <h2>August 6, 2020, 3:07 PM PDT</h2>
+    <div>
+      <p>The seven-day average of reported COVID-19 deaths has dropped slightly. It is difficult to know how long the trend will last. https://t.co/4TXuqoIPc9</p>
+
+    </div>
+  
+    <h2>August 7, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Georgia has consistently reported thousands of new cases each day—and has the fourth-largest number of hospitalized COVID-19 patients today, trailing only much larger states (CA, FL, TX). https://t.co/xtINB3o8bx</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:04 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 665k tests and 54k cases. 1,088 COVID-19 deaths were reported today, about 100 down from last Saturday. https://t.co/uiCUQJlNjh</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>It’s difficult to understand what’s happening with COVID-19 data right now, but we’re hoping to see better data soon as CA reporting problems are fixed, FL testing gets back up to speed, and hospital data improves nationally.</p>
+
+    </div>
+  
+    <h2>August 12, 2020, 4:28 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 658k tests, 56k cases, and 1,485 deaths. The number of currently hospitalized COVID-19 patients continues to fall.</p>
+<p>There are many data issues, which we note in this thread. https://t.co/sj1i95BrWd</p>
+
+    </div>
+  
+    <h2>August 13, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>The seven-day average of COVID-19 deaths has remained over 1,000 people per day since July 30. https://t.co/9Kyk3quAUs</p>
+
+    </div>
+  
+    <h2>August 14, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Only a few states currently count tests in Testing Encounters, but we hope to see more soon. Read a detailed explanation of this metric and all the ways state count COVID-19 tests here</p>
+<p>https://t.co/P58A4xRhyp</p>
+
+    </div>
+  
+    <h2>August 16, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 777k tests, 43k cases, and 619 COVID-19 deaths. Nationally, testing appears to be increasing again. https://t.co/pzTrTruOpg</p>
+
+    </div>
+  
+    <h2>August 16, 2020, 3:07 PM PDT</h2>
+    <div>
+      <p>The number of people states report to be hospitalized with COVID-19 continues to drop. 57% of COVID-19 hospitalizations are currently in the South, while the Northeast has fallen to 5%. https://t.co/Qe3yI7uZi7</p>
+
+    </div>
+  
+    <h2>August 18, 2020, 3:04 PM PDT</h2>
+    <div>
+      <p>The 7-day average of COVID-19 deaths remained above 1,000, as it has since July 30. However, reported deaths were lower than the previous Tuesday for the first time in 5 weeks.</p>
+<p>Tuesdays in dark grey below. https://t.co/TbO05c2vLu</p>
+
+    </div>
+  
+    <h2>August 19, 2020, 3:42 PM PDT</h2>
+    <div>
+      <p>We are pleased to see North Dakota reporting demographic data for cases, including race and ethnicity. Our COVID Racial Data Tracker will now be able to report some race and ethnicity for all 50 states.</p>
+
+    </div>
+  
+    <h2>August 20, 2020, 4:21 PM PDT</h2>
+    <div>
+      <p>Despite ongoing data issues, some key COVID-19 data points are finally beginning to trend positively. Read more in our Weekly Update: https://t.co/mC17OogYRz</p>
+
+    </div>
+  
+    <h2>August 24, 2020, 4:47 PM PDT</h2>
+    <div>
+      <p>The 7-day average for COVID-19 deaths dropped below 1,000 over the weekend. https://t.co/nm69R3fhFw</p>
+
+    </div>
+  
+    <h2>August 26, 2020, 4:36 PM PDT</h2>
+    <div>
+      <p>The number of patients currently hospitalized with COVID-19 has fallen 35% from the peak on July 24. https://t.co/iPuomIeXVU</p>
+
+    </div>
+  
+    <h2>August 29, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>The Washington State DOH noted that they will no longer report COVID-19 deaths over the weekend starting today. Weekend COVID-19 deaths in the state will be included in Monday and Tuesday counts.</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>Announcing our Long-Term Care COVID Tracker—the most comprehensive dataset on COVID-19 in long-term care facilities in the Unisted States.  https://t.co/HS5Vmi2XVB</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>Dating back to May 21, the Long-Term Care Tracker compiles all available information of COVID-19 cases and related deaths in long-term care facilities—nursing homes, skilled nursing facilities, assisted living facilities, and other care homes—and tracks both residents and staff.</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>COVID-19 deaths in US long-term care facilities have surpassed 73,000, representing 43% of all deaths and one out of every 28 LTC residents in America. And we’re still learning how states count and report these figures. https://t.co/Qkbv34GC6C https://t.co/Bz0rA44mF8</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>This illuminates a failure to protect these groups after COVID-19’s impact on them was known. The first US outbreak occurred at a Washington nursing home in late February, but @CMSGov didn’t set data collection requirements until May 8 and didn’t begin reporting data until June 1</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>A small fraction of deaths in long-term care facilities are staff members. Nonetheless, researchers estimate that, by year’s end, COVID-19 will make working in an LTC facility the most dangerous job in America in 2020.</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>34,000 LTC deaths have occurred since June. Even after COVID-19’s risks were established, facilities struggled to obtain rapid testing and personal protective equipment. One health economist calls the federal government’s response a “dismal failure.”</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 2:08 PM PDT</h2>
+    <div>
+      <p>Last week, about 1/3 of US reported COVID-19 deaths originated in long-term care facilities. https://t.co/HS5Vmi2XVB</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 2:08 PM PDT</h2>
+    <div>
+      <p>Shout out to Colorado, where the health department has clearly placed emphasis on reporting a full, granular dataset on COVID-19 outbreaks. Colorado's long-term care reporting should be a model for other states.</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 2:08 PM PDT</h2>
+    <div>
+      <p>Arizona and Missouri report only facilities with outbreaks, not actual cases, deaths, or facility names—this appears transparent, but doesn’t convey COVID-19’s true impact. County health depts (Maricopa, AZ and St. Louis, MO) provide both states’ most reliable source of LTC data.</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 2:08 PM PDT</h2>
+    <div>
+      <p>Much more information and analysis is available in @Whet’s meticulous deep dive on the impact of COVID-19 in long-term care facilities. https://t.co/Qkbv34GC6C</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>Announcing our Long-Term Care COVID Tracker—the most comprehensive dataset on COVID-19 in long-term care facilities in the United States. https://t.co/HS5Vmi2XVB</p>
+<p>https://t.co/AwQ5IU0iRk</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 694k tests, 42k cases, and 1,022 COVID-19 deaths. https://t.co/LXbeNV3xsf</p>
+
+    </div>
+  
+    <h2>September 2, 2020, 4:09 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 648k tests, 38k cases, and 1,025 COVID-19 deaths. https://t.co/gbwY4UeXUR</p>
+
+    </div>
+  
+    <h2>September 3, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>You can read more details on nationwide trends and our newest project, the Long-Term Care COVID Tracker, in our weekly post: https://t.co/zPI5wX1KB2</p>
+
+    </div>
+  
+    <h2>September 4, 2020, 3:56 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 903k tests, 52k cases, and 998 COVID-19 deaths. This is the first time deaths have been under 1,000 on a weekday (excluding Mondays) since July 18. https://t.co/TbNXig7MEY</p>
+
+    </div>
+  
+    <h2>September 5, 2020, 3:33 PM PDT</h2>
+    <div>
+      <p>Our daily update is published, with a few states not reporting over the long weekend. States reported 801k COVID-19 tests and 45k cases. The death toll was 915. https://t.co/iERV2wLMmu</p>
+
+    </div>
+  
+    <h2>September 11, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 766k tests, 45k cases, and 1,018 COVID-19 deaths. Numbers are beginning to rebound after the Labor Day holiday effect. https://t.co/nT4zoGU8tU</p>
+
+    </div>
+  
+    <h2>September 12, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 763k tests, 37k cases, and 663 COVID-19 deaths. Important caveat: this update does not include Texas’s daily data, which is still not in today. https://t.co/gRVcvQlarp</p>
+
+    </div>
+  
+    <h2>September 14, 2020, 4:20 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 743k tests, 30k cases, and 382 COVID-19 deaths. Important caveat: this update does not include Texas's daily data. Normal weekend lags are also reflected. https://t.co/tqTAdY78Dh</p>
+
+    </div>
+  
+    <h2>September 16, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 671k tests, 40k cases, and 1,202 COVID-19 deaths. Note: we've added 7-day averages to the nationwide overview. https://t.co/BQP32jcUi1</p>
+
+    </div>
+  
+    <h2>September 16, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>The increase in deaths is due to a backlogged addition of probable deaths in Arkansas. The state reported 147 COVID-19 deaths today, a noticeable uptick. We hope to see a backfilled time series moving forward.</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 9:48 AM PDT</h2>
+    <div>
+      <p>Michigan reports a disproportionate amount of COVID-19 cases and deaths among Black people. But state-level data does not reveal the ways COVID-19 is impacting local communities. To track this, @covid19tracking has followed a few cities since end of May. https://t.co/7plsSFrTgn</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 9:51 AM PDT</h2>
+    <div>
+      <p>Tracking city-level data allows us to see that 48% of Black people who have died from COVID-19 in Michigan are from Detroit. But the decisions that individual jurisdictions make can obscure the scale of this impact. https://t.co/N7Ex0uSP3C</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 9:54 AM PDT</h2>
+    <div>
+      <p>When we add Detroit back into the equation, it reveals that 60% of Michigan’s COVID-19 deaths among Black people happened in Wayne County. The current reporting system obscures the true impact of COVID-19 within the county, and on the state’s Black population. https://t.co/FJX27D97MW</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 9:57 AM PDT</h2>
+    <div>
+      <p>Localized analysis will continue to be key in identifying which communities are disproportionately impacted by COVID-19. We plan to release our dataset spanning 64 major metro areas in the near future. It will include ZIP code-level data, along with race and ethnicity data.</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 12:43 PM PDT</h2>
+    <div>
+      <p>Update for our data users - we continued to implement changes to our original totalTestResults API field, resulting in a ~600k cumulative test increase since March.</p>
+<p>We updated test totals for 14 states: AK, AL, AR, AS, CA, DC, GA, ID, KY, MN, NH, SD, VA, and WA.</p>
+
+    </div>
+  
+    <h2>September 21, 2020, 3:38 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 720k tests, 31k cases, and 287 COVID-19 deaths. https://t.co/yIhkWuGYJ9</p>
+
+    </div>
+  
+    <h2>September 21, 2020, 3:39 PM PDT</h2>
+    <div>
+      <p>Daily numbers from Texas included a backlog of 8,000 COVID-19 cases. We removed the historical count from the daily value for trend consistency, but have included them in our cumulative numbers on the website. https://t.co/W2Q4CGocJU</p>
+
+    </div>
+  
+    <h2>September 22, 2020, 4:08 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 766k tests, 35k cases, and 821 COVID-19 deaths. https://t.co/oYKovA3ZD1</p>
+
+    </div>
+  
+    <h2>September 22, 2020, 4:13 PM PDT</h2>
+    <div>
+      <p>Several sites tracking COVID-19 hit a grim milestone today: more than 200,000 deaths since the pandemic began. Our figures haven’t yet reached that level. Here’s why. https://t.co/21z83bn3eA</p>
+
+    </div>
+  
+    <h2>September 23, 2020, 4:10 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 843k tests, 38k cases, and 1,138 COVID-19 deaths. https://t.co/yf9JeoDMqB</p>
+
+    </div>
+  
+    <h2>September 23, 2020, 4:20 PM PDT</h2>
+    <div>
+      <p>Test positivity is extremely useful, but it has also become one of the most commonly misunderstood metrics for monitoring the COVID-19 pandemic. Here's an interactive look at what it really means. https://t.co/4EJkZ6k2DM</p>
+
+    </div>
+  
+    <h2>September 30, 2020, 4:22 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 784k tests, 44k cases, and 1,061 COVID-19 deaths. https://t.co/lpLvb74qYu</p>
+
+    </div>
+  
+    <h2>October 2, 2020, 4:06 PM PDT</h2>
+    <div>
+      <p>Our daily update is published.</p>
+<p>States reported 1.1 million tests, 50k cases, and 835 deaths. 31k patients are currently hospitalized with COVID-19.</p>
+<p>This is our highest recorded test day ever https://t.co/YUslwXmh7Q</p>
+
+    </div>
+  
+    <h2>October 3, 2020, 3:24 PM PDT</h2>
+    <div>
+      <p>Our daily update is published.</p>
+<p>States reported 976k tests, 48k cases, and 740 deaths.</p>
+<p>30k patients are currently reported hospitalized with COVID-19. https://t.co/L7YscYAkkz</p>
+
+    </div>
+  
+    <h2>October 4, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>Our daily update is published.</p>
+<p>States reported 935k tests, 38k cases, and 361 deaths.</p>
+<p>30k patients are currently reported hospitalized with COVID-19. https://t.co/gpqom0bSt4</p>
+
+    </div>
+  
+    <h2>October 5, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 952k tests, 38k cases, and 327 deaths. 30k patients are currently reported hospitalized with COVID-19. https://t.co/Md96TwZaQf</p>
+
+    </div>
+  
+    <h2>October 6, 2020, 2:22 PM PDT</h2>
+    <div>
+      <p>Interested in COVID data? Help us collect official testing, outcomes, race and ethnicity, and long-term care numbers. Also needed: web designers and developers, journalists, scientists, and healthcare professionals. Apply at https://t.co/GknhLkhCQq to join the project community.</p>
+
+    </div>
+  
+    <h2>October 6, 2020, 4:01 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 815k tests, 39k cases, and 635 deaths. 31k patients are currently reported hospitalized with COVID-19. https://t.co/hmkSE5ldJJ</p>
+
+    </div>
+  
+    <h2>October 7, 2020, 4:17 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 851k tests, 51k cases, and 916 deaths. Montana and South Dakota both hit record high COVID-19 case counts today. https://t.co/n3mhCcvVFF</p>
+
+    </div>
+  
+    <h2>October 7, 2020, 4:22 PM PDT</h2>
+    <div>
+      <p>States reported 32k patients are currently hospitalized with COVID-19. Trends in the midwest, particularly in Wisconsin, are worrisome. https://t.co/kc1EioHmNC</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 2:05 PM PDT</h2>
+    <div>
+      <p>You’ve probably heard about test positivity—a powerful metric that can reveal the percentage of COVID-19 tests coming back positive. This metric comes with some pretty big caveats. Let’s break them down: https://t.co/JaJmSS7Vc6</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>Until every state reports this most basic COVID-19 data in the same way, direct test positivity comparisons across states will remain an intractable problem. For that reason—because test positivity rates cannot easily be standardized—we do not currently publish them.</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>No single measure of the US public health response to COVID-19 should be considered in isolation, and this is especially true of test positivity. We recommend against an over-reliance on test positivity calculations to justify changes in public health responses or policies.</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1 million tests, 55k cases, and 975 deaths. 34k people are currently hospitalized with COVID-19. WI, ND, UT and WY reported record high case counts today. https://t.co/W4cOO1iVZp</p>
+
+    </div>
+  
+    <h2>October 9, 2020, 3:33 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests, 58k cases, 35k currently hospitalized, and 904 COVID-19 deaths. Today's case count is the highest since August 7. https://t.co/1eUPHZkljY</p>
+
+    </div>
+  
+    <h2>October 10, 2020, 4:30 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests, 57k cases, 35k currently hospitalized, and 663 COVID-19 deaths. https://t.co/wp9qll0NSB</p>
+
+    </div>
+  
+    <h2>October 11, 2020, 4:19 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 944k tests, 47k cases, 34k currently hospitalized, and 464 COVID-19 deaths, with six states not reporting today: CT, KS, MI, MO, NH, RI. https://t.co/tNvtsFLBoF</p>
+
+    </div>
+  
+    <h2>October 12, 2020, 3:34 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1 million tests, 43k cases, 35k currently hospitalized, and 284 COVID-19 deaths. Due to the holiday, a few states are missing full or partial updates. https://t.co/06CPhqy1aD</p>
+
+    </div>
+  
+    <h2>October 13, 2020, 3:57 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 894k tests, 47k cases, and 669 deaths. 36k people are currently hospitalized with COVID-19, the highest count since late-August. https://t.co/K8btE4TYcv</p>
+
+    </div>
+  
+    <h2>October 14, 2020, 4:28 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 949k tests, 57k cases (a 10k increase from yesterday), and 809 deaths. 37k people are currently hospitalized with COVID-19. https://t.co/5pvvYXc2g4</p>
+
+    </div>
+  
+    <h2>October 14, 2020, 4:31 PM PDT</h2>
+    <div>
+      <p>Ohio reported the highest COVID-19 case count to date.  The state reported 1,042 people are currently hospitalized - the highest number since early August. https://t.co/9QvwnjXiqG</p>
+
+    </div>
+  
+    <h2>October 15, 2020, 4:18 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1 million tests, 63k cases, and 951 deaths. 37k people are currently hospitalized with COVID-19. https://t.co/EPThF4QMq8</p>
+
+    </div>
+  
+    <h2>October 15, 2020, 4:23 PM PDT</h2>
+    <div>
+      <p>After a month of warning signs, this week’s alarming numbers make it clear that the third surge of COVID-19 in the US has arrived. Sadly, we're not only seeing an increase in cases and hosp., but deaths are also starting to rise, after a 3-week downtrend. https://t.co/AtEsWXSIlb</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 1:25 PM PDT</h2>
+    <div>
+      <p>The COVID Racial Data Tracker has launched shareable charts of per capita cases and deaths, broken out by the race and ethnicity categories reported. Sharing a few examples in this thread.
+https://t.co/gsNjLcubRT</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 1:29 PM PDT</h2>
+    <div>
+      <p>The New Mexico chart shows how much more likely ‘American Indian or Alaska Native’ people have been to test positive or die from COVID-19 since the pandemic began, compared to other people in the state.
+https://t.co/oaZR8Xqh8r https://t.co/KBmLBUznbL</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 1:30 PM PDT</h2>
+    <div>
+      <p>We are able to see the disparate impact of COVID-19 for each state and territory with these cards.
+In Tennessee, the ‘Hispanic or Latino’ population is much more likely to have tested positive for COVID-19.
+https://t.co/XOhgj4Dhkd https://t.co/v4F9tbIc0e</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 1:31 PM PDT</h2>
+    <div>
+      <p>New York does not report race or ethnicity data for cases. However, the disparity in deaths shows how many ‘Black or African American’ people have been affected by COVID-19.
+https://t.co/KutGHn1g5B https://t.co/A0MjJaHY94</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 1:38 PM PDT</h2>
+    <div>
+      <p>We made this tool to make it easier to understand and share how COVID-19 has affected Black, Indigenous, Latinx, and other people of color in every US state and territory, and we’d love to hear how you end up using it. https://t.co/fNJRifHPTC</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.15 million tests, 68k cases, and 877 deaths. 37k people are currently hospitalized with COVID-19. This is the highest case count since July 30. https://t.co/3VzZFxzY99</p>
+
+    </div>
+  
+    <h2>October 17, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.17 million tests, 60k cases, and 797 deaths. 37k people are currently hospitalized with COVID-19. https://t.co/CaTGhrAtLS</p>
+
+    </div>
+  
+    <h2>October 18, 2020, 4:05 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 965k tests, 49k cases, and 393 deaths. 36k people are currently hospitalized with COVID-19. https://t.co/W4bYJQrt6J</p>
+
+    </div>
+  
+    <h2>October 19, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2 million tests, 57k cases, and 456 deaths. 38k people are currently hospitalized with COVID-19. https://t.co/BewtuST9k9</p>
+
+    </div>
+  
+    <h2>October 20, 2020, 4:10 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 907k tests, 61k cases, and 832 deaths. 39k people are currently hospitalized with COVID-19. https://t.co/qqnQmeJAv2</p>
+
+    </div>
+  
+    <h2>October 20, 2020, 4:11 PM PDT</h2>
+    <div>
+      <p>We’ve written about the ways that states are reporting  antigen tests, which are becoming a major tool for rapid COVID-19 testing. But if states don’t report results clearly, we won’t know the true impact of these tests.</p>
+<p>https://t.co/gJqykAtJfR</p>
+
+    </div>
+  
+    <h2>October 21, 2020, 4:37 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 870k tests, 57k cases, 40k currently hospitalized, and 994 COVID-19 deaths. Note: Updates were not available from FL, GA, and AL. https://t.co/W7soJvLKw5</p>
+
+    </div>
+  
+    <h2>October 21, 2020, 4:45 PM PDT</h2>
+    <div>
+      <p>The COVID Tracking Project does not currently calculate test positivity rates, and will not do so until we are confident in our ability to document all these fluctuations and variations in test positivity between states.</p>
+
+    </div>
+  
+    <h2>October 22, 2020, 4:14 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests, 73k cases, and 41k people currently hospitalized with COVID-19. The death toll was 1,038, the highest since late September. https://t.co/dzu0VTUoLn</p>
+
+    </div>
+  
+    <h2>October 22, 2020, 4:15 PM PDT</h2>
+    <div>
+      <p>Our weekly in-depth look into the data is live. US COVID-19 deaths rose more than 10% from last week as the case surge in the Midwest expands to new states. https://t.co/l16yolTUtM</p>
+
+    </div>
+  
+    <h2>October 22, 2020, 4:26 PM PDT</h2>
+    <div>
+      <p>We’re still compiling data on COVID-19’s spread through long-term care facilities. Complicating the effort recently: Florida went nearly three weeks without releasing long-term care death data, and Louisiana’s cumulative counts appeared to drop with facilities marked as “closed.”</p>
+
+    </div>
+  
+    <h2>October 23, 2020, 4:09 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported a record high 1.3 million tests and 83k cases. There are currently 41k people hospitalized with COVID-19 and 916 deaths were reported. https://t.co/OFBHR9rSNx</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 12:10 PM PDT</h2>
+    <div>
+      <p>As COVID-19 cases rise across the United States, claims are circulating that case increases are (mostly or entirely) due to expanded testing, and do not indicate a spike in infections. The data does not support this conclusion. https://t.co/LiJMm85QnO</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 12:11 PM PDT</h2>
+    <div>
+      <p>But cases aren’t the only metric we can use to measure outbreaks. As we’ve seen throughout the year, when COVID-19 cases go up, hospitalizations also rise. The number of patients currently hospitalized with COVID-19 is up 40% since October 1.</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 12:11 PM PDT</h2>
+    <div>
+      <p>The ratio of cases to hospitalizations has improved significantly since the spring, but as these rising hospitalization numbers demonstrate, COVID-19 remains a significant threat. Details in our post: https://t.co/LiJMm85QnO</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>As COVID-19 cases and hospitalizations once again rise across the United States so, inevitably, will deaths. But there is reason to hope that we will not see the devastating fatality rates of the initial spring surge. A brief thread.</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>Earlier we shared a post highlighting the relationship between cases and hospitalizations. Here we take a closer look at the relationship between hospitalizations and COVID-19 deaths. https://t.co/sy1yxZlrFi</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 3:03 PM PDT</h2>
+    <div>
+      <p>In the past week, US states and territories have reported all-time highs in new cases of COVID-19. An alarming trend which we expect to be reflected in hospitalization data. But &quot;another NYC&quot; is far from inevitable.</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 3:04 PM PDT</h2>
+    <div>
+      <p>The gap that opens up between the hospitalization and fatality curves illustrates one of the most encouraging pieces of news about the COVID-19 pandemic in the United States. https://t.co/HRvjImy5KG</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 3:07 PM PDT</h2>
+    <div>
+      <p>Improvements in hospitalized patient care and overall patient outcomes are a welcome shift in COVID-19 news. It's also important to reiterate that if US outbreaks continue to worsen, overburdened hospitals could lead to a reversal in these trends.</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 4:11 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1 million tests, 79k cases, 45k currently hospitalized. The COVID-19 death toll was 1,025 today. https://t.co/uhQYQrcWH7</p>
+
+    </div>
+  
+    <h2>October 28, 2020, 4:15 PM PDT</h2>
+    <div>
+      <p>In the absence of national COVID-19 data standards, the state data we compile is not always comparable. Comparing test positivity across states and territories without considering the unit of the denominator will not yield useful results. We explain here: https://t.co/JaJmSS7Vc6</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 12:49 PM PDT</h2>
+    <div>
+      <p>The average number of people hospitalized with COVID-19 rose to 42,621, an increase of about 40%  from one month ago. Given the current trends, and what the past has taught us, we should expect deaths to continue to rise in the coming weeks. https://t.co/cRoz19IoIn</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 12:49 PM PDT</h2>
+    <div>
+      <p>In some states with worsening outbreaks, the virus has already arrived in nursing homes and other long-term care facilities: Ohio, Wisconsin, and Wyoming have posted record high numbers of COVID-19 cases in these facilities this week.</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 12:49 PM PDT</h2>
+    <div>
+      <p>Less than 1% of the US population lives in long-term care facilities, but deaths among these residents account for 41% of all COVID-19 deaths in the US, and were not restricted to the spring outbreaks. More in our long-term care tracker: https://t.co/HS5Vmi2XVB</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:13 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported a new record number of cases—97k—and 1.4 million tests. Currently, 47k people are hospitalized. There were 933 COVID-19 deaths reported. https://t.co/JWmi3R3Ks4</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:36 PM PDT</h2>
+    <div>
+      <p>Case growth is far outpacing testing through the US, suggesting that current case surges are an indication of uncontrolled spread of COVID-19. https://t.co/mcXWhXdyXg</p>
+
+    </div>
+  
+    <h2>November 1, 2020, 5:04 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests and 74k cases, almost 10k more than last Sunday. 48k people are currently hospitalized with COVID-19. Today's death toll was 388. https://t.co/MrwVMHvCA5</p>
+
+    </div>
+  
+    <h2>November 2, 2020, 4:47 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.3 million tests and 83k cases. 48k people are currently hospitalized with COVID-19. Today's death toll was 476. https://t.co/nzjXcK6oIt</p>
+
+    </div>
+  
+    <h2>November 2, 2020, 4:55 PM PST</h2>
+    <div>
+      <p>A note to our data users about the reporting trends observed by day of the week. Currently COVID-19 case data reported on Fridays and Saturdays is nearly double the figures reported on Sundays and Mondays. https://t.co/aXjilDqYeG</p>
+
+    </div>
+  
+    <h2>November 3, 2020, 3:20 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests and 87k cases. 50k people are currently hospitalized with COVID-19. Today's death toll was 1,079. https://t.co/WYyAGbHb3o</p>
+
+    </div>
+  
+    <h2>November 3, 2020, 3:23 PM PST</h2>
+    <div>
+      <p>COVID-19 hospitalizations in the Midwest are sharply increasing. In the region there are 238 people currently hospitalized per million people. https://t.co/caifzcobFr</p>
+
+    </div>
+  
+    <h2>November 4, 2020, 4:17 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2 million tests and 103k cases - the highest daily case count to date. 52k people are currently hospitalized with COVID-19 and today’s death toll was 1,116. https://t.co/tO1qSzn3pe</p>
+
+    </div>
+  
+    <h2>November 4, 2020, 4:21 PM PST</h2>
+    <div>
+      <p>Hospitalization numbers peaked in 16 states today. 20 states have over 1,000 people currently hospitalized with COVID-19. https://t.co/9vpAkVNoZb</p>
+
+    </div>
+  
+    <h2>November 6, 2020, 4:40 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5 million tests and a record 126k cases. There are 55k people currently hospitalized with COVID-19.  The death toll was 1,186. https://t.co/dMee7Lp9Cs</p>
+
+    </div>
+  
+    <h2>November 6, 2020, 4:46 PM PST</h2>
+    <div>
+      <p>Since Tuesday, over 6k people have been hospitalized with COVID-19. Regional per capita hospitalizations in the Midwest are quickly approaching the summer surge in the South. https://t.co/VfCBbyV5sC</p>
+
+    </div>
+  
+    <h2>November 7, 2020, 4:22 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5 million tests and 128k cases, making today the fourth day in a row the US broke its case count record. There are 56k people currently hospitalized with COVID-19. The death toll was 1,097. https://t.co/pethO2jvr8</p>
+
+    </div>
+  
+    <h2>November 7, 2020, 4:26 PM PST</h2>
+    <div>
+      <p>A total of 715k cases were reported last week. This means that 1 in every 462 people in the US tested positive for COVID-19 last week. Hosp. are also spiking in all regions, and are now close to the totals we saw in the spring and summer surges. https://t.co/4r5TE84xwH</p>
+
+    </div>
+  
+    <h2>November 8, 2020, 5:36 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests, 103k cases, and 57k people currently hospitalized with COVID-19. The death toll was 462. https://t.co/oSHwWztvYq</p>
+
+    </div>
+  
+    <h2>November 9, 2020, 4:48 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5 million tests, 119k cases, and 59k people currently hospitalized with COVID-19. The death toll was 580. https://t.co/2tMrNVWDfP</p>
+
+    </div>
+  
+    <h2>November 10, 2020, 4:30 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2 million tests and 131k cases, the highest single-day total since the pandemic started. There are 62k people currently hospitalized with COVID-19. The death toll was 1,347. https://t.co/WPoX9Nj7ef</p>
+
+    </div>
+  
+    <h2>November 11, 2020, 3:23 PM PST</h2>
+    <div>
+      <p>The third wave of COVID-19 deaths in long-term care facilities is here. Since May, we have compiled all the data states provide on cases and deaths within these facilities, where a shocking 40% of the nation’s COVID-19 deaths have originated - that’s 91,596 deaths. https://t.co/4LEFFSS0Kn</p>
+
+    </div>
+  
+    <h2>November 11, 2020, 3:24 PM PST</h2>
+    <div>
+      <p>In October, 8.4% of long-term care facility residents diagnosed with COVID-19 died. The rising cases of the past few weeks are resulting in the highest number of deaths in months as states and facilities fail to protect these most vulnerable Americans. https://t.co/PX5ggBrCyP</p>
+
+    </div>
+  
+    <h2>November 11, 2020, 3:28 PM PST</h2>
+    <div>
+      <p>When we compare COVID-19 deaths in long-term care facilities to overall deaths in the United States, the case fatality rate (CFR) in long-term care facilities is about 7 times the national rate in the month of October. https://t.co/ftL1gMxCYv</p>
+
+    </div>
+  
+    <h2>November 11, 2020, 3:28 PM PST</h2>
+    <div>
+      <p>This week, we’ve released new long-term care pages for each US state with searchable facility-level data. This release provides the most granular look yet available at COVID-19’s effects on residents and staff in US long-term care facilities. https://t.co/HS5Vmi2XVB</p>
+
+    </div>
+  
+    <h2>November 12, 2020, 11:47 AM PST</h2>
+    <div>
+      <p>Our weekly data update is live. All major US COVID-19 metrics rose sharply from last week. Cases are up more than 40%, while tests only rose 13%. Currently hospitalized continued to follow cases upward.</p>
+<p>Deaths increased nearly 23% from a week ago. https://t.co/FwNBf1VvVW</p>
+
+    </div>
+  
+    <h2>November 12, 2020, 11:47 AM PST</h2>
+    <div>
+      <p>COVID-19 hospitalizations rose in all but 4 states this week, with the most rapid increases centered in the Midwest. https://t.co/ypgi57LQhb</p>
+
+    </div>
+  
+    <h2>November 12, 2020, 11:47 AM PST</h2>
+    <div>
+      <p>Per capita COVID-19 hospitalization figures in the Midwest are now worse than they were in the South during the summer surge. https://t.co/uG7B3CLFp7</p>
+
+    </div>
+  
+    <h2>November 12, 2020, 11:47 AM PST</h2>
+    <div>
+      <p>In North and South Dakota, COVID-19 deaths per million are similar to rates in Michigan back in April - and are likely to continue rising. https://t.co/ouzy50Lgit</p>
+
+    </div>
+  
+    <h2>November 12, 2020, 4:24 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5 million tests, 151k cases, and 67k people currently hospitalized with COVID-19. The death toll was 1,104. Both case and hospitalization figures hit all-time highs today. https://t.co/93cGzRJFzk</p>
+
+    </div>
+  
+    <h2>November 12, 2020, 4:33 PM PST</h2>
+    <div>
+      <p>Our data shows that one in every 378 US residents has tested positive for COVID-19 this week. The situation is particularly alarming in the Dakotas, where one in less than 100 people have tested positive. https://t.co/CNypnftcV5</p>
+
+    </div>
+  
+    <h2>November 13, 2020, 3:59 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported a record 1.7 million tests, 170k cases, and 69k current COVID-19 hospitalizations. The death toll was 1,301. https://t.co/P11appz1Uj</p>
+
+    </div>
+  
+    <h2>November 13, 2020, 4:24 PM PST</h2>
+    <div>
+      <p>There are currently 9 states reporting over 1,000 COVID-19 cases per million people. https://t.co/khsIB0GvuG</p>
+
+    </div>
+  
+    <h2>November 14, 2020, 3:19 PM PST</h2>
+    <div>
+      <p>Our daily update is published.  States reported 1.7M tests, 163k cases, and 1,321 deaths. There are 69,455 people currently hospitalized with COVID-19. https://t.co/SAD7LOJTDL</p>
+
+    </div>
+  
+    <h2>November 14, 2020, 3:38 PM PST</h2>
+    <div>
+      <p>The 7-day average of reported deaths has now reached 1100. Since May 25, only August 4 had a higher 7-day average of COVID-19 deaths. https://t.co/oocz5ZzDu8</p>
+
+    </div>
+  
+    <h2>November 15, 2020, 4:59 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 139K cases, and 583 deaths. 69k people are currently hospitalized with COVID-19 in the US. Texas has not reported its data yet today. https://t.co/KD0j5Qe8bJ</p>
+
+    </div>
+  
+    <h2>November 16, 2020, 4:20 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 149K cases, and 581 deaths. A record 73k people are currently hospitalized with COVID-19. Texas did not report testing data today. https://t.co/brjIHCylb3</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>While we wait on a final few data points for our daily numbers - our second weekly update on COVID-19 data in long-term care facilities is published.</p>
+<p>This week we saw the most cases of COVID-19 in these congregate facilities since May.</p>
+<p>https://t.co/gqle0PJr1P https://t.co/YOH8XZkbzI</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>The Midwest is now the epicenter of COVID-19 outbreaks, where 38% of all new cases in LTC facilities were reported this week. Nearly every state in the region hit new peaks in either cases, deaths, or both. Ohio recorded 3,123 cases - the highest of this last week. https://t.co/o3nJkFTd58</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>In May, four-fifths of COVID-19 deaths in Minnesota were tied to LTC facilities; today that figure is 69%. Nationally, that number is 40%. This week, Minnesota reported their highest cases and deaths since May. https://t.co/Jf7YUiE12q</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>Any surge in resident cases sends one message - 8 months into the pandemic, the federal government, states, and long-term care facilities are continuing to fail the population most vulnerable to COVID-19.</p>
+<p>https://t.co/gqle0PJr1P</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:58 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 155K cases, and 1,565 deaths. 77k people are currently hospitalized with COVID-19 in the US. https://t.co/tY6FB4eIic</p>
+
+    </div>
+  
+    <h2>November 18, 2020, 5:29 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 164k cases, and 1,869 deaths. A record 79k people are currently hospitalized with COVID-19 in the US. Today's death count is the highest since May 7. https://t.co/8ps5itYiWr</p>
+
+    </div>
+  
+    <h2>November 18, 2020, 5:30 PM PST</h2>
+    <div>
+      <p>12 states reported over 5k COVID-19 cases today. https://t.co/Y94AXUNBf8</p>
+
+    </div>
+  
+    <h2>November 18, 2020, 5:33 PM PST</h2>
+    <div>
+      <p>26 states have over 1k people currently hospitalized with COVID-19. Hospitalizations in CA, TX, and IL account for almost a quarter of all COVID-19 current hospitalizations. https://t.co/E7aUzNBlmt</p>
+
+    </div>
+  
+    <h2>November 19, 2020, 3:24 PM PST</h2>
+    <div>
+      <p>Using new data from @HHSGov, we can see that daily confirmed hospital admissions for COVID-19 have risen dramatically over the past few weeks, especially in the Midwest and South. https://t.co/BIUn5msH1K https://t.co/aL6XLdYDu9</p>
+
+    </div>
+  
+    <h2>November 19, 2020, 4:56 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 183k cases, and 81k people currently hospitalized with COVID-19. Reported deaths were 1,971, the highest since May 7. Test, case, and hospitalization counts broke all-time records today. https://t.co/PlHHvYdIMj</p>
+
+    </div>
+  
+    <h2>November 19, 2020, 5:13 PM PST</h2>
+    <div>
+      <p>Long-term care facilities are being hit hard. Last week, they accounted for roughly 30% of COVID-19 deaths in the US. https://t.co/gqle0Q12qp</p>
+
+    </div>
+  
+    <h2>November 20, 2020, 4:10 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9 million tests, 193k cases, and 82k people currently hospitalized with COVID-19. Reported deaths were 1,862. Test, case, and hospitalization counts broke all-time records today. https://t.co/Wa74KCcOVG</p>
+
+    </div>
+  
+    <h2>November 20, 2020, 4:12 PM PST</h2>
+    <div>
+      <p>Daily COVID-19 deaths have been over 1,800 for 3 days in a row. https://t.co/pPuriIE6Vs</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2M tests (a record), 178k cases, and 1,506 new deaths. 83k people are currently hospitalized with COVID-19, also a record number. https://t.co/CWTrQEb82f</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:44 PM PST</h2>
+    <div>
+      <p>40 states reported over 1,000 cases today. And four didn't report. New Jersey, California, Mississippi, Idaho, and Oregon reported record numbers of cases. https://t.co/q23xwQ3BW7</p>
+
+    </div>
+  
+    <h2>November 22, 2020, 4:24 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 150k cases, and 889 new deaths. A record 83,870 people are currently hospitalized with COVID-19. https://t.co/rcKnxXmTyt</p>
+
+    </div>
+  
+    <h2>November 23, 2020, 4:36 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 151k cases, and 956 deaths. 85,836 people are hospitalized with COVID-19, setting a new record for the 14th consecutive day. https://t.co/t27aVB0FHu</p>
+
+    </div>
+  
+    <h2>November 23, 2020, 4:38 PM PST</h2>
+    <div>
+      <p>Only 4 states—HI, ME, NH, VT—have fewer than 100 people per million hospitalized with COVID-19. South Dakota and Nebraska have the most people hospitalized per capita, with North Dakota, Illinois, and Indiana close behind. https://t.co/mxRLdjJQvH</p>
+
+    </div>
+  
+    <h2>November 24, 2020, 4:26 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 167k cases, and 2,028 deaths. 88k people currently hospitalized with COVID-19, reaching a new all-time high for the 15th consecutive day. https://t.co/1ZqB5A0W7L</p>
+
+    </div>
+  
+    <h2>November 24, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Heading into Thanksgiving, we will see COVID-19 metrics drop—and then rise—in ways that may trip up unsuspecting observers. Here’s what to watch out for: https://t.co/Jg1jqYXbY2</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:14 AM PST</h2>
+    <div>
+      <p>The third wave of COVID-19 deaths in long-term care facilities continues, as cases increased at twice the rate of the nation’s total cases. Deaths reached 97,190, and will likely surpass the 100,000 mark this Thanksgiving week.  https://t.co/ALyORAmTPC https://t.co/oQj6UYtf8K</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:15 AM PST</h2>
+    <div>
+      <p>Each region reported their highest increase of long-term care cases in the past 4 months. The Midwest remains the epicenter of long-term care COVID-19 outbreaks. https://t.co/QbzN1eQLeO</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:17 AM PST</h2>
+    <div>
+      <p>COVID-19 tore through Nebraska long-term care facilities as the state reported close to a 70% increase in new long-term care deaths since last week. https://t.co/M1zv9Kwsav</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:18 AM PST</h2>
+    <div>
+      <p>Montana’s ongoing COVID-19 surge became apparent in long-term care facilities. Within 2 weeks, Montana reported a 45% increase in new long-term care cases and a 32% increase in deaths. https://t.co/I8uePvmUSp</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:18 AM PST</h2>
+    <div>
+      <p>More information about COVID-19 in long-term care facilities can be found at our Long-Term Care COVID Tracker.https://t.co/HS5Vmi2XVB</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 4:30 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 183k cases, and 2,284 deaths. 90k people currently hospitalized with COVID-19, reaching a new all-time high for the 16th consecutive day. https://t.co/yGeSTISpUe</p>
+
+    </div>
+  
+    <h2>November 28, 2020, 4:04 PM PST</h2>
+    <div>
+      <p>Today marks another new high for current COVID-19 hospitalizations. Hospitalizations have gone up every day since Oct 25 except for yesterday, and yesterday’s decrease was probably related to holiday data reported on a one-day delay. https://t.co/bjIqPDJ7WW</p>
+
+    </div>
+  
+    <h2>December 1, 2020, 4:27 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.3 million tests, 177k cases, and 2,473 deaths. There are 99k people currently hospitalized with COVID-19 in the US, a new record. https://t.co/NdL3Xyk5dr</p>
+
+    </div>
+  
+    <h2>December 1, 2020, 6:04 PM PST</h2>
+    <div>
+      <p>Today, we changed our source for North Dakota’s deaths metric. We previously tracked individuals with COVID-19 on their death certificate to align with federal standards, but ND’s backlog of death certificates have made this number fall far behind the state’s main deaths count. https://t.co/1m0V8JlbC9</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:14 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4 million tests, 196k cases, and 2,733 deaths. There are 100,226 people currently hospitalized with COVID-19 in the US —the first time hospitalizations have exceeded 100k. https://t.co/8QSKujBGao</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>CA reported over 20k COVID-19 cases today. This is the highest daily case count for a state to date. https://t.co/W1gaCVlVqY</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:17 PM PST</h2>
+    <div>
+      <p>Today's COVID-19 death count is the second highest on record after May 7th. It is also the first time deaths have exceed 5k in a 2-day period. https://t.co/2Ej14q2lpG</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:46 PM PST</h2>
+    <div>
+      <p>Long-term care facilities surpassed 100,000 known COVID-19 deaths last week. As a reminder: LTC residents are disproportionately affected. They make up about 40% of the nation’s deaths and only 6% of cases. https://t.co/AcgyehsSC1 https://t.co/zgzgrlYTom</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:48 PM PST</h2>
+    <div>
+      <p>The Midwest remains the epicenter of COVID-19 in long-term care facilities. The region has seen the highest number of reported LTC cases &amp; deaths every week since mid-November. Four states—IL, OH, IN &amp; MN—topped the nation in new reported LTC deaths last week. https://t.co/bp1sBO7RmF</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:50 PM PST</h2>
+    <div>
+      <p>Amid ongoing COVID-19 surges in long-term care facilities, some hope was restored. This week, the @CDCgov  Advisory Committee on Immunization Practices recommended that LTC facility residents be among the first in line to receive an upcoming COVID-19 vaccine.</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 4:51 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 210k cases, and 2,706 deaths. There are 101k people currently hospitalized with COVID-19 in the US. Both case and hospitalization counts from today are all-time highs. https://t.co/DuxnKyyG2K</p>
+
+    </div>
+  
+    <h2>December 4, 2020, 4:22 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 225k cases, and 2,563 deaths. There are 101,276 people currently hospitalized with COVID-19 in the US. Both case and hospitalization counts surpassed yesterday's all-time highs. https://t.co/Dp5ulEr0OA</p>
+
+    </div>
+  
+    <h2>December 4, 2020, 4:28 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 cases is at a record high, outpacing the 7-day average for tests. https://t.co/696LskyC2b</p>
+
+    </div>
+  
+    <h2>December 5, 2020, 4:20 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.2 million tests, 211k cases, and 2,445 deaths. There are 101,190 people currently hospitalized with COVID-19 in the US. https://t.co/SuyBBb001H</p>
+
+    </div>
+  
+    <h2>December 5, 2020, 4:20 PM PST</h2>
+    <div>
+      <p>The 7-day average for reported COVID-19 deaths has risen to 2,123, surpassing the previous high of 2,116 recorded on April 21. Given data drops and spikes on and after Thanksgiving, the 7-average is an especially useful metric to watch right now. https://t.co/SdCldXRsYG</p>
+
+    </div>
+  
+    <h2>December 6, 2020, 4:27 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6 million tests, 177k cases, and 1,138 deaths. 101,487 people are currently hospitalized with COVID, another new record. Averaged across the last 7 days, each of our core metrics is at record levels. https://t.co/z9RbCtA8Zo</p>
+
+    </div>
+  
+    <h2>December 7, 2020, 4:12 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 180k cases, and 1,347 deaths. There are 102, 148 people currently hospitalized with COVID-19 in the US. https://t.co/jgSa5oYqNW</p>
+
+    </div>
+  
+    <h2>December 8, 2020, 4:43 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6 million tests, 213k cases, and 2,622 deaths. There are 104,600 COVID-19 patients in US hospitals. https://t.co/EzQsMODdQH</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 2:53 PM PST</h2>
+    <div>
+      <p>COVID-19 continues to surge through the country’s long-term-care facilities. Our count from last week shows 51,574 new cases reported—the highest weekly number of the last 6 months. Nationally, deaths increased by 27% from last week. https://t.co/QF7dL8Ej19</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 2:56 PM PST</h2>
+    <div>
+      <p>The Northeast is beginning to see COVID-19 case increases reminiscent of that region’s Spring outbreaks. 838 new deaths were reported in the region -- the largest increase since early June. Nearly 40% of those deaths occurred in PA. https://t.co/qli0Vlm9fA</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 2:57 PM PST</h2>
+    <div>
+      <p>PA recorded 4,970 new LTC COVID-19 cases—a 6-month high. Based on the most available estimates of LTC residents in PA, 30% of people in the state’s LTC facilities have gotten COVID-19 and 99% of the reported deaths were among residents. https://t.co/0mo4CyHn1y</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 2:59 PM PST</h2>
+    <div>
+      <p>We are anticipating some good news by the end of this week with the long-expected EUA of the first COVID-19 vaccine in the US. Per ACIP's recommendations last week, long-term-care facility residents and staff will be among the first to receive doses.</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 4:57 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 210k cases, and a record 106,688 COVID-19 patients in US hospitals. There were 3,054 reported deaths today -- the highest single-day total to date. https://t.co/LcgzPJZdO6</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 4:58 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 deaths are at an all-time high as deaths are rising in throughout the country. The previous single-day record was on May 7 at 2,769 deaths. https://t.co/4TXQFjpX7m</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 3:43 PM PST</h2>
+    <div>
+      <p>In RI, more than 1 in 8 Latinx people have tested positive for COVID-19, compared to 1 in 31 white people. In SD, 1 in 7 Native Americans has tested positive for COVID-19. Per capita cases in this population have been the highest in SD for the last 3 months.</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:29 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9 million tests, 214k cases, and 3,067 deaths. There are 107k people currently hospitalized with COVID-19, a new all-time record. https://t.co/ReYTBJoQgF</p>
+
+    </div>
+  
+    <h2>December 11, 2020, 4:33 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1 million tests, a record 232k cases, and 2,749 deaths. There are 108k people currently hospitalized with COVID-19, also an all-time record. The 7-day average for all four metrics is the highest it has been. https://t.co/7GwbbKYDZn</p>
+
+    </div>
+  
+    <h2>December 11, 2020, 4:33 PM PST</h2>
+    <div>
+      <p>Today, we changed our source for CO’s deaths metric from “deaths due to COVID” to “deaths among cases.” Since September, the share of deaths among cases unrepresented in CO’s deaths due to COVID figure has quadrupled, likely indicating a processing lag.</p>
+
+    </div>
+  
+    <h2>December 12, 2020, 3:49 PM PST</h2>
+    <div>
+      <p>On Monday, @HHSGov released the most detailed data about COVID-19 hospitalizations yet. We dug into the details here: https://t.co/MqWhlAMlhx</p>
+
+    </div>
+  
+    <h2>December 12, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9 million tests, 223k cases, and 2,477 deaths. 108,487 people are hospitalized with COVID-19. https://t.co/8z9U6WRsDm</p>
+
+    </div>
+  
+    <h2>December 13, 2020, 4:52 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 187k cases, and 1,482 deaths. 109k people are hospitalized with COVID-19, another single-day record. Even missing updates from several states, the 7-day averages for cases, hospitalizations, and deaths are records. https://t.co/AmMG9PXtE0</p>
+
+    </div>
+  
+    <h2>December 14, 2020, 4:38 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1 million tests, 193k cases, and 1,358 deaths. There are 110,549 people currently hospitalized with COVID-19, a new record for hospitalizations. https://t.co/NGv7muVzEt</p>
+
+    </div>
+  
+    <h2>December 14, 2020, 4:39 PM PST</h2>
+    <div>
+      <p>As of today, our cumulative total for COVID-19 deaths in the US is 292,404. The reason our total varies from other sources is due the inclusion of probable deaths in select jurisdictions. https://t.co/21z83bEE68</p>
+
+    </div>
+  
+    <h2>December 14, 2020, 4:53 PM PST</h2>
+    <div>
+      <p>COVID-19 cases in the West have now outpaced the Midwest at 738 per million people. Today, cases in the West account for 31% of all reported cases. https://t.co/AcytwSnrt0</p>
+
+    </div>
+  
+    <h2>December 15, 2020, 4:46 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 190k cases, and 2,918 deaths. 112,816 people are currently hospitalized with COVID-19. https://t.co/PjWOpSjw4u</p>
+
+    </div>
+  
+    <h2>December 15, 2020, 4:51 PM PST</h2>
+    <div>
+      <p>Two states—Idaho and Michigan—have added an important new metric to their dashboards...</p>
+<p>Vaccine doses administered! https://t.co/ypQzYfHoRF</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 3:26 PM PST</h2>
+    <div>
+      <p>Our numbers, while drastic, are an undercount of COVID-19’s severity in long-term-care facilities. Arizona, Missouri, and New York provide incomplete LTC data, and are the largest contributors to the nation’s LTC undercount. https://t.co/bOWkmNiKjg</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 3:28 PM PST</h2>
+    <div>
+      <p>Pennsylvania reported nearly 500 LTC deaths last week, an increase of 55% from the previous week, and about 10% of the total new LTC deaths from COVID-19 in the United States. https://t.co/5dBvUizJcE</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 3:29 PM PST</h2>
+    <div>
+      <p>While COVID-19 continues to surge in LTC facilities , vaccines will soon arrive for these high-risk populations. Vaccines have the potential to prevent future COVID-19 outbreaks, but for many LTC residents and workers, they will come too late. https://t.co/AXU23O8eac</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 4:27 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 231k cases, and a record 3,400 deaths. There are 113,069 people currently hospitalized with COVID-19, a new record for hospitalizations. https://t.co/UBkhbQa909</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 3:10 PM PST</h2>
+    <div>
+      <p>Our weekly update is published. The case data this week is mixed: hope in the Midwest is balanced by strong surges elsewhere, especially California. States reported a record high of new COVID-19 deaths for the second week in a row. https://t.co/VcVmZtu42Y https://t.co/HvAAPec8fI</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 3:13 PM PST</h2>
+    <div>
+      <p>States have reported that more than 50,000 Black people have died of COVID-19. As stark as this number is, it is most certainly an undercount due to incomplete racial and ethnic demographic demographic data available. https://t.co/hTyV0MiuC2 https://t.co/YLimVOicCE</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 3:16 PM PST</h2>
+    <div>
+      <p>California alone reported more than 250,000 new cases this week. COVID-19 hospitalizations have more than doubled since Thanksgiving in 6 California counties, including Los Angeles, the most populous county in the country. https://t.co/wwuwgCnbHr</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 6:01 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9 million tests, 242k cases, 3,438 deaths, and 114k people currently hospitalized with COVID-19 in the US. Both case and hospitalization counts from today are all-time highs. https://t.co/6ZbWKOGATS</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 6:06 PM PST</h2>
+    <div>
+      <p>The past few days have brought an important new set of metrics to state dashboards: vaccine data! So far, we’ve learned of six states—ID, MI, OH, SD, TX and UT—that are posting the number of vaccines administered on their dashboards.</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 12:21 PM PST</h2>
+    <div>
+      <p>1/6 Ten months into the COVID-19 pandemic, and there are now several test types available in the United States. In this post, we explain how each one works and compare their pros and cons. By @juledurg and @jessicamalaty https://t.co/TIsaCB97Fu</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 12:25 PM PST</h2>
+    <div>
+      <p>2/6 As COVID-19 cases surged in the spring and states reported shortages and turnaround delays with PCR testing, new COVID-19 test types started coming into play. https://t.co/ttMnwiBSAM</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 12:29 PM PST</h2>
+    <div>
+      <p>5/6 But which test should you get? The answer is...it’s complicated. The probability of detecting COVID-19 with different test types varies according to the timeline of the infection. https://t.co/EKBClZwazA</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 5:23 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1 million tests, 229k cases, and 2,751 deaths. There are a record 114,751 people currently hospitalized with COVID-19. https://t.co/OxJ6NWeZ7T</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 5:35 PM PST</h2>
+    <div>
+      <p>Per capita cases are growing at an alarming rate in AZ again. There are 1,049 new COVID-19 cases per million people in the state. In CA, the 7-day average for new cases per million people is quickly approaching 1,000. https://t.co/AqKmJOvMj6</p>
+
+    </div>
+  
+    <h2>December 19, 2020, 5:15 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 202k cases, and 2,704 deaths. There are 114k people currently hospitalized with COVID-19 in the US. https://t.co/8RhV88OYf1</p>
+
+    </div>
+  
+    <h2>December 20, 2020, 4:03 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8 million tests, 195k cases, and 1,618 deaths. There are 113,663 people hospitalized with COVID-19, a very slight decline. https://t.co/WByHeGFkue</p>
+
+    </div>
+  
+    <h2>December 21, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1 million tests, 178k cases, and 1,485 deaths. There are a record 115,351 people currently hospitalized with COVID-19 in the US. https://t.co/xy21PNNvyF</p>
+
+    </div>
+  
+    <h2>December 21, 2020, 4:49 PM PST</h2>
+    <div>
+      <p>The outbreak in CA continues to worsen as the state reports 18,359 people are hospitalized with COVID-19. Earlier today, Los Angeles county officials reported 30 ICU beds were available in the county. https://t.co/I5fuN8TQ12</p>
+
+    </div>
+  
+    <h2>December 21, 2020, 4:51 PM PST</h2>
+    <div>
+      <p>COVID-19 deaths are rising in 19 states. The 7-day average for the US is now at a record 2,631. https://t.co/qp1cVjNvDf</p>
+
+    </div>
+  
+    <h2>December 22, 2020, 5:13 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 189k cases, and 3,131 deaths. There are 117,777 COVID-19 patients currently hospitalized. https://t.co/WkyEGVzL1t</p>
+
+    </div>
+  
+    <h2>December 23, 2020, 3:47 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 221k cases, and 3,379 deaths. There are a record 119,463 COVID-19 patients currently hospitalized. https://t.co/o7ritnnQ1o</p>
+
+    </div>
+  
+    <h2>December 23, 2020, 3:54 PM PST</h2>
+    <div>
+      <p>An encouraging trend: in the last week, COVID-19 cases have decreased in 22 states across the US. https://t.co/0VdJP34WFt</p>
+
+    </div>
+  
+    <h2>December 24, 2020, 3:36 PM PST</h2>
+    <div>
+      <p>Although overall cases are falling in the Midwest, it remains the epicenter of COVID-19 outbreaks in long-term care facilities. 13 states reported their highest number of LTC deaths this week. Most states will begin vaccinations in LTC facilities before the end of the year. https://t.co/OOA0CCZZF1</p>
+
+    </div>
+  
+    <h2>December 24, 2020, 4:50 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9 million tests, 203k cases, and 2,938 deaths. There are a record 120,151 COVID-19 patients currently hospitalized. https://t.co/MSdTGjM8OR</p>
+
+    </div>
+  
+    <h2>December 25, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.3 million tests, 124k cases, and 1,541 deaths. There are nearly 119 thousand people hospitalized with COVID-19.</p>
+<p>The numbers are strongly affected by holiday reporting. https://t.co/0V14NTx3Zj</p>
+
+    </div>
+  
+    <h2>December 25, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>20 states provided no update: AK, CA, CT, DC, ID, KS, KY, LA, MA, MI, MN, MP, NC, ND, NH, OH, RI, SC, SD, UT, VT.</p>
+<p>7 other states made partial updates.</p>
+
+    </div>
+  
+    <h2>December 26, 2020, 4:06 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1 million tests, 189k cases, and 1,409 deaths. There are more than 117 thousand people hospitalized with COVID-19.</p>
+<p>These numbers continue to be affected by disruptions to data pipelines caused by the holidays. https://t.co/4qCPlX3KA2</p>
+
+    </div>
+  
+    <h2>December 26, 2020, 4:06 PM PST</h2>
+    <div>
+      <p>None of our work would be possible without the state public health officials who have collected and publicly reported COVID-19 data for the past 10 months.</p>
+
+    </div>
+  
+    <h2>December 27, 2020, 3:50 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4 million tests, 152k cases, and 1,395 deaths. There are 118,720 people currently hospitalized with COVID-19. https://t.co/kHVjwixdqb</p>
+
+    </div>
+  
+    <h2>December 27, 2020, 3:50 PM PST</h2>
+    <div>
+      <p>Please use caution when viewing this data, as many states did not report due to the holiday while others gave incomplete updates. Holidays have had major impacts on COVID data reporting this year, as shown in these case trends. https://t.co/56BxbIBYwA</p>
+
+    </div>
+  
+    <h2>December 30, 2020, 4:41 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6 million tests, 226k cases, a record 125,220 hospitalizations, and a record 3,903 COVID-19 deaths. Holiday reporting delays are still markedly affecting testing, case, and deaths figures. https://t.co/HPV1cBbzLE</p>
+
+    </div>
+  
+    <h2>December 30, 2020, 4:44 PM PST</h2>
+    <div>
+      <p>Louisiana reported a record 6,754 COVID-19 cases today. The state department of health notes that this does not include a backlog of cases or multiple days of reporting.</p>
+
+    </div>
+  
+    <h2>December 30, 2020, 4:45 PM PST</h2>
+    <div>
+      <p>We continue to urge caution when interpreting current figures and trends in COVID-19 data. We also expect ongoing disruptions in reporting with the New Year holiday weekend.</p>
+
+    </div>
+  
+    <h2>December 31, 2020, 4:30 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 221k cases, a record 125,379 people hospitalized, and 3,255 COVID-19 deaths. https://t.co/0qVKmqomyK</p>
+
+    </div>
+  
+    <h2>December 31, 2020, 4:30 PM PST</h2>
+    <div>
+      <p>Even with all the data pipeline disruptions, every week in December saw more deaths from COVID-19 than any week earlier in the year. December was the deadliest month of the pandemic by far. The 76,580 reported deaths in the month surpassed the heights of April (55,267). https://t.co/8zWUnc8mDr</p>
+
+    </div>
+  
+    <h2>January 1, 2021, 4:55 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2 million tests, 173k cases, 125,057 people hospitalized, and 2,534 COVID-19 deaths. More than 20 states did not provide complete data today. https://t.co/g3YeUuFb1B</p>
+
+    </div>
+  
+    <h2>January 2, 2021, 4:06 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1 million tests, a record 276k cases, 123,639 people hospitalized, and 2,367 COVID-19 deaths. We believe that holiday reporting is still causing major oscillations in the data. https://t.co/RgHdjXC9tj</p>
+
+    </div>
+  
+    <h2>January 3, 2021, 3:28 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4 million tests, 205k cases, 125,544 people hospitalized, and 1,431 COVID-19 deaths.  Holiday data reporting effects are almost certainly still in play. https://t.co/4lECF5PbFq</p>
+
+    </div>
+  
+    <h2>January 4, 2021, 4:19 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6 million tests, 178k cases, a record 128,210 people hospitalized, and 1,545 COVID-19 deaths. The ongoing holiday effects are reflected in these figures. https://t.co/K0Ojferizt</p>
+
+    </div>
+  
+    <h2>January 4, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>Despite testing data dropping, the 7-day average for COVID-19 cases is higher than pre-holiday figures and increasing in many states across the US. https://t.co/5xdf4ynF85</p>
+
+    </div>
+  
+    <h2>January 4, 2021, 4:22 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 deaths is also increasing in 30 states. We expect the daily death numbers to increase significantly once the reporting trends stabilize post-holidays, in part due to backlogs. https://t.co/fCL4WGxD8X</p>
+
+    </div>
+  
+    <h2>January 5, 2021, 4:04 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6M tests, 214k cases, a record 131,195 COVID-19 patients, and 3,478 deaths. https://t.co/wMexUooSar</p>
+
+    </div>
+  
+    <h2>January 6, 2021, 4:20 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7 million tests, 243k cases, a record 132,476 people hospitalized, and 3,793 COVID-19 deaths. Today's cases and deaths are the second highest to date. https://t.co/bIifm1l1wY</p>
+
+    </div>
+  
+    <h2>January 6, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>All but 4 states in the South have had record COVID-19 hospitalizations this week. https://t.co/GEWuIMbztG</p>
+
+    </div>
+  
+    <h2>January 6, 2021, 4:24 PM PST</h2>
+    <div>
+      <p>Here's a snapshot of what the key COVID-19 metrics look like in Washington, DC as of today. https://t.co/FBdIpmae7a</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 1:15 PM PST</h2>
+    <div>
+      <p>In the first week of 2021, US states and territories reported more cases of COVID-19 than at any point in the pandemic so far, the second-highest number of deaths, and the most people currently hospitalized. https://t.co/fLHUNjF0jy</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 1:15 PM PST</h2>
+    <div>
+      <p>38% of the nation’s COVID-19 deaths in 2020 were among long-term-care residents and staff. December was the deadliest month in long-term-care facilities since we began tracking the data in May. https://t.co/kD1qSpU487</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 1:15 PM PST</h2>
+    <div>
+      <p>Holiday reporting is still affecting some metrics, but hospitalization reporting has stabilized. There are more than 132,000 people hospitalized with COVID-19 in the US, and hospitalizations per capita are alarmingly high in many southern and western states. https://t.co/t4Pmn6hXXH</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:18 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 266k cases, 132,370 COVID-19 hospitalizations, and a record 4,033 deaths. The 7-day average for deaths is now over 2,750, also a record. https://t.co/8wKB2d71hu</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 4:56 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1M tests, a record 310k cases, 131,889 COVID-19 hospitalizations, and 3,777 deaths. The 7-day averages for cases, hospitalizations, and deaths are at record highs. https://t.co/lCaomGRg5P</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>NJ reported nearly 20K probable COVID-19 cases and CA reported over 50K cases. Both states greatly influenced the large uptick in today's total cases.</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 4:59 PM PST</h2>
+    <div>
+      <p>16 states reported their highest number of COVID-19 hospitalizations this week. https://t.co/5LaPBFQblw</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 5:00 PM PST</h2>
+    <div>
+      <p>8 days into the new year, and we've already seen 23,083 COVID-19 deaths. https://t.co/ywIXj3svSV</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 5:02 PM PST</h2>
+    <div>
+      <p>44 states have reported at least 500 COVID-19 cases per million people. https://t.co/qj3FfBUvW6</p>
+
+    </div>
+  
+    <h2>January 9, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>California’s data continues to show the dire state of the pandemic there. With 695 deaths reported today, the state is averaging more than 410 deaths and nearly 40k new cases a day. One in 105 people in CA have tested positive for COVID-19 in 2021. https://t.co/GgczPu822H</p>
+
+    </div>
+  
+    <h2>January 10, 2021, 4:31 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 223k cases, 129,229 people currently hospitalized with COVID-19, and 1,999 deaths. https://t.co/XJtdUweSS9</p>
+
+    </div>
+  
+    <h2>January 11, 2021, 10:41 AM PST</h2>
+    <div>
+      <p>Using HHS data, we’ve created a new interactive map that lets you see how local hospitals are faring against COVID-19. https://t.co/N4xvRQNn3j</p>
+
+    </div>
+  
+    <h2>January 11, 2021, 10:42 AM PST</h2>
+    <div>
+      <p>This interactive map focuses on two data points: how many COVID-19 patients are currently hospitalized, and how many are in the ICU. Together, they present a localized understanding of the pandemic’s impact on communities and the healthcare systems that serve them. https://t.co/CkXuGRy60U</p>
+
+    </div>
+  
+    <h2>January 11, 2021, 4:48 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 194k cases, 129,748 people currently hospitalized with COVID-19, and 1,739 deaths. https://t.co/NKANfbCI91</p>
+
+    </div>
+  
+    <h2>January 11, 2021, 4:50 PM PST</h2>
+    <div>
+      <p>Hospitalizations in CA continue to skyrocket. There are 22,633 people currently hospitalized with COVID-19 in the state. https://t.co/by01jLixf9</p>
+
+    </div>
+  
+    <h2>January 11, 2021, 4:52 PM PST</h2>
+    <div>
+      <p>AZ's COVID-19 hospitalizations and deaths have far exceeded the state's summer surge, and continue to grow each day. https://t.co/u1OFNNeRnS</p>
+
+    </div>
+  
+    <h2>January 12, 2021, 4:45 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 214k cases, 131,326 people currently hospitalized with COVID-19, and 4,056 deaths. https://t.co/5bBfNyaHYC</p>
+
+    </div>
+  
+    <h2>January 12, 2021, 4:45 PM PST</h2>
+    <div>
+      <p>Only 12 days into January, states have reported more COVID-19 deaths than in any month between June and October of 2020. https://t.co/d2vtwtvyZQ</p>
+
+    </div>
+  
+    <h2>January 13, 2021, 4:28 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 219k cases, 130,383 people currently hospitalized with COVID-19, and 4,022 deaths. https://t.co/SVEqztd3tJ</p>
+
+    </div>
+  
+    <h2>January 13, 2021, 4:30 PM PST</h2>
+    <div>
+      <p>COVID-19 deaths are up by 10% or more in 25 states across the US. Today is the third time deaths have been above 4,000. https://t.co/9LKw6iy6hi</p>
+
+    </div>
+  
+    <h2>January 13, 2021, 4:30 PM PST</h2>
+    <div>
+      <p>Starting today, we will be capturing Oregon’s data the day after it is published, as they regularly update their COVID-19 pages and dashboards after we release our daily update. We have shifted their entire timeseries accordingly.</p>
+
+    </div>
+  
+    <h2>January 13, 2021, 4:31 PM PST</h2>
+    <div>
+      <p>We have taken this step because “recovered” values are largely estimates of non-infectiousness that do not account for the fact that many people suffer long-term health consequences after contracting COVID-19, and because no two states define the metric in the same way.</p>
+
+    </div>
+  
+    <h2>January 13, 2021, 4:32 PM PST</h2>
+    <div>
+      <p>Unfortunately, we just don’t know how many people have recovered from COVID-19, and in the absence of national data standards, we might never know. Read more about these issues at https://t.co/eucvgYUxuJ</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 2:01 PM PST</h2>
+    <div>
+      <p>A month since COVID-19 vaccine distribution began, it is still impossible for the public and the media to track the rollout of vaccines in nursing homes, assisted living facilities, and other long-term-care facilities in most states.</p>
+<p>https://t.co/ornHv0hSzB</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 2:01 PM PST</h2>
+    <div>
+      <p>As a reminder, less than 1 percent of US residents live in long-term-care facilities—but they make up at least 37% of the nation’s total COVID-19 deaths.</p>
+<p>https://t.co/UfkW2WHxHh https://t.co/dmfR9aEUPo</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>States reported 2 million tests, 223k cases, 128,947 people currently hospitalized with COVID-19, and 3,915 deaths. https://t.co/w792tRxiaT</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>COVID-19 deaths are 25% higher than any other week since the pandemic began. For scale, COVID-19 deaths reported this week exceed the CDC's estimate of 22K flu-related deaths during the entire 2019-2020 season.</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>We recently released a visualization of the @HHSGOV hospital data. It is a weekly average for COVID-19 metrics for each individual hospital across the country. This week, facilities across the South (though especially in Alabama) are under serious pressure. https://t.co/1HNKXyNPyE</p>
+
+    </div>
+  
+    <h2>January 15, 2021, 4:43 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.3M tests, 244k cases, 127,235 people currently hospitalized with COVID-19, and 3,679 deaths. The 7-day average for tests is at a record high. https://t.co/QUQ7HYUjL8</p>
+
+    </div>
+  
+    <h2>January 15, 2021, 4:47 PM PST</h2>
+    <div>
+      <p>On a national level, it appears COVID-19 hospitalizations are on the decline. Note: there are still some jurisdictions experiencing an overwhelming amount of hospitalizations. https://t.co/uUx7xE4tDd</p>
+
+    </div>
+  
+    <h2>January 16, 2021, 4:13 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2M tests, 215k cases, 126,139 people currently hospitalized with COVID-19, and 3,695 deaths. The 7-day average for tests is at a record high. https://t.co/uTppv9m6CD</p>
+
+    </div>
+  
+    <h2>January 17, 2021, 3:57 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 186k cases, 124,387 people currently hospitalized with COVID-19, and 2,044 deaths. https://t.co/xIN0q9Pa7c</p>
+
+    </div>
+  
+    <h2>January 18, 2021, 4:15 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2.1M tests, 150k cases, 123,848 people currently hospitalized with COVID-19, and 1,393 deaths. https://t.co/tPEryKKlhT</p>
+
+    </div>
+  
+    <h2>January 18, 2021, 4:15 PM PST</h2>
+    <div>
+      <p>Right now, the federal government publishes no race and ethnicity data about COVID-19 vaccine recipients. Only about a third of US states provide this data, and it's incomplete and not standardized.
+https://t.co/Yw8JGM2ebV</p>
+
+    </div>
+  
+    <h2>January 18, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>As we’ve seen since launching the COVID Racial Data Tracker, COVID-19 has disproportionately harmed Black, Latinx, and Indigenous Americans. As vaccine campaigns roll out, we need better data to see which efforts are working to protect these communities. https://t.co/QqP753hbMB</p>
+
+    </div>
+  
+    <h2>January 19, 2021, 4:06 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 144k cases, 123,820 people currently hospitalized with COVID-19, and 2,141 deaths. https://t.co/uEoLizfd7W</p>
+
+    </div>
+  
+    <h2>January 19, 2021, 4:14 PM PST</h2>
+    <div>
+      <p>The number of people reported to be currently hospitalized with COVID-19 has decreased on 13 days in January, and has increased on 6. Hospitalization reporting has been more resilient to holiday reporting disruptions than other COVID-19 metrics. https://t.co/cbW3ItVu4E</p>
+
+    </div>
+  
+    <h2>January 20, 2021, 4:02 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 186k cases, 122,700 people currently hospitalized with COVID-19, and a record 4,409 deaths. https://t.co/5WYUdLQoFw</p>
+
+    </div>
+  
+    <h2>January 20, 2021, 4:04 PM PST</h2>
+    <div>
+      <p>With 11 days remaining in the month, January 2021 is now the 2nd-most deadly month for COVID-19 in the US. https://t.co/Pp3vpLMZFb</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 12:42 PM PST</h2>
+    <div>
+      <p>This week, CA surpassed 3 million COVID-19 cases, which means 1 in 13 Californians has tested positive since the start of the pandemic. https://t.co/KzWw6enCAp</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 12:49 PM PST</h2>
+    <div>
+      <p>The CO DPHE has added variant case counts to their public dashboards. To date, most states lack the resources to add genomic surveillance to their ongoing COVID-19 workload. This data is critical to understanding the spread of SARS-CoV-2 variants in the US.</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 3:31 PM PST</h2>
+    <div>
+      <p>Correction: Earlier today, we tweeted that Indigenous people in AZ are 3x more likely to have been hospitalized with COVID-19 than their white neighbors. The correct number is 2.4x. We apologize for the error. https://t.co/FclsH9NJeo</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 4:26 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 185k cases, 119,927 people currently hospitalized with COVID-19, and 3,889 deaths. https://t.co/I94nim19fd</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 4:28 PM PST</h2>
+    <div>
+      <p>Over 400k people in the US have died of COVID-19. A reminder that our dataset does not include probable deaths reported in NY which is why this grim milestone lagged by a few days from other datasets. More details here: https://t.co/UJZRRVxQqJ https://t.co/iwalMa40v2</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Despite the alarmingly high death numbers, there are encouraging trends in COVID-19 case and hospitalization data. Read more about our weekly analysis here: https://t.co/i03KMQV1jw https://t.co/vdpP40B4AA</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 4:30 PM PST</h2>
+    <div>
+      <p>Today the Biden-Harris administration released a national strategy for COVID-19 response and cited @COVID19Tracking data. Hundreds of Americans—mostly volunteers—came together to build these datasets in a time of national crisis. https://t.co/risEUco1DJ</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 4:30 PM PST</h2>
+    <div>
+      <p>We’ve done this work every day since March 7, 2020 to provide essential COVID-19 data for the country—data the federal government was not providing. It is incredibly encouraging to see plans for the federal government to gather, share, and publish COVID-19 data.</p>
+
+    </div>
+  
+    <h2>January 22, 2021, 4:14 PM PST</h2>
+    <div>
+      <p>In hopeful news, the number of people nationwide who are currently hospitalized with COVID-19 dropped today by 3,685.</p>
+<p>The number of people currently hospitalized with COVID-19 declined by more than 10% from a week ago in 24 states. https://t.co/Wbi1rPZTjr</p>
+
+    </div>
+  
+    <h2>January 23, 2021, 4:01 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 174K cases, and 3,577 deaths. 114k people are currently hospitalized with COVID-19 in the US. Only two weeks ago, that number was 131k. https://t.co/XaOIOhAMYf</p>
+
+    </div>
+  
+    <h2>January 23, 2021, 4:02 PM PST</h2>
+    <div>
+      <p>There are almost exactly twice as many people in the hospital with COVID-19 now as there were at the peak of the previous two surges, but hospitalizations are dropping very quickly. https://t.co/akoOD9rSuf</p>
+
+    </div>
+  
+    <h2>January 24, 2021, 3:50 PM PST</h2>
+    <div>
+      <p>For the first time since November 3rd, no state has over 600 people per million hospitalized with COVID-19. https://t.co/d4eMsr29Yv</p>
+
+    </div>
+  
+    <h2>January 25, 2021, 4:09 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 133k cases, 109,936 people currently hospitalized with COVID-19, and 1,593 deaths. https://t.co/STzBhwVyJ5</p>
+
+    </div>
+  
+    <h2>January 25, 2021, 4:11 PM PST</h2>
+    <div>
+      <p>A hopeful sign: COVID-19 cases and hospitalizations continue to trend downward. https://t.co/6XW9BXX0ks</p>
+
+    </div>
+  
+    <h2>January 26, 2021, 4:43 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 144k cases, 108,957 people currently hospitalized with COVID-19, and 3,734 deaths. https://t.co/NeIk6qx6fq</p>
+
+    </div>
+  
+    <h2>January 26, 2021, 4:43 PM PST</h2>
+    <div>
+      <p>The number of hospitalized COVID-19 cases is falling nearly everywhere in the country. (Among the outliers: Hawaii and Vermont numbers are quite small, and Kansas's data regularly bounces around.) https://t.co/eua8mQaWqF</p>
+
+    </div>
+  
+    <h2>January 27, 2021, 4:44 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6M tests, 152k cases, 107,444 people currently hospitalized with COVID-19, and 4,077 deaths. https://t.co/DuxjyCUoHQ</p>
+
+    </div>
+  
+    <h2>January 27, 2021, 4:48 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 cases is the lowest since November 30 and has fallen by more than 30% from its peak on January 12. https://t.co/hJrYPv8pZZ</p>
+
+    </div>
+  
+    <h2>January 27, 2021, 4:49 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 is decreasing in every major US region. https://t.co/ajJNVXTUAO</p>
+
+    </div>
+  
+    <h2>January 27, 2021, 4:50 PM PST</h2>
+    <div>
+      <p>COVID-19 deaths are rising by 10% or more in 21 states across the US. Deaths are rising fastest in the West and South. https://t.co/JDCaPupu74</p>
+
+    </div>
+  
+    <h2>January 28, 2021, 3:07 PM PST</h2>
+    <div>
+      <p>Before the daily data, our weekly update is published.</p>
+<p>COVID-19 cases fell in almost every state. Hospitalizations are down another 10% from last week, though still above levels seen in previous surges. Deaths, which lag, remain high and rose 7%.</p>
+<p>https://t.co/KZOCO2ESw8 https://t.co/w7u4pUqu9R</p>
+
+    </div>
+  
+    <h2>January 28, 2021, 3:07 PM PST</h2>
+    <div>
+      <p>This decline in cases is borne out by drops in hospitalizations across the country. Only VT saw COVID-19 hospitalizations increase this week—from 46 to 47 patients, which was an increase of 2%. https://t.co/8g4FC3Dviy</p>
+
+    </div>
+  
+    <h2>January 28, 2021, 3:07 PM PST</h2>
+    <div>
+      <p>While some jurisdictions are seeing an uptick in the percentage of variant cases among tested samples, we won't know whether the variants are to blame for any increase in COVID-19 cases or hospitalizations until states are able to perform significantly more genomic sequencing.</p>
+
+    </div>
+  
+    <h2>January 28, 2021, 4:31 PM PST</h2>
+    <div>
+      <p>Our daily update is published. Our daily update is published. States reported 2.1M tests, 155k cases, 104,303 people currently hospitalized with COVID-19, and 4,011 deaths. https://t.co/fHUFGdQ626</p>
+
+    </div>
+  
+    <h2>January 29, 2021, 3:12 PM PST</h2>
+    <div>
+      <p>Our most recent look at the race and ethnicity data available from states has been published. The continued lack of consistent, comprehensive data makes it impossible to fully understand who is being infected with and dying of COVID-19.</p>
+<p>https://t.co/KyI1TAlQjy</p>
+
+    </div>
+  
+    <h2>January 29, 2021, 3:12 PM PST</h2>
+    <div>
+      <p>More Black Americans have died of COVID-19 since the pandemic began than there are names on the Vietnam Memorial. More Black or Latinx people have died than the number of people commemorated on the AIDS Memorial Quilt. The loss to the country is on a catastrophic scale. https://t.co/vKJcDboFKF</p>
+
+    </div>
+  
+    <h2>January 29, 2021, 3:12 PM PST</h2>
+    <div>
+      <p>The race and ethnicity data reported by states shows declining—but persistent—inequities. 1 in 6 Latinx people in Rhode Island and Utah has tested positive for COVID-19 since the pandemic began. https://t.co/C793FvKmIj</p>
+
+    </div>
+  
+    <h2>January 29, 2021, 3:12 PM PST</h2>
+    <div>
+      <p>Too much data is still missing—we don’t even have race data for a third of US COVID-19 cases. New datasets—including, critically, vaccination data—must not replicate the flaws and omissions of the other COVID-19 datasets we’ve worked with throughout the course of the pandemic.</p>
+
+    </div>
+  
+    <h2>January 29, 2021, 4:56 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 165k cases, 101,003 people currently hospitalized with COVID-19, and 3,503 deaths. https://t.co/GpCeFxrENJ</p>
+
+    </div>
+  
+    <h2>January 29, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 continues to decrease in almost every state. https://t.co/gmz57Aonp2</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:23 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 2M tests, 147k cases, 97,561 people currently hospitalized with COVID-19, and 2,972 deaths. https://t.co/O1eif97YOT</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:46 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 in the US is now below 100k for the first time since December 1. Almost all US states are seeing hospitalizations decline or flatten, and CA, FL, and TX all posted big drops today. https://t.co/ZbV4kUoiWh</p>
+
+    </div>
+  
+    <h2>January 31, 2021, 4:37 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 118k cases, 95,013 people currently hospitalized with COVID-19, and 2,055 deaths. https://t.co/xnetqNQc72</p>
+
+    </div>
+  
+    <h2>January 31, 2021, 4:37 PM PST</h2>
+    <div>
+      <p>The 7-day averages help us to understand trends around inconsistencies in the reported data. None of the 7-day averages for COVID-19 cases, hospitalizations, or deaths had a record day in the second half of the month.</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 8:01 AM PST</h2>
+    <div>
+      <p>More Black Americans have died of COVID-19 than there are names on the Vietnam Memorial. More Black or Latinx people have died than the number of people commemorated on the AIDS Memorial Quilt. And these are just the—incomplete—numbers we have.</p>
+<p>https://t.co/KyI1TAlQjy</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 8:01 AM PST</h2>
+    <div>
+      <p>Our latest analysis reveals persistent inequities and the continued absence of critically important data—we still lack race data for a third of US COVID-19 cases, and the data we do have is full of inconsistencies and gaps. It’s time to fix our data pipelines.</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 11:01 AM PST</h2>
+    <div>
+      <p>Some important news about CTP: After a year of collecting, analyzing, and interpreting COVID-19 data for the United States—and months of preparation for what we’re about to announce—we’re ending our data compilation work on March 7. https://t.co/HtM9c0lwDB</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 11:01 AM PST</h2>
+    <div>
+      <p>We didn’t come to this decision easily, but we have believed from the very beginning of the project that the work of compiling, publishing, and analyzing COVID-19 data for the US properly belongs to federal public health agencies.</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 11:01 AM PST</h2>
+    <div>
+      <p>We began this project to hold the federal government accountable for missing data. We ended up provisioning many kinds of COVID-19 data for the US for 11 months and counting. None of this would have been possible without the meticulous labor of hundreds of project contributors.</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 11:01 AM PST</h2>
+    <div>
+      <p>But after months of discussion with advisors and agencies, we believe this is the right thing to do for COVID-19 data in the US, and for our people as well. Please do take a moment to read the post if you have questions. https://t.co/HtM9c0lwDB</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 4:24 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6M tests, 120k cases, 93,536 people currently hospitalized with COVID-19, and 1,562 deaths. https://t.co/KZYfrXfl3D</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 4:26 PM PST</h2>
+    <div>
+      <p>Compared to last week, the number of people currently hospitalized with COVID-19 is down by 10% or more in 38 states. https://t.co/m66OC5qUYJ</p>
+
+    </div>
+  
+    <h2>February 1, 2021, 4:27 PM PST</h2>
+    <div>
+      <p>Today's data is missing updates from ID and OR. ID announced that it is no longer providing updates on Mondays. Data from Sunday and Monday will show up in our Tuesday updates.</p>
+
+    </div>
+  
+    <h2>February 2, 2021, 3:54 PM PST</h2>
+    <div>
+      <ol start="2">
+<li>For the first time since Nov 2, no state has more than 500 people per million hospitalized with COVID-19. https://t.co/DMyZHAnopp</li>
+</ol>
+
+    </div>
+  
+    <h2>February 4, 2021, 1:41 PM PST</h2>
+    <div>
+      <p>Since January 1, COVID-19 hospitalizations have declined in every US region, though to widely varying degrees. https://t.co/HPbIiTBv82</p>
+
+    </div>
+  
+    <h2>February 4, 2021, 1:41 PM PST</h2>
+    <div>
+      <p>It’s beginning to look like reported COVID-19 deaths are finally declining nationally. Holiday-related reporting problems have made this metric difficult to follow through much of the fall and winter, but the present decline seems to be real. https://t.co/FSG92LgjW1</p>
+
+    </div>
+  
+    <h2>February 4, 2021, 1:41 PM PST</h2>
+    <div>
+      <p>The COVID Tracking Project is winding down our data compilation on March 7 and closing up shop in May. Over the coming weeks we’ll be publishing many more analyses of federal and state COVID-19 data. Here’s why. https://t.co/HtM9c03VM3</p>
+
+    </div>
+  
+    <h2>February 4, 2021, 3:57 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 124k cases, 88,668 people currently hospitalized with COVID-19, and 3,705 deaths. https://t.co/NG6uZWqBcU</p>
+
+    </div>
+  
+    <h2>February 4, 2021, 3:58 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 is below 90k for the first since since Nov 27. https://t.co/EnIrUAezuG</p>
+
+    </div>
+  
+    <h2>February 4, 2021, 4:01 PM PST</h2>
+    <div>
+      <p>For the first time in several weeks, 7-day averages for COVID-19 cases have not exceeded 20k in any state. https://t.co/Q48ClA7P7n</p>
+
+    </div>
+  
+    <h2>February 5, 2021, 4:54 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 131k cases, 86,373 people currently hospitalized with COVID-19, and 3,543 deaths. https://t.co/IBQuMUIyXZ</p>
+
+    </div>
+  
+    <h2>February 5, 2021, 4:54 PM PST</h2>
+    <div>
+      <p>Only New York and Arizona have more than 400 people hospitalized with COVID-19 per million residents. A month ago, 19 states exceeded that level. https://t.co/6IPpFnUiMH</p>
+
+    </div>
+  
+    <h2>February 6, 2021, 3:55 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 114k cases, 84,233 people currently hospitalized with COVID-19, and 2,983 deaths. https://t.co/Dqps8hj4TG</p>
+
+    </div>
+  
+    <h2>February 6, 2021, 3:56 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 has dropped for 25 consecutive days. https://t.co/Za7cOMJRok</p>
+
+    </div>
+  
+    <h2>February 6, 2021, 3:57 PM PST</h2>
+    <div>
+      <p>For the second week in a row, no states have reported a record number of weekly COVID-19 cases. https://t.co/RjOUercJkw</p>
+
+    </div>
+  
+    <h2>February 6, 2021, 3:58 PM PST</h2>
+    <div>
+      <p>AK announced it will no longer provide weekend COVID-19 updates. Data on Mondays will include weekend backlogs moving forward.</p>
+
+    </div>
+  
+    <h2>February 7, 2021, 4:04 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 96k cases, 81,439 people currently hospitalized with COVID-19, and 1,471 deaths. https://t.co/4Y0v3YEcVS</p>
+
+    </div>
+  
+    <h2>February 7, 2021, 4:04 PM PST</h2>
+    <div>
+      <p>This is the first day since Nov 2 that states reported fewer than 100,000 new COVID-19 cases.</p>
+<p>Today’s data is missing updates from a handful of states, some of which regularly do not report on the weekend, some having technical difficulties. https://t.co/dHyQD4TJIJ</p>
+
+    </div>
+  
+    <h2>February 8, 2021, 4:33 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4M tests, 78k cases, 80,055 people currently hospitalized with COVID-19, and 1,309 deaths. https://t.co/wRYvbZ4FBN</p>
+
+    </div>
+  
+    <h2>February 8, 2021, 4:36 PM PST</h2>
+    <div>
+      <p>While the weekend effect is most often reflected in Monday data, today's number of COVID-19 cases is still the lowest since Oct 27. https://t.co/QoIdQCEQQ2</p>
+
+    </div>
+  
+    <h2>February 8, 2021, 4:37 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 has dropped by 21k in 10 days. In the last week, hospitalizations have decreased by 10% or more in 40 states. https://t.co/nZz5JBkbE6</p>
+
+    </div>
+  
+    <h2>February 8, 2021, 4:43 PM PST</h2>
+    <div>
+      <p>A persistent issue throughout this pandemic has been that there is still an insufficient amount of COVID-19 testing. For comparison, we've seen more cases in the last 8 days than in all of June, while the 7-day average for tests continues to decline. https://t.co/cRMhh4c4WV</p>
+
+    </div>
+  
+    <h2>February 9, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6M tests, 93k cases, 79,179 people currently hospitalized with COVID-19, and 2,795 deaths. https://t.co/FH1UlCCcuG</p>
+
+    </div>
+  
+    <h2>February 9, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>The trend in reported COVID-19 deaths is improving in every major US region. https://t.co/w00nnaAU3j</p>
+
+    </div>
+  
+    <h2>February 9, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>Over the next month, we’ll do a series of trainings and a set of brief written explainers on how to find and work with federal COVID-19 data.</p>
+<p>We welcome journalists, academics, researchers, epidemiologists, API users, and anyone who uses our data to come.
+https://t.co/XffKKQwUmC</p>
+
+    </div>
+  
+    <h2>February 10, 2021, 3:51 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4M tests, 95k cases, 76,979 people currently hospitalized with COVID-19, and 3,445 deaths. https://t.co/Xf4PEK0Tl8</p>
+
+    </div>
+  
+    <h2>February 10, 2021, 3:54 PM PST</h2>
+    <div>
+      <p>For the first time since Oct 22, no states are reporting over 400 COVID-19 hospitalizations per million people. NY is currently the highest with 390 hospitalizations per million people. https://t.co/7YZH2xNDhr</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 2:32 PM PST</h2>
+    <div>
+      <p>Our weekly update is published. COVID-19 cases are down 23% from the previous week. Since the national peaks in January, cases are down 57% and hospitalizations are down 42%. Deaths are down 10% since last week. https://t.co/sdHNzWZmAU https://t.co/Qnx0b78gIV</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 2:32 PM PST</h2>
+    <div>
+      <p>While most COVID-19 metrics are on a downward trend including the number of people currently hospitalized, new hospital admissions in the Northeast are moving slightly upward, most notably in NY and CT after last week’s winter snow storm. https://t.co/Iabc29Zx0V</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 2:32 PM PST</h2>
+    <div>
+      <p>Only 23 states have reported any demographic data for people hospitalized with COVID-19, and only 9 share race &amp; ethnicity data for tests. Without good, public demographic data on hospitalizations &amp; tests, there can be no accountability for efforts to address inequities. https://t.co/8u60xfE66P</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 2:32 PM PST</h2>
+    <div>
+      <p>The COVID Tracking Project is holding a series of free training sessions on how to find, use, and interpret federal COVID-19 data. All data users are welcome! Sign up here: https://t.co/1guPdlcNKY</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.9M tests, 103k cases, 74,225 people currently hospitalized with COVID-19, and 3,885 deaths. https://t.co/dmwRwm21H7</p>
+
+    </div>
+  
+    <h2>February 12, 2021, 12:00 PM PST</h2>
+    <div>
+      <p>We’ve revamped our process of evaluating COVID-19 data reporting completeness. We’re no longer assigning states letter grades. Instead, we’ve rolled out detailed assessments of each state.</p>
+<p>https://t.co/I7UrDH4JL5</p>
+
+    </div>
+  
+    <h2>February 12, 2021, 12:00 PM PST</h2>
+    <div>
+      <p>For the past year, states have made their own choices about how to report key pandemic metrics. Our assessments look at how each state presents all kinds of COVID-19 data—including data on race &amp; ethnicity and data from long-term-care facilities.</p>
+
+    </div>
+  
+    <h2>February 12, 2021, 4:42 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 101k cases, 71,504 people currently hospitalized with COVID-19, and 2,918 deaths. The 7-day average for cases has dropped below 100k for the first time since Nov 2. https://t.co/2Ap78C1Sl2</p>
+
+    </div>
+  
+    <h2>February 12, 2021, 4:44 PM PST</h2>
+    <div>
+      <p>Since last Friday, the number of people currently hospitalized with COVID-19 has decreased by nearly 15k and no states are reporting an increase by 10% or more. https://t.co/TRj9Pn6qK6</p>
+
+    </div>
+  
+    <h2>February 13, 2021, 5:01 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.7M tests, 90k cases, 69,283 people currently hospitalized with COVID-19, and 2,303 deaths. https://t.co/c07OymUQs5</p>
+
+    </div>
+  
+    <h2>February 13, 2021, 5:01 PM PST</h2>
+    <div>
+      <p>The reported new cases, people hospitalized, and new deaths decreased again this week. This week had the fewest reported new cases since October, and the fewest COVID-19 deaths of any in 2021. https://t.co/azya5sVvXN</p>
+
+    </div>
+  
+    <h2>February 13, 2021, 5:01 PM PST</h2>
+    <div>
+      <p>We are still well above the numbers reported during the spring and summer surges. More than 18M people have tested positive for COVID-19 since October. More than 137k people have died of COVID-19 in 2021.</p>
+
+    </div>
+  
+    <h2>February 14, 2021, 4:35 PM PST</h2>
+    <div>
+      <p>States reported 1.4 million tests, 72k cases, 67k people hospitalized with COVID-19, and 1,363 deaths.4 bar charts showing key COVID-19 metrics for the US over time. https://t.co/bxZ5EFe20H</p>
+
+    </div>
+  
+    <h2>February 14, 2021, 4:35 PM PST</h2>
+    <div>
+      <p>The @CDCgov has created a new weekly newsletter you can sign up for to receive COVID-19 updates. It's simple, clear, and useful. https://t.co/wq8IeDrfz7</p>
+
+    </div>
+  
+    <h2>February 15, 2021, 3:52 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests, 55k cases, 65,455 people currently hospitalized with COVID-19, and 1,078 deaths. https://t.co/7Tcvlyotv0</p>
+
+    </div>
+  
+    <h2>February 15, 2021, 3:54 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 has dropped in half from the peak in January. https://t.co/H0nd8pE3bd</p>
+
+    </div>
+  
+    <h2>February 15, 2021, 3:55 PM PST</h2>
+    <div>
+      <p>An important caveat: Today's data is missing updates from AK, ID, MP, WA, and WY. Partial updates were provided from several other states. There may be a slight holiday effect reflected in data later this week.</p>
+
+    </div>
+  
+    <h2>February 16, 2021, 3:18 PM PST</h2>
+    <div>
+      <p>Have more questions about federal COVID hospitalization data? Join us 2/18 at 2pm ET for a free training on how to use this data set. Sign up here:</p>
+<p>https://t.co/XffKKQfiY2</p>
+
+    </div>
+  
+    <h2>February 16, 2021, 4:23 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.1 million tests, 56k cases, 64,533 people currently hospitalized with COVID-19, and 1,353 deaths. https://t.co/keu3yiWGF0</p>
+
+    </div>
+  
+    <h2>February 16, 2021, 4:23 PM PST</h2>
+    <div>
+      <p>This is the fewest COVID-19 deaths reported by states on a Tuesday since Nov 3. https://t.co/wRVRtkEtub</p>
+
+    </div>
+  
+    <h2>February 17, 2021, 3:30 PM PST</h2>
+    <div>
+      <p>As we’ve shared, The COVID Tracking Project will be winding down data compilation on Mar 7. Before then, we’re taking a close look at federal data sources. Today we’re sharing the first installment in a series of analyses on federal testing data: https://t.co/04CLHMOOij</p>
+
+    </div>
+  
+    <h2>February 17, 2021, 4:16 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.3 million tests, 66k cases, 63,398 people currently hospitalized with COVID-19, and 2,336 deaths. https://t.co/AqZlv5pcHx</p>
+
+    </div>
+  
+    <h2>February 17, 2021, 4:18 PM PST</h2>
+    <div>
+      <p>5 weeks ago, 33 states reported 500 or more COVID-19 cases per million people. Today, no states have reached that threshold. https://t.co/nd6NfGfRW8</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 2:51 PM PST</h2>
+    <div>
+      <p>Our weekly update is published. All major indicators of COVID-19 transmission in the US continue to fall rapidly. Deaths are down 20% from last week. https://t.co/vjwxr5Sdm2 https://t.co/e3QaDvwQyJ</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 2:51 PM PST</h2>
+    <div>
+      <p>Every region and sub-region of the US now shows substantial declines in the number of hospitalized COVID-19 patients. https://t.co/rfggxJ0LMf</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 2:51 PM PST</h2>
+    <div>
+      <p>The effects of the vaccines are finally showing up in the data, and right where we want them: deaths in long-term-care facilities are declining rapidly not just in absolute numbers, but as a share of COVID-19 deaths in the whole country. https://t.co/35gqiNtph4</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 2:51 PM PST</h2>
+    <div>
+      <p>The CDC has a new COVID Data Tracker Weekly Review  that is simple and useful, as well as a good starting point for understanding what is available in federal government data repositories. https://t.co/wq8IeDIQXH</p>
+
+    </div>
+  
+    <h2>February 19, 2021, 4:06 PM PST</h2>
+    <div>
+      <p>COVID-19 hospitalizations are now under 60k for the first time since November 9, bringing us back down to the peak levels of hospitalizations we saw in the spring and summer surges. https://t.co/zK04ZrtWtc</p>
+
+    </div>
+  
+    <h2>February 20, 2021, 4:08 PM PST</h2>
+    <div>
+      <p>Today's COVID-19 case count is the lowest on a Saturday since Oct 17. https://t.co/snooZIAUlk</p>
+
+    </div>
+  
+    <h2>February 20, 2021, 4:09 PM PST</h2>
+    <div>
+      <p>While there are encouraging trends in declining COVID-19 cases, hospitalizations, and deaths, the 7-day average for COVID-19 tests is moving in the wrong direction. Tests are down 16.7% from last week. https://t.co/rdbzZcr68r</p>
+
+    </div>
+  
+    <h2>February 21, 2021, 4:10 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2 million tests, 58k cases, 56,159 COVID-19 hospitalizations, and 1,286 deaths. https://t.co/io06uGlfUW</p>
+
+    </div>
+  
+    <h2>February 22, 2021, 10:10 AM PST</h2>
+    <div>
+      <p>The decline in cases and deaths in LTCs is outpacing improvement overall, suggesting that vaccination efforts —which prioritized LTCs—are working. Deaths in LTC facilities are declining not just in absolute numbers, but as a share of COVID-19 deaths in the whole country. https://t.co/uVfH6dikte</p>
+
+    </div>
+  
+    <h2>February 22, 2021, 12:47 PM PST</h2>
+    <div>
+      <p>Have questions about federal COVID cases and deaths data? Join us Feb 25 at 2pm ET for a free training on how to use these datasets. Sign up here:</p>
+<p>https://t.co/1guPdlcNKY</p>
+
+    </div>
+  
+    <h2>February 22, 2021, 1:55 PM PST</h2>
+    <div>
+      <p>Day-of-week effects are a major cause of day to day fluctuations in COVID-19 data. Read about them here: https://t.co/uFVNSRLEBL</p>
+
+    </div>
+  
+    <h2>February 22, 2021, 1:59 PM PST</h2>
+    <div>
+      <p>Because day-of-week effects can mimic true trends in data, it’s important to understand what they are and how they affect the data. Here we outline best practices for interpreting COVID-19 data, accounting for day-of-week fluctuations. https://t.co/uFVNSRLEBL</p>
+
+    </div>
+  
+    <h2>February 22, 2021, 4:03 PM PST</h2>
+    <div>
+      <p>Reported COVID-19 deaths in VA have been notably high for 3 days as the state is processing death certificates from the post-holiday case surge. https://t.co/1GSVZEFhZj</p>
+
+    </div>
+  
+    <h2>February 22, 2021, 4:05 PM PST</h2>
+    <div>
+      <p>Since our dataset uses NYS reported deaths which does not include the more than 8,000 deaths that are reported by NYC, our total death count is lagging behind other trackers that marked 500k deaths today. We also recognize that COVID-19 deaths in the US are an undercount.</p>
+
+    </div>
+  
+    <h2>February 24, 2021, 12:20 PM PST</h2>
+    <div>
+      <p>As we wind down data compilation, we want to help everyone understand how to find and use federal COVID-19 numbers. Today, we’re going over CDC case data. https://t.co/6cm838CYO1</p>
+
+    </div>
+  
+    <h2>February 24, 2021, 3:56 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 73k cases, 54,118 currently hospitalized, and 2,447 COVID-19 deaths. https://t.co/IHEuv29ZKx</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 12:23 PM PST</h2>
+    <div>
+      <p>As we wind down data compilation, we want to help everyone understand how to find and use federal COVID-19 numbers. Today, we’re going over @CDCgov death data.</p>
+<p>https://t.co/lRr1AHuIoD https://t.co/0f0OL9Ko7l</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 12:23 PM PST</h2>
+    <div>
+      <p>The federal government publishes two different datasets: the CDC's COVID Data Tracker, and the NCHS's provisional COVID-19 death counts. The key to understanding them is knowing the source of each. https://t.co/dFI3kAMViW</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 12:23 PM PST</h2>
+    <div>
+      <p>The COVID Data Tracker’s data more closely aligns with CTP's, providing more timely but less standardized information. The NCHS's data is slower, but more closely aligns with gold standard definitions used in epidemiological studies. https://t.co/JB2kmiYLrg</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 3:41 PM PST</h2>
+    <div>
+      <p>Our weekly update is published. COVID-19 cases have been declining for 6 weeks, hospitalizations for 5 weeks, and deaths for 4 weeks. States reported fewer than 15K deaths this week, for the first time in 2021.</p>
+<p>https://t.co/Jpamin5UVm</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 3:41 PM PST</h2>
+    <div>
+      <p>Data this week was disrupted by 2 confounding factors: a holiday and a major winter storm which resulted in an artificial drop and rise in daily COVID-19 figures. Our post about day-of-the-week effects can help contextualize these wobbles.</p>
+<p>https://t.co/uFVNSRLEBL</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 3:41 PM PST</h2>
+    <div>
+      <p>Reports have revealed that COVID-19 vaccinations are not being proportionately administered to the communities hit hardest by the virus. Vaccine data  from @cdcgov also shows that race and ethnicity metadata is missing for nearly half of all vaccinations. https://t.co/LGwYkgeF5J</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 3:41 PM PST</h2>
+    <div>
+      <p>Next Thursday, March 4 at 11 am PT / 2 pm ET we will host our final free training session on federal COVID-19 data. We will cover long-term-care and race &amp; ethnicity datasets. Sign up here:</p>
+<p>https://t.co/1guPdlcNKY</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 4:07 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 76k cases, 52,669 currently hospitalized, and 2,332 COVID-19 deaths. https://t.co/8YldqX3bND</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 4:07 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 decreased again today, as it has every day since Jan 12, 2021. There are now fewer people hospitalized with COVID-19 than at any time since Nov 4, 2020, and fewer than during either the spring or summer surges. https://t.co/Knnjs0mioX</p>
+
+    </div>
+  
+    <h2>February 26, 2021, 5:00 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.8M tests, 74k cases, 51,116 currently hospitalized, and 2,137 COVID-19 deaths. https://t.co/LUHPvch2uw</p>
+
+    </div>
+  
+    <h2>February 26, 2021, 5:00 PM PST</h2>
+    <div>
+      <p>A close look at the topline metrics in Texas shows evidence of major disruption in COVID-19 data reporting across our second-most populous state. When Texas has big problems, they really move the national numbers. https://t.co/b4Tc85tPut</p>
+
+    </div>
+  
+    <h2>February 26, 2021, 5:00 PM PST</h2>
+    <div>
+      <p>Our count of COVID-19 deaths has now surpassed 500k. We reached this milestone a few days after some other trackers because—unlike many trackers—we compile deaths only from New York State and not directly from NYC. https://t.co/gZ5olBbDHW</p>
+
+    </div>
+  
+    <h2>February 27, 2021, 4:10 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6M tests, 71k cases, 48,870 currently hospitalized, and 1,822 COVID-19 deaths. https://t.co/4NlmwoAMYL</p>
+
+    </div>
+  
+    <h2>February 27, 2021, 4:11 PM PST</h2>
+    <div>
+      <p>For the first time since Nov 2, the number of people currently hospitalized with COVID-19 is below 50k. https://t.co/cbcGTMQ5Mv</p>
+
+    </div>
+  
+    <h2>February 27, 2021, 4:12 PM PST</h2>
+    <div>
+      <p>A reminder that some states do not report COVID-19 data on the weekends, and today's figures are missing updates from: AK, CT, KS, LA, MP, NM, RI, and WY. https://t.co/5XpgjRdDH0</p>
+
+    </div>
+  
+    <h2>February 28, 2021, 4:01 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.3 million tests, 54k cases, 47,352 currently hospitalized COVID-19 patients, and 1,049 deaths. https://t.co/e4vIj6xIoc</p>
+
+    </div>
+  
+    <h2>February 28, 2021, 4:01 PM PST</h2>
+    <div>
+      <p>States use different methods for accounting for COVID-19 deaths. Virginia has used a slower technique, which has resulted in a huge spike in reported deaths now, more than a month after the cases peaked in the state. VA has reported 1454 deaths over the last 9 days. https://t.co/uEg4kNmfwX</p>
+
+    </div>
+  
+    <h2>March 1, 2021, 4:16 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2M tests, 48k cases, 46,738 currently hospitalized, and 1,241 COVID-19 deaths. https://t.co/njDTVeufIM</p>
+
+    </div>
+  
+    <h2>March 1, 2021, 4:18 PM PST</h2>
+    <div>
+      <p>For the first time since Oct 18, the number of new COVID-19 cases is below 50k. https://t.co/FCkKyYIPfM</p>
+
+    </div>
+  
+    <h2>March 1, 2021, 4:19 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 testing is increasing after a sharp dip in February. https://t.co/bKwy4IJX7l</p>
+
+    </div>
+  
+    <h2>March 1, 2021, 4:28 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 cases in CA is down 89% since the peak on Jan 13. https://t.co/RChgv0v7LX</p>
+
+    </div>
+  
+    <h2>March 1, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Today's data is missing updates from ID, MP, NM, VI, and WA. As a reminder, Tuesday's data will reflect a number of weekend backlogs.</p>
+
+    </div>
+  
+    <h2>March 2, 2021, 11:58 AM PST</h2>
+    <div>
+      <p>Have questions about federal COVID long-term-care or  race and ethnicity data? Join us Mar 4 at 2pm ET for a free training on how to use these datasets. Sign up here:</p>
+<p>https://t.co/1guPdlcNKY</p>
+
+    </div>
+  
+    <h2>March 2, 2021, 4:13 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.3 million tests, 54k cases, 46,388 currently hospitalized COVID-19 patients, and 1,885 deaths. https://t.co/p6LS3g1ZUr</p>
+
+    </div>
+  
+    <h2>March 3, 2021, 4:13 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4 million tests, 67k cases, 45,462 currently hospitalized COVID-19 patients, and 2,449 deaths. https://t.co/aJZCPy2jJT</p>
+
+    </div>
+  
+    <h2>March 3, 2021, 4:14 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 has dropped dramatically since the start of the year. Each day, the total drops by about 2%. https://t.co/bhSY4R2LxP</p>
+
+    </div>
+  
+    <h2>March 3, 2021, 4:17 PM PST</h2>
+    <div>
+      <p>Have questions about federal COVID long-term-care or race and ethnicity data? Join us tomorrow at 2pm ET for our 4th and final free training on how to use these datasets. Sign up here:
+https://t.co/1guPdlcNKY</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 2:10 PM PST</h2>
+    <div>
+      <p>Today we published our final weekly update. COVID-19 cases, deaths, and hospitalizations continue to decline, while tests are up 12 percent. https://t.co/WR78xLciHn https://t.co/I1bosAlizt</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 2:10 PM PST</h2>
+    <div>
+      <p>As we wind down data compilation, we are publishing more introductions to federal COVID-19 datasets. Today we added a look at federal data on COVID-19 in nursing homes. https://t.co/Lus7ea9QN6 https://t.co/fWAAEZXapU</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 2:10 PM PST</h2>
+    <div>
+      <p>The federal government is now publishing more and better COVID-19 data than ever before. To those of you who’ve relied on our work this year, thank you for your trust. We’ve tried very hard to deserve it, and we believe that we’re leaving you in good hands.</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 4:49 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.6 million tests, 65k cases, 44,172 currently hospitalized COVID-19 patients, and 1,743 deaths. https://t.co/5RuxA8SpOZ</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 4:49 PM PST</h2>
+    <div>
+      <p>The number of people hospitalized with COVID-19 per million has decreased over the past month. 4 states currently have more than 200 people hospitalized per million, while on Feb 4 more than half of states did. Many states decreased their hospitalizations by more more than half. https://t.co/7wPdlaAxOv</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 8:22 AM PST</h2>
+    <div>
+      <p>To get more testing history, we changed ME’s testing data source to one that counts residents only instead of residents and nonresidents. ME’s other COVID-19 data only counts residents, so the new source better matches the rest.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 12:05 PM PST</h2>
+    <div>
+      <p>Since The COVID Tracking Project is winding down on March 7, we’re packaging up what we’ve learned about federal COVID-19 data in a 101 series. Up today: federal testing data. https://t.co/R2bLRmhSgh</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 1:56 PM PST</h2>
+    <div>
+      <p>The COVID Tracking Project is ending data collection this Sunday. As part of our wind down process, we are for the first time publishing our full data annotations, a set of structured metadata on how states define their COVID-19 metrics.
+https://t.co/7ZrFAIzBre</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 1:56 PM PST</h2>
+    <div>
+      <p>Health data pipelines in the US are siloed, with each state running its own pipelines to collect data on COVID-19’s spread. In the absence of federal guidelines, and constrained by technical limitations of their systems, many of them use different data definitions.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 1:56 PM PST</h2>
+    <div>
+      <p>Definitions are often relegated to small footnotes on state dashboards. But they make a big difference in the data: They can tip the scale between labeling a COVID-19 case as active versus recovered, or between counting or not counting some COVID-19 cases and deaths at all.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 1:56 PM PST</h2>
+    <div>
+      <p>Tracking state definitions has been vital to interpreting the data they publish. We hope that this full view of our annotations will be of use to researchers and data users aiming to understand state-level COVID-19 data and the methodologies we’ve used to collect and analyze it.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Our daily deaths is impacted by a change in Ohio's death reporting. The state is now only reporting COVID-19 deaths twice a week as they receive verified death certificates from the NCHS.</p>
+<p>See their dashboard note here: https://t.co/xVfN7mUSrC https://t.co/IJBnRF5wg6</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 4:40 PM PST</h2>
+    <div>
+      <p>We have spent these last few weeks documenting the federal sources of COVID-19 data and explaining how to best navigate them. If you're looking to keep an eye on pandemic data after we've wrapped, please read this piece: https://t.co/quJMBxqHZD</p>
+
+    </div>
+  
+    <h2>March 6, 2021, 4:32 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.4M COVID-19 tests, 60k cases, 41,401 people currently hospitalized, and 1,674 deaths. https://t.co/4dicgp6Pm4</p>
+
+    </div>
+  
+    <h2>March 6, 2021, 4:32 PM PST</h2>
+    <div>
+      <p>The number of people in the hospital with COVID-19 continues to decline in every US region. The Midwest and West are now both under 100 COVID-19 hospitalizations per million people. https://t.co/ZVtgBarFWe</p>
+
+    </div>
+  
+    <h2>March 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.2 million tests, 41k cases, 40,212 hospitalized COVID-19 patients, and 839 deaths. This is our final day of data collection after a very long year. https://t.co/fKDkp3iL03</p>
+
+    </div>
+  
+    <h2>March 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>It's impossible to take in the sweep of the pandemic. But on this day last year, fewer than 20 people were known to have died from COVID-19 in the US. There were only 574 cases. Now, 10 states have seen more than 1 in 500 of their residents killed during the pandemic. https://t.co/8kYBDdt1ty</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

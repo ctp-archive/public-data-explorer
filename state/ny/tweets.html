@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>New York Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">New York</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">New York</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 11, 2020, 1:22 PM PDT</h2>
+    <div>
+      <p>We are tracking the number of people who have been tested here, which is different from &quot;number of tests,&quot; which is what the CDC has released so far.</p>
+<p>Washington has tested the most people and has the most cases (267). NY now second for cases at 216.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 12:51 AM PDT</h2>
+    <div>
+      <p>As we close up the shop for the night, we've been able to track just under 8000 people tested for #COVID19. That's not a lot, and just a few thousand tests got reported today.</p>
+<p>We're missing fresh total test numbers from some big states: CA, NY, and MA.</p>
+<p>https://t.co/iERV2wLMmu https://t.co/dsb0GejjeI</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 1:27 PM PDT</h2>
+    <div>
+      <p>Two exceptions: California and New York. We know our numbers are low there by hundreds, maybe (maybe!) thousands. But it seems highly unlikely to change the <em>overall</em> picture here.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 9:50 PM PDT</h2>
+    <div>
+      <p>Some big new numbers came in since our 3/12 4pm update. Thanks to @NYGovCuomo, we now have a total tested for New York: 2,314, with 328 positives.</p>
+<p>Washington also updated. They've tested 4,807 people. 426 positives.</p>
+<p>https://t.co/iERV2wLMmu</p>
+
+    </div>
+  
+    <h2>March 13, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>A few thoughts on why we counted more than 6,600 new tests today:</p>
+<ol>
+<li>WA, which accounts for nearly 30% of all reported tests in the US, did not report before 4 pm ET yesterday.</li>
+<li>NY reported total tests last night for the first time.</li>
+</ol>
+
+    </div>
+  
+    <h2>March 13, 2020, 11:33 PM PDT</h2>
+    <div>
+      <p>Closing up the shop for the night. We're showing 19,066 tests. 2,182 positives. Here are the four states with the largest known outbreaks: WA, NY, CA, MA. https://t.co/LrCchHRS3V</p>
+
+    </div>
+  
+    <h2>March 14, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>@joshtpm Washington and New York are driving the numbers. We're falling further behind on CA testing numbers. Now that MA is out in the open, the other big question mark is TX.</p>
+
+    </div>
+  
+    <h2>March 15, 2020, 1:35 PM PDT</h2>
+    <div>
+      <p>By known positive tests, the 10 states with the highest per capita number of cases are:
+Washington
+New York
+Colorado
+Massachusetts
+Louisiana
+Rhode Island
+New Jersey
+South Dakota
+New Hampshire
+Georgia</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 11:15 PM PDT</h2>
+    <div>
+      <p>End of day, 3/17, we have confirmed cases in all 50 states + DC and 3 territories, almost 6000 in total. WA and NY are now over 1000 cases each. Of the smaller states, Louisiana, Colorado, and Rhode Island look like hot spots. https://t.co/LzKJBXTD0J</p>
+
+    </div>
+  
+    <h2>March 18, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>The score contains 4 simple components:</p>
+<ol>
+<li>+1 for reporting positives reliably (only NV fails)</li>
+<li>+1 for reporting negatives sometimes (e.g. NY, CA)</li>
+<li>+1 for reporting negatives reliably</li>
+<li>+1 for reporting all commercial tests</li>
+</ol>
+<p>(All labs have to report all positives.)</p>
+
+    </div>
+  
+    <h2>March 19, 2020, 2:28 PM PDT</h2>
+    <div>
+      <p>The other number that jumps off the page is New York's testing ramp. But it's actually 4th in per-capita testing behind Washington, Maine, and New Mexico. https://t.co/HmeRyEjyrV</p>
+
+    </div>
+  
+    <h2>March 21, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>New York accelerated past Washington in per capita positive tests. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Massachusetts
+Colorado
+Rhode Island
+Illinois</p>
+
+    </div>
+  
+    <h2>March 22, 2020, 2:25 PM PDT</h2>
+    <div>
+      <p>New York continues to have the highest positive tests per capita, an indication of both the intensity of testing there and the severity of the outbreak. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Illinois
+Vermont
+Colorado
+Rhode Island</p>
+
+    </div>
+  
+    <h2>March 22, 2020, 2:26 PM PDT</h2>
+    <div>
+      <p>Based on the 15 states that report this metric: The number of people hospitalized has grown to 2,544, most of them in New York. It’s worth noting: Washington State does not disclose this number (yet).</p>
+
+    </div>
+  
+    <h2>March 23, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>New York’s new hospitalization update did not make it into our initial daily update. It is there now. The state now has 2635 hospitalized people, up from 1974.</p>
+<p>We regret the error.</p>
+
+    </div>
+  
+    <h2>March 24, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>Across the 21 states who report them, we tracked 4,468 hospitalizations, the bulk in New York.</p>
+<p>But Louisiana and Florida also have growing numbers of hospitalizations.</p>
+
+    </div>
+  
+    <h2>March 24, 2020, 1:59 PM PDT</h2>
+    <div>
+      <p>New Jersey released new total test numbers today, too. The confirmed cases have grown rapidly as testing ramps up in the NY metro area. https://t.co/PARqhvwpSo</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>California has finally provided an update. It's unclear if the total test count includes pending, but that's a large number of tests—second only to New York—and presumably includes commercial test providers.</p>
+<p>https://t.co/GRXIpoPyGh</p>
+
+    </div>
+  
+    <h2>March 28, 2020, 2:53 PM PDT</h2>
+    <div>
+      <p>Louisiana remains extremely worrisome — and is just behind New York in deaths per capita. https://t.co/JMfbCnmiPy</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 7:38 PM PDT</h2>
+    <div>
+      <p>@alykatzz @rosanna_rago @THECITYNY Our general position is also that the data on hospitalizations and other outcomes is going to be extremely messy, at least for a couple weeks. I would expect a lot of changes and reformats.</p>
+
+    </div>
+  
+    <h2>March 30, 2020, 2:17 PM PDT</h2>
+    <div>
+      <p>Cumulative hospitalizations up to 22,303, still largely driven by New York. California is now second in hospitalizations, Louisiana third.</p>
+
+    </div>
+  
+    <h2>April 2, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>Michigan continues to be a real trouble spot and now has the third highest number of confirmed cases (after NY and NJ), crossing 10,000 total today.</p>
+<p>(We don't know nearly enough about their testing regime in the state, either.) https://t.co/5Vf1ymWOMH</p>
+
+    </div>
+  
+    <h2>April 3, 2020, 8:45 AM PDT</h2>
+    <div>
+      <p>@David_J_Bier @FT__Dan @J_Gelatt Some of it, I think, is the New York metro outbreak dominating the numbers. But I agree: we’re missing less commercial testing than we once were. I expected the positive rate to go down as we picked up those negative tests...</p>
+<p>And that’s not happening. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 5, 2020, 2:22 PM PDT</h2>
+    <div>
+      <p>New York's numbers improved today with a notable slowdown in the growth of hospitalizations, but we would agree with this caution.</p>
+<p>https://t.co/SKmZo4AjoQ</p>
+
+    </div>
+  
+    <h2>April 5, 2020, 2:36 PM PDT</h2>
+    <div>
+      <p>On Michigan. The state has the third-most confirmed cases and deaths (after NY, then NJ). We had not been including their negative test number because the state said it represented &quot;specimens&quot; not people.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 7:52 AM PDT</h2>
+    <div>
+      <p>@JPVMan @Ian_Myers @GovMurphy Also, the number of hospitalizations went up by 1000 the next day. Could be NJ is a day or two behind NY. So many confounding factors.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>New daily deaths held steady at 1,182, about as many as yesterday. New York continues to dominate the movement of these numbers, and New York's numbers have flattened.
+￼ https://t.co/IQzigNm3Nn</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>The nation passed 10,000 deaths today.</p>
+<p>New York stands at 4,758 deaths.  New Jersey passed 1,000.</p>
+<p>16 states have lost more than 100 people to COVID-19.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>@esandeen @supermills @alexismadrigal Not necessarily subsided but flattened in WA, CA, and —perhaps—NY. The waves are overlapping, though. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 6:05 PM PDT</h2>
+    <div>
+      <p>@DeKoustav @dwagswpb I would be very surprised if Florida did not have substantial outbreaks—but is behind New York curve by a substantial number of days. Let’s hope not, though. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>Another way to look at this. New York daily deaths have been a major component of U.S. deaths, but, at least today, there was a large increase in deaths in the other states and territories. https://t.co/or3yeGeUTG</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:53 PM PDT</h2>
+    <div>
+      <p>One last thing to look at. Here's your bottom 10 states in testing intensity, with the leader in testing, New York, for scale.</p>
+<p>If your state is on this list, it may be that your situation is relatively less severe and/or that you don't know how bad the outbreak is yet. https://t.co/bQ6mx9a50u</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 4:04 PM PDT</h2>
+    <div>
+      <p>@PeterJ_Walker @SteveHallArch You may also be seeing cross fade from New York dominant US outbreak to a more distributed picture -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 8, 2020, 1:57 PM PDT</h2>
+    <div>
+      <p>Heading into our daily update, we wanted to take a look back at where we are with testing. CA did the first early testing. Then WA started pumping out tests. But NY now dominates. (Graphics by: @samirrayani and @tophtucker) https://t.co/dPzCmzYjI4</p>
+
+    </div>
+  
+    <h2>April 8, 2020, 1:57 PM PDT</h2>
+    <div>
+      <p>On a per capita basis, things look quite different. NY still dominates, but Louisiana—due, in part, to a large outbreak—has tested a lot of people. There are huge disparities in testing between the states, as we've often noted. https://t.co/5x75DI44E3</p>
+
+    </div>
+  
+    <h2>April 10, 2020, 2:33 PM PDT</h2>
+    <div>
+      <p>New York continues to dominate the numbers, as you can see in these tiny charts of COVID-19 deaths in hard-hit states. https://t.co/79VARUjNxE</p>
+
+    </div>
+  
+    <h2>April 10, 2020, 2:38 PM PDT</h2>
+    <div>
+      <p>Here's the comparison between New York and the rest of the states and territories.</p>
+<p>43% of the known lives lost due to COVID-19 have come in New York. https://t.co/cf4tTXbd4Y</p>
+
+    </div>
+  
+    <h2>April 11, 2020, 2:24 PM PDT</h2>
+    <div>
+      <p>The death toll continues to be concentrated in New York and New Jersey, although Michigan, Illinois, and Pennsylvania continue to see substantial numbers of  deaths each day. https://t.co/GbJ5RNM0mc</p>
+
+    </div>
+  
+    <h2>April 12, 2020, 2:23 PM PDT</h2>
+    <div>
+      <p>Outside the NY-centric outbreak (NY, NJ, CT), Michigan  has the most severe outbreak. https://t.co/P3hqp3Hd9B</p>
+
+    </div>
+  
+    <h2>April 14, 2020, 4:22 PM PDT</h2>
+    <div>
+      <p>@JerrBearr @NateSilver538 New York’s share of daily deaths is flat to a slight decline. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 15, 2020, 11:35 AM PDT</h2>
+    <div>
+      <p>Here's where we are with positive tests in the United States. You can see the NY dominance, as well as the variability across the country.</p>
+<p>Remember that the number of positive results is shaped by the total number of tests, which has plateaued in April at less than ~150k/day. https://t.co/OmSJ1eJ9uI</p>
+
+    </div>
+  
+    <h2>April 15, 2020, 2:15 PM PDT</h2>
+    <div>
+      <p>~70% of the increase in deaths came from outside New York, as the outbreak burden continues to spread.</p>
+
+    </div>
+  
+    <h2>April 16, 2020, 4:15 PM PDT</h2>
+    <div>
+      <p>Another thread we've been following: New York versus the rest of the country.</p>
+<p>As NY deaths have plateaued and slowly begun to decline, the rest of the country does not yet show a similar pattern. https://t.co/E3s3hQDR0M</p>
+
+    </div>
+  
+    <h2>April 17, 2020, 7:23 AM PDT</h2>
+    <div>
+      <p>@20manny07 Other counters are including the new definition of deaths in New York City. We haven’t seen New York State report that yet, and we track state data. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 17, 2020, 2:24 PM PDT</h2>
+    <div>
+      <p>You may have seen high death counts from other sources over the last few days. That's because New York City and New York State report differently, as you can see in this NYC screenshot. We use New York State numbers.</p>
+<p>https://t.co/CbZwBOEKeH https://t.co/T7Ik1906HV</p>
+
+    </div>
+  
+    <h2>April 17, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>Another New York note: the state has not released new positive or total test numbers yet today. NY has been reporting 17-26k tests per day.</p>
+
+    </div>
+  
+    <h2>April 19, 2020, 7:32 AM PDT</h2>
+    <div>
+      <p>@FamiliaFeeling @lawmamaof3girls @Cornvelious_Dan Even in New York, the testing criteria remain strict. Which we know from anecdotes, government docs, and data like this. -@alexismadrigal https://t.co/CGgAgCNqHf</p>
+
+    </div>
+  
+    <h2>April 19, 2020, 1:56 PM PDT</h2>
+    <div>
+      <p>One confounding data issue right now: New York City is reporting confirmed and presumptive deaths, but the state is not, so we are not. However, at least one state (Ohio) is lumping those numbers together. This may get messy in the coming days.</p>
+
+    </div>
+  
+    <h2>April 19, 2020, 2:00 PM PDT</h2>
+    <div>
+      <p>A big part of the American story is the slow easing of the outbreak in New York. New York deaths represent an ever smaller number of the total daily deaths.</p>
+<p>Where New York once represented half of a day's death toll, it is now down to 30%. https://t.co/Acj21xtUaH</p>
+
+    </div>
+  
+    <h2>April 20, 2020, 10:53 PM PDT</h2>
+    <div>
+      <p>@rosnovsky @cdc The main discrepancy is in how New York City and New York State are reporting presumed COVID deaths. Both methods are defensible, just different. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 21, 2020, 2:21 PM PDT</h2>
+    <div>
+      <p>Unlike previous highs, this spike was <em>not</em> driven by New York data, but the rest of the country.</p>
+<p>Note, too, this data does not include <em>presumptive</em> deaths from COVID in New York City (as the state has not provided that number yet). https://t.co/25cQIoGCkY</p>
+
+    </div>
+  
+    <h2>April 21, 2020, 2:21 PM PDT</h2>
+    <div>
+      <p>New York State says they will soon be providing presumptive as well as laboratory-confirmed deaths. Our position is that all states should provide both numbers, but separately. This would allow for comprehensive accounting while providing better comparability through time.</p>
+
+    </div>
+  
+    <h2>April 21, 2020, 5:29 PM PDT</h2>
+    <div>
+      <p>@taylorgrayson It's much easier to get faster data if you mix sources, but you don't always know the provenance of that information. E.g. the LAT and NYT are much faster on New York cases. Or you can tally counties for some states. It's never worked well for what we do best: a clean time series</p>
+
+    </div>
+  
+    <h2>April 22, 2020, 2:35 PM PDT</h2>
+    <div>
+      <p>The reported death toll today is 2,100 people. That's in line with last week's numbers.</p>
+<p>(Again, these numbers do not include 5,000 &quot;probable&quot; deaths in New York City because New York State doesn't record them yet.)</p>
+<p>https://t.co/CbZwBOEKeH https://t.co/sUbx3XE71D</p>
+
+    </div>
+  
+    <h2>April 23, 2020, 2:29 PM PDT</h2>
+    <div>
+      <p>The death toll in our dataset was 1,911. New York made up less than a quarter of that total. https://t.co/naXXOT1LHb</p>
+
+    </div>
+  
+    <h2>April 24, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>States reported 1,772 new COVID-19 deaths today, and you can see a familiar falling curve in the reported death data over the week.</p>
+<p>The outbreak in New York again made up less than a quarter of US deaths for the day, down from a high of around 50% of the US daily deaths. https://t.co/cdi93XJtHK</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:33 PM PDT</h2>
+    <div>
+      <p>Deaths rose today in our dataset by 2,194 to 47,980.</p>
+<p><em><strong>Note</strong></em> New York City is reporting 4,453 more confirmed and probable COVID-19 deaths than the state government is for the city.</p>
+<p>If you add those deaths into our dataset, our count (52k) falls between the CDC and JHU. https://t.co/dznPM4bhln</p>
+
+    </div>
+  
+    <h2>April 26, 2020, 2:19 PM PDT</h2>
+    <div>
+      <p>A lot of the improvement is the slow easing of the situation in New York.</p>
+<p>It is worth noting that improvement is not even. In some states, the situation is not improving.</p>
+<p>For example:
+https://t.co/xuWU1QBZce</p>
+
+    </div>
+  
+    <h2>April 29, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>However, the death toll also reached a new daily high of 2,700. The cumulative number of deaths in our dataset have reached over 55,000.</p>
+<p>That does not include 5,302 probable COVID-19 deaths reported by New York City but not New York State. https://t.co/mhQucj2n7V</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:34 PM PDT</h2>
+    <div>
+      <p>1,651 deaths were reported, bringing the total in our dataset to 60,710. This does not include 5,126 probable COVID-19 deaths reported by NYC, but not by New York State.</p>
+<p>We're working on separate accounting of lab-confirmed and probable deaths for all states where we can do so. https://t.co/J7rBzYS4RZ</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>9 states reported over 50 deaths:</p>
+<p>California: 98
+Florida: 74
+Illinois: 102
+Indiana: 54
+Massachusetts: 130
+Michigan: 154
+New Jersey: 204
+New York: 299
+Pennsylvania: 64</p>
+
+    </div>
+  
+    <h2>May 4, 2020, 3:10 PM PDT</h2>
+    <div>
+      <p>When New York was driving the death toll, the national numbers were more consistent because the weekend lag was less pronounced. https://t.co/gTnkSYUkgr</p>
+
+    </div>
+  
+    <h2>May 5, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>It's worth zooming in on one state story, Michigan. A few weeks ago, it looked like it might turn into another New York.</p>
+<p>Deaths were rising rapidly, peaking at over 200 per day. Now, deaths are <em>slowly</em> declining.</p>
+<p>Testing is way up, but newly discovered cases are falling. https://t.co/5iPyKX0ML1</p>
+
+    </div>
+  
+    <h2>May 7, 2020, 2:06 PM PDT</h2>
+    <div>
+      <p>The reported death toll also reached a new high: 2,746.</p>
+<p>There is an important caveat to this number: NY reported 941 deaths, most of which were newly confirmed, but did not occur in the last 24 hours.</p>
+<p>Sharp local reporting on the topic: https://t.co/04pISwidhW https://t.co/9SVt4FUmtG</p>
+
+    </div>
+  
+    <h2>May 7, 2020, 2:10 PM PDT</h2>
+    <div>
+      <p>Even without the NY historical bump, however, reported deaths would still have been quite high, around 2000.</p>
+
+    </div>
+  
+    <h2>May 7, 2020, 2:19 PM PDT</h2>
+    <div>
+      <p>The positives and the positive rate are falling, but it is largely due to the New York metro area's numbers coming down.</p>
+<p>This is not great news for the rest of the country.</p>
+<p>(Analysis on that below by @PeterJ_Walker) https://t.co/7yVaOLrQpV</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 2:13 PM PDT</h2>
+    <div>
+      <p>The reported death toll today is 1,760, about the same as last Friday.</p>
+<p>Only two states reported over 200 deaths today (NY and PA). https://t.co/0EjueTbsWz</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>Cases continued their slight drift downward, but it's important to remember that outside NY-NJ-CT, cases are <em>not</em> falling. https://t.co/LB17L585rx</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 2:19 PM PDT</h2>
+    <div>
+      <p>The positive rate <em>is</em> falling both in the NY metro area and around the country. We are seeing more of the outbreak with our testing. https://t.co/P4LFmA8GIi</p>
+
+    </div>
+  
+    <h2>May 9, 2020, 2:03 PM PDT</h2>
+    <div>
+      <p>There were 1,529 newly reported deaths, pushing cumulative deaths over 73k in our dataset. This does not  include 5,313 probable COVID-19 deaths reported by New York City, but not New York State.</p>
+<p>We will have more details on how we'll be tracking deaths going forward this week. https://t.co/xQ91OaysOy</p>
+
+    </div>
+  
+    <h2>May 9, 2020, 2:17 PM PDT</h2>
+    <div>
+      <p>And an important reminder: the story is very different in different regions of the country. Outside NY-NJ-CT, cases  are not really declining. https://t.co/LCsljoCpXK</p>
+
+    </div>
+  
+    <h2>May 9, 2020, 2:27 PM PDT</h2>
+    <div>
+      <p>Reposting the daily cases chart for clarity here... It was mislabeled in an earlier tweet.</p>
+<p>Cases totals are drifting down, due to the improving situation in the NY metro area.</p>
+<p>Still, the 25k newly reported cases represent more than 25% of the global total. https://t.co/5oTc0faKaH</p>
+
+    </div>
+  
+    <h2>May 10, 2020, 2:47 PM PDT</h2>
+    <div>
+      <p>Reported deaths were quite low—979—as they have been on Sundays and Mondays in recent weeks.</p>
+<p>In this dataset, which does not include 5,178 probable COVID-19 deaths reported by New York City but not New York State, we've tracked 74,270 deaths. https://t.co/UR6jPlo3wh</p>
+
+    </div>
+  
+    <h2>May 10, 2020, 2:51 PM PDT</h2>
+    <div>
+      <p>Today's number of reported newly reported cases is one of the lowest since March.</p>
+<p>A reminder that the falling national number is largely driven by the slowing of the outbreak in the NY Metro area. The situation is not consistent across the country. https://t.co/Sr3D9jcDIB</p>
+
+    </div>
+  
+    <h2>May 11, 2020, 2:54 PM PDT</h2>
+    <div>
+      <p>The daily death toll fell to its lowest since March: 837.</p>
+<p>As you can see, Monday data tends to be low, then the numbers tick back up Tuesday.</p>
+<p>Note: this chart does not include 5,178 probable COVID-19 deaths, reported by NYC, but not reported by New York State. https://t.co/pNxNB306XB</p>
+
+    </div>
+  
+    <h2>May 12, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>The  death toll today is 1,510. That brings the total deaths in our dataset over ~77 thousand.</p>
+<p>This does not include 5,136 probable COVID-19 deaths reported by NYC, but not New York State, nor does it address excess mortality as reported by the CDC here:
+https://t.co/4ybLKisg6u https://t.co/upQWMTFN37</p>
+
+    </div>
+  
+    <h2>May 12, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>The U.S. situation continues to be highly influenced by the regional decline in the NY metro area—while the rest of the country shows a different pattern. https://t.co/kP5g6x7mN9</p>
+
+    </div>
+  
+    <h2>May 14, 2020, 2:42 PM PDT</h2>
+    <div>
+      <p>The reported death toll was 1,741, bringing our dataset over 80,000.</p>
+<p>This does not include 5,057 probable deaths reported by New York City but not the state, nor does it address excess mortality as reported by the CDC here:</p>
+<p>https://t.co/4ybLKisg6u https://t.co/PCJMSdieQw</p>
+
+    </div>
+  
+    <h2>May 15, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>1,645 deaths were reported today, bringing the total in our dataset to 81,729.</p>
+<p>This does not include 5,054 probable deaths recorded by NYC, but not published by New York State, nor does it address excess mortality as reported by the CDC here: https://t.co/4ybLKisg6u https://t.co/WTdXIsfeTa</p>
+
+    </div>
+  
+    <h2>May 16, 2020, 2:34 PM PDT</h2>
+    <div>
+      <p>1,286 deaths were reported today, bringing the total in our dataset to 83,015.</p>
+<p>This does not include 4,820 probable deaths recorded by NYC, but not published by New York State, nor does it address excess mortality as reported by the CDC here:
+https://t.co/4ybLKisg6u https://t.co/zK1qCAM17t</p>
+
+    </div>
+  
+    <h2>May 17, 2020, 2:58 PM PDT</h2>
+    <div>
+      <p>Some of the big day appears to be a test dump from California, which reported 56k tests today. But Michigan, New York, and Georgia also reported more than 30k tests.  13 states reported more than 10k.</p>
+<p>Overall, the U.S. hasn't been under 300k daily tests since last Sunday.</p>
+
+    </div>
+  
+    <h2>May 20, 2020, 2:45 PM PDT</h2>
+    <div>
+      <p>Deaths remained below 1,500 bringing our dataset's recorded deaths to 87,472. For a Wednesday, this is lower than average.</p>
+<p>The cumulative total does not include 4,781 probable deaths reported by NYC but not NY State. https://t.co/heaw3ZRLcH</p>
+
+    </div>
+  
+    <h2>May 23, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>1,178 deaths were reported. States have now reported 91,261 deaths.</p>
+<p>New York City also reports 4,735 probable COVID-19 deaths that New York State still does not record. https://t.co/9KeTXrUbOD</p>
+
+    </div>
+  
+    <h2>May 27, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>Deaths rose to 1259, but the 7-day average fell under 1000 for the first time since 4/4.</p>
+<p>States have reported 94,352 deaths. New York City reports an additional 4,752 probable COVID-19 deaths. Together, that's 99,104 people.</p>
+<ul>
+<li>For comparison *</li>
+</ul>
+<p>Hopkins: 100,407
+NYT: 100,046 https://t.co/PM69D2mQLy</p>
+
+    </div>
+  
+    <h2>May 28, 2020, 2:21 PM PDT</h2>
+    <div>
+      <p>The big numbers were driven by a few big data dumps. New York and Louisiana were way above average. But 15 states reported over 10k tests.</p>
+<p>Unclear how much of the new variability in the numbers is due to states pulling out antibody testing and how much was just Memorial Day. https://t.co/U6a3DY6tpv</p>
+
+    </div>
+  
+    <h2>May 28, 2020, 2:35 PM PDT</h2>
+    <div>
+      <p>States reported 1,353 new deaths today. The 7-day average remains under 1,000.</p>
+<p>New York is an ever-smaller percentage of the daily total. https://t.co/oOAUkqaOzm</p>
+
+    </div>
+  
+    <h2>June 1, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>The number of new cases was low—about 16k—after a series of higher days. The 7-day average fell under 21k.</p>
+<p>NY was under 1,000 new cases for the first time in 11 weeks!</p>
+<p>California and Texas, which had new highs yesterday, were much lower today. https://t.co/E1yZfBBEym</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>2/2</p>
+<p>Missouri
+Nevada
+New Jersey
+New York
+North Carolina
+Ohio
+Pennsylvania
+South Carolina
+Tennessee
+Wisconsin</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 3:12 PM PDT</h2>
+    <div>
+      <p>States reported just under 1000 deaths, not far from the 7-day average.</p>
+<p>Our data set shows over 101 thousand deaths reported by states, not including 5,783 probable and confirmed COVID deaths reported by NYC but not (yet) by NY state. https://t.co/UcyaqRRq2M</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>This is what a &quot;patchwork pandemic&quot; (as @edyong209 called it) looks like.</p>
+<p>The regions vary, as do the states. While New York is seeing its best days since the very beginning, Arizona is seeing its worst. https://t.co/KJf0Mn9S18</p>
+
+    </div>
+  
+    <h2>June 7, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Only 20k new cases were reported today. 24 states reported more than 300 new cases today.</p>
+<p>New York and New Jersey tested more than 102k people combined, and only got ~1k positives.</p>
+<p>On the other end of the spectrum, Arizona tested ~10k people and confirmed 1,438 new cases. https://t.co/q7b8gj50V2</p>
+
+    </div>
+  
+    <h2>June 8, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>States reported 640 deaths. The 7-day average ticked up a little.</p>
+<p>Deaths in the NY, NJ, and CT have plummeted. They've also fallen elsewhere, but much more slowly. https://t.co/9DYyuzcrLY</p>
+
+    </div>
+  
+    <h2>June 12, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>States reported 751 new deaths, right about the 7-day average.</p>
+<p>A reminder that this chart does not include ~6k probable and confirmed COVID-19 deaths reported by New York City, but not yet by New York State. https://t.co/C9QvtUX5zV</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>States reported 695 new deaths, trending down slightly.</p>
+<p>A reminder that this chart does not include ~6k probable and confirmed COVID-19 deaths reported by New York City, but not yet by New York State. https://t.co/iFdrYzwafW</p>
+
+    </div>
+  
+    <h2>June 16, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Here are the five states with the greatest change in the number of people currently hospitalized.</p>
+<p>A rising Arizona is about to cross a falling New York. https://t.co/ny80q6Ei5M</p>
+
+    </div>
+  
+    <h2>June 17, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Hospitalizations reflect the same trends. Arizona now has more people hospitalized than NY.</p>
+<p>(Note: Florida might be on the right-hand list, but it does not provide this metric.) https://t.co/6iAzGanQ6J</p>
+
+    </div>
+  
+    <h2>June 17, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Among states that had an early outbreak, most are now in decent shape with lots of testing and very new cases. NY, for example, had a positive rate under 1% today.</p>
+<p>Louisiana may be an exception. Cases are rising again and now hospitalizations have stopped falling, too. https://t.co/TSt030hhbN</p>
+
+    </div>
+  
+    <h2>June 22, 2020, 2:59 PM PDT</h2>
+    <div>
+      <p>Take out just three states from the data—NY, NJ, and CT—and a different story emerges.</p>
+<p>The positive rate outside that area never reached as high, nor did it ever get as low. And it began climbing over the last week. https://t.co/23x5Yse3wV</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>Looking at new cases, the trends of the last couple weeks continue. Florida became the second state to record a day of over 10,000 new cases (after New York on April 15th). Georgia set a new record yesterday and broke it today. https://t.co/77LvPQIhyU</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:48 PM PDT</h2>
+    <div>
+      <p>This is the same pattern we saw for cases and hospitalizations over the last couple months. Compare Arizona, New Jersey, New York, and Texas. https://t.co/Uz6d2aQ9LU</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>At the peak in New York on April 15, that state hit 595 cases per million.</p>
+<p>Arizona (580) <em>and</em> Louisiana (568) approached that number today. https://t.co/MxvPqIC43k</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 2:46 PM PDT</h2>
+    <div>
+      <p>Florida reported an astounding 15k cases today. No state has ever reported so many infections.</p>
+<p>It’s worth remembering how few tests were available in April, which suppressed New York’s confirmed cases.</p>
+<p>(Florida started reporting current hospitalizations this week.) https://t.co/k7mQFVETRn</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>A better milestone. New York City saw at least one COVID-19 death on every day since mid March. That's 120+ days. Yesterday, after months of communal effort by the people of the city, New York City finally reported 0 new deaths.</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>In Texas, the number of currently hospitalized COVID-19 patients has been over 10k for the last three days. New York, at its peak, had 18.8k hospitalized COVID-19 patients. https://t.co/vhn6Z512DU</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Florida didn't just break the record for reported cases. It also shattered the mark for cases per million population. New York, at peak, hit 595. Today, Florida reported 712 cases per million. Arkansas also entered the 500+ tier, where we've only seen FL, AZ, and LA. https://t.co/KeQmHMA9as</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Florida broke New York’s 7-day average record for cases per million population today. Testing capacity is obviously much, much greater now than in spring. However, it’s still stunning to see that record fall. https://t.co/VGzrM6uWGW</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>California is now #3 in the United States for total COVID-19 deaths, behind New York and New Jersey. We hope that declining case counts in CA will be reflected in falling deaths within the next 2-3 weeks. https://t.co/iGGokUAjGB</p>
+
+    </div>
+  
+    <h2>August 1, 2020, 3:33 PM PDT</h2>
+    <div>
+      <p>And finally, deaths from the beginning to yesterday.</p>
+<p>(Along with your periodic reminder that New York State still is not reporting over 5000 probable deaths recorded by New York City and the CDC.) https://t.co/k0HugoRg4Q</p>
+
+    </div>
+  
+    <h2>August 3, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>Florida has shut down many testing sites due to the storm, but here’s a post to help break down the differences between the Florida outbreak and what we saw in New York back in the spring. https://t.co/VTw86CFW8X</p>
+
+    </div>
+  
+    <h2>August 12, 2020, 4:33 PM PDT</h2>
+    <div>
+      <p>In better news, New York has continued to test large numbers of people while cases have remained consistently, impressively low. https://t.co/sNZg8wGbAY</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>Total deaths remain highest in the Northeast, with nearly 29,000—certainly a substantial undercount, as New York reports only deaths within long-term care facilities, not those linked to such facilities but occurring in hospitals. https://t.co/QTVXT0Hb1z</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 1:31 PM PDT</h2>
+    <div>
+      <p>New York does not report race or ethnicity data for cases. However, the disparity in deaths shows how many ‘Black or African American’ people have been affected by COVID-19.
+https://t.co/KutGHn1g5B https://t.co/A0MjJaHY94</p>
+
+    </div>
+  
+    <h2>December 1, 2020, 4:33 PM PST</h2>
+    <div>
+      <p>Indiana and Nevada are now reporting more than 500 currently hospitalized per million people, along with South Dakota. For reference, the highest value of hospitalizations per million people we've seen was 968 in New York back in April. https://t.co/140cQIWjDh</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 3:40 PM PST</h2>
+    <div>
+      <p>Hospitalizations in the 4 most populous states—CA, FL, NY, and TX—are rising quickly. California in particular has seen a steep hospitalization increase over the past few weeks. https://t.co/ul9K4nQUGz</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Seven states reported more than 10k cases today: CA, FL, IL, NY, PA, OH, and TX. https://t.co/L93HHx9vjH</p>
+
+    </div>
+  
+    <h2>December 12, 2020, 4:20 PM PST</h2>
+    <div>
+      <p>California, the most populous state in the country, set a new case record for any state. More people are hospitalized in CA than in any state at any time since New York in April. https://t.co/ULdfBExPUJ</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 3:26 PM PST</h2>
+    <div>
+      <p>Our numbers, while drastic, are an undercount of COVID-19’s severity in long-term-care facilities. Arizona, Missouri, and New York provide incomplete LTC data, and are the largest contributors to the nation’s LTC undercount. https://t.co/bOWkmNiKjg</p>
+
+    </div>
+  
+    <h2>December 24, 2020, 4:50 PM PST</h2>
+    <div>
+      <p>The majority of states that updated their data today reported more than 500 new cases per million residents. Twenty reported a higher number of cases per capita than New York had at its spring peak. https://t.co/InZ7ivmXkl</p>
+
+    </div>
+  
+    <h2>January 1, 2021, 4:55 PM PST</h2>
+    <div>
+      <p>California reported 585 deaths today. Before today, New York and Pennsylvania were the only states to have reported more than 500 deaths in a day.</p>
+<p>CA, the most populous state, now also has more people hospitalized than NY did at the spring peak. https://t.co/u7FOXtlWCP</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 12:42 PM PST</h2>
+    <div>
+      <p>On a more hopeful note, hospitalizations declined in almost every state over the past week. Only New York saw an increase in hospitalized patients (4% higher), while MA was essentially flat. https://t.co/TlTFT1oJjl</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 4:28 PM PST</h2>
+    <div>
+      <p>Over 400k people in the US have died of COVID-19. A reminder that our dataset does not include probable deaths reported in NY which is why this grim milestone lagged by a few days from other datasets. More details here: https://t.co/UJZRRVxQqJ https://t.co/iwalMa40v2</p>
+
+    </div>
+  
+    <h2>February 5, 2021, 4:54 PM PST</h2>
+    <div>
+      <p>Only New York and Arizona have more than 400 people hospitalized with COVID-19 per million residents. A month ago, 19 states exceeded that level. https://t.co/6IPpFnUiMH</p>
+
+    </div>
+  
+    <h2>February 10, 2021, 3:54 PM PST</h2>
+    <div>
+      <p>For the first time since Oct 22, no states are reporting over 400 COVID-19 hospitalizations per million people. NY is currently the highest with 390 hospitalizations per million people. https://t.co/7YZH2xNDhr</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 2:32 PM PST</h2>
+    <div>
+      <p>While most COVID-19 metrics are on a downward trend including the number of people currently hospitalized, new hospital admissions in the Northeast are moving slightly upward, most notably in NY and CT after last week’s winter snow storm. https://t.co/Iabc29Zx0V</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 2:32 PM PST</h2>
+    <div>
+      <p>Cases and deaths reported in long-term-care facilities declined between Jan 28 and Feb 4 (excluding MO and NY, both of which recorded large backfills of LTC deaths). https://t.co/Mgm6CNqLMb</p>
+
+    </div>
+  
+    <h2>February 17, 2021, 4:19 PM PST</h2>
+    <div>
+      <p>NY has the highest per capita hospitalizations in the country right now, with 338 per million people. https://t.co/SMXXTLqaC5</p>
+
+    </div>
+  
+    <h2>February 26, 2021, 5:00 PM PST</h2>
+    <div>
+      <p>Our count of COVID-19 deaths has now surpassed 500k. We reached this milestone a few days after some other trackers because—unlike many trackers—we compile deaths only from New York State and not directly from NYC. https://t.co/gZ5olBbDHW</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

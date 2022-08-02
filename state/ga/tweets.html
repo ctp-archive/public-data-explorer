@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Georgia Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Georgia</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Georgia</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 8, 2020, 10:09 PM PDT</h2>
+    <div>
+      <p>New  update with state data up to midnight eastern: tally shows over 4000 tests.</p>
+<p>https://t.co/Zc39AZVRge</p>
+<p>WA and CA have conducted the most tests and have the most cases. Big gaps in our testing capacity knowledge: MA, TX, GA, PA.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 10:01 PM PDT</h2>
+    <div>
+      <p>The current number of people tested is now up to almost 14,000. Still far, far too low.</p>
+<p>GA, MA, TX remain data holes.</p>
+
+    </div>
+  
+    <h2>March 13, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>These numbers are a lower bound for a few reasons:</p>
+<ol>
+<li>We are still waiting on accurate negative test counts from CA, MA, GA, and TX, among other states.</li>
+<li>Commercial labs only report positive results to the states.</li>
+</ol>
+
+    </div>
+  
+    <h2>March 15, 2020, 1:35 PM PDT</h2>
+    <div>
+      <p>By known positive tests, the 10 states with the highest per capita number of cases are:
+Washington
+New York
+Colorado
+Massachusetts
+Louisiana
+Rhode Island
+New Jersey
+South Dakota
+New Hampshire
+Georgia</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>We'd also draw your attention to a cluster of southern states that are undertested, but have rising case loads, especially on a per-capita basis: Alabama, Arkansas, Georgia, Mississippi. https://t.co/7yChSLGK6x</p>
+
+    </div>
+  
+    <h2>April 20, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>Connecticut reported its single largest increase daily death toll.</p>
+<p>Other states we're watching for Tuesday: Massachusetts, Michigan, Georgia, Florida, Texas, Kentucky. https://t.co/iVJQMeS7yQ</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 17, 2020, 2:58 PM PDT</h2>
+    <div>
+      <p>Some of the big day appears to be a test dump from California, which reported 56k tests today. But Michigan, New York, and Georgia also reported more than 30k tests.  13 states reported more than 10k.</p>
+<p>Overall, the U.S. hasn't been under 300k daily tests since last Sunday.</p>
+
+    </div>
+  
+    <h2>May 30, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>There's a lot of interest in Georgia. Their testing numbers are way down since May 27, when they pulled antibody tests out. But that doesn't seem like a full explanation.</p>
+<p>As the tests have swung down, cases have been  steady, so the positive rate has shot up. https://t.co/Jn7UNgnCRp</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>1/2 A list of states/territories in which African American COVID deaths substantially exceed the community's share of the population:</p>
+<p>Alabama
+Arkansas
+California
+Colorado
+Connecticut
+D.C.
+Florida
+Georgia
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Maryland
+Michigan
+Mississippi</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 3:12 PM PDT</h2>
+    <div>
+      <p>We're getting a lot of questions about Georgia. As you can see, no clear signal of a major outbreak in the state.</p>
+<p>Testing volume is way down since May 26, but the state is reporting about the same number of cases. It's unclear if this is a testing or a test reporting issue. https://t.co/cp8XkPor2O</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 3:12 PM PDT</h2>
+    <div>
+      <p>Mobility reports from Apple and Google for Georgia suggest that while some things have returned to normal, others have not.</p>
+<p>https://t.co/QnhOoXNABM</p>
+<p>https://t.co/D8D7nFwQzR https://t.co/W4TDDiONx2</p>
+
+    </div>
+  
+    <h2>June 20, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Three more states of interest: California, Oklahoma, and Georgia.</p>
+<p>(GA had reporting problems during that May 24 week, which is why the numbers look strange.) https://t.co/6HFs7D09GI</p>
+
+    </div>
+  
+    <h2>June 21, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>States reported ~27.5k new cases.</p>
+<p>This is the second-highest number we've seen on a Sunday, topped only by April 12 at ~27.9k.</p>
+<p>Note: we're missing Georgia, which reported 1800 cases yesterday, but had reporting trouble today. https://t.co/wi9UBQmii3</p>
+
+    </div>
+  
+    <h2>June 21, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>Here's the state-by-state daily case breakdown.</p>
+<p>(Note: AR and GA have not reported yet today.) https://t.co/aHfdLapsIu</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Mississippi, Alabama, South Carolina, North Carolina, Georgia, and Florida all reported more than 1000 cases today. https://t.co/RysGHFrCF1</p>
+
+    </div>
+  
+    <h2>June 27, 2020, 2:58 PM PDT</h2>
+    <div>
+      <p>Georgia also reported a record high in cases at almost 2000. The 7-day average for cases has nearly tripled since late May.</p>
+<p>Hospitalizations have also gone right back up after falling from May into June. https://t.co/GUSMJYdmcM</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:43 PM PDT</h2>
+    <div>
+      <p>Several big states reported record numbers today: Arizona, California, Georgia, North Carolina, Texas. https://t.co/ZKTM496d2T</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 5:05 PM PDT</h2>
+    <div>
+      <p>Georgia's numbers have started to look quite bad. Over the last few weeks, testing has grown a little while daily new cases have tripled. https://t.co/SoDrf2c1SI</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>Looking at new cases, the trends of the last couple weeks continue. Florida became the second state to record a day of over 10,000 new cases (after New York on April 15th). Georgia set a new record yesterday and broke it today. https://t.co/77LvPQIhyU</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>It should be obvious now, but the large numbers of new cases in these states are not just due to testing. Florida and Georgia have positivity rates well beyond 10%.</p>
+<p>Only Arizona has a higher positivity rate than Florida right now. https://t.co/ovxcUPtGpp</p>
+
+    </div>
+  
+    <h2>July 3, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>The record new cases are coming from many states. Notable jumps in Georgia, Louisiana, North Carolina, and South Carolina. (Ohio looks bad today but this number is for two days.) https://t.co/L6CJXXbuuP</p>
+
+    </div>
+  
+    <h2>July 3, 2020, 3:28 PM PDT</h2>
+    <div>
+      <p>Georgia recorded more than 2,700 new cases today, and its positivity rate has continued to rise. It has posted at least 2,700 cases for the last three days. Before that, GA had never reported more than 2,200 cases in one day. https://t.co/sywSTOhk7b</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>But the problems extend beyond those hotspots. 15 states reported over 1000 cases today. Georgia reported nearly 4500. https://t.co/6uSbTDjRjU</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 3:03 PM PDT</h2>
+    <div>
+      <p>Though Mondays are typically low reporting days, three states broke that trend. Alabama, Georgia, and Tennessee reported large numbers today. https://t.co/O2QhlEsJVz</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>Six states saw a rise of over 100 (FL, CA, TX, AZ, GA, TN) in their number of currently hospitalized COVID-19 patients. All six set new record highs for their states. https://t.co/1qvm9AEdMh</p>
+
+    </div>
+  
+    <h2>July 21, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>Georgia is particularly worrisome. The state had not seen a large rise in reported deaths, despite rising infections and a steep hospitalization curve. Today, the state reported its second-highest deaths since the beginning of the pandemic, and the highest number since April 7. https://t.co/XUz1nnA1bl</p>
+
+    </div>
+  
+    <h2>July 24, 2020, 3:55 PM PDT</h2>
+    <div>
+      <p>The huge testing number appears to be due—in part—to California, Georgia, and other states releasing backlogged results. CA and GA both reported at least 20k more results today than they did yesterday, for instance. CA alone reported 137k test results today. https://t.co/HJEVlde5Vi</p>
+
+    </div>
+  
+    <h2>August 7, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Georgia has consistently reported thousands of new cases each day—and has the fourth-largest number of hospitalized COVID-19 patients today, trailing only much larger states (CA, FL, TX). https://t.co/xtINB3o8bx</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>Nearly 22,000 deaths have occurred in long-term facilities in the South—almost 14,000 in June, July, and August. Georgia and Florida have seen their highest death tolls in the past four weeks—over 350 a week in Florida, and over 100 a week in Georgia. https://t.co/RC56clVQ1e</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 12:43 PM PDT</h2>
+    <div>
+      <p>Update for our data users - we continued to implement changes to our original totalTestResults API field, resulting in a ~600k cumulative test increase since March.</p>
+<p>We updated test totals for 14 states: AK, AL, AR, AS, CA, DC, GA, ID, KY, MN, NH, SD, VA, and WA.</p>
+
+    </div>
+  
+    <h2>October 21, 2020, 4:37 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 870k tests, 57k cases, 40k currently hospitalized, and 994 COVID-19 deaths. Note: Updates were not available from FL, GA, and AL. https://t.co/W7soJvLKw5</p>
+
+    </div>
+  
+    <h2>October 27, 2020, 4:00 PM PDT</h2>
+    <div>
+      <p>Only 3 states have seen hospitalizations fall since October 1 (CA, GA, HI). https://t.co/ziNiGmZLVk</p>
+
+    </div>
+  
+    <h2>October 31, 2020, 3:19 PM PDT</h2>
+    <div>
+      <p>In the month of October, only Georgia and Hawaii saw decreases in hospitalization. California held steady. There were increases in hospitalizations in every other state and DC. https://t.co/tIwKEeNBeJ</p>
+
+    </div>
+  
+    <h2>November 4, 2020, 4:22 PM PST</h2>
+    <div>
+      <p>Two data changes in Georgia: GA has added 30,829 “antigen positive cases” to their totals. We asked for clarification on how we should account for these positive tests. In the meantime, we recorded these positive antigen tests in our “Positive Antigen Tests (People)” API field.</p>
+
+    </div>
+  
+    <h2>November 4, 2020, 4:23 PM PST</h2>
+    <div>
+      <p>Georgia also began reporting probable deaths on Nov 3, so the 480 GA deaths now in our data for Nov 3 include ~450 previously recorded probable deaths. These deaths are reflected in the historical data and not in today's national update.</p>
+
+    </div>
+  
+    <h2>November 20, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>OH has reported incomplete data for 3 consecutive days and GA dashboards will be under scheduled maintenance on Sunday, Nov 22, from 8am - 6pm.</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 3:42 PM PST</h2>
+    <div>
+      <p>The trends in currently hospitalized data suggest that outbreak conditions in Midwest states are improving: 9 of 12 states saw falling hosp. this week compared to last. But nationally these improvements were offset by large hosp. increases in CA, GA, PA, and many Eastern states. https://t.co/mAt5VMQRnW</p>
+
+    </div>
+  
+    <h2>December 22, 2020, 5:27 PM PST</h2>
+    <div>
+      <p>But this view masks the seriousness of the situation in the three largest southern states. Hospitalizations are rapidly rising in Texas, Florida, and Georgia. https://t.co/MerIVz8tIF</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Our eyes are on 5 states this week: AL, AZ, CA, GA, and FL―where surges in cases, hospitalizations, and deaths are steadily growing. Alarmingly, AZ currently has the worst per-capita new case numbers in the world.</p>
+
+    </div>
+  
+    <h2>February 3, 2021, 4:13 PM PST</h2>
+    <div>
+      <p>We moved GA’s metric for “Antigen Positive Cases” from our API field for antigen positive individuals to that for probable cases, after a review. The change added 162,028 cumulative cases in GA distributed over time from 11/3 onward, when GA began providing the number.</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

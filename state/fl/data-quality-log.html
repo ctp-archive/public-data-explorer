@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Florida Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Florida</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Florida</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>January 1, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 1, 2020, Florida announced that they would not be updating their data on January 1, 2021 due to the New Year holiday. We were able to update **Now hospitalized** from Florida's separate hospitalization source.</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Florida announced via the official Florida Department of Health twitter that they would not be updating their data on December 25, 2020 due to the Christmas holiday. We were able to update **Now hospitalized** from Florida's separate hospitalization source.</p>
+
+      </div>
+    
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On December 11, 2020, Florida did not update their state report by the time of our daily update so we could not update Total PCR tests (specimens), Positive PCR tests (specimens), Negative PCR tests (specimens), Positive PCR tests (people), or Probable cases. This late update was patched in our historical data on December 12, 2020.</p>
+
+      </div>
+    
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 11, 2020, Florida did not update their state report so we could not update total tests (PCR), positive tests (PCR), negative tests (PCR), positive cases (PCR), positive cases (antigen).</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to December 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On August 11, 2020, FL added antigen tests to its data definition for deaths, which were previously PCR only. Since Florida does not call these deaths &quot;confirmed,&quot; we are clearing confirmed deaths from August 12 onward (since we are on a one day lag in terms of when the data is as of).</p>
+
+      </div>
+    
+    <h2>November 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On <strong>November 26, 2020</strong>, Florida did not update their data, presumably due to the Thanksgiving holiday. Additionally, the data that would normally have been published on November 26, 2020 was included in the November 27, 2020 update, along with the data for November 27, 2020.</p>
+
+      </div>
+    
+    <h2>November 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 26, 2020, the listed states either released partial updates or did not update their data at all.</p>
+
+      </div>
+    
+    <h2>November 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 22, 2020, Florida did not update their daily COVID-19: summary of cases and monitoring report by the time we published our data. As a result, we were unable to update **Total PCR tests (specimens)**, **Positive PCR tests (specimens)**, **Negative PCR tests (specimens)**, **Positive PCR tests (people)**, and **Probable cases**.</p>
+
+      </div>
+    
+    <h2>November 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>FL PDF updated after pub shift. This updates Total Tests (PCR), Positive Tests (PCR), Negative Tests (PCR), Positive Cases (PCR), Probable Cases</p>
+
+      </div>
+    
+    <h2>October 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Florida abruptly stopped reporting tests in people when they started reporting in encounters, but we could still calculate it using a positive + negative calculation. On October 30, 2020, the negative value for the calculation was frozen for more than 24 hours, resulting in a carried over Negative PCR tests (people) value and a smaller Total PCR tests (people) value.</p>
+
+      </div>
+    
+    <h2>January 28, 2020
+       to October 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>We switched Florida's totalTestResults from a calculation of pos+neg to drawing directly from the totalTestEncountersViral field.</p>
+
+      </div>
+    
+    <h2>October 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On October 4, 2020, the value for Florida's totalTestsPeopleViral dropped by 190 without explanation.</p>
+
+      </div>
+    
+    <h2>January 29, 2020
+       to October 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Dataset / Timeseries</span>
+        </p>
+      
+      <div>
+        <p>On 10/27 we backfilled Florida's total test encounters from a newly provided timeseries on their open data hub. We also update Florida's cases numbers (confirmed, probable and total) and total people tested numbers to include only Florida residents.</p>
+
+      </div>
+    
+    <h2>October 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/21, FL updated partially. We only found new values from the daily report, but the dashboard was not updated. We were unable to find an explanation.</p>
+
+      </div>
+    
+    <h2>August 14, 2020
+       to October 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsPeopleAntigen</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>Florida flips Antigen positive cases to PCR positive cases in their daily state report upon confirmatory PCR testing. Moved the Antigen positive column values to the Probable Cases column.</p>
+
+      </div>
+    
+    <h2>October 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/11, FL updated with two days of data to account for the missed update during the previous day. Math checks out that this was a 2 day update, but we haven't found any documentation to confirm.</p>
+
+      </div>
+    
+    <h2>October 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/10, FL received an influx of tests and did not provide a daily update. We only updated our Currently Hospitalized number because it's from an outside source.</p>
+
+      </div>
+    
+    <h2>October 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/3, non-resident deaths decreased by 1.</p>
+
+      </div>
+    
+    <h2>May 8, 2020
+       to September 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>privateNotes</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Metric</span>
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>Backfilling Positive Cases (PCR) through 8/14 with a resident+non-resident calculation for PCR Positives.</p>
+
+      </div>
+    
+    <h2>September 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/21, FL updated their serology report for the first time since 8/21, resulting in a substantial spike.</p>
+
+      </div>
+    
+    <h2>September 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On September 1, 2020, the Florida Department of Health announced that Quest Diagnostics had reported nearly 75,000 backlogged tests dating as far back as April.</p>
+
+      </div>
+    
+    <h2>August 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsPeopleAntigen</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>State of FL on 8/14 released a antigen positives in their data for residents and non-residents in the pdfs.</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/12, Niznik labs in Miami-Dade gave FLDOH a data dump of 4000 cases over last 7 weeks, so today’s data has a big spike. <a href="https://twitter.com/HealthyFla/status/1293568494475378688?s=20">https://twitter.com/HealthyFla/status/1293568494475378688?s=20</a></p>
+
+      </div>
+    
+    <h2>May 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>We incorrectly reported Total Tests (PCR) on 5/17 as 653081 when it should be 746124.</p>
+
+      </div>
+    
+    <h2>August 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/7, FL data is still broken. Got all the data except for non-FL resident hospitalizations, but the state report doesn't report non-FL resident cum. hospitalizations so carried over yesterday's non-resident cum. hospitalizations (384) and added in today's resident hospitalizations (29,730) for the total. This is an increase of 599 resident hospitalizations. (See also public note on site)</p>
+
+      </div>
+    
+    <h2>June 1, 2020
+       to July 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>(1) FL 6/1-7/29, antibody values (all, both people and specimens)
+(2) FL was found to report in both specimens and people. Existing capture labels people as specimens. Annotations and States Daily were changed to reflect these findings.</p>
+
+      </div>
+    
+    <h2>June 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsPeopleAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On June 1, 2020, Florida started reporting serology testing</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

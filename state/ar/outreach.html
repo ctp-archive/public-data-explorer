@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Arkansas Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Arkansas</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Arkansas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The total test count in AR is negative tests + positive cases. For some research we're doing comparing state and federal testing numbers, it would be really helpful for us to know as a one-time number, how many positive tests (including repeat positive testing) there have been?</p>
+
+    </div>
+    
+  
+    <h2>February 17, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>AR reports a percentage of people who have died that were Hispanic. Are all the other people who have died known to have been non-Hispanic, or are there any people for whom ethnicity was unknown?</p>
+
+    </div>
+    
+  
+    <h2>February 15, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We have been comparing our data to the CDC Cases and Deaths data (https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36). We found that the total number of cases matches perfectly between AR’s dashboard and the CDC reports. We found however that in the CDC data your probable cases are not recorded in the Probable Cases field (prob_cases), but are recorded in the daily New Probable Cases field (pnew_case). When we sum the values of the daily pnew_case we get the exact same number of probable cases reported by Arkansas.</p>
+<p>We were wondering if you had any ideas why this might be happening?</p>
+<p>Illustrative screenshot (attached)
+https://docs.google.com/document/d/1293se2S6G1jxB7SNcPZbpuM_dYc19LP_DT0G3IaXElM/edit</p>
+<p>We are also interested in the process of cases and deaths reporting to the federal government in general. We understand from the CDC website that there is a process of the CDC collecting and then confirming aggregate numbers from each jurisdiction, and that this aggregate reporting complements line level reporting (https://www.cdc.gov/coronavirus/2019-ncov/covid-data/faq-surveillance.html).
+Can you tell us about the different mechanisms of reporting cases and deaths to the federal government (voluntary NNDS, aggregate counts process, and line level reporting from the state health department)? We are particularly interested in the aggregate count process as it appears to be the source of the state-level data published by the federal government regularly.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 23, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>On the first question, that does appear that the probable cases are being recorded in the new probable cases field. But our team thinks this is on the CDC’s end – they don’t see what would be causing that based on our data.
+ 
+On the second one, we send a de-identified file each day that is a line list of every single case and includes deaths. We resend this database every day, so any changes would be recorded.</p>
+
+        </div>
+      
+    
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For cases and deaths, we wanted to confirm that 100% (including all reported categories and unknown) was coming from the Total (Confirmed + Probable).</p>
+<p>The way the site is currently set up, the numbers displayed on the donut charts rounds to the nearest hundred for any value over 1,000, meaning that we either need to use the percentages or the rounded values, leading to a loss of information in either case. Would it be possible to have the hover display the full number?</p>
+<p>Thank you.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 23, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Under race and ethnicity, that is correct for the first one.</p>
+<p>On the second, we are not planning to change that one. The rounding keeps the hover-over figure shorter and makes the page easier to navigate.</p>
+<p>And on the last one, there are unknowns included in the non-Hispanic figure.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We noticed that the antigen reporting PDF that used to be posted to healthy.arkansas.gov, and represented tests (as opposed to people on the dashboard) hasn't been posted for the past few days. Are there plans to re-release the data in this PDF again?</p>
+<ul>
+<li>The numbers for total people tested via antigen posted on the dashboard have been fluctuating a bit. For example, yesterday, the totals dropped from 10,427 antigen tests to 9,453 total antigen tests. In addition, on 9/20, the antigen test numbers dropped from 9,587 to 5,216 before rising to 10,101 on 9/21. We were wondering what the reason behind this fluctuation is?</li>
+</ul>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I’ve been looking into this today and have a little bit of information. The antigen spike and subsequent changes was due to some data that was added in one update and then mistakenly left out of the next and then fixed. We are still looking into our antigen numbers, though, and we may have some additional updates to them next week.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 14, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Why do the current hospitalizations, current ventilation, and recovered figures on the “COVID-19 Update” graphic on this page not match the new current hospitalizations, current ventilation, and recovered figures on the dashboard under the “Hospital Information” tab? (The current hospitalized/vent statistics on the dashboard are lower than the graphic). Do these numbers have different definitions? (Does the graphic include persons under investigation while the dashboard only includes confirmed cases?)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 14, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>AR just updated its hospitalization reporting as of Friday, 9/11. Previously, it wasn't bringing in all of the hospitalization information. Going forward as of Friday, it should all be accurate. For example, before, the press conferences were reporting 380 hospitalizations, but the dash was only reporting 318. This will not be fixed in historical data, but will be accurate from now on. (This is me, Kara, summing up what Gavin said and not a direct quote)</p>
+
+        </div>
+      
+    
+  
+    <h2>September 14, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does the “Non-COVID Deaths” figure on AR’s dashboard tab for Deaths refer to deaths in COVID cases where COVID was not the cause of death on the death certificate? If not, what does it refer to?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 14, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>When a person is COVID positive but dies from something else, for example: a car wreck, this counts as a &quot;Non-COVID Death&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>August 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On your dashboard, you appear to sum cases and “negative tests” to get the “total tests reported” figure. We are curious about the unit of “negative tests”. In a previous email, you told us the negative number represents the number of specimens collected
+Can you confirm that this means the number of individual samples testing negative with no deduplication of samples? If it does mean this, can you explain why you are getting totals by adding this number to your cases in a different unit? If it does not, how do you calculate negatives? Do you only count one negative result per individual per day, for example?</p>
+
+    </div>
+    
+  
+    <h2>August 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>If you are only counting one negative per day, your “total test reported” may fit our understandings of “testing encounters”, which can be defined as “the number of unique people who have been tested per day.” Under this metric, if a person is tested for COVID twice on separate days, that counts as two testing encounters; however, if the same person has two samples collected for testing on one day, then that only counts as one testing encounter. We permit counting cases only once for the first positive in testing encounters, although we prefer if subsequent positives are captured. Does your “total tests reported” data point sound like it might fit this description? If not, are you willing to or are you planning to release testing encounters? If so, will you be able to provide historical data consistently under an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+  
+    <h2>August 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware Arkansas does not at this time. Do you have plans to release this data in an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+  
+    <h2>August 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How do the new HHS guidelines affect the reporting relationship between Arkansas hospitals and the Department of Health?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>As of now, nothing has changed. Hospitals are reporting directly through the approved HHS process, via tele-tracking. Each hospital is responsible for their own data submission. We and the Arkansas Hospital Association track their compliance. This is a collaborative approach with the AHA.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Arkansas performing pooled testing for COVID-19? If so, how are the results incorporated into the public data? Also, if so, do you know what types of pooled tests are being used?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Arkansas Department of Health’s Public Health Lab is not performing pooled sampling.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Arkansas performing antigen testing for COVID-19? If so, how are the results incorporated into the public data? Do you know how many antigen tests have been performed in Arkansas?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Arkansas Department of Health’s Public Health Lab is not performing antigen testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The AR statewide data is broken out by race. However, as of today, the race case count (16,420) does not add up to the total COVID-19 case count (18,062). Do you know why?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The difference in number is often unknown or missing information. We get much of the racial and ethnicity data from the interviews that the case investigators do, so there is a lag time between when the positive test/new case is reported and when the interview occurs. If there are a large number of new positives then the “missing” category will similarly increase until the interviews are done.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>a data footnote states 8% of deaths were among those who identified as Hispanic. Are all other deaths non-Hispanic, or is there some % unknown?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Currently, we have a confirmed 8% of deaths as Hispanic. (no further clarification provided)</p>
+
+        </div>
+      
+    
+  
+    <h2>June 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do the &quot;total tests reported&quot; refer to people tested or specimens tested?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>For negatives, the number is specimens, but for positives, it’s people tested.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are antibody tests included in the testing figures and, if so, does the State have plans to break them out?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We aren’t including antibody tests in our numbers. (Also, FYI: https://news.uams.edu/2020/06/25/uams-developed-high-accuracy-covid-19-antibody-testing-begins-in-arkansas/ - provided by Michelle Kitchens at ACHI, a healthcare policy organization in Arkansas. She is also very responsive.)</p>
+
+        </div>
+      
+    
+  
+    <h2>June 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The Department of Health website shows both cumulative (&quot;ever&quot;) and current counts of hospitalizations and individuals on a ventilator. However, the nursing home data does not appear to be cumulative. Is it possible for the Department to share cumulative nursing home / long term care facility data?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Answer shared in pdf format. Data seems to be updated daily but was shared via email.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

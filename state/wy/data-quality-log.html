@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wyoming Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wyoming</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wyoming</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On December 11, 2021, Wyoming updated their Positive PCR tests (specimens) and Negative PCR tests (specimens) after the time of our daily update. We are patching this late update in our historical data.</p>
+
+      </div>
+    
+    <h2>March 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>Beginning on March 7, 2021, Wyoming no longer updates their COVID-19 data on Saturdays or Sundays.</p>
+
+      </div>
+    
+    <h2>February 28, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 28, 2021, Wyoming's Now hospitalized metric did not update.</p>
+
+      </div>
+    
+    <h2>February 21, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 21, 2021, Wyoming did not update its **Now hospitalized** data.</p>
+
+      </div>
+    
+    <h2>February 15, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 15, 2021, Wyoming did not update their data due to the Presidents Day holiday.</p>
+
+      </div>
+    
+    <h2>February 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>As of February 13, 2021, Wyoming does not update their COVID-19 data on Saturdays.</p>
+
+      </div>
+    
+    <h2>February 9, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">Other</span>
+        </p>
+      
+      <div>
+        <p>On February 9, 2021, Wyoming’s Total PCR tests (specimens) fell from 704,836 to 595,970. We carried the previous day’s number as we believed this may have been an error and wanted to allow them time to correct it. On February 10, 2021, we learned that the decrease was &quot;Due to recent changes in reporting by commercial laboratories, some test results were being counted twice. Testing numbers have been corrected to reflect these changes therefore a decrease in the testing numbers will be observed for Non-WPHL labs. That decrease is attributed to the removal of duplicate tests being reported&quot;. As a result of this new information, we are backfilling our Total PCR tests (specimens) to reflect this new information and ensure that our data aligns as closely as possible with the states.</p>
+
+      </div>
+    
+    <h2>February 9, 2021
+       to February 10, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 9, 2021, Wyoming’s **Total PCR tests (specimens)** fell from 704,836 to 595,970 with no explanation. We carried over the previous day’s number. However, on February 10, 2021, Wyoming's **Total PCR tests (specimens)** and **Negative PCR tests (people)** had each decreased by approximately 100K, while their **Positive PCR tests (specimens)** decreased by approximately 10K. These decreases were due to de-duplication of test results, caused by changes in reporting from commercial laboratories.</p>
+
+      </div>
+    
+    <h2>February 9, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 9, 2021, Wyoming’s Total PCR tests (specimens) fell from 704,836 to 595,970 with no explanation. We carried the previous day’s number.</p>
+
+      </div>
+    
+    <h2>February 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 7, 2021, Wyoming’s *Confirmed cases” decreased by 36 and **Recovered** decreased by 2 with no explanation.</p>
+
+      </div>
+    
+    <h2>February 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 4, 2021, Wyoming's total probable cases decreased from 7684 to 7620. The cause of this decrease was not specified.</p>
+
+      </div>
+    
+    <h2>February 2, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 02, 2021, Wyoming’s Total PCR tests (specimens) decreased by roughly 4,600 and their Total PCR tests (people) decreased by approximately 1,500 without explanation. As a result, Negative PCR tests (people), which is calculated as Total PCR tests (people) minus Confirmed cases, decreased by roughly 1,600.</p>
+
+      </div>
+    
+    <h2>January 25, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 25, 2021, Wyoming’s Total PCR tests (specimens) decreased by roughly 106k, and their Total PCR tests (people) decreased by about 3.6k without explanation. Their Positive PCR tests (specimens) and Negative PCR tests (specimens) did not reflect that decrease, so we did not update their Total PCR tests (specimens), Total PCR tests (people), or Negative PCR tests (people), which is calculated as Total PCR tests (people) minus Confirmed cases, on January 25, 2021 to ensure our data is as accurate as possible.</p>
+
+      </div>
+    
+    <h2>January 23, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 23, 2021, Wyoming did not update all COVID-19 data due to state computer maintenance work.</p>
+
+      </div>
+    
+    <h2>January 23, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 23, 2021, Wyoming did not update all their COVID-19 data due to state computer maintenance work.</p>
+
+      </div>
+    
+    <h2>January 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 22, 2021, Wyoming did not update their Total PCR Tests (specimens), Positive PCR Tests (specimens), Negative PCR Tests (people), or Total PCR Tests (people) before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>January 18, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 18, 2021, Wyoming did not update their testing data due to the holiday. The next expected update will be Tuesday, January 19, 2021.</p>
+
+      </div>
+    
+    <h2>January 12, 2021
+       to January 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>On January 12, 2021 and January 13, 2021 the calculation used for Wyoming's Ever hospitalized was entered incorrectly, and this caused the appearance of a big spike in hospitalization. Correcting the calculation and values.</p>
+
+      </div>
+    
+    <h2>January 12, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 12, 2021, Wyoming reported more new Confirmed cases than new Total PCR tests (people). As a result, Negative PCR tests (people), which is calculated as Total PCR tests (people) minus Confirmed Cases decreased by 85</p>
+
+      </div>
+    
+    <h2>January 1, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 24, 2020, Wyoming announced on their COVID-19 page that there would be no update to their data on December 24, 2020 or December 25, 2020. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021.We were able to update **Now hospitalized** from Wyoming's separate hospitalization source on both days.</p>
+
+      </div>
+    
+    <h2>December 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 26, 2020, hospitalization metrics did not update for these states.</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 24, 2020, Wyoming announced on their COVID-19 page that there would be no update to their data on December 24, 2020 or December 25, 2020. We were able to update **Now hospitalized** from Wyoming's separate hospitalization source.</p>
+
+      </div>
+    
+    <h2>December 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 24, 2020, Wyoming announced on their COVID-19 page that there would be no update to their data on December 24, 2020 or December 25, 2020.</p>
+
+      </div>
+    
+    <h2>December 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 23, 2020, Wyoming's Currently hospitalized did not update by our publish time.</p>
+
+      </div>
+    
+    <h2>December 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On December 22, 2020, Wyoming removed our source for testing numbers from their main page, so we sourced Total PCR tests (specimens), Positive PCR tests (specimens), and Negative PCR tests (specimens) from their [Testing Data page](https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-testing-data/).</p>
+
+      </div>
+    
+    <h2>December 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 21, 2020, Wyoming did not update their Currently hospitalized by the time of our daily update.</p>
+
+      </div>
+    
+    <h2>December 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 19, 2020 Wyoming did not update their Currently hospitalized metric.</p>
+
+      </div>
+    
+    <h2>December 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 17, 2020, the number of total tests (PCR) reported by Wyoming dropped because &quot;Commercial Lab tests dropped from 301,462 yesterday to 300,289&quot;</p>
+
+      </div>
+    
+    <h2>December 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 14, 2020, Wyoming's data did not include updated values for the following metrics: Total Tests (PCR), Positive Tests (PCR), Negative Tests (PCR), and Currently Hospitalized (PCR).</p>
+
+      </div>
+    
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 11, 2020, Wyoming did not update it's Total Tests (PCR), Positive Tests (PCR), or Negative Tests (PCR).</p>
+
+      </div>
+    
+    <h2>December 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 05, 2020 Wyoming's Currently hospitalized did not update.</p>
+
+      </div>
+    
+    <h2>December 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 4, 2002, Wyoming did not provide a testing update, so we carried over values for <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong>, and <strong>Negative PCR tests (specimens)</strong>.</p>
+
+      </div>
+    
+    <h2>December 2, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 2, 2020, Wyoming's cumulative <strong>Positive PCR tests (specimens)</strong> decreased by about 2,000, <strong>Negative PCR tests (specimens)</strong> decreased by about 13,000, and <strong>Total PCR tests (specimens)</strong> decreased by about 11,000.</p>
+
+      </div>
+    
+    <h2>December 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 1, 2020, Wyoming did not update their testing data before the end of our publication shift. We carried over values for <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong>, <strong>Negative PCR tests (specimens)</strong>, <strong>Total PCR tests (people)</strong>, and <strong>Negative PCR tests (people)</strong>.</p>
+
+      </div>
+    
+    <h2>November 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 29, 2020, the listed states had a partial or missed update.</p>
+
+      </div>
+    
+    <h2>November 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 29, 2020, we carried over values for Wyoming's Positive PCR tests (specimens) and Negative PCR tests (specimens) due to issues with the state's testing CSV.</p>
+
+      </div>
+    
+    <h2>November 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 27, 2020, we carried over values for Wyoming's Positive PCR tests (specimens), Negative PCR tests (specimens), and Cumulative hospitalizations due to issues with the state's testing CSV and apparent typos in their hospitalization percentages.</p>
+
+      </div>
+    
+    <h2>November 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 26, 2020, the listed states either released partial updates or did not update their data at all.</p>
+
+      </div>
+    
+    <h2>March 1, 2020
+       to November 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>As of November 25, 2020, Wyoming's total test results are drawn from our `totalTestViral` field instead of calculated via positive+negative.</p>
+
+      </div>
+    
+    <h2>March 1, 2020
+       to November 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Backfill Total Tests (PCR) and positive and negative tests (PCR) from the new state source we'll be using for this going forward</p>
+
+      </div>
+    
+    <h2>November 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 23, 2020, Wyoming did not update their testing data before the end of our publication shift. We carried over values for **Total PCR tests (specimens)**, **Positive PCR tests (specimens)**, **Negative PCR tests (specimens)**, **Total PCR tests (people)**, and **Negative PCR tests (people)**.</p>
+
+      </div>
+    
+    <h2>November 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 22, 2020, Wyoming's **Positive PCR Tests (people)** increased by a small amount, which would have resulted in a decrease in **Cumulative hospitalizations** which is calculated from cases. Because of this, we carried over the **Cumulative hospitalization** number.</p>
+
+      </div>
+    
+    <h2>November 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 19, 2020, Wyoming's updated date did not have a time associated with it.</p>
+
+      </div>
+    
+    <h2>November 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 18, 2020, Wyoming did not update their Total PCR tests (specimens) number before the end of our publication shift.</p>
+
+      </div>
+    
+    <h2>November 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On November 17, 2020, Negative PCR tests (people) decreased because the increase in new cases was larger than the increase in tests.</p>
+
+      </div>
+    
+    <h2>November 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On November 16, 2020, we backfilled the Currently hospitalized number from November 15, 2020 because we missed Wyoming's update from that day and had carried over the metric from November 14, 2020.</p>
+
+      </div>
+    
+    <h2>November 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On November 16, 2020, we backfilled a missed update for Currently hospitalized on November 13, 2020.</p>
+
+      </div>
+    
+    <h2>November 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 13, 2020, Wyoming did not provide an update for Currently hospitalized.</p>
+
+      </div>
+    
+    <h2>November 4, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 4, 2020, Wyoming did not provide a testing update. We carried over values for Total PCR tests (specimens), Positive PCR tests (specimens), Negative PCR tests (specimens), Total PCR tests (people), and Negative PCR tests (people).</p>
+
+      </div>
+    
+    <h2>October 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On 10/28/20, Wyoming did not provide a testing update.</p>
+
+      </div>
+    
+    <h2>October 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On 10/27/20, Wyoming did not provide a testing update.</p>
+
+      </div>
+    
+    <h2>October 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On 10/24, WY did not provide a total testing update. We carried over values for Total Tests (PCR), Positive Tests (PCR), Negative Tests (PCR), Negative (People or cases), and Total PCR Tests (People)</p>
+
+      </div>
+    
+    <h2>October 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On 10/22, WY did not update their testing data. We carried over values for:
+- Total Tests (PCR)
+- Positive Tests (PCR)
+- Negative Tests (PCR)
+- Negative (People or Cases)</p>
+
+      </div>
+    
+    <h2>October 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On 10/22, WY reported ~47% hospitalization rate which would resulted in 3700 additional hospitalized cases. We decided to freeze this number.</p>
+
+      </div>
+    
+    <h2>October 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On 10/14, WY's Total Tests (PCR) and Total PCR Tests (People) dropped by ~1000 and ~2000 with no explanation. This also caused the Negative (People or Cases) value to drop.</p>
+
+      </div>
+    
+    <h2>March 12, 2020
+       to July 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On September 30, 2020, we backfilled Wyoming's timeseries of cases from screenshots on their dashboard, to correct updates that were missed due to shift time, and to add probable case capturing since CTP was not capturing those early on.</p>
+
+      </div>
+    
+    <h2>March 27, 2020
+       to September 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>privateNotes</code>
+            </li>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>The wrong date was entered while checking</p>
+
+      </div>
+    
+    <h2>September 12, 2020
+       to September 13, 2020
+      
+    </h2>
+    
+      
+      <div>
+        <p>On September 12, 2020, Wyoming's cumulative hospitalizations increased by about 60; on the following day, the number decreased to one person more than on September 11, 2020.
+We do not know the reason for this anomaly, but it is possible that the September 12, 2020 number was a reporting error.</p>
+
+      </div>
+    
+    <h2>August 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/26, WI removed the total number of people tested (PCR) from their dashboard. As such, we have carried over this number waiting for further updates.</p>
+
+      </div>
+    
+    <h2>March 27, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>August 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On August 10, 2020, the number of probable cases in Wyoming decreased by 40, while the number of confirmed cases increased by 32. This caused the total number of cases to drop by 8 compared to the previous day.</p>
+
+      </div>
+    
+    <h2>July 18, 2020
+       to July 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>Current hospitalization data for 7/18 and 7/19 updated (state reporting for these days was delayed by the new HHS regulations).</p>
+
+      </div>
+    
+    <h2>June 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On June 20, 2020, CTP changed the negatives calculation in Wyoming to use the total tests (people) number instead of tests. This caused a drop in the number of negatives as the units changed.</p>
+
+      </div>
+    
+    <h2>June 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On June 19, 2020, Wyoming started reporting tests in people units in addition to specimens.</p>
+
+      </div>
+    
+    <h2>June 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On June 15, 2020, Wyoming did not report a new number of total tests, but they reported a new number for positives.  We calculated negatives using their previous total test numbers and their newer positives number, which caused an apparent drop in the number of negatives.</p>
+<p>Typically in this case, we would carry over the number of negatives.</p>
+
+      </div>
+    
+    <h2>April 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On April 23, 2020, Wyoming's negative tests dropped by 60. In response to our query, they indicated that some duplicated results that were reported both by hospitals and by reference laboratories were removed from their totals</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

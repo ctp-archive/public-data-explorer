@@ -1,0 +1,2942 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Georgia Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Georgia</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Georgia</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>March 2, 2021, 11:10 PM PST</td>
+          <td>1120</td>
+          <td>
+            <a href="#issue-1120">[GA] Backfilling Total and Positive antigen tests from 2/18/21-3/2/18</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 2, 2021, 11:10 PM PST</td>
+          <td>1120</td>
+          <td>
+            <a href="#issue-1120">[GA] Backfilling Total and Positive antigen tests from 2/18/21-3/2/18</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 3, 2021, 1:47 PM PST</td>
+          <td>1087</td>
+          <td>
+            <a href="#issue-1087">[GA] Capture &quot;antigen positive cases&quot; as probable cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 3, 2021, 1:47 PM PST</td>
+          <td>1087</td>
+          <td>
+            <a href="#issue-1087">[GA] Capture &quot;antigen positive cases&quot; as probable cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 19, 2020, 12:24 PM PST</td>
+          <td>1022</td>
+          <td>
+            <a href="#issue-1022">[GA] The state fixed an error in their hospitalized PUI value on 12/18</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 30, 2020, 8:09 PM PST</td>
+          <td>987</td>
+          <td>
+            <a href="#issue-987">[GA] Removing calculated PCR Test Negatives</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 13, 2020, 12:55 PM PST</td>
+          <td>949</td>
+          <td>
+            <a href="#issue-949">[GA] Update PCR testing metric to remove lumped antibody tests</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 4, 2020, 2:23 PM PST</td>
+          <td>926</td>
+          <td>
+            <a href="#issue-926">[GA] Antigen Positive Cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 4, 2020, 12:33 PM PST</td>
+          <td>925</td>
+          <td>
+            <a href="#issue-925">[GA] Patch 11/3 Total, confirmed, and probable deaths</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 23, 2020, 12:19 PM PDT</td>
+          <td>912</td>
+          <td>
+            <a href="#issue-912">[GA] Backfilling a missed update on 10/21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 1, 2020, 7:05 AM PDT</td>
+          <td>879</td>
+          <td>
+            <a href="#issue-879">[GA] Patch 9/24 Negatives</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 26, 2020, 7:56 AM PDT</td>
+          <td>791</td>
+          <td>
+            <a href="#issue-791">[GA] Deleting calculated negative serology values</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 14, 2020, 11:53 AM PDT</td>
+          <td>765</td>
+          <td>
+            <a href="#issue-765">[GA] Deaths not updated on 8/4</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 5, 2020, 12:02 PM PDT</td>
+          <td>736</td>
+          <td>
+            <a href="#issue-736">[GA] [LA] Negative Values for number of &quot;New Tests&quot;</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 25, 2020, 3:57 AM PDT</td>
+          <td>672</td>
+          <td>
+            <a href="#issue-672">[GA] Georgia situation reports have hospitalization data back to 1 May</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 23, 2020, 10:01 AM PDT</td>
+          <td>660</td>
+          <td>
+            <a href="#issue-660">[GA] Remove values for Total Tests (PCR)  before 5/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 23, 2020, 9:44 AM PDT</td>
+          <td>659</td>
+          <td>
+            <a href="#issue-659">[GA] Pub Shift missed a late testing update 4/29</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 15, 2020, 11:46 AM PDT</td>
+          <td>635</td>
+          <td>
+            <a href="#issue-635">[GA] 6/17 timestamp inaccurate</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 7:57 AM PDT</td>
+          <td>533</td>
+          <td>
+            <a href="#issue-533">[GA] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 28, 2020, 7:50 AM PDT</td>
+          <td>462</td>
+          <td>
+            <a href="#issue-462">[GA Historicals] Negative Tests shown on 5/27 because the states separated serology and PCR</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 20, 2020, 11:27 AM PDT</td>
+          <td>436</td>
+          <td>
+            <a href="#issue-436">[Historical GA] Trend on state website not matching our trends</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 27, 2020, 1:37 PM PDT</td>
+          <td>313</td>
+          <td>
+            <a href="#issue-313">GA Data is &quot;N/A&quot;.</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 21, 2020, 9:45 AM PDT</td>
+          <td>247</td>
+          <td>
+            <a href="#issue-247">GA data discrepancy (~ APR 20)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 7, 2020, 10:09 AM PDT</td>
+          <td>164</td>
+          <td>
+            <a href="#issue-164">GA negative test results decreased</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1120">#1120: [GA] Backfilling Total and Positive antigen tests from 2/18/21-3/2/18</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1120</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on March 2, 2021, 11:10 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1120" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Georgia</p>
+<p>Issue: Georgia started posting Total antigen tests and Positive antigen tests on February 18, 2021, so we are backfilling the values through to March 2, 2021 from screenshots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-789493389">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on March 2, 2021, 11:11 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1120#issuecomment-789493389" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Sources:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Totals</th>
+<th>Positive</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3/2/21</td>
+<td>1422062</td>
+<td>163820</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210302-172206.png</td>
+</tr>
+<tr>
+<td>3/1/21</td>
+<td>1406064</td>
+<td>162411</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210301-171947.png</td>
+</tr>
+<tr>
+<td>2/28/21</td>
+<td>1397752</td>
+<td>161352</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210228-172122.png</td>
+</tr>
+<tr>
+<td>2/27/21</td>
+<td>1390595</td>
+<td>160451</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210227-171959.png</td>
+</tr>
+<tr>
+<td>2/26/21</td>
+<td>1375548</td>
+<td>159339</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210226-172451.png</td>
+</tr>
+<tr>
+<td>2/25/21</td>
+<td>1360896</td>
+<td>158218</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210225-172210.png</td>
+</tr>
+<tr>
+<td>2/24/21</td>
+<td>1350009</td>
+<td>157551</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210224-172156.png</td>
+</tr>
+<tr>
+<td>2/23/21</td>
+<td>1333372</td>
+<td>156556</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210223-172225.png</td>
+</tr>
+<tr>
+<td>2/22/21</td>
+<td>1318989</td>
+<td>155590</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210222-171900.png</td>
+</tr>
+<tr>
+<td>2/21/21</td>
+<td>1316079</td>
+<td>155284</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210221-172029.png</td>
+</tr>
+<tr>
+<td>2/20/21</td>
+<td>1312100</td>
+<td>154830</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210220-172310.png</td>
+</tr>
+<tr>
+<td>2/19/21</td>
+<td>1300188</td>
+<td>154024</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210219-172522.png</td>
+</tr>
+<tr>
+<td>2/18/21</td>
+<td>1280884</td>
+<td>152547</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210218-172443.png</td>
+</tr>
+</tbody>
+</table>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-789496033">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on March 2, 2021, 11:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1120#issuecomment-789496033" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values added:
+<a href="../../assets/github/files/6074204/Changes.6.txt">Changes (6).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1120">#1120: [GA] Backfilling Total and Positive antigen tests from 2/18/21-3/2/18</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1120</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on March 2, 2021, 11:10 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1120" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Georgia</p>
+<p>Issue: Georgia started posting Total antigen tests and Positive antigen tests on February 18, 2021, so we are backfilling the values through to March 2, 2021 from screenshots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-789493389">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on March 2, 2021, 11:11 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1120#issuecomment-789493389" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Sources:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Totals</th>
+<th>Positive</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3/2/21</td>
+<td>1422062</td>
+<td>163820</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210302-172206.png</td>
+</tr>
+<tr>
+<td>3/1/21</td>
+<td>1406064</td>
+<td>162411</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210301-171947.png</td>
+</tr>
+<tr>
+<td>2/28/21</td>
+<td>1397752</td>
+<td>161352</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210228-172122.png</td>
+</tr>
+<tr>
+<td>2/27/21</td>
+<td>1390595</td>
+<td>160451</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210227-171959.png</td>
+</tr>
+<tr>
+<td>2/26/21</td>
+<td>1375548</td>
+<td>159339</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210226-172451.png</td>
+</tr>
+<tr>
+<td>2/25/21</td>
+<td>1360896</td>
+<td>158218</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210225-172210.png</td>
+</tr>
+<tr>
+<td>2/24/21</td>
+<td>1350009</td>
+<td>157551</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210224-172156.png</td>
+</tr>
+<tr>
+<td>2/23/21</td>
+<td>1333372</td>
+<td>156556</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210223-172225.png</td>
+</tr>
+<tr>
+<td>2/22/21</td>
+<td>1318989</td>
+<td>155590</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210222-171900.png</td>
+</tr>
+<tr>
+<td>2/21/21</td>
+<td>1316079</td>
+<td>155284</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210221-172029.png</td>
+</tr>
+<tr>
+<td>2/20/21</td>
+<td>1312100</td>
+<td>154830</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210220-172310.png</td>
+</tr>
+<tr>
+<td>2/19/21</td>
+<td>1300188</td>
+<td>154024</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210219-172522.png</td>
+</tr>
+<tr>
+<td>2/18/21</td>
+<td>1280884</td>
+<td>152547</td>
+<td>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/GA/GA-20210218-172443.png</td>
+</tr>
+</tbody>
+</table>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-789496033">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on March 2, 2021, 11:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1120#issuecomment-789496033" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values added:
+<a href="../../assets/github/files/6074204/Changes.6.txt">Changes (6).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1087">#1087: [GA] Capture &quot;antigen positive cases&quot; as probable cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1087</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on February 3, 2021, 1:47 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1087" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Georgia</p>
+<p>Issue: Moving Georgia's anitgen positive cases (which were added <a href="https://github.com/COVID19Tracking/issues/issues/926">here</a>) to probable cases.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-772847482">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 3, 2021, 1:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1087#issuecomment-772847482" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Expected change in lumped:
+<img src="../../assets/github/images/15933271/106814043-cd673d00-663f-11eb-8340-f571cee29982.png" alt="Columns F-G"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-772852336">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 3, 2021, 1:58 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1087#issuecomment-772852336" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5921804/Changes.3.txt">Changes (3).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1087">#1087: [GA] Capture &quot;antigen positive cases&quot; as probable cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1087</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on February 3, 2021, 1:47 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1087" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Georgia</p>
+<p>Issue: Moving Georgia's anitgen positive cases (which were added <a href="https://github.com/COVID19Tracking/issues/issues/926">here</a>) to probable cases.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-772847482">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 3, 2021, 1:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1087#issuecomment-772847482" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Expected change in lumped:
+<img src="../../assets/github/images/15933271/106814043-cd673d00-663f-11eb-8340-f571cee29982.png" alt="Columns F-G"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-772852336">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 3, 2021, 1:58 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1087#issuecomment-772852336" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5921804/Changes.3.txt">Changes (3).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1022">#1022: [GA] The state fixed an error in their hospitalized PUI value on 12/18</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1022</p>
+          <p>
+            <strong>whobody</strong> opened this issue on December 19, 2020, 12:24 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1022" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>GA</p>
+<p>They had an accidental additional 1069 PUI's on 12/18.</p>
+<p>We need to patch 12/18 with the fixed data</p>
+<p>https://covid-tracking.slack.com/archives/C01B0EGJ3J9/p1608396800220900</p>
+<p>https://services7.arcgis.com/Za9Nk6CPIPbvR1t7/arcgis/rest/services/Join_Features_to_GHA_Regions_Admin/FeatureServer/0/query?where=1%3D1&amp;objectIds=&amp;time=&amp;geometry=&amp;geometryType=esriGeometryEnvelope&amp;inSR=&amp;spatialRel=esriSpatialRelIntersects&amp;resultType=standard&amp;distance=0.0&amp;units=esriSRUnit_Meter&amp;returnGeodetic=false&amp;outFields=ObjectId%2CCOVID_Patients%2CEntry_Date&amp;returnGeometry=false&amp;returnCentroid=false&amp;featureEncoding=esriDefault&amp;multipatchOption=xyFootprint&amp;maxAllowableOffset=&amp;geometryPrecision=&amp;outSR=&amp;datumTransformation=&amp;applyVCSProjection=false&amp;returnIdsOnly=false&amp;returnUniqueIdsOnly=false&amp;returnCountOnly=false&amp;returnExtentOnly=false&amp;returnQueryGeometry=false&amp;returnDistinctValues=false&amp;cacheHint=true&amp;orderByFields=Entry_Date+DESC&amp;groupByFieldsForStatistics=Entry_Date&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27COVID_Patients%27%7D%2C+%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Patients_Under_Investigation%27%7D%5D&amp;having=&amp;resultOffset=0&amp;resultRecordCount=4000&amp;returnZ=false&amp;returnM=false&amp;returnExceededLimitFeatures=true&amp;quantizationParameters=&amp;sqlFormat=none&amp;f=html&amp;token=</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-987">#987: [GA] Removing calculated PCR Test Negatives</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            987</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 30, 2020, 8:09 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/987" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Georgia</p>
+<p>Issue: CTP has been calculating negative PCR tests from GA's Total PCR tests - Positive PCR tests. We are removing this metric.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-745762604">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 15, 2020, 8:52 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/987#issuecomment-745762604" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-751318969">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 25, 2020, 9:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/987#issuecomment-751318969" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-799928759">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on March 15, 2021, 9:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/987#issuecomment-799928759" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was <a href="https://covid-tracking.slack.com/archives/C016R3SR605/p1606839942171300">done</a>.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-949">#949: [GA] Update PCR testing metric to remove lumped antibody tests</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            949</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on November 13, 2020, 12:55 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/949" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Earlier in the pandemic, GA was publishing a single testing metric that lumped together both PCR and antibody testing.
+Recently, GA started providing a data download file (https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip) with a full time series for PCR tests and results.
+We can use this file to correctly fill the PCR tests series to include only PCR tests.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-727057678">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 13, 2020, 2:01 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/949#issuecomment-727057678" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was updated on Nov 13th, 2020.
+From a data file downloaded from GA on Oct-22nd 2020.
+Edit batch 541
+<a href="../../assets/github/files/5539496/GA.-.PCR.tests.and.pos.update.20201113.csv.txt">GA - PCR tests and pos update 20201113.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-926">#926: [GA] Antigen Positive Cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            926</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on November 4, 2020, 2:23 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/926" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: GA</p>
+<p><strong>Describe the problem</strong>
+GA added 29,937 antigen positive cases yesterday.  We should record 29,937 antigen positive cases in our <strong>Positive Antigen Tests (People)</strong> field on November 3 until we get clarity about whether these numbers are getting revised in the manner of probable cases upon PCR testing/a timeseries.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/GA/GA-20201103-171638.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-722009018">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on November 4, 2020, 2:27 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/926#issuecomment-722009018" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <img width="273" alt="Screen Shot 2020-11-04 at 5 27 23 PM" src="../../assets/github/images/15933271/98174519-036f1680-1ec3-11eb-81dd-a3704a336fef.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-925">#925: [GA] Patch 11/3 Total, confirmed, and probable deaths</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            925</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 4, 2020, 12:33 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/925" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: GA</p>
+<p>Dates affected: 11/3</p>
+<p>Describe the issue: On 11/3 GA added confirmed and probable deaths to their dashboard. We should patch 11/3 confirmed and probable deaths, and edit total deaths to be {confirmed deaths + probable deaths}. We will begin capturing confirmed and probable deaths during our daily publish shifts on 11/4</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-721961101">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 4, 2020, 12:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/925#issuecomment-721961101" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="828" alt="Screen Shot 2020-11-04 at 3 34 59 PM" src="../../assets/github/images/68712382/98165098-4de89700-1eb3-11eb-9e76-1bb8c84163c0.png"></p>
+<p>AFTER:
+<img width="830" alt="Screen Shot 2020-11-04 at 3 33 53 PM" src="../../assets/github/images/68712382/98165012-2691ca00-1eb3-11eb-8faf-7c777ffdf2f5.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-912">#912: [GA] Backfilling a missed update on 10/21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            912</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 23, 2020, 12:19 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/912" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Georgia</p>
+<p><strong>Describe the problem</strong>
+On 10/21, GA did not update their website, but we were able to record a Currently Hospitalized update.</p>
+<p><strong>Link to data source</strong>
+Data download from their main website: https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-715535265">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 23, 2020, 12:21 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/912#issuecomment-715535265" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/97045232-3f50c600-152a-11eb-80d0-330d931d159a.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-715537611">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 23, 2020, 12:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/912#issuecomment-715537611" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/97045682-09f8a800-152b-11eb-8a22-0d932eca6315.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-879">#879: [GA] Patch 9/24 Negatives</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            879</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 1, 2020, 7:05 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/879" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><em>State:</em> GA</p>
+<p><em>Dates affected:</em> 9/24</p>
+<p><em>Describe the issue:</em> On 9/24 the neg. calc. for GA was entered incorrectly. We accidentally subtracted positive test pcr, when we should have subtracted positive cases pcr. We need to patch this metric.</p>
+<p><em>Links:</em> https://covid-tracking.slack.com/archives/C01B0EGJ3J9/p1601066257023400</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702166938">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 1, 2020, 7:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/879#issuecomment-702166938" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1440" alt="Screen Shot 2020-10-01 at 10 09 38 AM" src="../../assets/github/images/68712382/94820235-39a20d80-03ce-11eb-8a84-3e9766b2a6b8.png"></p>
+<p>AFTER:</p>
+<img width="1440" alt="Screen Shot 2020-10-01 at 10 15 36 AM" src="../../assets/github/images/68712382/94820979-0e6bee00-03cf-11eb-877b-9ae2cc786d46.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-791">#791: [GA] Deleting calculated negative serology values</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            791</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on August 26, 2020, 7:56 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/791" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Georgia</p>
+<p><strong>Describe the problem</strong>
+On 6/7, CTP began calculating negative serology results. We are deleting this calculation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-680935375">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 26, 2020, 8:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/791#issuecomment-680935375" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/91320022-ed7e0080-e771-11ea-8a1f-b487210a9378.png" alt="image"></p>
+<p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/91320322-3b930400-e772-11ea-825f-41868ec5113e.png" alt="image"></p>
+<p>Values deleted:
+249758
+249088
+247845
+246405
+244139
+242577
+240822
+240165
+239354
+235868
+233928
+232033
+229908
+228852
+226786
+226508
+224787
+222916
+220660
+218459
+216414
+214477
+214348
+212535
+210412
+208075
+205981
+203937
+203216
+202784
+200340
+198530
+196050
+192963
+191418
+191212
+190956
+188675
+186101
+183223
+181191
+177492
+176597
+176430
+173727
+171096
+168075
+165798
+162826
+162044
+161854
+161467
+159209
+155695
+152838
+149415
+149076
+148846
+145700
+143853
+140811
+138045
+135244
+134772
+134569
+132677
+130180
+126461
+114169
+111514
+111178
+111016
+108958
+106774
+104321
+101813
+99259
+98953
+98810
+96554</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-765">#765: [GA] Deaths not updated on 8/4</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            765</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on August 14, 2020, 11:53 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/765" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Georgia</p>
+<p><strong>Describe the problem</strong>
+Deaths were not updated on 8/4.</p>
+<p><strong>Link to data source</strong>
+8/3: https://covidtracking.com/screenshots/GA/GA-20200803-180743.png
+8/4: https://covidtracking.com/screenshots/GA/GA-20200804-180737.png
+8/5:  https://covidtracking.com/screenshots/GA/GA-20200805-180731.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-674322895">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 14, 2020, 5:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/765#issuecomment-674322895" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Using the 8/4 screenshot, the death count was updated.</p>
+<p>Before:
+<img width="935" alt="Screen Shot 2020-08-14 at 8 39 37 PM" src="../../assets/github/images/66738237/90301523-76da2c80-de6e-11ea-86c5-31d4ff47d156.png">
+After:
+<img width="929" alt="Screen Shot 2020-08-14 at 8 40 43 PM" src="../../assets/github/images/66738237/90301524-78a3f000-de6e-11ea-97ac-089c9add1564.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-736">#736: [GA] [LA] Negative Values for number of &quot;New Tests&quot;</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            736</p>
+          <p>
+            <strong>Stayerbear</strong> opened this issue on August 5, 2020, 12:02 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/736" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Georgia, Louisiana</p>
+<p><strong>Describe the problem</strong>
+GA has -74,189 new tests on May 27.  All quantity of tests should be a positive value.
+LA has -2,651 new test on April 19.
+Negative values have caused the 7-day average to scale to 300% make the rest of the 7-day average a flat line at the bottom.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus.jhu.edu/testing/individual-states/georgia
+https://covidtracking.com/data/state/georgia#historical
+https://covidtracking.com/data/state/louisiana#historical</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-678425770">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 21, 2020, 11:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/736#issuecomment-678425770" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-681969222">
+          <div class="frontmatter">
+            <div>
+              <strong>Stayerbear</strong> commented on August 27, 2020, 7:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/736#issuecomment-681969222" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I missed DC... it also has -11,188 on May 25.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691139940">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 11, 2020, 7:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/736#issuecomment-691139940" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-696165344">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 21, 2020, 7:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/736#issuecomment-696165344" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-672">#672: [GA] Georgia situation reports have hospitalization data back to 1 May</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            672</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on July 25, 2020, 3:57 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/672" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: GA</p>
+<p><strong>Describe the problem</strong>
+The COVID Tracking Project's current hospitalization data for Georgia goes back to 16 May. However, Georgia's Situation Reports began including this number starting on 1 May. Once 16 May comes around, the numbers in these reports exactly matches CTP's number.</p>
+<p>The exception is that there are two days after 16 May where CTP retained the previous day's current hospitalization: 21 May and 21 June but the Situation Reports have a new value. There's no documentation of what happened 21 May, but on 21 June Georgia's dashboard wasn't working during the data entry shift and the other columns Georgia reports were backfilled later.</p>
+<p><strong>Link to data source</strong>
+https://gema.georgia.gov/document/document/sitrep-320-723/download</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663842647">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 25, 2020, 4:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/672#issuecomment-663842647" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I have a <a href="https://docs.google.com/spreadsheets/d/1T4e0hoLlyIjBJYOTaeMll7byGK3UEp5KortXK1jYBvA/edit">spreadsheet</a> with the old States Daily column, numbers from the Situation Reports, and the new column. I didn't pull in all the numbers from the Situation Reports, just the ones we were missing (5/1 - 5/15, 5/21, and 6/21) and a few overlapping days where applicable to demonstrate the data source is perfectly aligned with our existing data.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/88455643-f9119b00-ce44-11ea-9dc8-dce6083fbeaf.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/88455648-0038a900-ce45-11ea-9bb3-9c189d282d56.png" alt="image"></p>
+<p>Overlaid data:
+<img src="../../assets/github/images/404503/88455658-17779680-ce45-11ea-896b-2d3e45769222.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-660">#660: [GA] Remove values for Total Tests (PCR)  before 5/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            660</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 23, 2020, 10:01 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/660" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Georgia</p>
+<p><strong>Describe the problem</strong>
+Previous contributors (MM) back-filled the Total Tests (PCR) with the values provided by GA at that time, but GA was lumping PCR and Antibody tests until 5/27 so these values should be removed.</p>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-670647590">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 7, 2020, 11:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/660#issuecomment-670647590" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-675057753">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 17, 2020, 12:04 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/660#issuecomment-675057753" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-685296078">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 1, 2020, 9:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/660#issuecomment-685296078" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691413098">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 11, 2020, 10:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/660#issuecomment-691413098" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-659">#659: [GA] Pub Shift missed a late testing update 4/29</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            659</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 23, 2020, 9:44 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/659" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: GA</p>
+<p><strong>Describe the problem</strong>
+GA updated their testing a few hours late, causing us to have a lower testing value and an artificially high postivity %.</p>
+<p><strong>Link to data source</strong>
+Screenshot from 4/29 morning:
+<img src="https://user-images.githubusercontent.com/67408226/88313878-fee27180-ccc8-11ea-9658-140bdab5bf92.png" alt="image"></p>
+<p>Screenshot from after the pub shift:
+<img src="https://user-images.githubusercontent.com/67408226/88313920-0b66ca00-ccc9-11ea-8fbb-ab446c07215d.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663113188">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 23, 2020, 9:45 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/659#issuecomment-663113188" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/88314061-648f2780-cce2-11ea-8dbc-9186e7756c4f.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/88315329-272b9980-cce4-11ea-9e5c-3007da90963c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670647601">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 7, 2020, 11:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/659#issuecomment-670647601" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-635">#635: [GA] 6/17 timestamp inaccurate</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            635</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 15, 2020, 11:46 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/635" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>6/17 shows an update date of 6/15 when the update was current as of 6/17</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_26781">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-658940467">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 15, 2020, 11:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/635#issuecomment-658940467" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>To resolve, state screenshots were reviewed. 6/17's timestamp changed to 6/17/2020 14:50:00
+<img width="1326" alt="After" src="../../assets/github/images/66738237/87583734-69ccf080-c6aa-11ea-9f7b-7c89332ecb8b.png">
+<img width="1357" alt="Before" src="../../assets/github/images/66738237/87583743-6d607780-c6aa-11ea-9af7-2a8c9c8b0485.png"></p>
+<p>.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-533">#533: [GA] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            533</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on June 25, 2020, 7:57 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/533" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for GA. However, GA’s death values are unclear about what they represent, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+<p>5/12: CTP started to report values in both deaths (confirmed) and deaths.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649836889">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 2:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/533#issuecomment-649836889" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Confirmed they matched what we already had in &quot;Deaths&quot;, then removed &quot;Deaths (confirmed)&quot; for GA between today and 5/12 when they were first recorded.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649896863">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 6:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/533#issuecomment-649896863" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>(Jesse updated the source note for Deaths (confirmed) and the private note this morning)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650195411">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on June 26, 2020, 6:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/533#issuecomment-650195411" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'ed by JJA 6/26 10:00:00 a.m. ET</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-462">#462: [GA Historicals] Negative Tests shown on 5/27 because the states separated serology and PCR</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            462</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 28, 2020, 7:50 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/462" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/1749380/83156934-0292b700-a0d1-11ea-8912-769d6b2d20f4.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-643318963">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 12, 2020, 7:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/462#issuecomment-643318963" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647613001">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 8:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/462#issuecomment-647613001" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-436">#436: [Historical GA] Trend on state website not matching our trends</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            436</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on May 20, 2020, 11:27 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Possible revision of historicals by the GA</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_2424x">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-639064105">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 4, 2020, 12:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436#issuecomment-639064105" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-639138534">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on June 4, 2020, 2:52 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436#issuecomment-639138534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We need to add this to our historical clean-up list</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-639138812">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on June 4, 2020, 2:53 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436#issuecomment-639138812" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>https://app.frontapp.com/open/msg_dme1zv5</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-646873679">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 19, 2020, 2:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436#issuecomment-646873679" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653821124">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 4, 2020, 4:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436#issuecomment-653821124" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-658464328">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 14, 2020, 4:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/436#issuecomment-658464328" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-313">#313: GA Data is &quot;N/A&quot;.</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            313</p>
+          <p>
+            <strong>dcorbin</strong> opened this issue on April 27, 2020, 1:37 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/313" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>GA has change the format of it's dashboard as of today and many covid-tracking fields are &quot;N/A&quot; where I don't think they used to be.</p>
+<p>(I looked and did not see a duplicate issue)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-620238833">
+          <div class="frontmatter">
+            <div>
+              <strong>03stories</strong> commented on April 27, 2020, 2:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/313#issuecomment-620238833" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I noticed the total Deaths was wrong too. Currently it says 942 on GA site, but here it says 971. I <em>think</em> GA has put their dashboard at a different url: https://dph.georgia.gov/covid-19-daily-status-report.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-620271775">
+          <div class="frontmatter">
+            <div>
+              <strong>dcorbin</strong> commented on April 27, 2020, 3:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/313#issuecomment-620271775" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I concur. They've moved change the URL to https://dph.georgia.gov/covid-19-daily-status-report and it _appears very different, with more charts.  I don't know how much different it is structurally.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-627637928">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 12, 2020, 3:42 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/313#issuecomment-627637928" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-634654872">
+          <div class="frontmatter">
+            <div>
+              <strong>erfgottlieb</strong> commented on May 27, 2020, 6:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/313#issuecomment-634654872" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@dcorbin</strong> ! We are now referring to the updated dashboard for the GA data.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-247">#247: GA data discrepancy (~ APR 20)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            247</p>
+          <p>
+            <strong>dcorbin</strong> opened this issue on April 21, 2020, 9:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/247" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On Apr 20, in Georgia, you're data table shows about ~ 700 new cases.  I looked at the source page for that data (also visible in the screen shots).  The only place on that page that I can find to extract a &quot;new cases&quot; is from a chart (hover), and it is showing 36 new cases. I strongly suspect there is a data inconsistency on the source page, but I need more information on how the GA data is extracted from that page.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-617285655">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 21, 2020, 9:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/247#issuecomment-617285655" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@dcorbin</strong></p>
+<p>Thanks for writing
+The Georgia source page shows a total of 18,301 cases on 4/19
+https://covidtracking.com/screenshots/GA/GA-20200419-180551.png</p>
+<p>and a total of 18,947 cases on 4/20
+https://covidtracking.com/screenshots/GA/GA-20200420-180537.png</p>
+<p>18,947-18301 = 646
+https://covidtracking.com/data/state/georgia#historical</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-164">#164: GA negative test results decreased</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            164</p>
+          <p>
+            <strong>webmasterkai</strong> opened this issue on April 7, 2020, 10:09 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/164" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>There seems to be an error in the Georgia history data between 6 Apr 2020 and the current (7 Apr) data.  The negative test results decreased by about 9,000.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-610688502">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 7, 2020, 5:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/164#issuecomment-610688502" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@webmasterkai</strong> It looks like the higher 4/6 number was a <a href="https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1586225805363600">data entry error.</a> I am going to update the historical data.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-610689426">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 7, 2020, 5:43 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/164#issuecomment-610689426" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <img width="245" alt="GA Negatives Before" src="../../assets/github/images/1749380/78732335-68a06080-7910-11ea-883d-f8266d3c19be.png">
+<img width="249" alt="GA Negatives After" src="../../assets/github/images/1749380/78732347-6dfdab00-7910-11ea-9691-fd4cb24d52bd.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

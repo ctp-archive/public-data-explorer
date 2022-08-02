@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Maryland Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Maryland</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Maryland</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>(question with links and screenshot can be found in this doc: https://docs.google.com/document/d/19PFG6YUP1awDTq_f7-gEoxw8G6bzbZze9DGopFS4au0/edit)</p>
+<p>We have been comparing our data to the CDC Cases and Deaths data (https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36). We found that the total number of cases matches perfectly to the confirmed cases on Maryland’s dashboard. However, in the CDC data Maryland’s cases are not recorded as confirmed cases, and we were wondering if you had any insight into why this might be?</p>
+<p>We are also interested in the process of cases and deaths reporting to the federal government in general. We understand from the CDC website that there is a process of the CDC collecting and then confirming aggregate numbers from each jurisdiction, and that this aggregate reporting complements line level reporting (https://www.cdc.gov/coronavirus/2019-ncov/covid-data/faq-surveillance.html).
+Can you tell us about the different mechanisms of reporting cases and deaths to the federal government (voluntary NNDS, aggregate counts process, and line level reporting from the state health department)? We are particularly interested in the aggregate count process as it appears to be the source of the state-level data published by the federal government regularly.</p>
+
+    </div>
+    
+  
+    <h2>October 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>In parallel with doing this switch, we have some questions about the testing-related time series GIS queries that are available from Maryland. There are two time series:   “Testing Volume”: daily tests and positive tests. (ArcGis query)  This time series starts on 3/23.  This is the time series that we used to populate the Total and Positive specimens for Maryland.  “MASTERCaseTracker”: Total tests and positive cases by report date. (ArcGIS query)  This time series starts on 3/4.   The Testing Volume time series is described in the data dictionary as “static daily total of PCR COVID-19 tests electronically reported”. Does this mean that tests are associated with days based on the date that the test info was received electronically in your system?   Both of these time series have a total tests number. We would like to understand the differences between these two total test numbers. Is it simply that the first is electronically reporting only and the second includes all reporting?   We are specifically wondering about this because between 3/24 and 3/27 the number of positive cases (retrieved from the MASTERCaseTracker time series) is higher than the number of cumulative positive tests (calculated from the daily numbers retrieved from the Testing Volume time series) and we would like to understand why that is.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>According to our Infectious Disease Epidemiology and Outbreak Response colleagues, the main reason for the discrepancy is that at the time, we were not receiving electronic lab reports like we are now.In the beginning, we were depending on direct reports from providers and local health departments to classify people as cases or not. This means our case count increased while our overall number of actual test results reported in NEDSS did not.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 30, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What constitutes a confirmed death?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our Vital Statistics Administration reports COVID-19 deaths as confirmed or probable. A death is classified as &quot;confirmed&quot; when there is a positive lab-confirmed COVID-19 test; a death is classified as &quot;probable&quot; when COVID-19 is the suspected or presumed cause of death, but has not yet been confirmed by a lab test. Death data are presented by both date of the report and by date of death and may be updated as amendments to the death record are received.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 30, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Define data points update</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The state’s COVID-19 case and testing data are dated according to when MDH receives the report; we're also working on a data 'dictionary'(/glossary) that will help more clearly define what all our data points mean.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 30, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you provide historic LTC data?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Related to long-term care, we're able to provide data points for the total ever reported COVID-19 cases and deaths for Maryland nursing homes, assisted living facilities, and group homes with ten or more residents, beginning June 10:  Date of reportResident Cases (Deaths)Staff Cases (Deaths)June 107967 (1743)4032 (23)June 178042 (1804)4126 (26)June 248223 (1852)4239 (28)July 18320 (1892)4338 (28)July 88464 (1932)4470 (29)July 158574 (1948)4593 (30)July 228727 (1971)4788 (30)July 298883 (2003)4975 (30)The Maryland COVID-19 in Congregate Facility Settings list provides a point-in-time picture of COVID-19 case activity within these facilities. The numbers reported for each facility on the list reflect totals ever reported for cases and deaths, but week-over-week numbers are not reported via the dashboard. As noted, cumulative totals appear in our 'Total Summary Data' below the dashboard and are updated each week.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Maryland performing pool testing? How is this testing reported? What types of tests are they using?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Maryland Department of Health (MDH) is not conducting pool testing for COVID-19.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are they conducting antigen testing? Are these testing results reported on the state site? How many tests have they conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>MDH receives COVID-19 antigen test reports; however, it currently reports only PCR COVID-19 test data on the dashboard.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>In the MD data, does &quot;negative test results&quot; refer to people tested or specimens tested? Are antibody tests included in this figure, and if so does the state have plans to break them out?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I'd refer you to the Maryland Department of Health dashboard at <a href="https://coronavirus.maryland.gov/">https://coronavirus.maryland.gov/</a>. MDH reports the &quot;number of persons tested negative.&quot; Antibody tests are not included in this figure.</p>
+
+        </div>
+      
+    
+  
+    <h2>March 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Reached out to MD for clarification on definition of &quot;released from isolation” and if we should report this as “recovered”.</p>
+
+    </div>
+    
+  
+  
+    </main>
+  </body>
+</html>

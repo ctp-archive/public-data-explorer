@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wyoming: Long-term metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="../index.html">Wyoming</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Long-term care</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="../index.html">Wyoming</a>
+      : Long-term care metadata history
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="../index.html">Data</a>
+        </li>
+        <li>
+          <a href="../metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="../outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="../data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="../annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="../github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="../tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="../ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="../ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="../ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="../ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="../crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-19T09:31:06.000-07:00">March 19, 2021, 9:31 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-26T14:53:37.000-08:00">February 26, 2021, 2:53 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-12T11:12:42.000-08:00">February 12, 2021, 11:12 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-05T10:56:07.000-08:00">February 5, 2021, 10:56 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-28T22:51:22.000-08:00">January 28, 2021, 10:51 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-15T12:46:28.000-08:00">January 15, 2021, 12:46 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-08T13:51:09.000-08:00">January 8, 2021, 1:51 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T13:44:04.000-08:00">December 25, 2020, 1:44 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-24T06:46:36.000-08:00">December 24, 2020, 6:46 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-22T15:03:33.000-08:00">December 22, 2020, 3:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T10:01:52.000-08:00">December 18, 2020, 10:01 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-27T20:49:29.000-08:00">November 27, 2020, 8:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-20T12:48:02.000-08:00">November 20, 2020, 12:48 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-13T12:08:58.000-08:00">November 13, 2020, 12:08 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-06T14:49:32.000-08:00">November 6, 2020, 2:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-30T08:33:01.000-07:00">October 30, 2020, 8:33 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T13:36:09.000-07:00">October 23, 2020, 1:36 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-16T09:15:41.000-07:00">October 16, 2020, 9:15 AM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+    <h2 id="2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2021: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+
+January 14, 2021: Wyoming did not provide CTP with updated LTC data. Carried over total from January 7, 2021. 
+
+January 28, 2021: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+February 4, 2021: Wyoming began emailing CTP biweekly with information. On the off weeks, data will be carried from the previous reported week. 
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-03-19T09:31:06.000-07:00">March 19, 2021, 9:31 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On February 4, 2021 Wyoming began releasing long-term care data to CTP via email bi-weekly. 
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2021: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+
+January 14, 2021: Wyoming did not provide CTP with updated LTC data. Carried over total from January 7, 2021. 
+
+January 28, 2021: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+February 4, 2021: Wyoming began reporting long-term care information bi-weekly. On the off weeks data will be carried from the previous reported week. 
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-02-26T14:53:37.000-08:00">February 26, 2021, 2:53 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On February 4, 2021 Wyoming began releasing long-term care data to CTP via email bi-weekly. 
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2021: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+
+January 14, 2021: Wyoming did not provide CTP with updated LTC data. Carried over total from January 7, 2021. 
+
+January 28, 2021: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+February 4, 2021: Wyoming began reporting long-term care information bi-weekly.
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-02-12T11:12:42.000-08:00">February 12, 2021, 11:12 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2021: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+
+January 14, 2021: Wyoming did not provide CTP with updated LTC data. Carried over total from January 7, 2021. 
+
+January 28, 2021: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+February 4, 2021: Wyoming began reporting long-term care information bi-weekly.
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-02-05T10:56:07.000-08:00">February 5, 2021, 10:56 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2021: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+
+January 14, 2021: Wyoming did not provide CTP with updated LTC data. Carried over total from January 7, 2021. 
+
+January 28, 2021: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-28T22:51:22.000-08:00">January 28, 2021, 10:51 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2021: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+
+January 14, 2021: Wyoming did not provide CTP with updated LTC data. Carried over total from January 7, 2021. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-15T12:46:28.000-08:00">January 15, 2021, 12:46 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+
+January 7, 2020: Assisted living staff cases decreased from 56 to 35, and probably staff cases from
+33 to 24. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-08T13:51:09.000-08:00">January 8, 2021, 1:51 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 24, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-25T13:44:04.000-08:00">December 25, 2020, 1:44 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+
+December 23, 2020: Wyoming did not provide updated data to CTP. Data was carried over from previous week and outbreak data removed.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-24T06:46:36.000-08:00">December 24, 2020, 6:46 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-22T15:03:33.000-08:00">December 22, 2020, 3:03 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+
+November 26th, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-18T10:01:52.000-08:00">December 18, 2020, 10:01 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+November 26th, 2020: Wyoming did not release data this week. Data was carried over from previous week.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-27T20:49:29.000-08:00">November 27, 2020, 8:49 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatality in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-20T12:48:02.000-08:00">November 20, 2020, 12:48 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers. According to the Wyoming Department of Health, &quot;numbers of deaths listed in this report for each facility should be considered provisional; not every death listed has been confirmed through death certificate review for announcement by WDH or inclusion in the official WDH count of COVID-19 related deaths.&quot;
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-13T12:08:58.000-08:00">November 13, 2020, 12:08 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+November 5, 2020: Due to technical difficulties, Wyoming was unable to release data this week. Data was carried over from previous week
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-06T14:49:32.000-08:00">November 6, 2020, 2:49 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. Wyoming provides facility-level data for nursing homes, assisted living facilities and rehabilitation centers
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-30T08:33:01.000-07:00">October 30, 2020, 8:33 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. 
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+October 22, 2020: Two Nursing Home facilities in Wyoming staff cases decreased. Douglas Care Center&#39;s staff cases dropped from 7 to 2. New Horizons Care Center staff cases dropped from 4 to 2.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-23T13:36:09.000-07:00">October 23, 2020, 1:36 PM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. This data is cumulative since March, 13 2020. Wyoming Department of Health releases data to CTP via email. 
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-16T09:15:41.000-07:00">October 16, 2020, 9:15 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Wyoming reports long-term care data for Nursing Homes and Assisted Living Facilities. Wyoming reports cumulative cases and deaths. Wyoming Department of Health releases data in press releases. 
+
+On July 2, 2020: CTP began receiving updated information from Wyoming’s Public Information Department. 
+On August 27, 2020, Wyoming reported that one resident death is not included in Wyoming&#39;s total death count due to the resident having permanent residency in Montana. CTP includes this fatalitiy in Wyoming&#39;s long-term care data. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+
+    </main>
+  </body>
+</html>

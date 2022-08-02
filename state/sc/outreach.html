@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>South Carolina Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">South Carolina</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">South Carolina</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 1, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We noticed that South Carolina’s number for antigen positive tests is about 40% higher than South Carolina’s probable case number as of March 23. In many other states, even those that say they are accounting for retesting and PCR confirmation in probables, antigen positive test data and probable cases data closely track. Why is South Carolina’s antigen positive test count so much higher than its probable case count?</p>
+
+    </div>
+    
+  
+    <h2>March 17, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are trying to understand the gaps between state-provided testing data and state-level testing data provided by the federal government daily in its PCR testing timeseries dataset: https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb</p>
+<p>In this dataset, South Carolina's total test count is about 15% lower than what the state shares.</p>
+<p>Recently, the federal government said it was investigating differences between state-provided and federally-provided test positivity for South Carolina in its data notes for the Community Profile Report, which are calculated using the same data.</p>
+<p>We were wondering if the cause of these differences had been identified and if these problems will be fixed for SC?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p><strong>Why there was a change?</strong>
+Large differences in counts and percent positive led to us reviewing the data sending process.** **As part of our ongoing review of data provided to both our State-level data visualization tools and data provided to the CDC, it was noticed that testing data displayed by the CDC did not align with the data being presented on our website. Discussions were initiated with the CDC to review their processes and data sources. This process required extensive review, testing, evaluation of any changes that needed to be made and correlation studies with new data processes. We have recently reached a resolution and the changes have been made to ensure data provided to the CDC more accurately reflect information being provided by South Carolina on our website. Cleaning processes will continue to refine how data are presented.</p>
+<p><strong>Why there are still differences?</strong>
+There are three main reasons for the differences.</p>
+<ol>
+<li>We use different deduplication processes. Sometimes we receive the same test twice (or more times), which must be identified and dropped. This requires making some choices, and our processes are not the same.</li>
+<li>We use different cleaning processes. We must classify tests into different test types (PCR, antigen, antibody), and how to classify test results (positive or negative) using sometimes incomplete data. This also leads to some differences.</li>
+<li>We use different dates of reference. We count tests the day they arrive at DHEC's systems. The CDC prefers to use a mixture of 4 different dates (date of result, date of test, date of specimen receipt or date of specimen collection), based on which is available for each test.</li>
+</ol>
+
+        </div>
+      
+    
+  
+    <h2>February 28, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Hello -- for the Cases by Race, there is no longer an &quot;under investigation&quot; section in the pie chart. However, the pie chart next to it for Ethnicity does have the &quot;under investigation&quot; group. What was the reasoning for this shift? Should we be reporting the &quot;under investigation&quot; number from the ethnicity pie chart?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 7, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The &quot;under investigation&quot; item on the dashboard was a filtering issue; it's been resolved on the dashboard.</p>
+
+        </div>
+      
+    
+  
+    <h2>February 24, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’ve noticed that South Carolina removed the “Go to Testing” tab and “State Recovery Estimate” section on the County Level COVID-19 Data dashboard on February 23, 2021. Is there an alternative source for the data points previously on these sections of the dashboard, including total, positive, and negative PCR tests? These metrics are important for our data collection, and we’d like to identify a source for them.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>March 17, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>He said the data got shifted around to make room for vax info.On this link - <a href="https://scdhec.gov/covid19/south-carolina-county-level-data-covid-19">https://scdhec.gov/covid19/south-carolina-county-level-data-covid-19</a> when you toggle to the test tab at the top, all that information should be there. Additionally, looks like the definition is below the table as well.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We would like clarification on the note for this chart -- https://www.scdhec.gov/sites/default/files/media/image/ReportedDeathsbyAgeandRace_8_24_2020.png Are values less than 5 suppressed or not suppressed? Would it be possible to report the underlying values for this chart in a table or some kind of interactive format?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The note below the figure has been updated to read: &quot;Note: A value of 0 means that no death has occurred. Values between 1-4 are suppressed and displayed as (&lt;5).&quot; At this time we do not have plans to make this specific page view interactive. You can find more interactive information on the County Dashboard regarding deaths in your county or region: https://scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/south-carolina-county-level-data-covid-19</p>
+
+        </div>
+      
+    
+  
+    <h2>October 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is SC currently reporting hospitalizations in the Asian/Alaskan/Hawaiian and Under Investigation categories?  It's currently difficult to see if these values are 0s or present, but too small to show up as slices.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Regarding the hospitalizations for Asian, Alaskan and Hawaiian individuals there are currently 1% of all COVID-19 cases hospitalized among these individuals. You can only see this information though when you are in the full state view (or a county with greater than 5 individual cases). Individual counties may have less than 5 cases hospitalized among Asian, Alaskan and Hawaiian individuals. At that time the data would filter out and you would not be able to view that information. This information also applies to unknown individuals. Note may can also be suppressed given the timeline you have selected. We are actively working on incorporating more information into the hospitalizations page.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>With the recent website redesign, our source for capturing &quot;Recovered&quot; values is no longer on the website, and we cannot find the metric anywhere else. Will you release the &quot;Recovered&quot; metric elsewhere? When can we expect you to provide this data?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The recovery rate was recently re-added to the dashboard. You can find a click-through on the Cases Page of the dashboard. Please note that the recovery estimate is provisional and only offers an estimate of recovery among those individuals that we have a known/reported illness onset date for. The methods that we used to estimate recovery are outlined on the recovery page.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>SC previously provided age-race demographic data for deaths in a bar chart that we could hover over and derive the race information counts from for each age group. The most recent dashboard has brought back the COVID-19 reported deaths in South Carolina by age and race; however, we cannot hover over the bar chart to derive the case counts—instead it is an image. (See the link in the first question.) Could SC provide the hover over bar chart once again?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>You can find more interactive information on the County Dashboard regarding the number of deaths by age and race: https://scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/south-carolina-county-level-data-covid-19</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting “Total Viral (Molecular/PCR) Tests” as referring to the total number of tests conducted. Is this correct?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>It is total tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have plans to release a full historical time-series of all testing and results? We have been capturing the total test results in “Total Viral (Molecular/PCR)” Tests since 5/22/2020. Do you plan to release a historical time series of that number?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Total tests by day is available online here (https://scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/south-carolina-county-level-data-covid-19), dating back to February and total molecular tests back to February is available in the percent positive section here (https://scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/south-carolina-county-level-data-covid-19).</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Will this historical data set be available consistently and in an automation friendly format, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Not at this time.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach the “Total Viral (Molecular/PCR) Tests?” If so, how? (i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)? When reporting testing results, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We currently report total tests performed, not individuals tested. One individual who receives three positive test results is one case and three tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware S.C Department of Health and Environment Control does not at this time. Do you have plans to release this data in an automation friendly format, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Not at this time.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’re also interested in testing data in units of “testing encounters”, which can be defined as “the number of unique people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two tests, however, if the same person has two samples tested at a testing center visit, then that only counts as one testing encounter. Are you willing to or are you planning to release testing encounters? If so, will you be able to provide historical data consistently under an automation friendly format, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Not at this time.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have plans to release the total number of individuals tested?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Not at this time.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 12, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Would it be possible for SC to separate the group Asian / American Indian / Alaskan Native / Pacific Islander in its COVID data in order to match census categories?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 12, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I'll propose this request to see if it's possible to capture this information.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 12, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What challenges are you facing in adjusting to the new HHS guidelines? Which metrics that you report were impacted, or could be impacted by HHS procedure changes? How does this affect the reporting relationship between hospitals and DOH? Are there changes in regulations on which hospitals are now required or not required to report to state DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 12, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>DHEC has been working closely with the S.C. Hospital Association during hospitals' transition in reporting from the CDC's NHSN system to the federally required TeleTracking system. Currently, the TeleTracking system asks hospitals to report all of their available beds as one total number, not broken down by bed type as the NHSN system had. Therefore, hospitals’ total number of beds reported includes pediatric beds, neonatal intensive care unit (ICU) bassinets, psychiatric beds, labor and delivery beds, rehabilitation beds and others. As a practical matter, not all of these bed types could be used for caring for adult patients hospitalized with COVID-19, or other medical issues. DHEC has been worked with the S.C. Hospital Association to implement a new process for gathering inpatient bed availability and occupancy from each hospital in the state, as this is the reporting metric that best provides the number of hospital beds available for caring for adult COVID-19 patients. We've been able to return to reporting out this information daily since late last week. https://scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/hospital-bed-capacity-covid-19</p>
+
+        </div>
+      
+    
+  
+    <h2>July 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What types of tests are South Carolina using?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>While DHEC’s Public Health Laboratory doesn’t perform antibody testing, but private labs report antibody test results to DHEC every day as part of their total COVID-19 testing numbers. DHEC has included antibody tests in the total number of reported tests in South Carolina since March 10. DHEC has not included positive antibody test results in the total number of positive cases of COVID-19 in South Carolina. We provide an updated break down every day of testing by serology and molecular here. https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/sc-testing-data-projections-covid-19</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

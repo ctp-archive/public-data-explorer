@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Nevada Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Nevada</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Nevada</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you provide a breakdown of vaccinations by long term care facility?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 16, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Please see the document attached.</p>
+
+        </div>
+      
+    
+  
+    <h2>February 10, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Would it be possible to include the numbers from the Demographics tab on the dashboard (https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9) in the downloadable Excel file (from the Download Data link).</p>
+<p>Thank you.</p>
+
+    </div>
+    
+  
+    <h2>February 4, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>NV LTC Vac data</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 4, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>TCF Update for 2/1/21:
+20,158 Beds total for all Nevada facilities
+6,455 staff total 
+Total doses administered           18,526
+Total first doses administered         15,137
+Total second doses administered        3,389
+Total staff doses administered         8,030
+Total staff first doses administered       6,131
+Total staff second doses administered      1,899
+Total resident doses administered       10,496
+Total resident first doses administered      9,006
+Total resident second doses administered    1,490</p>
+
+        </div>
+      
+    
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Thanks for the response to our earlier question about the number of cases, tests, and deaths missing race/ethnicity data. When you do find out the exact numbers, we kindly ask you to report integer numbers for each demographic category instead of percentages. If this is not possible, we kindly ask you to report two decimal points for the percentages along with the exact number of cases/tests/deaths missing race/ethnicity data. Thanks in advance for everything.</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>February 5, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hi Laura,
+ 
+We are looking into this, but our office is extremely busy right now. This would require some development to our dashboard, so I am not sure when I will be able to get back to you.</p>
+
+        </div>
+      
+        <h4>February 11, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hi Laura,
+ 
+Please find below the numbers for missing R/E. These values are as of today's update.
+ 
+Cases - 1,402 (0.5%)
+Tests - 1,225,680 (47.8%)
+Deaths - 342 (7.5%)</p>
+
+        </div>
+      
+    
+  
+    <h2>January 31, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>NV says &quot;Records with unknown values for gender, race/ethnicity, and age are excluded from percent calculations for each demographic indicator. A significant number of records are missing race and ethnicity information.&quot; Without knowing <em>how many</em> records are missing race and ethnicity information, we have no idea what any of the race and ethnicity numbers should be, since we don't know what the N the percents are out of is. Can they please report the number of records with known race/ethnicity, or the number of records with unknown race/ethnicity (which are equivalent, because we can subtract) so that we can calculate what the percents mean? I selected &quot;Cases&quot; for the metric because it's a single select, but this applies to tests and deaths too.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 2, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hi Laura,
+ 
+I’ve sent this over to my team to get you the exact numbers. Last I checked we had about 25-30% of records missing R/E. This is similar to other western states (not sure about the rest of the country).</p>
+
+        </div>
+      
+    
+  
+    <h2>January 19, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>will they publish vaccination data for long-term care facilities?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 19, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>we have not discussed posting facility-level data; it would be challenging when it comes to LTCF's, as we are leveraging the Pharmacy Partnership Program to serve them. While their doses administered reporting appears to be consistent, we do not have direct insight in the data reported to us which LTCF's are being served. We would need to work with the pharmacies to gain further details there.</p>
+<p>We are looking at closely mirroring Washington's COVID19 vaccination dashboard.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you provide case definitions?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>A confirmed case for NV is a positive molecular test, either PCR or ID Now, they do not include antigen or antibody tests. They said they would be willing to put this notation on their site.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you publish death definitions?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>They'd like to see examples of how other states report death definitions and are open to publishing death definitions on their site.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you break out probable and confirmed cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>They do not include probable cases (i.e. antigen or antibody testing in their test counts) so they would not be able to break these out.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How do you define &quot;environmental samples&quot; ?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>These are tests done on high-touch surfaces, but it is a statistically tiny amount of tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you provide test types?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>They only use PCR and ID Now tests, not antigen or antibody, so they do not see the value of breaking the test type down by two confirmatory test types.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you report recovered cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We don't have the investigative tools to come up with a recovered case number other than an estimate, i.e. any positive test that didn't result in a death. They are also unsure of what the public value is of reporting this number, so they haven't prioritized it. Can we show them examples?</p>
+
+        </div>
+      
+    
+  
+    <h2>September 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting “Total Tests (Molecular)” (listed on the first page of the dashboard) as referring to the total number of tests conducted, and we are interpreting “Total People Tested” (on pages 3 and 4 of the dashboard) as referring to the total number of unique individuals tested. Are these correct interpretations?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, those are correct interpretations.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication (redundancies) to reach the “total tests” and “total people tested” figures? If so, how? If the same person gets different test results on different days, would you report the raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Total people tested is de-duplicated by the patient name and date of birth, and keeps the date of the person’s first test. If a person is tested multiple times, they will only be counted once in “total people tested” regardless of their test results.  If they have both positive and negative results, we keep the positive record.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We only have a record of “Total People Tested (Molecular)” beginning May 13th and of “Total Tests” beginning April 29. Do you have plans to release a full historical time-series for this metric? Furthermore, other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware, Nevada does not at this time. Do you plan to release a historical time series of these numbers in formats such as json or csv?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are currently working on adding an export function to the dashboard so end users would be able to export the data populating the dashboard.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What challenges are you facing in adjusting to the new HHS guidelines?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>There is a lot of data to collect. It takes a great deal of time for hospitals to complete the daily survey and then for the COVID-19 team at the NHA to validate, compile and push it out.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Nevada performing pool testing? If so, how is this testing reported? What types of tests are they using?  Is Nevada conducting antigen testing? Are these testing results reported on the state site? How many tests have they conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No we are not doing pool testing. No antigen testing is taking place, of which I am aware, but it is being discussed. I am looking into your other request and will get back to you soon.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What are some of the factors leading to the cases without race/ethnicity data (i.e. are patients or hospitals not reporting it?)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The laboratory results received by the Department of Health and Human Services for the COVID-19 Dashboard do not include race and ethnicity information. That information is gathered when we contact the patient and the missing data reflects cases where we were not able to reach the patient, or they declined to provide this information.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do &quot;confirmed cases&quot; include staff and residents combined? How do you define &quot;skilled nursing&quot; and how do you define &quot;assisted living&quot;</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>On the Nevada COVID-19 Facilities Dashboard confirmed cases include both staff and residents.Information on the definition of “skilled nursing” can be found on the health facilities page and information on “assisted living” can be found on the residential facility for groups page, both of which include links to the Nevada statute.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

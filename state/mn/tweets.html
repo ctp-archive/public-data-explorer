@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Minnesota Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Minnesota</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Minnesota</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>April 6, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Indiana got off to a very slow start testing. Compare their completed tests with Minnesota's, a smaller state. https://t.co/N5uuj5NAQI</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 5:50 PM PDT</h2>
+    <div>
+      <p>As of today, 8 states are reporting racial demographics for COVID cases:
+CT, IL, MI, MN, NC, NJ, SC, VA</p>
+<p>And 5 states are reporting racial demographics for COVID deaths:
+CT, IL, LA, MN, NC</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 21, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>[CORRECTED CHART AXIS]</p>
+<p>We wanted to call attention to an emerging situation in four states:</p>
+<p>North Carolina, Minnesota, New Mexico, and North Dakota all report currently hospitalized numbers at or near their peak so far. https://t.co/HADm7TS0iV</p>
+
+    </div>
+  
+    <h2>May 26, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Two states, in particular, have some concerning hospitalization numbers: Minnesota and North Carolina. https://t.co/D33yN9otXN</p>
+
+    </div>
+  
+    <h2>May 27, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Arizona, North Carolina, Minnesota, and Wisconsin are all seeing hospitalizations rising to new levels.</p>
+<p>Not all states report this data, and we wish that they did. https://t.co/ql49O8FtuK</p>
+
+    </div>
+  
+    <h2>June 5, 2020, 3:22 PM PDT</h2>
+    <div>
+      <p>A couple of states in the midwest changed the way they report and affected the topline numbers.</p>
+<p>Minnesota changed to reporting total tests, not people tested. That led to a jump in our data of 45k+ tests.</p>
+<p>Michigan added probable cases to their total, adding 5k cases.</p>
+
+    </div>
+  
+    <h2>June 7, 2020, 3:37 PM PDT</h2>
+    <div>
+      <p>There are several other states we're keeping an eye on. California, Minnesota, North Carolina, and Texas. https://t.co/FZWIFuMWLT</p>
+
+    </div>
+  
+    <h2>June 9, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>If you're wondering if we're seeing any impact from the protests in Minneapolis. So far, no signal at all in the Minnesota data. Tests up, positives down. https://t.co/3z9xxUBQFU</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. We see slightly lower numbers than earlier in the week, probably due to the holiday weekend. 6 states (CT, KS, KY, LA, MN, RI) did not report at all, and some others had lower numbers than usual.</p>
+<p>Still: states reported 52k new cases. https://t.co/x830ffyPzh</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:28 PM PDT</h2>
+    <div>
+      <p>One caveat on today’s total test number: Minnesota has updated their data recording, which resulted in a reduction of ~173k cumulative tests. We placed a zero in place of -173k for the daily chart above, so the real trend would be more apparent.</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 5:50 PM PDT</h2>
+    <div>
+      <p>@BobbyHead75 See Tweet #2 in this thread to understand the discrepancy (it's because of a one-time change in Minnesota's reporting)</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 12:43 PM PDT</h2>
+    <div>
+      <p>Update for our data users - we continued to implement changes to our original totalTestResults API field, resulting in a ~600k cumulative test increase since March.</p>
+<p>We updated test totals for 14 states: AK, AL, AR, AS, CA, DC, GA, ID, KY, MN, NH, SD, VA, and WA.</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 12:43 PM PDT</h2>
+    <div>
+      <p>Most of these changes had minimal impact.</p>
+<p>MN, whose units switched from unique ppl to encounters, and NH, whose units switched from unique ppl to specimens, drove the increase. These rises are due to the inclusion of repeat testing, which unique ppl counts do not capture.</p>
+
+    </div>
+  
+    <h2>October 5, 2020, 4:16 PM PDT</h2>
+    <div>
+      <p>When a state fails to update a “current” number for 7 days, we stop collecting that metric until it’s updated again. Yesterday MN hit that mark, and today, MO did. With MO’s numbers, we’d be seeing US hospitalizations at their highest level since Sept. 11. https://t.co/w8rXd3aaPn</p>
+
+    </div>
+  
+    <h2>November 1, 2020, 5:05 PM PST</h2>
+    <div>
+      <p>Today, Arkansas did not update any of its metrics except for hospitalization figures. In addition, Minnesota has not updated its hospitalizations and ICU figures since Thursday.</p>
+
+    </div>
+  
+    <h2>November 14, 2020, 3:20 PM PST</h2>
+    <div>
+      <p>38 states reported over 1k cases. CO, IN, KY, MD, MN, MO, MT, ND, NH, NJ, NV, PA, WV, and UT all set records for detected cases. (5 states did not report cases.) https://t.co/3Gi0ieFO3i</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>In May, four-fifths of COVID-19 deaths in Minnesota were tied to LTC facilities; today that figure is 69%. Nationally, that number is 40%. This week, Minnesota reported their highest cases and deaths since May. https://t.co/Jf7YUiE12q</p>
+
+    </div>
+  
+    <h2>November 26, 2020, 4:01 PM PST</h2>
+    <div>
+      <p>The following jurisdictions did not report today: AS, CT, FL, KS, KY, LA, MA, MI, MN, MP, NC, NH, OH, RI, SC, SD, UT, VI, VT, WY. 10 more reported partial data. Some will report two days of data tomorrow.</p>
+
+    </div>
+  
+    <h2>December 12, 2020, 3:49 PM PST</h2>
+    <div>
+      <p>At the same time, this data requires substantial knowledge to use correctly. So, researchers at @careset, @pkmandic's team at the University of Minnesota, and @covidactnow made a community FAQ: https://t.co/P4ZexXFh8b</p>
+
+    </div>
+  
+    <h2>December 25, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>20 states provided no update: AK, CA, CT, DC, ID, KS, KY, LA, MA, MI, MN, MP, NC, ND, NH, OH, RI, SC, SD, UT, VT.</p>
+<p>7 other states made partial updates.</p>
+
+    </div>
+  
+    <h2>January 3, 2021, 3:28 PM PST</h2>
+    <div>
+      <p>At publish time, we had no updates from 7 of the 56 states and territories we track: AR, CT, KS, MI, MP, RI, and WA. Seven additional states did not report current hospitalizations today: HI, MN, MS, NV, OK, OR, and WI.</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 4:49 PM PST</h2>
+    <div>
+      <p>Today’s update includes 31k previously unreported tests in MN and 2125 previously unreported cases in TX.</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

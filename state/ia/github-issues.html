@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Iowa Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Iowa</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Iowa</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 3, 2021, 1:21 PM PST</td>
+          <td>1086</td>
+          <td>
+            <a href="#issue-1086">[IA] Capture antigen positive as probable cases </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 3, 2021, 1:21 PM PST</td>
+          <td>1086</td>
+          <td>
+            <a href="#issue-1086">[IA] Capture antigen positive as probable cases </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 28, 2020, 1:30 PM PDT</td>
+          <td>800</td>
+          <td>
+            <a href="#issue-800">[IA] Total PCR tests (people) on 8/27 accidentally included antigen tests</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 6:45 AM PDT</td>
+          <td>700</td>
+          <td>
+            <a href="#issue-700">[IA] Antibody test reporting in people</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 10, 2020, 7:32 AM PDT</td>
+          <td>596</td>
+          <td>
+            <a href="#issue-596">[IA] PCL Case Historicals </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 26, 2020, 7:00 AM PDT</td>
+          <td>545</td>
+          <td>
+            <a href="#issue-545">[IA] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 11, 2020, 6:23 AM PDT</td>
+          <td>1</td>
+          <td>
+            <a href="#issue-1">IA: Need live-browser capture</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1086">#1086: [IA] Capture antigen positive as probable cases </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1086</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on February 3, 2021, 1:21 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1086" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Iowa</p>
+<p>Issue: Iowa is treating anitgen positive individuals as probable cases, so we are moving the time series to the Probable case metric</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-781796369">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 18, 2021, 7:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1086#issuecomment-781796369" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-787628102">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 28, 2021, 8:30 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1086#issuecomment-787628102" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1086">#1086: [IA] Capture antigen positive as probable cases </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1086</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on February 3, 2021, 1:21 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1086" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Iowa</p>
+<p>Issue: Iowa is treating anitgen positive individuals as probable cases, so we are moving the time series to the Probable case metric</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-781796369">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 18, 2021, 7:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1086#issuecomment-781796369" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-787628102">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 28, 2021, 8:30 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1086#issuecomment-787628102" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-800">#800: [IA] Total PCR tests (people) on 8/27 accidentally included antigen tests</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            800</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on August 28, 2020, 1:30 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/800" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: IA</p>
+<p><strong>Describe the problem</strong>
+There was a mistake on 8/27 where the testing number lumping antigen was inputted into of total tests (people) field in IA</p>
+<p><strong>Link to data source</strong>
+We have no viable screenshot to backfill 😢</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-814446235">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/800#issuecomment-814446235" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We should carry over the previous day's number.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-700">#700: [IA] Antibody test reporting in people</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            700</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 30, 2020, 6:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/700" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Iowa</p>
+<p><strong>Describe the problem</strong>
+IA's use of &quot;Individuals&quot; for antibody test counts implies that they report in people, not specimens, tested. States Daily needs to be updated accordingly.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus.iowa.gov/pages/serology-testing</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666375197">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 30, 2020, 6:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/700#issuecomment-666375197" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Our need to transfer to people antibody reporting was verified.</p>
+<p>Action items:</p>
+<p><strong>1/4: WS2 private note left</strong>
+Before&quot;
+<img width="432" alt="Screen Shot 2020-07-30 at 9 41 46 AM" src="../../assets/github/images/66738237/88930446-82f8a400-d249-11ea-923d-34f8016583a5.png">
+After:
+<img width="431" alt="Screen Shot 2020-07-30 at 9 42 10 AM" src="../../assets/github/images/66738237/88930463-85f39480-d249-11ea-87a1-434d3b30146c.png"></p>
+<p><strong>2/4: WS2 source notes changed</strong>
+Before:
+<img width="1241" alt="Screen Shot 2020-07-30 at 9 42 34 AM" src="../../assets/github/images/66738237/88930486-8ab84880-d249-11ea-830b-3825c3e1e8b9.png">
+After:
+<img width="1246" alt="Screen Shot 2020-07-30 at 9 42 47 AM" src="../../assets/github/images/66738237/88930496-8db33900-d249-11ea-944a-71340a905bc0.png"></p>
+<p><strong>3/4: Data in States Daily copied to correct columns</strong>
+Before:
+<img width="812" alt="Screen Shot 2020-07-30 at 9 43 54 AM" src="../../assets/github/images/66738237/88930507-9277ed00-d249-11ea-8577-abcfb592dcca.png">
+After:
+<img width="1021" alt="Screen Shot 2020-07-30 at 9 44 10 AM" src="../../assets/github/images/66738237/88930517-973ca100-d249-11ea-908c-3dbae9c86889.png"></p>
+<p><strong>4/4: WS2 pre-filled</strong></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-596">#596: [IA] PCL Case Historicals </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            596</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 10, 2020, 7:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/596" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State</strong>: Iowa</p>
+<p><strong>Description</strong>:
+CTP started capturing <strong>Positive Cases (PCR) / positiveTestsViral</strong> on 4/29. We should back-fill the values before that date in Iowa.
+It is unlikely that IA used lumped values and then went to lab-confirmed only, given the consistent time-series for Positives. The wording before the dashboard changed also is in line with our definition for Lab Confirmed Only.</p>
+<blockquote>
+<p>The state only reports cases confirmed by viral test. State must explicitly use the word &quot;confirmed&quot;, inviting interpretation by CSTE case definition, or specify they are using PCR/viral tests, to be labelled as lab-confirmed.
+Positives should therefore be copied into Positive Cases (PCR).</p>
+</blockquote>
+<p><strong>Source</strong>: Screenshots from Iowa's websites &amp; previous capture by CTP of the same information</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657603893">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 13, 2020, 7:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/596#issuecomment-657603893" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>UPDATE: 7/13</strong></p>
+<p><em>While backfiling, we came across a graph on the website that reports confirmed cases by day [https://coronavirus.iowa.gov/pages/case-counts]. Here is the graph:</em></p>
+<p><img src="../../assets/github/images/57415941/87318053-d0f57400-c4f5-11ea-8341-946e5864d253.png" alt="Screen Shot 2020-07-13 at 9 32 39 AM"></p>
+<p>This graph is <strong>hoverable</strong> and <strong>the data can be automatically fetched from ArcGIS layers.</strong></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663019169">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 23, 2020, 6:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/596#issuecomment-663019169" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Using IA's data definition, it was confirmed that IA reports in lab-confirmed cases. Values from Positives were then copied into Positive Cases (PCR) in States Daily.</p>
+<p>Before:
+<img width="783" alt="Screen Shot 2020-07-23 at 9 37 14 AM" src="../../assets/github/images/66738237/88293478-0e61ba80-ccc9-11ea-9eaf-eec7c39dcce8.png">
+After:
+<img width="784" alt="Screen Shot 2020-07-23 at 9 39 52 AM" src="../../assets/github/images/66738237/88293487-115cab00-ccc9-11ea-80db-30fa59c31542.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-545">#545: [IA] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            545</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on June 26, 2020, 7:00 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/545" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for IA. However, IA’s death values are unclear about what they represent, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-650196808">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 26, 2020, 7:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/545#issuecomment-650196808" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated tooltip from &quot;Dashboard&quot; to &quot;no data&quot; as well as added process note.</p>
+<img width="876" alt="Screen Shot 2020-06-26 at 7 02 03 AM" src="../../assets/github/images/67423649/85865599-ff93f080-b77a-11ea-92b7-737124960494.png">
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651165360">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 29, 2020, 7:40 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/545#issuecomment-651165360" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/86019558-c1096a80-b9f4-11ea-9ffb-221dbcdba7af.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/86019687-e39b8380-b9f4-11ea-9e9b-c7f38505d80b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1">#1: IA: Need live-browser capture</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1</p>
+          <p>
+            <strong>joshuaellinger</strong> opened this issue on March 11, 2020, 6:23 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>IA scraping fails due to a security project (Incapsula).  It breaks for any python requests based approach.</p>
+<p>The link is https://idph.iowa.gov/Emerging-Health-Issues/Novel-Coronavirus</p>
+<p>Can someone setup a chromium proxy that deals with this?</p>
+<ol>
+<li>Setup an endpoint like http://mysite.org/proxy?state=IA</li>
+<li>when you get a request, spawn up a captive browser using something like Nightwatch or Selentium(sp?)</li>
+<li>issue the request to the link above</li>
+<li>return the HTML.</li>
+</ol>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-598836437">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 13, 2020, 10:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1#issuecomment-598836437" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Iowa is hopeless -- we'll need to check it manually.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-598836437">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 13, 2020, 10:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1#issuecomment-598836437" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Iowa is hopeless -- we'll need to check it manually.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>South Dakota: Long-term metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="../index.html">South Dakota</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Long-term care</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="../index.html">South Dakota</a>
+      : Long-term care metadata history
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="../index.html">Data</a>
+        </li>
+        <li>
+          <a href="../metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="../outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="../data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="../annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="../github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="../tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="../ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="../ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="../ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="../ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="../crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-04-05T15:24:40.000-07:00">April 5, 2021, 3:24 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-18T22:55:20.000-08:00">February 18, 2021, 10:55 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-15T12:46:28.000-08:00">January 15, 2021, 12:46 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-08T13:51:09.000-08:00">January 8, 2021, 1:51 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-03T19:15:11.000-08:00">January 3, 2021, 7:15 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T13:44:04.000-08:00">December 25, 2020, 1:44 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-24T06:46:36.000-08:00">December 24, 2020, 6:46 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T10:01:52.000-08:00">December 18, 2020, 10:01 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-04T09:35:04.000-08:00">December 4, 2020, 9:35 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-20T12:48:02.000-08:00">November 20, 2020, 12:48 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-13T12:08:58.000-08:00">November 13, 2020, 12:08 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-10T15:48:13.000-08:00">November 10, 2020, 3:48 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T15:49:32.000-08:00">November 2, 2020, 3:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T14:33:11.000-08:00">November 2, 2020, 2:33 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</a>
+      </li>
+    
+  </ul>
+
+  
+    <h2 id="2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      On August 27, 2020, South Dakota began releasing long-term-care data in their Department of Health&#39;s Healthcare Partner Webinar slides. For months, we pulled data from these slides, but in January 2021, we noticed resident case and death numbers were available on South Dakota&#39;s main COVID-19 data dashboard, so we switched our process to pull data from the dashboard. Around that same time, we also noticed a note from South Dakota that the data on the slides was not intended to be used for press or public reporting, but because the main dashboard does not include information on staff cases and deaths, we continue to get those numbers from the slides when they are available.
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 24, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 31, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+January 7, 2021: South Dakota began posting LTC resident cases and deaths on the main COVID-19 dashboard. All other data (facility counts, outbreak cases) are gathered from the weekly health care call slides. This week, South Dakota posted this note at the bottom of the slides, “Not intended for press or for reporting purposes.” This is the first time CTP has seen this caveat on SD&#39;s slideshow. We will sustain this historic data to stay consistent with our previous reporting, which has been based off of these slides. 
+
+February 18, 2020: CTP carried all data except for cumulative resident cases and cumulative resident deaths. No updates on Long-Term Care data were given in the slides.
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-04-05T15:24:40.000-07:00">April 5, 2021, 3:24 PM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 24, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 31, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+January 7, 2021: South Dakota began posting LTC resident cases and deaths on the main COVID-19 dashboard. All other data (facility counts, outbreak cases) are gathered from the weekly health care call slides. This week, South Dakota posted this note at the bottom of the slides, “Not intended for press or for reporting purposes.” This is the first time CTP has seen this caveat on SD&#39;s slideshow. We will sustain this historic data  to stay consistent with our previous reporting, which has been based off of these slides. 
+
+February 18, 2020: CTP carried all data except for cumulative resident cases and cumulative resident deaths. No updates on Long-Term Care data were given in the slides.
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-02-18T22:55:20.000-08:00">February 18, 2021, 10:55 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 24, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 31, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+January 7, 2021: South Dakota began posting LTC resident cases and deaths on the main COVID-19 dashboard. All other data (facility counts, outbreak cases) are gathered from the weekly health care call slides. This week, South Dakota posted this note at the bottom of the slides, “Not intended for press or for reporting purposes.” This is the first time CTP has seen this caveat on SD&#39;s slideshow. We will sustain this historic data  to stay consistent with our previous reporting, which has been based off of these slides. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-15T12:46:28.000-08:00">January 15, 2021, 12:46 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 24, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 31, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+January 7, 2021: South Dakota began posting LTC resident cases and deaths on the main COVID-19 dashboard. All other data (facility counts, outbreak cases) are gathered from the weekly health care call slides. This week, South Dakota posted this note at the bottom of the slides, “Not intended for press or for reporting purposes.” This is the first time CTP has seen this caveat on SD&#39;s slideshow. We will continue reporting this data to stay consistent with our previous reporting, which has been based off of these slides.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-08T13:51:09.000-08:00">January 8, 2021, 1:51 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 24, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 31, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-03T19:15:11.000-08:00">January 3, 2021, 7:15 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 24, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-25T13:44:04.000-08:00">December 25, 2020, 1:44 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+
+December 23, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-24T06:46:36.000-08:00">December 24, 2020, 6:46 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+
+December 17, 2020: No updated data released by South Dakota. Totals were carried over from December 10, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-18T10:01:52.000-08:00">December 18, 2020, 10:01 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-04T09:35:04.000-08:00">December 4, 2020, 9:35 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of its total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+
+November 19, 2020: No updated data released by South Dakota. Totals were carried over from November 12, 2020. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      South Dakota does not report COVID-19 data for long-term care facilities.
+    </div>
+  
+    <h2 id="2020-11-20T12:48:02.000-08:00">November 20, 2020, 12:48 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+
+September 24, 2020: South Dakota did not report residential care facilities as part of it&#39;s total. Data from September 17, 2020 was carried. 
+
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      South Dakota does not report COVID-19 data for long-term care facilities.
+    </div>
+  
+    <h2 id="2020-11-13T12:08:58.000-08:00">November 13, 2020, 12:08 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota began releasing long-term care data on August 27, 2020 in the South Dakota Department of Health&#39;s Healthcare Partner Webinar slides. No facility type is provided. South Dakota reports cumulative and current outbreak data for resident and staff cases and deaths, as well as number of facilities with a case. 
+ 
+South Dakota notes their data is from self-reported &quot;touch-base calls&quot; with facilities. 
+
+September 10, 2020: South Dakota did not report Long Term Care data. Data from September 3, 2020 was carried. 
+September 24, 2020: South Dakota did not report residential care facilities as part of it&#39;s total. Data from September 17, 2020 was carried. 
+November 10, 2020: CTP started reporting South Dakota&#39;s long-term care data and backfilled it to August 27th, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      South Dakota does not report COVID-19 data for long-term care facilities.
+    </div>
+  
+    <h2 id="2020-11-10T15:48:13.000-08:00">November 10, 2020, 3:48 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota does not release COVID-19 data for long-term care facilities.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      South Dakota does not report COVID-19 data for long-term care facilities.
+    </div>
+  
+    <h2 id="2020-11-02T15:49:32.000-08:00">November 2, 2020, 3:49 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota does not release COVID-19 data for long-term care facilities.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      South Dakota does not report COVID-19 data for LTC facilities.
+    </div>
+  
+    <h2 id="2020-11-02T14:33:11.000-08:00">November 2, 2020, 2:33 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota does not release COVID-19 data for long-term care facilities.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      South Dakota does not release COVID-19 data for long-term care facilities.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+
+    </main>
+  </body>
+</html>

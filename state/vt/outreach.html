@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Vermont Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Vermont</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Vermont</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 1, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Your dashboard’s “Info” tab says Vermont requires symptomatic or epidemiological evidence in addition to a positive antigen test to count an individual as a probable case, but links to the CSTE’s most recent definition which only requires a positive antigen test. Which criteria is Vermont using? If not CSTE’s most recent definition, why your own custom definition?
+In addition, why do probable cases make up such a small share of cases in Vermont (less than 3%)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 3, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The algorithm for interpreting a positive antigen test does require symptoms or epidemiologic evidence which is why we note it in the “info” tab. Please note, there is new guidance on antigen positive interpretation and decision making, which Vermont is currently reviewing.
+ 
+Our state’s relatively small proportion of probable cases is likely due to the fact that we strongly encourage PCR testing and have made PCR testing widely available.</p>
+
+        </div>
+      
+    
+  
+    <h2>March 26, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We have a question regarding COVID fatality reporting. In comparing Vermont's figure for &quot;deaths&quot; reported on the state dashboard to the figure reported by the National Center for Health Statistics for Vermont's &quot;all deaths involving COVID-19&quot; (https://www.cdc.gov/nchs/nvss/vsrr/covid19/index.htm) we notice that the numbers differ. Currently the state dashboard reports 224 total deaths while the NCHS reports 105 deaths. Additionally, the most recent week the NCHS is reporting data for is 01/02/21. We're interested in any information you can provide to shed light on this discrepancy.</p>
+
+    </div>
+    
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We noticed that on 2/1/2021 the number of tests of the dashboard is 886.121, which is less than the number of tests posted yesterday (908,823) https://covidtracking.com/screenshots/VT/VT-20210201-183522.png</p>
+<p>We also see these slightly lower number of tests reflected in the Total PCR Tests graph. Can you please tell us why the number of tests has decreased from previous reporting</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 3, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Once a week, the Data Team runs a program that improves data quality by removing duplicates from the number of people tested. Because of this, the number of people tested may drop slightly on the data dashboard Tuesday update.</p>
+
+        </div>
+      
+    
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For cases and deaths with race/ethnicity data, VT is currently rounding to the nearest (100) if the number is larger than 1,000. We kindly ask them to display the whole number in order to not lose any information. Thanks in advance.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Changed to hover</p>
+
+        </div>
+      
+    
+  
+    <h2>September 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We see that Vermont deduplicates the &quot;number of people tested&quot; stat on a weekly basis.  Can you please let us know more about how Vermont deduplicates this value?  If the same person gets separate tests on different days, would Vermont report the raw results as part of the daily positives/negatives?  Does Vermont apply a logic, like only reporting the first negative or positive test per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Only the first test for each individual is included in our patient-level dataset, unless a positive test result occurs after a negative test, in which case the positive result would replace the negative result in the dataset.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We currently have a machine readable time-series of &quot;number of people tested&quot; for Vermont from May 13, 2020.  We interpret this metric as referring to the total numbers of unique individuals tests.  Is our interpretation correct?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, the interpretation of ‘number of people tested’ in the second paragraph is correct – this is the number of unique individuals tested.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>If so, could Vermont provide the total number of specimens tested as well?  Would it be possible to provide a full historical time-series for all testing and results in an automation-friendly form, like ArcGIS or CKAN API, or a direct download, like a CSV of JSON file?  Could Vermont switch to reporting current data in an automation-friendly form as well?</p>
+<p>We are interested in testing data in units of &quot;testing encounters,&quot; defined as &quot;the number of people who have been tested per day.&quot;  Under this metric, if a person is tested once today and once next week, two total tests have been performed.  However, if one person has two samples collected in a single testing center visit, this visit is considered one testing encounter.  Would Vermont be willing to release testing encounters numbers in an automation-friendly form?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>In creating our specimen-level dataset, we deduplicate tests at the specimen level. To repeat the examples provided, if one person has two samples collected in a single testing center visit, that would appear as one test in our specimen-level dataset.</p>
+<p>If they are tested once today and once next week, this would appear as two tests in the specimen-level dataset. Based on your description, it seems like there is a distinction being made between ‘testing encounters’ (what we call total tests or specimens) and ‘total specimens’ (or non-deduplicated specimens collected), the latter of which we do not produce.</p>
+<p>We would likely not be able to switch to an automation friendly format, but could provide a CSV containing the deduplicated number of specimens collected since March (and their results). Is this something you would like us to do? Would this need to be provided on an ongoing basis?</p>
+
+        </div>
+      
+    
+  
+    <h2>September 11, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>I would like to check back in with you and the team for an update on Vermont's LTCF landscape:  As of September 10, what is the number of lab-confirmed COVID-19 cases and deaths in LTCFs?  If possible, please break down these figures by residents and staff.  Have there been any new outbreaks in LTCFs since our previous correspondence in June?    And, finally, we understand that HHS has pushed a number of new nursing home testing initiatives:  Do you have any update regarding testing in Vermont's LTCFs per either state or federal policies?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 11, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The number of deaths associated with LTC facilities is 32. Total associated cases is 164. We have not had any new outbreaks in long term care facilities since June. For your second question, we’re still assessing how these HHS testing initiatives will be put into practice here in Vermont and finalizing guidance around this, but feel free to check back in.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 14, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>I'm a daily user of your Covid19 dashboards and related datasets in your open data portal (https://geodata.vermont.gov/pages/covid-19).
+I recently saw that in the weekly report (e.g., the latest one: https://www.healthvermont.gov/sites/default/files/documents/pdf/COVID19-Weekly-Data-Summary-8-14-2020.pdf)
+you include information such as Total Tests to Date (p. 7 of report), and cumulative hospitalizations (p. 17 of report). Could you add these to your publicly available datasets as well?
+Specifically, &quot;Total Tests to Date&quot; is a very interesting metric, that most states started reporting, since as the time passes many people are tested more than once. If you cannot add the full time series at this time, could you start publishing the available numbers in the dashboard or as a raw format so it'll be easy to automate (the current PDF is not easy to parse).</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Thank you for your message. I work on a team of health department staff who respond to e-mails to our public inbox. I will forward your questions and suggestions to the team handling the COVID-19 data dashboard. Be well.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Thank you for providing a helpful sense of scale -- outbreaks at 5 LTCFs of 167 total throughout the state.  Is it possible for you to specify the type of LTCF in which each of the 5 outbreaks occurred?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, nursing homes and rehabs.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Am I correct in my understanding that Vermont classifies nursing homes/skilled nursing facilities, assisted living, and behavioral health institutions as LTCFs?  Am I missing any other types of institutions from the LTCF bucket?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>There is a little more background on the types of facilities here: https://asd.vermont.gov/services/residential-options (If you mean behavioral health in the sense of places like Physically Secure Residential and Level 1 mental health beds, those facilities are their own bucket.)</p>
+
+        </div>
+      
+    
+  
+    <h2>June 25, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does Vermont track historic COVID-19 data for LTC facilities?  I have reviewed the recent Vermont weekly summary from June 19, including the statistics around COVID-19 deaths and outbreaks in LTC facilities.  Some states publish granular COVID-19 LTC data, broken down by the names and locations of the facilities.  For each facility, these states track the number of total positive cases since the start of the pandemic; the current positive cases; and the number of total deaths.  These states also separate resident and staff data. We would like Vermont to provide this detailed LTC information if it is available.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 25, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Any [LTC] data is a special order item that we can often accommodate, though because of our small population, we are not always able to give exact numbers by facility due to State Statutes related to privacy and HIPAA concerns. As of 6/22, there have been 164 lab-confirmed cases and 32 covid-19 associated deaths at LTC facilities. There are currently no active outbreaks in LTC facilities.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 25, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How does Vermont define LTC facilities (per the 164 lab-confirmed cases/32 COVID-associated deaths as of June 22)?  I am reviewing the June 19 weekly summary, including the footnotes and the charts in the outbreaks/clinical course sections.  Does LTC include all of the listed health settings -- skilled nursing facilities, assisted living, therapeutic treatment centers, and behavioral health institutions?  Are any non-health settings, like senior housing communities, included in Vermont's definition of LTC facilities?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 25, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Senior housing, correctional facilities and therapeutic treatment facilities are not included in LTCFs. For perspective, of the 167 LTCFs in Vermont, we have had cases reported at 5 of them.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>VT reached out to us about their new dashboard URL.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I am writing on behalf of the Vermont Department of Health with updates regarding where to continue to reference Vermont COVID-19 data as there will be a change in URL's for the dashboard and its underlying data services implemented tomorrow, 6/18. The change is expected to be implemented between 9 and 10am ET on 6/18. The change is due to an updated workflow in how the application is maintained. All data, function and appearance will remain the same. We believe you rely on these data feeds in some way or another, hence getting in touch.</p>
+<p>New Vermont COVID-19 Dashboard URL
+The current dashboard's address will no longer be embedded at VDH's site beginning 6/18. It will remain updated through and including 6/21 albeit with a note of its deprecated status, and retired thereafter.
+The new dashboard URL starting 6/18 will be: https://experience.arcgis.com/experience/85f43bd849e743cb957993a545d17170
+It will be embedded at VDH's current activity in Vermont page starting 6/18, replacing the current version. The change may not be noticeable.
+For those who embed the dashboard on their sites:
+Use the new dashboard URL from 6/18 onward: <a href="https://experience.arcgis.com/experience/85f43bd849e743cb957993a545d17170">https://experience.arcgis.com/experience/85f43bd849e743cb957993a545d17170</a>
+For those scraping the dashboard, please also point to the new URL starting 6/18.
+Unlike the current dashboard that has 2 builds, one for desktop and one for mobile, each with a separate URL, the new URL automatically detects screen size and adjusts accordingly, e.g. one URL serves both versions. This is so long as a viewer is using a modern web browser, not IE11 or below. For those folks and only if needed, here's the non-dynamically responsive, desktop and mobile apps only. Embed the single URL if you can.</p>
+<p>Underlying Data
+For those who download daily .csv tables or other data products:
+VT Open Geodata Portal links for data items from 6/18 onwards are as follows. Schemas are unchanged wherever possible.
+VT COVID-19 Daily Counts Table
+https://geodata.vermont.gov/datasets/vt-covid-19-daily-counts-table  (same as it has been)
+VT COVID-19 Cases by County
+https://geodata.vermont.gov/datasets/vt-covid-19-cases-by-county  (same as it has been)
+A third table will also be posted containing Current Hospitalizations and Hospitalized Under Investigation counts by day, which are currently within the Daily Counts table but no longer will be populated there given the update.
+VT COVID-19 Hospitalizations by Date - EMR
+<a href="https://geodata.vermont.gov/datasets/vt-covid-19-hospitalizations-by-date-emr">https://geodata.vermont.gov/datasets/vt-covid-19-hospitalizations-by-date-emr</a>
+The query https://geodata.vermont.gov/search?q=covid currently mentioned in VDH's FAQ's should also continue to fetch these items at the VT Open Geodata Portal.
+For those who reference the REST endpoints/services to update other data:
+Endpoints will change from 6/18 onward given the new update process:
+VT COVID-19 Daily Counts Table
+https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VIEW_EPI_DailyCount_PUBLIC/FeatureServerVT COVID-19 Cases by County
+https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VIEW_EPI_CountyDailyCount_GEO_PUBLIC/FeatureServerVT COVID-19 Hospitalizations by Date – EMR
+<a href="https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VIEW_EMR_Hospitalization_PUBLIC/FeatureServer">https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VIEW_EMR_Hospitalization_PUBLIC/FeatureServer</a></p>
+<p>Thanks for bearing with us and updating your references accordingly.</p>
+
+        </div>
+      
+    
+  
+    <h2>May 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Number of people on ventilators and in ICU</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>May 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Per reporter, &quot;He gave me some some numbers as of 5/4 but did not connect me with any resources to follow up as things develop. It does not seem that this information is being posted publicly. They are also going to be updating their states dashboard to include recovered cases in the coming days. As of 5/4:</p>
+<ul>
+<li>2 current COVID patients in ICU</li>
+<li>0 current COVID patients on ventilator&quot;
+&quot;</li>
+</ul>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

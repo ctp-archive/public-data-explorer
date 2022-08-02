@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wisconsin Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wisconsin</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wisconsin</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>April 2, 2020, 6:45 AM PDT</h2>
+    <div>
+      <p>@JonCurtBeck @DrIbram Can you point us to the Wisconsin data? I just looked again and could not find it. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>May 27, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Arizona, North Carolina, Minnesota, and Wisconsin are all seeing hospitalizations rising to new levels.</p>
+<p>Not all states report this data, and we wish that they did. https://t.co/ql49O8FtuK</p>
+
+    </div>
+  
+    <h2>May 30, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>In addition to the states we've mentioned recently, Alabama, Arizona, California, and Wisconsin are worth keeping eyes on.</p>
+<p>California and Arizona had new highs for cases today. Alabama and Wisconsin set highs yesterday. https://t.co/M2JTnIfchI</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>2/2</p>
+<p>Missouri
+Nevada
+New Jersey
+New York
+North Carolina
+Ohio
+Pennsylvania
+South Carolina
+Tennessee
+Wisconsin</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:08 PM PDT</h2>
+    <div>
+      <ol start="2">
+<li>Wisconsin reported 2.8k probable cases today from previous days. They are also in the API, but excluded from the charts presented here.</li>
+</ol>
+<p>As with NJ, we hope to be able to properly assign those probable cases to the right dates, too, with the state's help.</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>Even subtracting Wisconsin's probables, today marked a new record high for reported cases in the outbreak at just over 39k. https://t.co/oSl6FF9hKa</p>
+
+    </div>
+  
+    <h2>September 24, 2020, 4:06 PM PDT</h2>
+    <div>
+      <p>The number of cases and hospitalizations continues to grow in ND, SD and WI. A few days after breaking their new case record, today Wisconsin reported 530 current hospitalized patients, the highest in the state on a single day. https://t.co/V4rcTv7kVF</p>
+
+    </div>
+  
+    <h2>October 1, 2020, 4:42 PM PDT</h2>
+    <div>
+      <p>Cases are increasing in most of the Midwest. Both Wisconsin and South Dakota reported their highest single-day case counts today. https://t.co/m3FLfMO0oQ</p>
+
+    </div>
+  
+    <h2>October 1, 2020, 4:49 PM PDT</h2>
+    <div>
+      <p>Hospitalization numbers are also rising in most midwestern states. WI and SD's counts are more than 100% higher than a month ago. https://t.co/bogrVbAwTZ</p>
+
+    </div>
+  
+    <h2>October 6, 2020, 4:01 PM PDT</h2>
+    <div>
+      <p>Nationwide, current hospitalizations are beginning to rise. In WI, the 7-day average of people reported hospitalized has more than doubled over the last month, from 290 on September 5th to 722 today.</p>
+
+    </div>
+  
+    <h2>October 7, 2020, 4:22 PM PDT</h2>
+    <div>
+      <p>States reported 32k patients are currently hospitalized with COVID-19. Trends in the midwest, particularly in Wisconsin, are worrisome. https://t.co/kc1EioHmNC</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1 million tests, 55k cases, and 975 deaths. 34k people are currently hospitalized with COVID-19. WI, ND, UT and WY reported record high case counts today. https://t.co/W4cOO1iVZp</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 4:00 PM PDT</h2>
+    <div>
+      <p>This week’s data continues a four-week rise in cases. Hospitalizations grew not only across the Midwest, but in states in every region, with especially worrisome signs in WI. You can read more about the weekly trends in our update: https://t.co/RKtpgFYLn0</p>
+
+    </div>
+  
+    <h2>October 13, 2020, 4:21 PM PDT</h2>
+    <div>
+      <p>Case counts are increasing in 36 states. Wisconsin, one of the worst hotspots in the country this week, reported 3.4k cases today, 65% more than a week ago.</p>
+
+    </div>
+  
+    <h2>October 17, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>Wisconsin and four other states—Connecticut, Louisiana, Kansas, Rhode Island—did not update their case numbers today.</p>
+<p>Today's case count was high, despite the absence of these states. https://t.co/7Bh16lsBko</p>
+
+    </div>
+  
+    <h2>October 19, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>Wisconsin and Michigan both included weekend backlogs in today's update resulting in very high state case counts. https://t.co/QqjgpLomBJ</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 12:49 PM PDT</h2>
+    <div>
+      <p>In some states with worsening outbreaks, the virus has already arrived in nursing homes and other long-term care facilities: Ohio, Wisconsin, and Wyoming have posted record high numbers of COVID-19 cases in these facilities this week.</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 3:54 PM PDT</h2>
+    <div>
+      <p>Attention API users: As part of our ongoing work to provide more comparable data across states, we're switching 4 more states numbers in our totalTestResults field: DE, UT, VT, WI.</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 3:54 PM PDT</h2>
+    <div>
+      <p>In all cases, the previous unique-people data remains available in our API and on our website. In our cumulative topline data, these changes will add 1.8 million test results, the bulk of that (1.1 million) in Wisconsin.</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:24 PM PDT</h2>
+    <div>
+      <p>TX, FL, and WI all reported over 5k cases today. IL reported a new daily record of over 8k cases. Here's how these states looked over the last two months for comparison. https://t.co/pQhRRDTkGQ</p>
+
+    </div>
+  
+    <h2>November 1, 2020, 5:15 PM PST</h2>
+    <div>
+      <p>Following the trend in the Dakotas, Wisconsin, Montana, and Wyoming have also seen big spikes in their case per capita numbers. https://t.co/u9QgLClrjg</p>
+
+    </div>
+  
+    <h2>November 16, 2020, 4:21 PM PST</h2>
+    <div>
+      <p>IL and WI both reported over 10k cases today. VA reported ~2.7k cases due to a technical issue over the weekend. https://t.co/Rzt6t2xe10</p>
+
+    </div>
+  
+    <h2>January 3, 2021, 3:28 PM PST</h2>
+    <div>
+      <p>At publish time, we had no updates from 7 of the 56 states and territories we track: AR, CT, KS, MI, MP, RI, and WA. Seven additional states did not report current hospitalizations today: HI, MN, MS, NV, OK, OR, and WI.</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

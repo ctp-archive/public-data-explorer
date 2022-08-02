@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Illinois Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Illinois</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Illinois</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>March 4, 2021, 2:53 PM PST</td>
+          <td>1127</td>
+          <td>
+            <a href="#issue-1127">[IL] Negative people/cases historical field removed from API</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 2:53 PM PST</td>
+          <td>1127</td>
+          <td>
+            <a href="#issue-1127">[IL] Negative people/cases historical field removed from API</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 2:12 PM PST</td>
+          <td>1125</td>
+          <td>
+            <a href="#issue-1125">[IL] backfill testing for Total Tests (Viral)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 2:12 PM PST</td>
+          <td>1125</td>
+          <td>
+            <a href="#issue-1125">[IL] backfill testing for Total Tests (Viral)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 18, 2020, 4:40 PM PST</td>
+          <td>1019</td>
+          <td>
+            <a href="#issue-1019">[IL] Remove values carried over after Illinois stopped reporting a Confirmed and Probable case breakdown on 11/6 </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 10, 2020, 9:56 AM PST</td>
+          <td>943</td>
+          <td>
+            <a href="#issue-943">[IL] Mistake in Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 11, 2020, 8:00 AM PDT</td>
+          <td>824</td>
+          <td>
+            <a href="#issue-824">[IL] Explicit Probables Backfill 6/8-7/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 10, 2020, 7:51 AM PDT</td>
+          <td>598</td>
+          <td>
+            <a href="#issue-598">[IL] PCL Cases Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 3, 2020, 12:55 PM PDT</td>
+          <td>573</td>
+          <td>
+            <a href="#issue-573">[IL] 7/2 numbers weren&#39;t updated on dash, they are provided via a press release </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 3:12 PM PDT</td>
+          <td>94</td>
+          <td>
+            <a href="#issue-94">IL: Latent positive count updates</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1127">#1127: [IL] Negative people/cases historical field removed from API</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1127</p>
+          <p>
+            <strong>whobody</strong> opened this issue on March 4, 2021, 2:53 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1127" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+IL</p>
+<p><strong>Describe the problem</strong>
+We are clearing Negative people/cases for IL because we made the TTR switch.</p>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-791007576">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on March 4, 2021, 2:55 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1127#issuecomment-791007576" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6087080/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1127">#1127: [IL] Negative people/cases historical field removed from API</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1127</p>
+          <p>
+            <strong>whobody</strong> opened this issue on March 4, 2021, 2:53 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1127" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+IL</p>
+<p><strong>Describe the problem</strong>
+We are clearing Negative people/cases for IL because we made the TTR switch.</p>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-791007576">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on March 4, 2021, 2:55 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1127#issuecomment-791007576" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6087080/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1125">#1125: [IL] backfill testing for Total Tests (Viral)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1125</p>
+          <p>
+            <strong>whobody</strong> opened this issue on March 4, 2021, 2:12 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1125" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+IL</p>
+<p><strong>Describe the problem</strong>
+We have a time series that fills in IL Total Tests (Viral) prior to May 31, which we did not have previously.</p>
+<p><strong>Link to data source</strong>
+http://www.dph.illinois.gov/content/covid-19-cases-tests-and-deaths-day</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790983254">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on March 4, 2021, 2:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1125#issuecomment-790983254" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6086913/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1125">#1125: [IL] backfill testing for Total Tests (Viral)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1125</p>
+          <p>
+            <strong>whobody</strong> opened this issue on March 4, 2021, 2:12 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1125" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+IL</p>
+<p><strong>Describe the problem</strong>
+We have a time series that fills in IL Total Tests (Viral) prior to May 31, which we did not have previously.</p>
+<p><strong>Link to data source</strong>
+http://www.dph.illinois.gov/content/covid-19-cases-tests-and-deaths-day</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790983254">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on March 4, 2021, 2:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1125#issuecomment-790983254" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6086913/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1019">#1019: [IL] Remove values carried over after Illinois stopped reporting a Confirmed and Probable case breakdown on 11/6 </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1019</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on December 18, 2020, 4:40 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1019" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Illinois</p>
+<p>Issue: On November 6, 2020, Illinois announced that they &quot;<a href="http://www.dph.illinois.gov/news/public-health-officials-announce-10376-new-confirmed-cases-coronavirus-disease">will report confirmed cases and probable cases combined</a>&quot; and no longer provide a breakdown on confirmed and probable cases separately. We carried over the last available values, but the breakdown has not returned, so the values are out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from November 7th, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-748401123">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on December 18, 2020, 5:52 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1019#issuecomment-748401123" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x] make GH issue</li>
+<li>[x] double check the metrics aren't being reported somewhere by the state</li>
+<li>[x] add public note - there was a public note already, I've cleaned it up some but will need to remove last sentence of Nov 6 note when values are removed</li>
+<li>[x] add chart annotation</li>
+<li>[x] remove carried over values</li>
+<li>[x] null out source notes</li>
+<li>[x] null out WS2 values</li>
+<li>[x] revisit public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-753568437">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 2, 2021, 9:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1019#issuecomment-753568437" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-759939256">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 13, 2021, 9:39 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1019#issuecomment-759939256" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values removed:
+<a href="../../assets/github/files/5812506/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-943">#943: [IL] Mistake in Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            943</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on November 10, 2020, 9:56 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/943" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Illinois</p>
+<p><strong>Describe the problem</strong>
+On 11/6/20, Illinois stopped<a href="http://www.dph.illinois.gov/news/public-health-officials-announce-10376-new-confirmed-cases-coronavirus-disease"> reporting their confirmed/probable cases breakdown</a>. Since that day, Data Entry has been subtracting the lumped PCR/antigen positive number from the lumped PCR/antigen total tests number to calculated Negative PCR tests (people). On 11/9, the checker subtracted the un-updated confirmed number from 11/6 from the lumped total test number. We need to backfill the negative value for 11/9.</p>
+<p><strong>Link to data source</strong>
+http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-724866893">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on November 10, 2020, 9:56 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/943#issuecomment-724866893" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/98712321-02167180-233b-11eb-8e45-d1dd8829af26.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-724867286">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on November 10, 2020, 9:57 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/943#issuecomment-724867286" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/98712400-1b1f2280-233b-11eb-86a5-29edd3ca5718.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-824">#824: [IL] Explicit Probables Backfill 6/8-7/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            824</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 11, 2020, 8:00 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/824" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: IL</p>
+<p><strong>Describe the problem</strong>
+CTP didn't have a column for probables until 7/28 and we started a confirmed cases column on 4/29.
+IL didn't start separating out confirmed and probables until 6/8.</p>
+<p><strong>Action plan</strong>
+Calculate probables as positive - positive(PCR) from 6/9 to 7/28.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-691147512">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 11, 2020, 8:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/824#issuecomment-691147512" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/57415941/92941208-1531c180-f41e-11ea-8fbc-63eba8e2623e.png" alt="Screen Shot 2020-09-11 at 11 00 46 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691148253">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 11, 2020, 8:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/824#issuecomment-691148253" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/57415941/92941372-47dbba00-f41e-11ea-83f1-3db0df46e241.png" alt="Screen Shot 2020-09-11 at 11 02 04 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698498454">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 24, 2020, 11:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/824#issuecomment-698498454" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'd by DZL 9/24 13:00</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-598">#598: [IL] PCL Cases Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            598</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 10, 2020, 7:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/598" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Issue:</strong> Our coverage IL has a gap in Positive Cases (PCR) between 6/04 and 5/25, although confirmed cases were being reported during that time. There is also a two day gap between 6/5-6/6 in Total Tests (PCR)</p>
+<p><strong>Data source:</strong>
+IL state dashboard charts</p>
+<p><strong>Link to data source</strong>
+http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-656718105">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on July 10, 2020, 7:54 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/598#issuecomment-656718105" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Note that our research found IL only started separating confirmed and probable in June.  The bar chart now displayed by IL for historical cases (when hovering over each bar) is likely only confirmed, but we may need to check.</p>
+<img width="735" alt="Screen Shot 2020-07-10 at 7 54 03 AM" src="../../assets/github/images/67423649/87167908-8ae4aa00-c282-11ea-9cee-ace40b898826.png">
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-657282974">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 12, 2020, 3:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/598#issuecomment-657282974" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The data for this bar chart
+It's a <code>CSV</code> file with <code>TXT</code> extension so GitHub agrees to upload it as is, without zipping.
+<a href="../../assets/github/files/4909679/date_totalTested_confirmedCases_deaths_20200712.txt">date_totalTested_confirmedCases_deaths_20200712.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663586983">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on July 24, 2020, 8:10 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/598#issuecomment-663586983" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Using the above <code>CSV</code> file
+BEFORE:
+<img src="../../assets/github/images/67408226/88405482-319d7000-cd84-11ea-9fea-a45820e6ca88.png" alt="image"></p>
+<p>AFTER:
+<img src="../../assets/github/images/67408226/88406152-20a12e80-cd85-11ea-8089-d8b36a9d782a.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-573">#573: [IL] 7/2 numbers weren&#39;t updated on dash, they are provided via a press release </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            573</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 3, 2020, 12:55 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/573" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  IL</p>
+<p><strong>Describe the problem</strong>
+7/2 numbers weren't updated on dash, they are provided via a press release</p>
+<p><strong>Link to data source</strong>
+http://dph.illinois.gov/news/public-health-officials-announce-869-new-confirmed-cases-coronavirus-disease</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-653665150">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 3, 2020, 1:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/573#issuecomment-653665150" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DATA</p>
+<blockquote>
+<p>Currently, IDPH is reporting a total of 144,882 cases, including 6,987 deaths
+Within the past 24 hours, laboratories have reported 30,262 specimens for a total of 1,666,317.</p>
+</blockquote>
+<p>BEFORE
+<img src="../../assets/github/images/1749380/86495215-5cc50e80-bd46-11ea-9118-052ea943d5a0.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653666212">
+          <div class="frontmatter">
+            <div>
+              <strong>hackerlikecomputer</strong> commented on July 3, 2020, 1:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/573#issuecomment-653666212" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>came here to post this.</p>
+<p>I just contacted the state department of health -- they've updated the page. Do a hard refresh of the page if it's not showing updated numbers. I expect the covid tracking project's data will be updated withe the new figures whenever they run an update next.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653673956">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 3, 2020, 1:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/573#issuecomment-653673956" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The press release linked above does not include probable counts -- carrying over probable cases and deaths from the previous day (1053 probable cases and 201 probable deaths).
+AFTER
+<img src="../../assets/github/images/25627274/86496782-dbbd4580-bd4c-11ea-8b22-c5125db22b4d.png" alt="image">
+<img src="../../assets/github/images/25627274/86496798-ec6dbb80-bd4c-11ea-9453-2cec43f676e8.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-94">#94: IL: Latent positive count updates</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            94</p>
+          <p>
+            <strong>colintj</strong> opened this issue on March 31, 2020, 3:12 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/94" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The screenshot from 6:02 pm has the data (160 positives) that was previously populated on 2020-03-17 for Illinois:</p>
+<p>https://covidtracking.com/screenshots/IL/IL-20200317-180220.png</p>
+<p>As of this posting, the API and website return 28 positives for that date.</p>
+<p>https://covidtracking.com/data/state/illinois/#history</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623800957">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 7:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/94#issuecomment-623800957" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628989975">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/94#issuecomment-628989975" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

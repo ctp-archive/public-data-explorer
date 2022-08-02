@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Alabama Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Alabama</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Alabama</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>April 8, 2021, 3:36 PM PDT</td>
+          <td>1146</td>
+          <td>
+            <a href="#issue-1146">[AL] Patch 10/21/20 Cases (confirmed + probable ) and Deaths (confirmed  + probable) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 8, 2021, 3:36 PM PDT</td>
+          <td>1146</td>
+          <td>
+            <a href="#issue-1146">[AL] Patch 10/21/20 Cases (confirmed + probable ) and Deaths (confirmed  + probable) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 22, 2021, 7:33 AM PST</td>
+          <td>1076</td>
+          <td>
+            <a href="#issue-1076">[AL] Patch 10/26 Total antibody tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 22, 2021, 7:33 AM PST</td>
+          <td>1076</td>
+          <td>
+            <a href="#issue-1076">[AL] Patch 10/26 Total antibody tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 2, 2020, 1:35 PM PST</td>
+          <td>992</td>
+          <td>
+            <a href="#issue-992">[AL] Move total specimens to total unique people</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 10, 2020, 9:33 AM PDT</td>
+          <td>745</td>
+          <td>
+            <a href="#issue-745">[AL] Backfill current hospitalization counts</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 6, 2020, 7:23 AM PDT</td>
+          <td>740</td>
+          <td>
+            <a href="#issue-740">[AL] Probables Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 22, 2020, 11:27 AM PDT</td>
+          <td>655</td>
+          <td>
+            <a href="#issue-655">[AL] Better current hospitalization data is available</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 19, 2020, 8:19 PM PDT</td>
+          <td>650</td>
+          <td>
+            <a href="#issue-650">[AL] Current Hospitalization data was updated after pub shift</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 15, 2020, 12:56 PM PDT</td>
+          <td>636</td>
+          <td>
+            <a href="#issue-636">[AL] is reporting Specimens not Individuals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 6:40 AM PDT</td>
+          <td>610</td>
+          <td>
+            <a href="#issue-610">[AL] PCL Cases Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 3, 2020, 11:17 AM PDT</td>
+          <td>348</td>
+          <td>
+            <a href="#issue-348">AL numbers off </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 11, 2020, 1:09 PM PDT</td>
+          <td>180</td>
+          <td>
+            <a href="#issue-180">AL: ICU=177, ventilator=117, cume hospitalized=407 as of 4/10 4:08est</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 30, 2020, 8:47 AM PDT</td>
+          <td>84</td>
+          <td>
+            <a href="#issue-84">QUALITY CONTROL LOGIC</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1146">#1146: [AL] Patch 10/21/20 Cases (confirmed + probable ) and Deaths (confirmed  + probable) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1146</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 8, 2021, 3:36 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1146" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AL</p>
+<p><strong>Dates affected:</strong> 10/21/20</p>
+<p><strong>Describe the issue:</strong> On October 21, 2020, Alabama updated their COVID-19 data dashboard after the time of our daily update due to technical issues. Later on October 21, 2020, they updated Cases (confirmed + probable ) and Deaths (confirmed  + probable). We are patching these metrics from our automatic log of their dashboard metrics, see comment below for numbers.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-816276736">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 8, 2021, 3:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1146#issuecomment-816276736" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DATE	AL
+FETCH_TIMESTAMP	1603320846
+TIMESTAMP	
+POSITIVE	175674
+NEGATIVE	
+TOTAL	
+PENDING	
+CURR_HOSP	863
+HOSP	19330
+CURR_ICU	
+ICU	1967
+CURR_VENT	
+VENT	1121
+DEATH	2828
+DEATH_PROBABLE	172
+DEATH_CONFIRMED	2633
+RECOVERED	74439
+PROBABLE	21512
+DATE	
+ANTIBODY_TOTAL	
+ANTIBODY_POS	
+ANTIBODY_NEG	
+SPECIMENS	1273523
+SPECIMENS_POS	
+SPECIMENS_NEG	
+CONFIRMED	153016
+PCR_TEST_ENCOUNTERS	
+ANTIBODY_TOTAL_PEOPLE	62008</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-816277024">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 8, 2021, 3:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1146#issuecomment-816277024" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+AL 2020-10-21
+positive: 175674 (was 174528)
+death: 2828 (was 2805)
+lastUpdateTime: 2020-10-21 15:00:00+00:00 (was 2020-10-20 15:00:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1146">#1146: [AL] Patch 10/21/20 Cases (confirmed + probable ) and Deaths (confirmed  + probable) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1146</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 8, 2021, 3:36 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1146" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AL</p>
+<p><strong>Dates affected:</strong> 10/21/20</p>
+<p><strong>Describe the issue:</strong> On October 21, 2020, Alabama updated their COVID-19 data dashboard after the time of our daily update due to technical issues. Later on October 21, 2020, they updated Cases (confirmed + probable ) and Deaths (confirmed  + probable). We are patching these metrics from our automatic log of their dashboard metrics, see comment below for numbers.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-816276736">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 8, 2021, 3:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1146#issuecomment-816276736" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DATE	AL
+FETCH_TIMESTAMP	1603320846
+TIMESTAMP	
+POSITIVE	175674
+NEGATIVE	
+TOTAL	
+PENDING	
+CURR_HOSP	863
+HOSP	19330
+CURR_ICU	
+ICU	1967
+CURR_VENT	
+VENT	1121
+DEATH	2828
+DEATH_PROBABLE	172
+DEATH_CONFIRMED	2633
+RECOVERED	74439
+PROBABLE	21512
+DATE	
+ANTIBODY_TOTAL	
+ANTIBODY_POS	
+ANTIBODY_NEG	
+SPECIMENS	1273523
+SPECIMENS_POS	
+SPECIMENS_NEG	
+CONFIRMED	153016
+PCR_TEST_ENCOUNTERS	
+ANTIBODY_TOTAL_PEOPLE	62008</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-816277024">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 8, 2021, 3:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1146#issuecomment-816277024" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+AL 2020-10-21
+positive: 175674 (was 174528)
+death: 2828 (was 2805)
+lastUpdateTime: 2020-10-21 15:00:00+00:00 (was 2020-10-20 15:00:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1076">#1076: [AL] Patch 10/26 Total antibody tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1076</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 22, 2021, 7:33 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1076" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AL</p>
+<p><strong>Dates affected:</strong> 10/21/20</p>
+<p><strong>Describe the issue:</strong> On October 26, 2020, Alabama reported 80313 Total antibody tests (people), however on October 27, 2020, they tweeted a correction to that number. We are patching our Total antibody tests (people) for October 26, 2020 to 63,683 accordingly.</p>
+<p><strong>Links:</strong> https://twitter.com/ALPublicHealth/status/1321118002222419968</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-765492210">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 22, 2021, 7:38 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1076#issuecomment-765492210" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+AL 2020-10-26
+totalTestsPeopleAntibody: 63683 (was 80313)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1076">#1076: [AL] Patch 10/26 Total antibody tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1076</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 22, 2021, 7:33 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1076" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> AL</p>
+<p><strong>Dates affected:</strong> 10/21/20</p>
+<p><strong>Describe the issue:</strong> On October 26, 2020, Alabama reported 80313 Total antibody tests (people), however on October 27, 2020, they tweeted a correction to that number. We are patching our Total antibody tests (people) for October 26, 2020 to 63,683 accordingly.</p>
+<p><strong>Links:</strong> https://twitter.com/ALPublicHealth/status/1321118002222419968</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-765492210">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 22, 2021, 7:38 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1076#issuecomment-765492210" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+AL 2020-10-26
+totalTestsPeopleAntibody: 63683 (was 80313)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-992">#992: [AL] Move total specimens to total unique people</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            992</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 2, 2020, 1:35 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/992" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: AL</p>
+<p><strong>Describe the problem</strong>
+Alabama documents on its dashboard that the state's totals are unique people, but we had them stored in specimens because of (old) conflicting evidence received via outreach. We recently found social media posts from ADPH verifying that unique people was the correct interpretation. We are going to switch the state's timeseries to unique people. We will also switch totalTestResults to draw from unique people since it was previously drawing from specimens.</p>
+<p><strong>Link to data source</strong>
+https://twitter.com/ALPublicHealth/status/1300810345729142787
+Our timeseries for specimens</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-737517555">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 2, 2020, 1:50 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/992#issuecomment-737517555" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5632258/Changes.3.txt">Changes (3).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-745">#745: [AL] Backfill current hospitalization counts</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            745</p>
+          <p>
+            <strong>ladyzhetse</strong> opened this issue on August 10, 2020, 9:33 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/745" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Alabama</p>
+<p><strong>Describe the problem</strong>
+Alabama updates its current hospitalization data retroactively. For example: our dataset lists 1575 current COVID-19 patients for 8/5, 8/6, 8/7, and 8/8, but in fact this was only the number on 8/5, according to the state's dashboard. Other previous dates have also been retroactively updated. We should double-check our current hosp time series against the AL dashboard for the time period since we last did a backfill for this state (7/22). I suggest having morning shifts or backfill shifts check on AL hosp data once a week going forward.</p>
+<p><strong>Link to data source</strong>
+https://alpublichealth.maps.arcgis.com/apps/opsdashboard/index.html#/6d2771faa9da4a2786a509d82c8cf0f7
+Daily hospitalizations of confirmed cases chart on Tab 9</p>
+<p><img src="https://user-images.githubusercontent.com/67837472/89806593-48beba80-db05-11ea-9e17-7188d4d4ccf4.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-675759899">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 18, 2020, 3:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/745#issuecomment-675759899" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I've pulled in the state's official data as of this evening. Here's a chart showing the impact:</p>
+<p><img src="../../assets/github/images/404503/90573297-1d327480-e184-11ea-8afd-cc335df23d3d.png" alt="image"></p>
+<p>It's good to make sure we have the official data but until we automate this, I don't think we are able to do it once week.</p>
+<p>Analysis spreadsheet, including before/after values: https://docs.google.com/spreadsheets/d/1zhMdtviXvMZiBImDqX5zsiWhBYWGld6PTvg1cMgKIXI/edit</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-740">#740: [AL] Probables Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            740</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on August 6, 2020, 7:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/740" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Alabama</p>
+<p><strong>Describe the problem</strong>
+We started reporting probable cases on 7/28. The states probables can be calculated from total cases - confirmed cases. We can backfill these values back to 5/31, when AL first reported probable cases (https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1590948981250500).</p>
+<p><strong>Link to data source</strong>
+https://alpublichealth.maps.arcgis.com/apps/opsdashboard/index.html#/6d2771faa9da4a2786a509d82c8cf0f7</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-669959720">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 6, 2020, 7:23 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/740#issuecomment-669959720" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/89543412-c016e600-d7b5-11ea-8e41-9f825a37e0df.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669971528">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 6, 2020, 7:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/740#issuecomment-669971528" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/89545591-695edb80-d7b8-11ea-965e-315ab908a8c6.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-655">#655: [AL] Better current hospitalization data is available</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            655</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on July 22, 2020, 11:27 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/655" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: AL</p>
+<p><strong>Describe the problem</strong>
+Alabama updates their current hospitalization number throughout the day, including a few updates that actually come in the next day. The data entry shift gets <em>most</em> but not all of them, so our numbers for current hospitalization are a little low. Alabama also provides this data set going back much farther in time (3/24 vs. our 6/9).</p>
+<p><strong>Link to data source</strong>
+https://services7.arcgis.com/4RQmZZ0yaZkGR1zy/arcgis/rest/services/HospitalizedPatientTemporal_READ_ONLY/FeatureServer/1/query?where=1%3D1&amp;orderbyfields=DateTxt+desc&amp;outFields=%2A&amp;resultRecordCount=1</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-662621569">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 22, 2020, 11:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/655#issuecomment-662621569" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This has been done on States Daily.</p>
+<p>Analysis spreadsheet, including old and new values: https://docs.google.com/spreadsheets/d/1yFcbbCacCwVCh8wTod8gvFwmDtnNZ8Dk4qWVGYGjNgs/edit#gid=106790101</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-650">#650: [AL] Current Hospitalization data was updated after pub shift</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            650</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on July 19, 2020, 8:19 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/650" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>AL had only a partial update of 920 up during all of pub shift, it has since been updated to 1465.</p>
+<p>https://alpublichealth.maps.arcgis.com/apps/opsdashboard/index.html#/6d2771faa9da4a2786a509d82c8cf0f7</p>
+<img width="779" alt="Screen Shot 2020-07-19 at 8 12 02 PM" src="https://user-images.githubusercontent.com/66583275/87896116-2b159e00-c9fc-11ea-82f2-f207c494fbf3.png">
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-661117466">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 20, 2020, 8:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/650#issuecomment-661117466" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The older values do not match our data but I'm going to leave that for another issue.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/87956834-7de36a00-ca7d-11ea-95dc-3573fe479ca3.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/87956905-95225780-ca7d-11ea-87f3-de5990466715.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-636">#636: [AL] is reporting Specimens not Individuals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            636</p>
+          <p>
+            <strong>amandafrench</strong> opened this issue on July 15, 2020, 12:56 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/636" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [AL]</p>
+<p><strong>Describe the problem</strong>
+Per Outreach information, AL &quot;Total Tested&quot; is reporting in units of specimens not people. We have changed the capture field as of today (7/15) and need to backfill the series and put it into the correct column.</p>
+<p>Related to #610</p>
+<p><strong>Link to data source</strong>
+<img width="1164" alt="Screenshot 2020-07-15 15 59 15" src="https://user-images.githubusercontent.com/227453/87590042-2b3c3380-c6b4-11ea-8693-cfbb545cce91.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666701163">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 30, 2020, 2:08 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/636#issuecomment-666701163" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670519505">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 7, 2020, 6:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/636#issuecomment-670519505" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>In States Daily, pre-7/15 test counts from Total PCR Tests (People) were copied over into Total Tests (PCR).</p>
+<p>Before:
+<img width="799" alt="Screen Shot 2020-08-07 at 9 34 15 AM" src="../../assets/github/images/66738237/89650990-38060e80-d891-11ea-96ed-9b05c568e6e5.png"></p>
+<p>After:
+<img width="790" alt="Screen Shot 2020-08-07 at 9 34 33 AM" src="../../assets/github/images/66738237/89651003-3a686880-d891-11ea-930b-dc423051e5a5.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-610">#610: [AL] PCL Cases Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            610</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 13, 2020, 6:40 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/610" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On Mar 20, AL began reporting in confirmed-cases.  Historicals can be found in the archive of daily screenshots here: http://covid-tracking-project-data.s3-website.us-east-1.amazonaws.com/state_screenshots/AL/</p>
+<p>Starting on May 31, AL began to report confirmed and probable cases.</p>
+<p>Confirmed case counts can be included in Positive Cases (PCR) between Mar 20 and May 31 on States Daily.</p>
+<img width="1287" alt="Screen Shot 2020-07-13 at 6 33 03 AM" src="https://user-images.githubusercontent.com/67423649/87311075-a4306500-c4d3-11ea-9ce9-58b24d30ad64.png">
+<img width="1428" alt="Screen Shot 2020-07-13 at 6 32 22 AM" src="https://user-images.githubusercontent.com/67423649/87311104-abf00980-c4d3-11ea-8d7c-fedaffd43227.png">
+<p>Please backfill historical confirmed cases to Mar 20th, which is the earliest date when the state provides this number.  Prior to Mar 20th, AL reported cases and it is unclear if the case count includes probable cases or not.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-661073840">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 20, 2020, 7:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/610#issuecomment-661073840" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values from C were transferred to V. This change acknowledges that AL's reporting of confirmed cases only on 5/30 and before and confirmed+probable beginning on 5/31. WS2 verified to have correct pop-ups.</p>
+<p>Before:
+<img width="781" alt="Screen Shot 2020-07-20 at 10 24 31 AM" src="../../assets/github/images/66738237/87949010-7323d780-ca73-11ea-9da2-358e3798d04d.png">
+After:
+<img width="785" alt="Screen Shot 2020-07-20 at 10 25 00 AM" src="../../assets/github/images/66738237/87949017-75863180-ca73-11ea-8a85-f79abf82bd34.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663529828">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 24, 2020, 6:08 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/610#issuecomment-663529828" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Double checked.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-348">#348: AL numbers off </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            348</p>
+          <p>
+            <strong>rncem</strong> opened this issue on May 3, 2020, 11:17 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/348" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>All Alabama numbers off 5/1 and 5/2.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623179734">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 3, 2020, 1:49 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/348#issuecomment-623179734" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@rncem</strong>
+Can you please provide more details on what is off?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623233992">
+          <div class="frontmatter">
+            <div>
+              <strong>rncem</strong> commented on May 3, 2020, 7:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/348#issuecomment-623233992" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Look at your screenshot times.  You don’t have accurate numbers at accurate times.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-180">#180: AL: ICU=177, ventilator=117, cume hospitalized=407 as of 4/10 4:08est</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            180</p>
+          <p>
+            <strong>catawbasam</strong> opened this issue on April 11, 2020, 1:09 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/180" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>see https://alpublichealth.maps.arcgis.com/apps/opsdashboard/index.html#/6d2771faa9da4a2786a509d82c8cf0f7
+'CASE CHARACTERISTICS' tab</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-612518136">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on April 11, 2020, 2:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/180#issuecomment-612518136" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1277811/79055407-c4256380-7c1a-11ea-8400-7cb6f2ec14fe.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612532960">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on April 11, 2020, 4:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/180#issuecomment-612532960" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>accidently closed while commenting</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623775023">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/180#issuecomment-623775023" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-624097022">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 5, 2020, 7:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/180#issuecomment-624097022" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you <strong>@catawbasam</strong></p>
+<p>We added this information into the data and you should see it reflected on the  API this afternoon.</p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/81079107-1c1f5500-8ebd-11ea-9e5a-c84a523cc7b7.png" alt="Screenshot_2020-05-05 Coronavirus numbers by state (CovidTracking, DEV COPY)(6)"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/81079109-1c1f5500-8ebd-11ea-9199-653a66157ea0.png" alt="Screenshot_2020-05-05 Coronavirus numbers by state (CovidTracking, DEV COPY)(5)"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-84">#84: QUALITY CONTROL LOGIC</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            84</p>
+          <p>
+            <strong>joshuaellinger</strong> opened this issue on March 30, 2020, 8:47 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/84" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I am going to extract a spreadsheet that contains the currently implemented logic for y'all to review.</p>
+<p>It will in Excel and checked into the repo as a living document.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

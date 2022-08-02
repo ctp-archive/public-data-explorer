@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Pennsylvania Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Pennsylvania</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Pennsylvania</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 1, 2021, 10:44 AM PST</td>
+          <td>1085</td>
+          <td>
+            <a href="#issue-1085">[PA] backfill total tests historical data from new state data source</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 1, 2021, 10:44 AM PST</td>
+          <td>1085</td>
+          <td>
+            <a href="#issue-1085">[PA] backfill total tests historical data from new state data source</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 6, 2020, 9:37 AM PST</td>
+          <td>933</td>
+          <td>
+            <a href="#issue-933">[PA] Patch 11/3-11/5 cur. icu</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 16, 2020, 8:01 AM PDT</td>
+          <td>839</td>
+          <td>
+            <a href="#issue-839">[PA] Explicit Probables Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 16, 2020, 7:34 AM PDT</td>
+          <td>838</td>
+          <td>
+            <a href="#issue-838">[PA] Incorrect Positive (PCR) Cases value on 5/25</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 4, 2020, 1:28 PM PDT</td>
+          <td>814</td>
+          <td>
+            <a href="#issue-814">[PA] Move total tests historic time-series to `Total Tests PCR (People)`</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 17, 2020, 9:03 PM PDT</td>
+          <td>773</td>
+          <td>
+            <a href="#issue-773">[PA] SVP Fixes: Move total test values from &quot;Total PCR Tests (People)&quot; to &quot;Total Tests (PCR)&quot; and backfill Totals to 3/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 8:05 AM PDT</td>
+          <td>705</td>
+          <td>
+            <a href="#issue-705">[PA]: PCL Cases Historical </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 10:52 AM PDT</td>
+          <td>618</td>
+          <td>
+            <a href="#issue-618">[PA] Case counts after antibody testing reporting ended on 6/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 2, 2020, 8:40 PM PDT</td>
+          <td>347</td>
+          <td>
+            <a href="#issue-347">PA&#39;s Positive counts for April 22-23 may be incorrect</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 29, 2020, 4:12 AM PDT</td>
+          <td>325</td>
+          <td>
+            <a href="#issue-325">PA deaths neagtive on 4/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 24, 2020, 9:24 PM PDT</td>
+          <td>291</td>
+          <td>
+            <a href="#issue-291">[States Daily CSV] PA deathIncrease is VERY negative for 2020-04-23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 23, 2020, 3:06 PM PDT</td>
+          <td>274</td>
+          <td>
+            <a href="#issue-274">[States Daily CSV] PA deaths is lower 2020-04-23 than 2020-04-22</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 2, 2020, 6:20 PM PDT</td>
+          <td>126</td>
+          <td>
+            <a href="#issue-126">PA cumulative hospitalized overcounting </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 29, 2020, 12:01 PM PDT</td>
+          <td>76</td>
+          <td>
+            <a href="#issue-76">PA: cumulative hospitalizations</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1085">#1085: [PA] backfill total tests historical data from new state data source</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1085</p>
+          <p>
+            <strong>theomichel</strong> opened this issue on February 1, 2021, 10:44 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1085" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> This week
+<strong>Overview:</strong> backfill up to most recent date and let daily DE continue.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-771274025">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 1, 2021, 5:12 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1085#issuecomment-771274025" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5907876/Multi-edit.tool-PRODUCTION.-.PA-reb-20210202.csv.txt">Multi-edit tool-PRODUCTION - PA-reb-20210202.csv.txt</a>
+<a href="../../assets/github/files/5907877/Multi-edit.tool-PRODUCTION.-.PA-reb-20210202_post.csv.txt">Multi-edit tool-PRODUCTION - PA-reb-20210202_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1085">#1085: [PA] backfill total tests historical data from new state data source</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1085</p>
+          <p>
+            <strong>theomichel</strong> opened this issue on February 1, 2021, 10:44 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1085" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> This week
+<strong>Overview:</strong> backfill up to most recent date and let daily DE continue.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-771274025">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 1, 2021, 5:12 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1085#issuecomment-771274025" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5907876/Multi-edit.tool-PRODUCTION.-.PA-reb-20210202.csv.txt">Multi-edit tool-PRODUCTION - PA-reb-20210202.csv.txt</a>
+<a href="../../assets/github/files/5907877/Multi-edit.tool-PRODUCTION.-.PA-reb-20210202_post.csv.txt">Multi-edit tool-PRODUCTION - PA-reb-20210202_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-933">#933: [PA] Patch 11/3-11/5 cur. icu</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            933</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 6, 2020, 9:37 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/933" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: PA</p>
+<p>Dates affected: 11/3-11/5</p>
+<p>Describe the issue: As of 11/3, PA reports patients currently in the ICU for COVID-19 in their press releases(PRs). We began capturing this metric on 11/6. We should patch cur. icu data for 11/3-11/5 from press releases.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-723209649">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 6, 2020, 9:40 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/933#issuecomment-723209649" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="356" alt="Screen Shot 2020-11-06 at 12 38 59 PM" src="../../assets/github/images/68712382/98397242-0d148d80-202d-11eb-9d71-51fdd3953f4f.png"></p>
+<p>AFTER:
+<img width="354" alt="Screen Shot 2020-11-06 at 12 40 13 PM" src="../../assets/github/images/68712382/98397349-3b926880-202d-11eb-95b1-752cb112c64f.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-839">#839: [PA] Explicit Probables Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            839</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 16, 2020, 8:01 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/839" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: PA</p>
+<p><strong>Describe the problem</strong>
+PA started providing probables and confirmed values on 5/22. CTP started tracking confirmed values on 5/22 but started reporting probables on 7/28. We can backfill using positive - positive PCR cases and screenshots to have probables back until 5/22.</p>
+<p><strong>Sources</strong>:
+https://covidtracking.com/data/state/pennsylvania/screenshots</p>
+<p>NEW VALUES FOR PROBABLES (5/22-9/15):</p>
+<p>4264
+4221
+4182
+4182
+4126
+4074
+4049
+4014
+4001
+3992
+3982
+3931
+3897
+3859
+3834
+3814
+3801
+3778
+3741
+3726
+3701
+3685
+3652
+3641
+3627
+3602
+3576
+3544
+3529
+3490
+3474
+3454
+3438
+3390
+3391
+3356
+3355
+3347
+3337
+3310
+3280
+3252
+3229
+3185
+3174
+3157
+3141
+3120
+3080
+3053
+3036
+3024
+2993
+2969
+2950
+2913
+2890
+2866
+2863
+2853
+2827
+2814
+2792
+2765
+2727
+2714
+2688
+2670
+2665
+2633
+2608
+2599
+2587
+2562
+2536
+2501
+2491
+2476
+2459
+3540
+2414
+2414
+2396
+2381
+2349
+2327
+2325
+2319
+2311
+2287
+2275
+2253
+2238
+2231
+2225
+2199
+2814
+2782
+2758
+2736
+2733
+2727
+2713
+2679
+2661
+2646
+2620
+2630
+2607
+2574
+1938
+1902
+1858
+1839
+1807
+1774
+1707</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-693467102">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 8:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/839#issuecomment-693467102" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/57415941/93355694-56eead80-f80c-11ea-82bc-aa49d91ef90e.png" alt="Screen Shot 2020-09-16 at 11 03 21 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-693467194">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 8:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/839#issuecomment-693467194" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/57415941/93355712-5bb36180-f80c-11ea-859d-d6e8f7dc653c.png" alt="Screen Shot 2020-09-16 at 11 03 52 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698511467">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 24, 2020, 11:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/839#issuecomment-698511467" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'd by DZL 9/24 14:26</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-838">#838: [PA] Incorrect Positive (PCR) Cases value on 5/25</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            838</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 16, 2020, 7:34 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/838" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: PA</p>
+<p><strong>Describe the problem</strong>
+We reported 68186 positive (PCR) cases on 5/25. This is incorrect according to screenshots: https://covidtracking.com/screenshots/PA/PA-20200525-184018.png.</p>
+<p><strong>Link to data source</strong></p>
+<ul>
+<li>https://covidtracking.com/screenshots/PA/PA-20200525-184018.png</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-693457589">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 7:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/838#issuecomment-693457589" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/57415941/93353846-61a84300-f80a-11ea-9bf2-13e2da1a6fb8.png" alt="Screen Shot 2020-09-16 at 10 49 28 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-693457736">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 7:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/838#issuecomment-693457736" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/57415941/93353876-6836ba80-f80a-11ea-96c8-9168a9394a76.png" alt="Screen Shot 2020-09-16 at 10 49 40 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-814">#814: [PA] Move total tests historic time-series to `Total Tests PCR (People)`</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            814</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 4, 2020, 1:28 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/814" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Pennsylvania</p>
+<p><strong>Describe the problem</strong>
+Pennsylvania clarified that their negatives number is in people units, so we are moving the total tests time-series to <code>Total Tests PCR (People)</code></p>
+<p><strong>Link to data source</strong>
+Will add</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-687368120">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 4, 2020, 1:32 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/814#issuecomment-687368120" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>States Before</strong>
+<img src="../../assets/github/images/1749380/92282558-de165a00-eecb-11ea-920e-da66379db296.png" alt="image"></p>
+<p><strong>States After</strong>
+<img src="../../assets/github/images/1749380/92282986-d60aea00-eecc-11ea-8f9f-e88f8a943687.png" alt="image"></p>
+<p><strong>Contentful After</strong>
+<img src="../../assets/github/images/1749380/92283039-02266b00-eecd-11ea-9bcc-e0a246e6e1b0.png" alt="image"></p>
+<p><strong>States Daily Before</strong>
+<img src="../../assets/github/images/1749380/92282697-29306d00-eecc-11ea-82be-c6478e8e2d92.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-695356522">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 19, 2020, 2:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/814#issuecomment-695356522" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-701001219">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 29, 2020, 2:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/814#issuecomment-701001219" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-773">#773: [PA] SVP Fixes: Move total test values from &quot;Total PCR Tests (People)&quot; to &quot;Total Tests (PCR)&quot; and backfill Totals to 3/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            773</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on August 17, 2020, 9:03 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/773" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: PA</p>
+<p>Dates impacted: 8/17 - 3/11</p>
+<p>Issues: PA report positive cases and negatives. We add these values to get Total Tests, however the units of the negative tests is unclear. We are moving the Total Test values from &quot;Total PCR Tests (People)&quot; to &quot;Total Tests (PCR).&quot;</p>
+<p>Additionally, we are backfilling the Total Tests (PCR) metric from 3/11-5/17 using the positive case values plus the negative case values we had already recorded. In doing the backfill we noticed that the total had been carried over from 5/12-5/17. During this period we were unsure what was included in PA's case number, the backfill includes replacing that carried over value with the value that matches positive+negative.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-675262843">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 17, 2020, 10:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/773#issuecomment-675262843" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE MOVE
+<img width="419" alt="PA Before" src="../../assets/github/images/66583275/90474075-5366ea00-e0d9-11ea-8b9f-c17c1ec6b51c.png">
+AFTER MOVE
+<img width="406" alt="PA After Move" src="../../assets/github/images/66583275/90474380-fddf0d00-e0d9-11ea-8dfd-94faa69237be.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-675266011">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 17, 2020, 10:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/773#issuecomment-675266011" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE BACKFILL
+<img width="241" alt="PA Before Backfill" src="../../assets/github/images/66583275/90474792-f704ca00-e0da-11ea-8f41-f8d6535098f8.png">
+AFTER
+<img width="290" alt="Screen Shot 2020-08-17 at 10 44 38 PM" src="../../assets/github/images/66583275/90474966-64b0f600-e0db-11ea-86e6-2e21b7abf5bd.png"></p>
+<p>Backfill Values:
+332904
+327836
+319832
+311195
+302869
+295980
+288858
+284383
+277107
+270559
+262788
+256340
+250882
+245590
+240641
+235376
+227448
+221365
+214883
+209088
+203422
+198593
+192935
+186143
+179114
+171956
+166851
+162952
+158854
+153965
+147373
+141470
+137584
+133631
+129792
+124890
+120153
+113019
+105602
+98538
+91278
+83854
+77771
+70030
+62115
+54714
+48232
+42488
+37864
+33455
+28005
+23234
+18128
+12320
+9494
+7239
+5443
+4137
+2842
+1793
+1320
+975
+746
+268
+252
+181
+138
+104</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-685376877">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 1, 2020, 11:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/773#issuecomment-685376877" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-705">#705: [PA]: PCL Cases Historical </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            705</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on July 30, 2020, 8:05 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/705" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: PA</p>
+<p><strong>Describe the problem</strong>
+On 5/22, PA started breaking down total cases by confirmed and probable status. However, the value for confirmed cases was not recorded on 5/22. Using the 6pm screenshot to backfill</p>
+<p><strong>Link to data source</strong>
+Screenshots from the date (https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/PA/PA-20200522-184845.png)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666435586">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 30, 2020, 8:07 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/705#issuecomment-666435586" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixing now...
+BEFORE:
+<img src="../../assets/github/images/25627274/88939667-cad0f880-d254-11ea-9021-62270565cea6.png" alt="image">
+AFTER:
+<img src="../../assets/github/images/25627274/88939730-de7c5f00-d254-11ea-9e4e-7031264e7e56.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-618">#618: [PA] Case counts after antibody testing reporting ended on 6/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            618</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 13, 2020, 10:52 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/618" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>After 6/11, PA stopped reporting antibody testing, of which positive values were included in total case calculations. A user contacted us about how that 620 was carried over/used subsequently, particularly on 6/12, when the state's bar graph showed an increase of 686 cases, but CTP showed an increase of only 66.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_2609d">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665191474">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 28, 2020, 11:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/618#issuecomment-665191474" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673522215">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 13, 2020, 7:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/618#issuecomment-673522215" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-678789451">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 23, 2020, 8:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/618#issuecomment-678789451" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-347">#347: PA&#39;s Positive counts for April 22-23 may be incorrect</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            347</p>
+          <p>
+            <strong>sgdoerfler</strong> opened this issue on May 2, 2020, 8:40 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/347" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Comparing the data shown in the Positive column <a href="https://covidtracking.com/data/state/pennsylvania#historical">here</a> to the numbers shown in the accompanying screen shots, it appears the Positive column represents Pennsylvania's total case counts, including both confirmed and probable cases.</p>
+<p>However, on April 22nd, the table uses the figure 35045, which includes only confirmed cases, according to the screen shots, not probables. The correct figure that includes probables, and would match the other dates, is 35684. Both numbers appear on the screen shot. It appears the site just used the wrong one.</p>
+<p>Then the next day, April 23rd, the table shows a Positive value of 36647. This doesn't seem to appear on any of the screen shots for that day. The figure that does is 37053. So I think the Positive value for April 23rd also needs correcting.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623102053">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 3, 2020, 5:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/347#issuecomment-623102053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for reporting this <strong>@sgdoerfler</strong></p>
+<p>We updated the positives number for 4/22 and 4/23 after checking the screenshots. You should see it reflected on the site this afternoon.</p>
+<p><a href="https://covidtracking.com/screenshots/PA/PA-20200422-181553.png">4/22 PA Screenshot Evening</a>
+<a href="https://covidtracking.com/screenshots/PA/PA-20200423-181745.png">4/23 PA Screenshot Evening</a></p>
+<p><strong>Before</strong>
+<img src="../../assets/github/images/1749380/80914089-66ff6800-8d17-11ea-890a-8a38ff309cff.png" alt="Screenshot_2020-05-03 Coronavirus numbers by state (CovidTracking, DEV COPY)"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/1749380/80914088-6666d180-8d17-11ea-9893-7f0152c2b8d0.png" alt="Screenshot_2020-05-03 Coronavirus numbers by state (CovidTracking, DEV COPY)(1)"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-325">#325: PA deaths neagtive on 4/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            325</p>
+          <p>
+            <strong>ryansarver</strong> opened this issue on April 29, 2020, 4:12 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/325" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>It appears total deaths goes down by over 200 on 4/23 for Pennsylvania.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623044983">
+          <div class="frontmatter">
+            <div>
+              <strong>sgdoerfler</strong> commented on May 2, 2020, 7:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/325#issuecomment-623044983" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The state revised their numbers. According to <a href="https://www.lehighvalleylive.com/coronavirus/2020/04/pa-coronavirus-update-new-cases-rise-but-death-toll-drops-heres-why-and-what-it-means-in-the-lehigh-valley-covid-19-case-map-42320.html">Lehigh Valley Live</a> (and many other newspapers), reporting on April 23rd 2020:</p>
+<blockquote>
+<p>The unusual change in the Pennsylvania Department of Health’s daily report is due to its inclusion of probable cases in the death count earlier this week. Per CDC guidelines, those are instances where COVID-19 is listed as a cause or contributing factor in a death where the patients had not been tested, but did have symptoms and a connection to a confirmed case.</p>
+<p>After adding probable cases to the death toll two days ago, Health Secretary Rachel Levine on Thursday said that a number of those deaths require more information before they can be linked with the pandemic virus. She said they were removed from the count in the interest of transparency, citing the difficulty epidemiologists have handling these thousands of cases.</p>
+<p>That resulted in the statewide coronavirus death toll dropping by 201.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-291">#291: [States Daily CSV] PA deathIncrease is VERY negative for 2020-04-23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            291</p>
+          <p>
+            <strong>acobolew</strong> opened this issue on April 24, 2020, 9:24 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/291" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>[States Daily CSV] Pennsylvania deathIncrease is VERY negative for 2020-04-23</p>
+<blockquote>
+<p>library(data.table)
+covidtracking.dt &lt;- fread('https://covidtracking.com/api/v1/states/daily.csv')
+covidtracking.dt[, date := as.Date(as.character(date), '%Y%m%d')]
+covidtracking.dt[order(date, decreasing=FALSE)][ , .(date, state, death, deathIncrease) ][deathIncrease &lt; 0]
+date state death deathIncrease
+1: 2020-04-05    VA    51            -1
+2: 2020-04-07    DC    22            -2
+3: 2020-04-22    AR    42            -1
+<strong><em>4: 2020-04-23    PA  1421          -201</em></strong>
+5: 2020-04-24    KS   111            -1
+6: 2020-04-24    TN   168            -2</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-619622949">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 26, 2020, 1:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/291#issuecomment-619622949" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@acobolew</strong></p>
+<p>Thanks for reporting.</p>
+<p>As per a press conference on  4/23, &quot;Death count: 1,421 total COVID-19 deaths, a decrease of 201 than was reported yesterday -- this reflects that the probable deaths had been removed from the count because of further investigating.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-274">#274: [States Daily CSV] PA deaths is lower 2020-04-23 than 2020-04-22</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            274</p>
+          <p>
+            <strong>hrushka</strong> opened this issue on April 23, 2020, 3:06 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/274" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Source: https://covidtracking.com/api/v1/states/daily.csv</p>
+<p>PA, 2020-04-22: 1,622
+PA, 2020-04-23: 1,421</p>
+<p>Reference: https://c19.dev/d/4S5AN4CZz/covid-19-us-state-data?orgId=1&amp;from=now-45d&amp;to=now&amp;var-state=PA&amp;var-population=12801989&amp;var-density=475.7437637476716&amp;var-total_cases=36763&amp;var-total_deaths=1720</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-619256482">
+          <div class="frontmatter">
+            <div>
+              <strong>beachhockey</strong> commented on April 24, 2020, 2:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/274#issuecomment-619256482" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Even 4/24 is still lower than 4/22 with only 1,492 deaths reported.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-619281629">
+          <div class="frontmatter">
+            <div>
+              <strong>hrushka</strong> commented on April 24, 2020, 4:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/274#issuecomment-619281629" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Looks like the reason is that the deathIncrease for <strong>2020-04-23</strong> is negative</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623048354">
+          <div class="frontmatter">
+            <div>
+              <strong>sgdoerfler</strong> commented on May 2, 2020, 8:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/274#issuecomment-623048354" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This should be merged with issue 325, where I added an explanation already.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-629931243">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 17, 2020, 8:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/274#issuecomment-629931243" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631481307">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on May 20, 2020, 6:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/274#issuecomment-631481307" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@hrushka</strong>,
+Thanks for flagging. See <a href="https://github.com/COVID19Tracking/issues/issues/325">issue 325</a> for an explanation. We are making a public note of the revision.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-126">#126: PA cumulative hospitalized overcounting </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            126</p>
+          <p>
+            <strong>jdmaresco</strong> opened this issue on April 2, 2020, 6:20 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/126" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>From <strong>@webmasterkai</strong></p>
+<blockquote>
+<p>The hospitalizedCummulative data for PA goes down from 20200329 to 20200330, then does not exceed the 20200329 value again until today.</p>
+</blockquote>
+<p>The higher, earlier numbers are not correct. We should adjust based on screen captures</p>
+<p><img src="https://user-images.githubusercontent.com/1327983/78314360-c3f4dc00-7527-11ea-86db-5dfa3b58665a.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-608701762">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 3, 2020, 2:44 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/126#issuecomment-608701762" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <img width="415" alt="PA Hosp Before" src="../../assets/github/images/1749380/78407462-e3950e80-75d2-11ea-83f5-8dc7119f72a2.png">
+<img width="741" alt="Screen Shot 2020-04-03 at 5 38 22 PM" src="../../assets/github/images/1749380/78407464-e3950e80-75d2-11ea-8e62-e192b878836e.png">
+<img width="746" alt="Screen Shot 2020-04-03 at 5 38 57 PM" src="../../assets/github/images/1749380/78407466-e42da500-75d2-11ea-8e5d-c21b4ae468ce.png">
+<img width="724" alt="Screen Shot 2020-04-03 at 5 39 33 PM" src="../../assets/github/images/1749380/78407467-e42da500-75d2-11ea-90af-c9020f33aa0b.png">
+<img width="408" alt="PA Hosp After" src="../../assets/github/images/1749380/78407461-e2fc7800-75d2-11ea-9e60-42a8244f15fa.png">
+<p>I updated States Daily based on the screenshots.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-76">#76: PA: cumulative hospitalizations</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            76</p>
+          <p>
+            <strong>meetar</strong> opened this issue on March 29, 2020, 12:01 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/76" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>PA cumulative hospitalizations were calculated on 3/27 based on percentages on:
+https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</p>
+<p>Using a formula in the PA tab:
+https://docs.google.com/spreadsheets/d/1MvvbHfnjF67GnYUDJJiNYUmGco5KQ9PW0ZRnEP9ndlU/edit#gid=1393227010</p>
+<p>KP left a private note:</p>
+<blockquote>
+<p>(3/27 KP) used a messy dot product to calculate hospitalization numbers; see PA tab and ask me, JD, Elliot, or Jeff if needed</p>
+</blockquote>
+<p>As well as an item in the #Reporting wishlist:</p>
+<blockquote>
+<p>The percentages hospitalization data are crazy. Absolute numbers for hospitalization would be very helpful</p>
+</blockquote>
+<p>On 3/29 midday I found that the same page appears to be reporting hospitalizations directly. That number is about half of the calculated number, and is ~corroborated by multiple news articles:
+https://www.ydr.com/story/news/2020/03/28/coronavirus-hospitalizations-pa-up-316-nearly-all-patients-icu/2933307001/
+https://www.pennlive.com/coronavirus/2020/03/update-on-coronavirus-in-pennsylvania-watch-gov-wolf-dr-levine-news-conference.html</p>
+<p>After conversation with KP and JH, they suggest that the reported cumulative number be used instead of the calculated number, though that will result in a decrease in the hospitalizations figure.
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1585507764070700?thread_ts=1585504370.051800&amp;cid=CUQ4MMTPD</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-605683755">
+          <div class="frontmatter">
+            <div>
+              <strong>meetar</strong> commented on March 29, 2020, 12:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/76#issuecomment-605683755" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Also from KP:</p>
+<blockquote>
+<p>For what it's worth, if we do the dot product calculation with the numbers on their site, we get 846 hospitalized instead of the 353 they claim.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790189">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/76#issuecomment-623790189" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628989996">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/76#issuecomment-628989996" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

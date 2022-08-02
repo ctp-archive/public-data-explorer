@@ -1,0 +1,3595 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Colorado Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Colorado</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Colorado</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 20, 2021, 2:56 PM PST</td>
+          <td>1106</td>
+          <td>
+            <a href="#issue-1106">[CO] Patch 02/19/21 error in Total PCR tests (people) and Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 20, 2021, 2:56 PM PST</td>
+          <td>1106</td>
+          <td>
+            <a href="#issue-1106">[CO] Patch 02/19/21 error in Total PCR tests (people) and Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 2:55 PM PST</td>
+          <td>1081</td>
+          <td>
+            <a href="#issue-1081">[CO] Patch late 01/26/21 metrics</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 2:55 PM PST</td>
+          <td>1081</td>
+          <td>
+            <a href="#issue-1081">[CO] Patch late 01/26/21 metrics</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 11, 2020, 10:34 AM PST</td>
+          <td>1006</td>
+          <td>
+            <a href="#issue-1006">[CO] Deaths due to COVID vs. deaths among cases source switch</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 2, 2020, 8:14 PM PST</td>
+          <td>993</td>
+          <td>
+            <a href="#issue-993">[CO] Patch 12/2 Positive antibody tests (specimens) and Negative antibody tests (specimens)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 1, 2020, 11:19 AM PST</td>
+          <td>988</td>
+          <td>
+            <a href="#issue-988">[ND] Backfill Deaths (Confirmed and Probable), Deaths (Confirmed) to reflect all deaths rather than deaths due to COVID</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 28, 2020, 9:22 PM PST</td>
+          <td>983</td>
+          <td>
+            <a href="#issue-983">[CO] Patch 11/28 Positive antibody tests (specimens) and Negative antibody tests (specimens)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 25, 2020, 6:52 PM PST</td>
+          <td>980</td>
+          <td>
+            <a href="#issue-980">[CO] Patch 11/18 missed positive/negative antibody test update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 18, 2020, 1:19 PM PST</td>
+          <td>960</td>
+          <td>
+            <a href="#issue-960">[CO] Shift timeseries by a day and patch a few values that do not match dashboard layer</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 16, 2020, 8:14 AM PST</td>
+          <td>953</td>
+          <td>
+            <a href="#issue-953">[CO] Patch 11/11 timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 18, 2020, 9:59 AM PDT</td>
+          <td>848</td>
+          <td>
+            <a href="#issue-848">[CO] Fixing confirmed/total positive issues on 4/25, 4/29, 5/8, 5/10, 5/11, 6/13, 8/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 4, 2020, 8:06 AM PDT</td>
+          <td>812</td>
+          <td>
+            <a href="#issue-812">[CO] Probable backfill 4/24 - 7/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 27, 2020, 8:50 PM PDT</td>
+          <td>797</td>
+          <td>
+            <a href="#issue-797">[CO] Fill frozen values for probable+confirmed cases after state changed dashboards</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 18, 2020, 10:50 PM PDT</td>
+          <td>776</td>
+          <td>
+            <a href="#issue-776">Server CORS (Access-Control-Allow-Origin) header issue</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 12:14 PM PDT</td>
+          <td>716</td>
+          <td>
+            <a href="#issue-716">[CO] Backfill Test Encounters metric for CO</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 12, 2020, 2:38 PM PDT</td>
+          <td>607</td>
+          <td>
+            <a href="#issue-607">[CO] Positive Cases 17-July</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 3, 2020, 7:36 AM PDT</td>
+          <td>572</td>
+          <td>
+            <a href="#issue-572">[ID] Historicals Fill out historical info for current COVID-19 hospitalizations &amp; ICU</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 1, 2020, 5:26 PM PDT</td>
+          <td>565</td>
+          <td>
+            <a href="#issue-565">[CO] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 7:43 AM PDT</td>
+          <td>529</td>
+          <td>
+            <a href="#issue-529">[CO] Updating historicals for Total PCR Tests (People) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 15, 2020, 2:17 PM PDT</td>
+          <td>423</td>
+          <td>
+            <a href="#issue-423">CO Total Tests Dropped on 5/12</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 3, 2020, 5:29 PM PDT</td>
+          <td>352</td>
+          <td>
+            <a href="#issue-352">CDC Has Slashed COVID-19 Deaths by 40%</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 29, 2020, 11:19 AM PDT</td>
+          <td>331</td>
+          <td>
+            <a href="#issue-331">COVID19Tracking vs worldometers/info/coronavirus</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 26, 2020, 7:08 PM PDT</td>
+          <td>309</td>
+          <td>
+            <a href="#issue-309">CO data does not match state website </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 25, 2020, 9:19 AM PDT</td>
+          <td>295</td>
+          <td>
+            <a href="#issue-295">Is it possible to have a time-series dataset for Tracking Race and Ethnicity in the COVID-19 Pandemic Blog Data?</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 22, 2020, 7:20 AM PDT</td>
+          <td>253</td>
+          <td>
+            <a href="#issue-253">Michigan COVID</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 20, 2020, 3:48 PM PDT</td>
+          <td>238</td>
+          <td>
+            <a href="#issue-238">Washington COVID</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 19, 2020, 7:50 AM PDT</td>
+          <td>226</td>
+          <td>
+            <a href="#issue-226">California COVID Data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 17, 2020, 7:09 PM PDT</td>
+          <td>213</td>
+          <td>
+            <a href="#issue-213">CO: new daily report currently hospitalized=858, discharged last 24 hours=203 (4/17)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 16, 2020, 9:02 AM PDT</td>
+          <td>200</td>
+          <td>
+            <a href="#issue-200">Standard GeoJSON format for the COVIDTracking API?</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 13, 2020, 6:48 AM PDT</td>
+          <td>191</td>
+          <td>
+            <a href="#issue-191">JHU and statnews are using hospitalization data from COVID19Tracker</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 2, 2020, 2:22 PM PDT</td>
+          <td>124</td>
+          <td>
+            <a href="#issue-124">Michigan negative counts -- COVID19Tracking is behind latest state report</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2020, 9:15 AM PDT</td>
+          <td>112</td>
+          <td>
+            <a href="#issue-112">The row of Colorado (CO) state data for 3/31 is a duplicate 3/30</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 12, 2020, 2:45 PM PDT</td>
+          <td>109</td>
+          <td>
+            <a href="#issue-109">Georgia (US) - links to data behind DPH COVID-19 Daily Status Report</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 6:40 PM PDT</td>
+          <td>98</td>
+          <td>
+            <a href="#issue-98">CO: Data integrity problem on March 31, 2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 3:41 PM PDT</td>
+          <td>95</td>
+          <td>
+            <a href="#issue-95">CO: Potential Alternate Data Source</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 30, 2020, 8:47 AM PDT</td>
+          <td>84</td>
+          <td>
+            <a href="#issue-84">QUALITY CONTROL LOGIC</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1106">#1106: [CO] Patch 02/19/21 error in Total PCR tests (people) and Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1106</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 20, 2021, 2:56 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1106" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> CO</p>
+<p><strong>Dates affected:</strong> 02/19/21</p>
+<p><strong>Describe the issue:</strong> On February 19, 2021, we had in error in Colorado's Total PCR tests (people). This also affected Negative PCR tests (people), which is calculated as Total PCR tests (people) minus Confirmed cases.</p>
+<p><strong>Screenshot with correct data:</strong> https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-quaternary-20210219-231911.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-782761867">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 20, 2021, 2:56 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1106#issuecomment-782761867" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CO 2021-02-19
+totalTestsPeopleViral: 2522901 (was 2552901)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-782761940">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 20, 2021, 2:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1106#issuecomment-782761940" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+CO 2021-02-19
+negative: 2126610 (was 2156610)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1106">#1106: [CO] Patch 02/19/21 error in Total PCR tests (people) and Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1106</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 20, 2021, 2:56 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1106" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> CO</p>
+<p><strong>Dates affected:</strong> 02/19/21</p>
+<p><strong>Describe the issue:</strong> On February 19, 2021, we had in error in Colorado's Total PCR tests (people). This also affected Negative PCR tests (people), which is calculated as Total PCR tests (people) minus Confirmed cases.</p>
+<p><strong>Screenshot with correct data:</strong> https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-quaternary-20210219-231911.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-782761867">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 20, 2021, 2:56 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1106#issuecomment-782761867" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CO 2021-02-19
+totalTestsPeopleViral: 2522901 (was 2552901)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-782761940">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 20, 2021, 2:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1106#issuecomment-782761940" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+CO 2021-02-19
+negative: 2126610 (was 2156610)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1081">#1081: [CO] Patch late 01/26/21 metrics</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1081</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 27, 2021, 2:55 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1081" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> CO</p>
+<p><strong>Dates affected:</strong> 01/26/21</p>
+<p><strong>Describe the issue:</strong> On January 26, 2021, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768633437">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 27, 2021, 2:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1081#issuecomment-768633437" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+CO 2021-01-26
+negative: 1991411 (was 1982404)
+hospitalizedCurrently: 740 (was 737)
+recovered: 20673 (was 20569)
+deathConfirmed: 4809 (was 4801)
+deathProbable: 708 (was 704)
+probableCases: 18840 (was 18539)
+positiveCasesViral: 369780 (was 367746)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1081">#1081: [CO] Patch late 01/26/21 metrics</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1081</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 27, 2021, 2:55 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1081" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> CO</p>
+<p><strong>Dates affected:</strong> 01/26/21</p>
+<p><strong>Describe the issue:</strong> On January 26, 2021, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768633437">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 27, 2021, 2:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1081#issuecomment-768633437" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+CO 2021-01-26
+negative: 1991411 (was 1982404)
+hospitalizedCurrently: 740 (was 737)
+recovered: 20673 (was 20569)
+deathConfirmed: 4809 (was 4801)
+deathProbable: 708 (was 704)
+probableCases: 18840 (was 18539)
+positiveCasesViral: 369780 (was 367746)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1006">#1006: [CO] Deaths due to COVID vs. deaths among cases source switch</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1006</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 11, 2020, 10:34 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1006" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: CO</p>
+<p><strong>Describe the problem</strong>
+Colorado's deaths due to COVID-19 metric is lagging its deaths among cases metric. On September 1, there was only 97 difference: 1946 deaths among cases, vs. 1849 deaths due to COVID. On December 11, there is a 759 difference—3759 deaths among cases, as opposed to 3005 deaths due to COVID. This means 20% of deaths among cases do not have death certificate data, vs. 5% in September, indicating a lag.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/data/state/colorado/screenshots
+CO's raw data files for confirmed/probable death breakdowns:
+https://www.arcgis.com/home/webmap/viewer.html?url=https://services3.arcgis.com/66aUo8zsujfVXRIT/ArcGIS/rest/services/colorado_covid19_daily_state_statistics_cumulative/FeatureServer&amp;source=sd</p>
+<p><img src="https://user-images.githubusercontent.com/15933271/101941244-b5ca8580-3bb5-11eb-8e62-5206ea6bb37b.png" alt="Deaths Trends in CO"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-743367151">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 11, 2020, 10:58 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1006#issuecomment-743367151" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We are adding the breakdown for confirmed/probable from 5/15 onward because before then they were not reported on the website and do not sum
+<a href="../../assets/github/files/5681068/CO.after.txt">CO after.txt</a>
+<a href="../../assets/github/files/5681069/CO.Before.txt">CO Before.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-743368161">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 11, 2020, 11:01 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1006#issuecomment-743368161" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5681076/Changes.7.txt">Changes (7).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-993">#993: [CO] Patch 12/2 Positive antibody tests (specimens) and Negative antibody tests (specimens)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            993</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on December 2, 2020, 8:14 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/993" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: CO</p>
+<p>Dates affected: 12/2</p>
+<p>Describe the issue: On December 2, 2020, Colorado did not update their Positive antibody tests (specimens) or Negative antibody tests (specimens) before the time of our daily update.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-737654826">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 2, 2020, 8:16 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/993#issuecomment-737654826" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img width="240" alt="Screen Shot 2020-12-02 at 11 14 21 PM" src="../../assets/github/images/68712382/100963317-1db50800-34f4-11eb-8f3b-2170358ec688.png"></p>
+<p>BEFORE:
+<img width="238" alt="Screen Shot 2020-12-02 at 11 16 22 PM" src="../../assets/github/images/68712382/100963472-65d42a80-34f4-11eb-8a86-927db4104762.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-988">#988: [ND] Backfill Deaths (Confirmed and Probable), Deaths (Confirmed) to reflect all deaths rather than deaths due to COVID</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            988</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on December 1, 2020, 11:19 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/988" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  North Dakota</p>
+<p><strong>Describe the problem</strong>
+Over the past week, a gap has opened between the number of COVID-19 deaths North Dakota's health department reports and The COVID Tracking Project’s counts of deaths in the state. On November 30, North Dakota’s health department dashboard reported 927 cumulative COVID-19 deaths, but The COVID Tracking Project recorded 680. This is because we track deaths due to COVID, instead of deaths among cases in the state.</p>
+<p>It’s clear that a reporting backlog is to blame for most of the widening discrepancy between figures: The share of COVID-19-positive individuals who died in North Dakota with death certificates still pending has doubled since the beginning of November.  To better reflect the reality of rising deaths in North Dakota, we are changing our method for counting deaths in the state to the other main paradigm for tracking deaths: counting deaths among cases.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/data/state/north-dakota/screenshots</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-736768503">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on December 1, 2020, 11:29 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/988#issuecomment-736768503" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>[
+<a href="../../assets/github/files/5624952/ND.xlsx">ND.xlsx</a>
+](url)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-736823444">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 1, 2020, 1:12 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/988#issuecomment-736823444" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5625473/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-983">#983: [CO] Patch 11/28 Positive antibody tests (specimens) and Negative antibody tests (specimens)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            983</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 28, 2020, 9:22 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/983" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> CO</p>
+<p><strong>Dates affected:</strong> 11/28</p>
+<p><strong>Describe the issue:</strong> On November 28, 2020, Colorado's Positive antibody tests (specimens) and Negative antibody tests (specimens) updated after we published our daily update.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-735345907">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 28, 2020, 9:25 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/983#issuecomment-735345907" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="239" alt="Screen Shot 2020-11-29 at 12 23 27 AM" src="../../assets/github/images/68712382/100534048-1aaad680-31d9-11eb-85cc-b281f0505362.png"></p>
+<p>AFTER:
+<img width="242" alt="Screen Shot 2020-11-29 at 12 24 58 AM" src="../../assets/github/images/68712382/100534064-5180ec80-31d9-11eb-9d65-bc8cb6cd0042.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-980">#980: [CO] Patch 11/18 missed positive/negative antibody test update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            980</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 25, 2020, 6:52 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/980" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: CO</p>
+<p>Dates affected: 11/18</p>
+<p>Describe the issue: On 11/18, Colorado updated their Positive antibody tests (specimens) and Negative antibody tests (specimens) after our daily update.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-734043080">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 25, 2020, 6:53 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/980#issuecomment-734043080" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="242" alt="Screen Shot 2020-11-25 at 9 52 56 PM" src="../../assets/github/images/68712382/100302545-9520ef80-2f68-11eb-918b-6ea22ec7ef7e.png"></p>
+<p>AFTER:
+<img width="238" alt="Screen Shot 2020-11-25 at 9 53 36 PM" src="../../assets/github/images/68712382/100302582-acf87380-2f68-11eb-82fa-f21051d0a22e.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-960">#960: [CO] Shift timeseries by a day and patch a few values that do not match dashboard layer</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            960</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on November 18, 2020, 1:19 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/960" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Colorado</p>
+<p><strong>Describe the problem</strong></p>
+<ol>
+<li>Because of the timing of the data entry shift, we are regularly a day behind in our capture of Colorado's reporting.
+We are going to shift the entire timeseries in order to match up with what we would have captured on an evening shift each day from Colorado.</li>
+<li>We are also going to patch up a few values to Total Tests PCR (People), Cumulative Hospitalizations, Deaths , and Cases (Confirmed and Probable) columns from a download from Colorado's website</li>
+</ol>
+<p><strong>Link to data source</strong>
+https://services3.arcgis.com/66aUo8zsujfVXRIT/ArcGIS/rest/services/colorado_covid19_daily_state_statistics_cumulative/FeatureServer/0</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-729979945">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on November 18, 2020, 1:53 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/960#issuecomment-729979945" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Source file - raw download from Colorado
+<a href="../../assets/github/files/5562956/source.CO.-.Colorado.All.dashboard.data.20201118.csv.txt">source.CO - Colorado All dashboard data 20201118.csv.txt</a></p>
+<p>Initial CTP timeseries
+<a href="../../assets/github/files/5562957/CO-20201118-Before.csv.txt">CO-20201118-Before.csv.txt</a></p>
+<p>CTP timeseries shifted by one day
+<a href="../../assets/github/files/5562955/CO.-.Colorado.after.shifting.timseries.csv.txt">CO - Colorado after shifting timseries .csv.txt</a></p>
+<p>Final CTP timeseries
+<a href="../../assets/github/files/5562954/CO-MM-20201118-done.csv.txt">CO-MM-20201118-done.csv.txt</a></p>
+<p>Question: when will github allow CSV attachments?</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-953">#953: [CO] Patch 11/11 timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            953</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 16, 2020, 8:14 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/953" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> CO</p>
+<p><strong>Dates affected:</strong> 11/11</p>
+<p><strong>Describe the issue:</strong> The 11/11 timestamp for CO was entered as 11/10 23:59, but should have been 11/09 23:59.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-728164076">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 16, 2020, 8:15 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/953#issuecomment-728164076" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="321" alt="Screen Shot 2020-11-16 at 11 15 04 AM" src="../../assets/github/images/68712382/99278399-fb856f80-27fc-11eb-9c35-e6911a105513.png"></p>
+<p>AFTER:
+<img width="324" alt="Screen Shot 2020-11-16 at 11 15 34 AM" src="../../assets/github/images/68712382/99278447-0d671280-27fd-11eb-8635-8908fb00328f.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-848">#848: [CO] Fixing confirmed/total positive issues on 4/25, 4/29, 5/8, 5/10, 5/11, 6/13, 8/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            848</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 18, 2020, 9:59 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/848" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Colorado</p>
+<p><strong>Describe the problem</strong>
+While doing probables backfill in https://github.com/COVID19Tracking/issues/issues/812, I discovered three main issues between CTP values and the state screenshots/<a href="https://drive.google.com/drive/folders/1bBAC7H-pdEDgPxRuU_eR36ghzc0HWNf1">archive</a>:</p>
+<ol>
+<li>
+<p>We sourced a few of our total positive values from the respective day's PR. The issue with this is that, while those values were the most up to date values at the time of the PR, they were unaligned with the screenshots and the 1 day lag on the dashboard which throws off the proposed probable values' alignment. The days we used PR values are 4/29, 5/8, 5/10, and 5/11. These values should be changed to 14316, 18371, 19375, 19703, respectively.</p>
+</li>
+<li>
+<p>Separate from these PRs, we had two values entered incorrectly on 4/25 (12256) and 8/27 (52229). These values should be changed to 12255 and 52228, respectively, to reflect the screen-shotted values from those days and the values from the archived files mentioned above. These revisions are also in blue in the proposed section.</p>
+</li>
+<li>
+<p>Lastly, we entered the total positive value in the confirmed case column on 6/13. The value should be changed from 28822 to 26215 to reflect the screenshotted value/archived value.</p>
+</li>
+</ol>
+<p><strong>Links to data sources</strong>
+4/25: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-20200424-180528.png ; https://docs.google.com/spreadsheets/d/1QcI_QvssZpVxT5ib6yHoeHchLIuIIZkX45eKrn4ciCU/edit#gid=1892357304</p>
+<p>4/29: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-20200429-000541.png</p>
+<p>5/8: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-20200507-180530.png</p>
+<p>5/10: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-20200509-180520.png</p>
+<p>5/11: https://docs.google.com/spreadsheets/d/1e2TLX1eJw9kueTZBssoA9eRWIwEtpgC3HZODao9mGGo/edit#gid=1282281468 ;
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-20200511-120513.png</p>
+<p>6/13: https://drive.google.com/drive/folders/1bBAC7H-pdEDgPxRuU_eR36ghzc0HWNf1</p>
+<p>8/27: https://docs.google.com/spreadsheets/d/1sU6w75m7SXuRR7gZxMiMhFksez6D9V2pGFjFZaLwRso/edit#gid=1728791480 (confirmed/probable breakdown not available in screenshots due to changed dashboard)</p>
+<p>This issue solves https://github.com/COVID19Tracking/issues/issues/423</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-695090265">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 18, 2020, 2:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/848#issuecomment-695090265" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+4/25 - 5/11:
+<img src="../../assets/github/images/67408226/93645720-8858ac00-f9b9-11ea-9961-bc690b06acfc.png" alt="image"></p>
+<p>6/13:
+<img src="../../assets/github/images/67408226/93645554-1d0eda00-f9b9-11ea-9ec3-4146ab7eaf09.png" alt="image"></p>
+<p>8/27:
+<img src="../../assets/github/images/67408226/93645514-07011980-f9b9-11ea-9e94-430e719cc97b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-695091877">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 18, 2020, 2:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/848#issuecomment-695091877" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+4/25 - 5/11:
+<img src="../../assets/github/images/67408226/93645834-c786fd00-f9b9-11ea-8de8-a567af138708.png" alt="image"></p>
+<p>6/13:
+<img src="../../assets/github/images/67408226/93645927-01f09a00-f9ba-11ea-920a-612bc0374948.png" alt="image"></p>
+<p>8/27
+<img src="../../assets/github/images/67408226/93645978-22205900-f9ba-11ea-8fe2-575ce84410cb.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-812">#812: [CO] Probable backfill 4/24 - 7/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            812</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 4, 2020, 8:06 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/812" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Colorado</p>
+<p><strong>Describe the problem</strong>
+On 7/28, CTP introduced an explicit probables column. Backfilling through 4/24 (when CO first separated out confirmed cases on their dashboard) by subtracting confirmed cases from total cases. Fixing issues with confirmed/probables in https://github.com/COVID19Tracking/issues/issues/848</p>
+<p><strong>Link to data source</strong>
+We have screenshots of probables through 4/24 to reference. We also have a state-provided archive with probable values: https://drive.google.com/drive/folders/1bBAC7H-pdEDgPxRuU_eR36ghzc0HWNf1</p>
+<p>4/24 screenshot:
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/CO/CO-20200424-000533.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-695046722">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 18, 2020, 12:29 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/812#issuecomment-695046722" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/93637412-6e639d00-f9aa-11ea-84da-a23759bde855.png" alt="image">
+<img src="../../assets/github/images/67408226/93637453-7e7b7c80-f9aa-11ea-8a61-5375a616b32e.png" alt="image">
+<img src="../../assets/github/images/67408226/93637493-8d622f00-f9aa-11ea-8654-31deb97ed0a2.png" alt="image">
+<img src="../../assets/github/images/67408226/93637542-9e12a500-f9aa-11ea-8f4c-48332c58318b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-695052168">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 18, 2020, 12:43 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/812#issuecomment-695052168" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/93638438-26de1080-f9ac-11ea-999d-acf9d7ef6ec0.png" alt="image">
+<img src="../../assets/github/images/67408226/93638453-31000f00-f9ac-11ea-929b-eef72e6fb9de.png" alt="image">
+<img src="../../assets/github/images/67408226/93638479-3a897700-f9ac-11ea-8976-42fabad9933a.png" alt="image">
+<img src="../../assets/github/images/67408226/93638513-46753900-f9ac-11ea-8741-8fe7fc58d92f.png" alt="image"></p>
+<p>Backfilled values:
+3162
+3161
+3158
+3151
+3136
+3112
+3095
+3101
+3090
+3084
+3036
+3029
+3023
+3013
+3002
+3004
+3002
+2979
+2978
+2928
+2889
+2897
+2896
+2897
+2899
+2896
+2871
+2860
+2831
+2828
+2824
+2805
+2781
+2755
+2746
+2739
+2741
+2734
+2683
+2670
+2647
+2633
+2607
+2609
+2607
+2607
+2584
+2560
+2556
+2544
+2529
+2516
+2512
+2503
+2477
+2468
+2429
+2431
+2441
+2363
+2327
+2295
+2285
+2280
+2280
+2253
+2218
+2157
+2095
+2067
+2024
+2004
+1980
+1958
+1940
+1880
+1842
+1823
+1825
+1824
+1786
+1726
+1717
+1709
+1637
+1622
+1590
+1545
+1527
+1497
+1424
+1370
+1335
+1189
+974</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-797">#797: [CO] Fill frozen values for probable+confirmed cases after state changed dashboards</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            797</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on August 27, 2020, 8:50 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/797" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The data is available in files here:
+https://drive.google.com/drive/folders/1bBAC7H-pdEDgPxRuU_eR36ghzc0HWNf1</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-685927242">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 2, 2020, 11:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/797#issuecomment-685927242" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Filled the data from COs archive folder for the relevant days
+Confirmed, Positive cases and Antibody negative and positive tests</p>
+<p><img src="../../assets/github/images/62236447/92023298-71576000-ed11-11ea-906f-b2f579145a90.png" alt="Screenshot from 2020-09-02 11-35-59">
+<img src="../../assets/github/images/62236447/92023302-71eff680-ed11-11ea-822f-213f8c351f54.png" alt="Screenshot from 2020-09-02 11-40-01"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-776">#776: Server CORS (Access-Control-Allow-Origin) header issue</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            776</p>
+          <p>
+            <strong>loglow</strong> opened this issue on August 18, 2020, 10:50 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Describe the problem</strong>
+The server does not appear to be returning <code>Access-Control-Allow-Origin</code> headers along with API requests.</p>
+<p>This results in web browser errors such as:
+<code>XMLHttpRequest at 'https://covidtracking.com/api/v1/us/daily.json' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></p>
+<p>I believe that the API server should be returning an <code>Access-Control-Allow-Origin: *</code> header, and that this would resolve the problem.</p>
+<p>I don't have prior experience with these kinds of issues, so please forgive my ignorance if any of this is incorrect. I only began receiving these errors today for the first time, and I've been using this API for months now. I've temporarily mitigated the problem by routing all API requests through <code>https://cors-anywhere.herokuapp.com/</code> but this doesn't seem like a great permanent solution.</p>
+<p>Thanks for all your time and efforts!</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-676432411">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 19, 2020, 7:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676432411" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@kevee</strong> can you please transfer to the website repo? 🙏</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-676706585">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on August 19, 2020, 2:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676706585" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Well, this just became more urgent because <code>https://cors-anywhere.herokuapp.com/</code> is now giving me <code>429 Too Many Requests</code> errors. Please fix ASAP.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-676708069">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on August 19, 2020, 2:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676708069" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <img width="616" alt="cors" src="../../assets/github/images/3103472/90690258-63004300-e23f-11ea-8e7d-963787726ef8.png">
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-676713722">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on August 19, 2020, 2:19 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676713722" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Safari flavor of errors below. Above was Chrome.</p>
+<img width="890" alt="cors2" src="../../assets/github/images/3103472/90690664-1d904580-e240-11ea-8488-028424016dd7.png">
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-676717461">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on August 19, 2020, 2:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676717461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>PS. Firefox 79.0 (latest version) is <strong>working</strong> because apparently it's not yet strictly enforcing CORS policy.</p>
+<p>For the above screenshots:</p>
+<ul>
+<li>Chrome is 84.0.4147.135</li>
+<li>Safari is 13.1.2 (14609.3.5.1.5)</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-676840514">
+          <div class="frontmatter">
+            <div>
+              <strong>kevee</strong> commented on August 19, 2020, 6:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676840514" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Per our <a href="https://apichanges.covidtracking.com/new-api-domain-name-162768">API changelog</a>, please use <code>https://covidtracking.com/api/v1/us/daily.json</code> instead of <code>https://covidtracking.com/api/v1/us/daily.json</code>. The website is doing a 301 redirect to the new API domain, but for some reason Netlify is stripping CORS out from that feedback, so I'll check in with them:</p>
+<pre><code class="language-shell">curl -I https://covidtracking.com/api/v1/us/daily.json
+HTTP/2 301 
+content-type: text/plain
+location: https://api.covidtracking.com/v1/us/daily.json
+</code></pre>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-676857891">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on August 19, 2020, 7:26 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/776#issuecomment-676857891" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-716">#716: [CO] Backfill Test Encounters metric for CO</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            716</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on July 31, 2020, 12:14 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/716" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>CO publishes a &quot;Test Encounters&quot; value, and we recently added it to our worksheet, we need to backfill past data for this metric</p>
+<p>We started collecting numbers on 7/27, when CO started publishing them on the dashboard.</p>
+<p>To fill the values before 7/27, we used the &quot;Testing Encounters&quot; daily bar chart, to calculate cumulative sum by date.
+The values we used in this initial population of the time series were calculated from data as downloaded on 8/1.</p>
+<p>We're using this calculated backfill only for dates before the 27th, and going forward <em>(despite the bar chart with daily test encounters being continuously back-filled)</em> we're only going to use the number posted on the dashboard.
+Since the numbers on the dashboard normally correspond to data as of two days previous, we are shifting the total test encounters to reflect what would have been displayed on the dashboard on the corresponding date.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-670657973">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 7, 2020, 11:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/716#issuecomment-670657973" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/62236447/89678219-afdd3480-d8a3-11ea-9f39-9dfe37377c5d.png" alt="Screenshot from 2020-08-07 11-41-45"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670695685">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 7, 2020, 1:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/716#issuecomment-670695685" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Done
+Before:
+<img src="../../assets/github/images/62236447/89684871-1b2d0380-d8b0-11ea-820f-e4540dc3a9e2.png" alt="Screenshot from 2020-08-07 13-13-00">
+After
+<img src="../../assets/github/images/62236447/89684873-1bc59a00-d8b0-11ea-9346-895bdfa5039d.png" alt="Screenshot from 2020-08-07 13-15-08"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-607">#607: [CO] Positive Cases 17-July</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            607</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on July 12, 2020, 2:38 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/607" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On 12-July, CO reported 36,591 cases. Needs to be fixed from 36,951</p>
+<p><img src="https://user-images.githubusercontent.com/62236447/87257151-478a6700-c44d-11ea-8b16-98e06135d06c.png" alt="Screenshot from 2020-07-12 14-37-39"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657279653">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 12, 2020, 2:42 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/607#issuecomment-657279653" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/62236447/87257200-bcf63780-c44d-11ea-9506-bf5b35887d2d.png" alt="Screenshot from 2020-07-12 14-40-01"></p>
+<p>After:
+<img src="../../assets/github/images/62236447/87257208-d39c8e80-c44d-11ea-8d86-f2fdeff75dd5.png" alt="Screenshot from 2020-07-12 14-40-27"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-572">#572: [ID] Historicals Fill out historical info for current COVID-19 hospitalizations &amp; ICU</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            572</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 3, 2020, 7:36 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/572" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Idaho</p>
+<p><strong>Describe the problem</strong>
+We did not capture these values before but they are available, so we should fill out the historical values</p>
+<p><strong>Link to data source</strong>
+https://public.tableau.com/profile/idaho.division.of.public.health#!/vizhome/DPHIdahoCOVID-19Dashboard_V2/Story1 Click Hospitalizations</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-653669422">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 3, 2020, 1:25 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/572#issuecomment-653669422" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>: No values
+<strong>After</strong>
+<a href="../../assets/github/files/4871347/2020-07-03__CTP_ID_Update.xlsx">2020-07-03__CTP_ID_Update.xlsx</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653670709">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on July 3, 2020, 1:32 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/572#issuecomment-653670709" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hey <strong>@muamichali</strong>, I took a look at <a href="https://public.tableau.com/profile/idaho.division.of.public.health#!/vizhome/DPHIdahoCOVID-19Dashboard_V2/Story1">Idaho's Tableau dashboard</a> and exported data from the Hospitalizations tab. Attached is a spreadsheet with a proposed update - please see &quot;CTP_Update&quot; tab: <a href="../../assets/github/files/4871351/2020-07-03__CTP_ID_Update.xlsx">2020-07-03__CTP_ID_Update.xlsx</a></p>
+<p>Can you please review before we make an update for 2020-03-26 to 2020-06-28 for <strong>In ICU   – Currently</strong> and <strong>Hospitalized –   Currently</strong>?</p>
+<p>Thanks!
+Camille</p>
+<p><strong>Link to Data Source(s)</strong>:</p>
+<ul>
+<li><strong>ICU</strong>: &quot;Number of hospitalized and ICU with confirmed COVID-19&quot; <a href="../../assets/github/files/4871342/C_in_ICU_Full_Data_data.xlsx">C_in_ICU_Full_Data_data.xlsx</a></li>
+<li><strong>Hospitalizaitons</strong>: &quot;Patients currently hospitalized in an inpatient bed who have suspected or confirmed COVID-19&quot; <a href="../../assets/github/files/4871343/S_and_C_Hospitalized_Full_Data_data.xlsx">S_and_C_Hospitalized_Full_Data_data.xlsx</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653671107">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on July 3, 2020, 1:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/572#issuecomment-653671107" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Update - closing this ticket and moving to double-check.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-565">#565: [CO] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            565</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on July 1, 2020, 5:26 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/565" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Starting <a href="https://covidtracking.com/screenshots/CO/CO-20200515-182911.png">May 15</a>, CO reports four different numbers about deaths: &quot;deaths among cases,&quot; confirmed/probable breakdowns for &quot;deaths among cases,&quot; and &quot;deaths due to COVID-19.&quot; Deaths among cases captures information about all deaths in probable or confirmed COVID cases (e.g. determined by testing data for confirmed, syndromic or epidemiological evidence for probable), while &quot;deaths due to COVID-19&quot; tracks cases where COVID is listed on the death certificate.</p>
+<p>Right now, we fill out our columns like this:
+Deaths (confirmed+probable): &quot;deaths among cases&quot;
+Deaths (confirmed): &quot;deaths among cases (confirmed)&quot;
+Deaths (probable): &quot;deaths among cases (probable&quot;</p>
+<p>However, to maintain consistency with other states (e.g. ND) that provide data about whether COVID was the <em>cause of death</em> , we do not want to track &quot;deaths among cases&quot; but &quot;deaths due to COVID-19,&quot; which tracks death certificate data. Hence for May 15 onward, we are going to switch to:</p>
+<p>Deaths (confirmed+probable): &quot;deaths due to COVID 19&quot;
+Deaths (confirmed): no data (since &quot;deaths due to COVID-19&quot; is not broken down to confirmed/probable)
+Deaths (probable): &quot;no data (since &quot;deaths due to COVID-19&quot; is not broken down to confirmed/probable)</p>
+<p>We will add back the data for &quot;deaths among cases (confirmed)&quot; at a later date when we add a column for deaths w/ positive lab tests but not necessarily COVID as a cause of death on a death certificate.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-652728544">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 1, 2020, 6:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/565#issuecomment-652728544" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updating CO tooltips and values
+<strong>Before</strong>
+<img width="251" alt="Screen Shot 2020-07-01 at 9 18 37 PM" src="../../assets/github/images/15933271/86305832-a1369a00-bbe0-11ea-8cfb-3aec3f5e7116.png">
+<img width="250" alt="Screen Shot 2020-07-01 at 9 18 41 PM" src="../../assets/github/images/15933271/86305836-a3005d80-bbe0-11ea-882f-4f433a11cae1.png">
+<img width="249" alt="Screen Shot 2020-07-01 at 9 18 47 PM" src="../../assets/github/images/15933271/86305840-a4318a80-bbe0-11ea-8590-baf91372d7a1.png"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/15933271/86306572-9aa92200-bbe2-11ea-9cfa-a17263043d32.png" alt="Screen Shot 2020-07-01 at 9 33 51 PM">
+<img src="../../assets/github/images/15933271/86306574-9c72e580-bbe2-11ea-8f40-a84dbcec906f.png" alt="Screen Shot 2020-07-01 at 9 33 56 PM">
+<img src="../../assets/github/images/15933271/86306577-9da41280-bbe2-11ea-81ab-3d04e6a361e7.png" alt="Screen Shot 2020-07-01 at 9 34 03 PM"></p>
+<p>NOTE: we will need to add a private note to explain the drop. I will draft it once I've fixed all the historicals.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-652731514">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 1, 2020, 6:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/565#issuecomment-652731514" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Updating historicals for CO (from screenshots, account for 1 day lag due to late CO update time, e.g. our update 7/1 picked up <a href="https://covidtracking.com/screenshots/CO/CO-20200630-183140.png">6/30 6:30 pm</a> data):</strong></p>
+<p><strong>Before</strong>
+<img src="../../assets/github/images/15933271/86307345-8d8d3280-bbe4-11ea-8ad9-eb1fa4ea5e47.png" alt="Screen Shot 2020-07-01 at 9 45 41 PM">
+<img src="../../assets/github/images/15933271/86307350-8fef8c80-bbe4-11ea-84a3-c46d67437c32.png" alt="Screen Shot 2020-07-01 at 9 47 24 PM"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/15933271/86308988-941da900-bbe8-11ea-8cfc-26a353dc8f12.png" alt="Screen Shot 2020-07-01 at 10 16 50 PM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-652733657">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 1, 2020, 6:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/565#issuecomment-652733657" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CO also provided its confirmed/probable breakdown before it provided figures on deaths due to COVID-19 on 5/15.  We record these values sporadically between 4/29-5/3 and 5/12-5/15. These confirmedvalues still reflect confirmed deaths within &quot;deaths in COVID-19 cases&quot; (any lab-confirmed death) so I am deleting them.
+<strong>Before:</strong>
+<img src="../../assets/github/images/15933271/86307684-5f5c2280-bbe5-11ea-9168-8fb5aea95a17.png" alt="Screen Shot 2020-07-01 at 9 53 53 PM">
+<strong>After</strong>
+<img src="../../assets/github/images/15933271/86307792-ab0ecc00-bbe5-11ea-9cc6-d5419b3e4159.png" alt="Screen Shot 2020-07-01 at 9 56 02 PM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-652740339">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 1, 2020, 7:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/565#issuecomment-652740339" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Adding public note: &quot;On 5/15 (which we caught on our update 5/16), Colorado started providing a new figure for deaths where COVID-19 is listed on the death certificate, in addition to the figure it already provided, deaths among laboratory-confirmed and probable cases (whether or not COVID was a cause of death). On 7/1, we revised our historical data to reflect the deaths certificate figure instead of the deaths among cases. As such, it appears as if there is a drop from 1091 deaths on 5/15 to 878 on 5/16 in our data.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-529">#529: [CO] Updating historicals for Total PCR Tests (People) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            529</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on June 25, 2020, 7:43 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/529" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: CO</p>
+<p><strong>Describe the problem</strong>
+Updating historical values for &quot;Total PCR Tests (People)&quot; for CO prior to implementation of this column. Historicals updated from 3/17 to 5/14, using the screenshot captured at 6 - 7 pm the previous day. Unfortunately due to lack of screenshots, gaps will exist on 3/27, 4/9 and 5/18.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/data/state/colorado#historical</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649598016">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on June 25, 2020, 7:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/529#issuecomment-649598016" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before screenshots for 5/14 and 5/13
+<img src="../../assets/github/images/25627274/85742952-a9b73e00-b6d1-11ea-832a-c2714ebc4b6a.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649600791">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on June 25, 2020, 7:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/529#issuecomment-649600791" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>After screenshots for 5/14 and 5/13
+<img src="../../assets/github/images/25627274/85743757-509bda00-b6d2-11ea-92e8-74d0876b3a09.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650238106">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on June 26, 2020, 8:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/529#issuecomment-650238106" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>All CO data has been backfilled up till March 16th. Some gaps due to missing relevant screenshots.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-423">#423: CO Total Tests Dropped on 5/12</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            423</p>
+          <p>
+            <strong>schmian</strong> opened this issue on May 15, 2020, 2:17 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/423" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>&quot;I think there's an issue with Colorado 5-12-20 info. It indicated that there was &quot;-133&quot; new tests, which makes no sense.&quot;</p>
+<p>Based on the screenshots form 5/11 it appears that Positive Cases should have be 19,703 instead of 19,899, causing the there to be negative new test and cases on 5/12</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_23xqp">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632694325">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 6:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/423#issuecomment-632694325" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The higher numbers entered on 5/11 came from a press release but they never showed up on the dashboard. I am revising 5/11 CO numbers to the dashboard.</p>
+<p>See https://covid-tracking.slack.com/archives/C0116LT5CTT/p1590073899348700</p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/82672837-e396af80-9c0e-11ea-90a7-3fd4b69f069b.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/82673215-7d5e5c80-9c0f-11ea-95cf-face669f2fc9.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660222000">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on July 17, 2020, 9:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/423#issuecomment-660222000" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>It seems like you edited the number for 5/10 instead of 5/11. From screenshots, the numbers for those few days should be:
+5/10 - 19375
+5/11 - 19703
+5/12 - 19879</p>
+<p>CTP:
+<img src="../../assets/github/images/67408226/87941722-66da5300-ca50-11ea-88b2-26044eed7b20.png" alt="image"></p>
+<p>Colorado State Page 5/10:
+<img src="../../assets/github/images/67408226/87941765-78bbf600-ca50-11ea-9c2c-a83d40936be6.png" alt="image"></p>
+<p>Colorado State Page 5/11:
+<img src="../../assets/github/images/67408226/87941832-91c4a700-ca50-11ea-87a9-0f41913b6b24.png" alt="image"></p>
+<p>Colorado State Page 5/12:
+<img src="../../assets/github/images/67408226/87941904-adc84880-ca50-11ea-8691-b129d69398d2.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667306538">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 31, 2020, 12:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/423#issuecomment-667306538" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@the-daniel-lin</strong> oops - I did not see this --- will work now (or get <strong>@space-buzzer</strong> to do it lol)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674441371">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 15, 2020, 12:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/423#issuecomment-674441371" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694969642">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 18, 2020, 9:40 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/423#issuecomment-694969642" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is being resolved here: https://github.com/COVID19Tracking/issues/issues/848</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-352">#352: CDC Has Slashed COVID-19 Deaths by 40%</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            352</p>
+          <p>
+            <strong>JustOneGuyHere</strong> opened this issue on May 3, 2020, 5:29 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/352" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I suggest publishing both sets of numbers. I have used this site to track the numbers, but they need to be accurate.</p>
+<p>https://www.cdc.gov/nchs/nvss/vsrr/covid19/index.htm</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623222307">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 3, 2020, 6:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/352#issuecomment-623222307" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@</strong>JustOneGuyHere</p>
+<p>Please see the CDC Data tracker here https://www.cdc.gov/covid-data-tracker/index.html</p>
+<p>Currently 65,735 deaths are reported on the page.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623240691">
+          <div class="frontmatter">
+            <div>
+              <strong>JustOneGuyHere</strong> commented on May 3, 2020, 8:29 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/352#issuecomment-623240691" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks, censor.</p>
+<p>On Sun, May 3, 2020 at 6:35 PM Michal Mart <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<blockquote>
+<p>Closed #352 <a href="https://github.com/COVID19Tracking/issues/issues/352">https://github.com/COVID19Tracking/issues/issues/352</a>.</p>
+<p>—
+You are receiving this because you were mentioned.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/352#event-3298064864">https://github.com/COVID19Tracking/issues/issues/352#event-3298064864</a>,
+or unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/APOCEYR7QRRQTI7T4VA4XO3RPYLWJANCNFSM4MYLPALA">https://github.com/notifications/unsubscribe-auth/APOCEYR7QRRQTI7T4VA4XO3RPYLWJANCNFSM4MYLPALA</a>
+.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-331">#331: COVID19Tracking vs worldometers/info/coronavirus</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            331</p>
+          <p>
+            <strong>Fyjimojo</strong> opened this issue on April 29, 2020, 11:19 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  NYC Probable Deaths
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/331" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hello.  I have been tracking COVID-19 on worldometers.info/coronavirus since mid-March.</p>
+<p>You report U.S. deaths at 52,525 as of yesterday.</p>
+<p>Yesterday, worldometers.info/coronavirus reported 57,862.</p>
+<p>Which number is correct?</p>
+<p>Thank you!</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-621381956">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on April 29, 2020, 11:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/331#issuecomment-621381956" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Both numbers are defensible. The difference is primarily attributable to
+the way New York City and New York State differ in tracking deaths.</p>
+<p>See:
+https://twitter.com/COVID19Tracking/status/1254161668671541248?s=20</p>
+<p>We anticipate New York State will incorporate probable deaths soon, as will
+we, though maintaining our laboratory-confirmed number in the states where
+it is possible.</p>
+<p>Alexis</p>
+<p>On Wed, Apr 29, 2020 at 11:19 AM Fyjimojo <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<blockquote>
+<p>Hello. I have been tracking COVID-19 on worldometers.info/coronavirus
+since mid-March.</p>
+<p>You report U.S. deaths at 52,525 as of yesterday.</p>
+<p>Yesterday, worldometers.info/coronavirus reported 57,862.</p>
+<p>Which number is correct?</p>
+<p>Thank you!</p>
+<p>—
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/331">https://github.com/COVID19Tracking/issues/issues/331</a>, or unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/ACS7NYKMDY22MCN7SKGJ76DRPBVUBANCNFSM4MT6SUNQ">https://github.com/notifications/unsubscribe-auth/ACS7NYKMDY22MCN7SKGJ76DRPBVUBANCNFSM4MT6SUNQ</a>
+.</p>
+</blockquote>
+<p>--
+Alexis Madrigal
+Staff Writer | The Atlantic
+Co-Founder | The Atlantic's COVID Tracking Project, covidtracking.com
+m. 415 602 4953</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623453699">
+          <div class="frontmatter">
+            <div>
+              <strong>OrionEridanus</strong> commented on May 4, 2020, 6:09 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/331#issuecomment-623453699" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This can't explain the entire difference for US total deaths, which as of this morning is approximately 6,000.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-309">#309: CO data does not match state website </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            309</p>
+          <p>
+            <strong>stevemcconnell</strong> opened this issue on April 26, 2020, 7:08 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/309" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>for example, this data set has the following info for positive tests by date:
+4/23 10,878
+4/24 11,262
+4/25, 12,256
+4/26, 12968</p>
+<p>The CO state website (listed as the best source of data on the covid tracking website) lists this data
+4/23 12,256
+4/24 12,947
+4/25, 13,441
+4/26, not listed yet</p>
+<p>Similarly, on new deaths, the covid tracking project shows 44 new deaths on 4/24, whereas the CO state website shows 2.</p>
+<p>These are not the only issues, just illustrations to show the data doesn't match.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-627075409">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 11, 2020, 7:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/309#issuecomment-627075409" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631498913">
+          <div class="frontmatter">
+            <div>
+              <strong>erfgottlieb</strong> commented on May 20, 2020, 7:12 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/309#issuecomment-631498913" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for your input <strong>@stevemcconnell</strong> ! Colorado updated its total tests and deaths after our publish time cutoff. If a state updates total tests or deaths after that time, we catch that update on the following day. So far, the historicals we keep seem to agree with this pattern. We're working internally to best represent this data as well as shifting our time to catch states that update only slightly after our publish time.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-295">#295: Is it possible to have a time-series dataset for Tracking Race and Ethnicity in the COVID-19 Pandemic Blog Data?</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            295</p>
+          <p>
+            <strong>riccardograziani</strong> opened this issue on April 25, 2020, 9:19 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Feature Request
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/295" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I would like to ask you if it is possible to obtain the following dataset as time-series dataset:</p>
+<p>https://docs.google.com/spreadsheets/d/e/2PACX-1vTfUQPxkhP_CRcGmnnpUBihnTNZ9Z8pcizII4_sc2o2n3opOoAJdAM4CRTJBI339tou8LWnQrqbTMgH/pubhtml?gid=1129119811&amp;single=true</p>
+<p>Best,
+Riccardo</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626828645">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 11, 2020, 10:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/295#issuecomment-626828645" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632131128">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 21, 2020, 7:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/295#issuecomment-632131128" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for the request <strong>@riccardograziani</strong> I will pass it on to the race data team.</p>
+<p>I also wanted to let you know that we launched the new Covid Racial Data Tracker and homepage today https://covidtracking.com/race</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632254331">
+          <div class="frontmatter">
+            <div>
+              <strong>riccardograziani</strong> commented on May 21, 2020, 10:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/295#issuecomment-632254331" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks very much for your response!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-253">#253: Michigan COVID</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            253</p>
+          <p>
+            <strong>mlgnight</strong> opened this issue on April 22, 2020, 7:20 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/253" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>RE: https://covidtracking.com/data/state/wisconsin#historical</p>
+<p>How can the new tests for March 30 be negative??</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-625318782">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 7, 2020, 8:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/253#issuecomment-625318782" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-629819365">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 17, 2020, 8:54 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/253#issuecomment-629819365" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-238">#238: Washington COVID</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            238</p>
+          <p>
+            <strong>mlgnight</strong> opened this issue on April 20, 2020, 3:48 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/238" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>https://covidtracking.com/data/state/washington#historical positives dropped from 4/19 to 4/20</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-616854995">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 20, 2020, 4:00 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/238#issuecomment-616854995" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for reporting this issue <strong>@mlgnight</strong>!</p>
+<p>If you scroll down to the top of the page, we publish notes that explain these kinds of issues if we know about them. In this case, it was a data revision by the state <code>(4/19/20) are lower than yesterday. Data cleaning that occurred late on 4/18 removed 190 confirmed cases that were discovered to be out of state residents.</code></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-616874520">
+          <div class="frontmatter">
+            <div>
+              <strong>jstover79</strong> commented on April 20, 2020, 5:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/238#issuecomment-616874520" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I was just checking WA state data and comparing to yours. I'm sure they won't perfectly line up since the WA state data is probably cleaned/edited from time to time for various reasons (adding/subtracting cases due to data entry errors, or like this one where some individuals were from out of state). I just wanted to make sure that this is to be expected (e.g. once your data is finalized for a particular date, it isn't updated. It might be nice to have a separate tracking database that does automatically update as states update there data. I also checked against the usafact.org dataset, and found similar discrepancies form the official WA state count. Either way, thank you so much for your work!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-617486259">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 21, 2020, 5:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/238#issuecomment-617486259" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@jstover79</strong> You are very welcome. If you find data that we need to update and report it here as new issue with state sources, we will do our best to correct historical data.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-226">#226: California COVID Data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            226</p>
+          <p>
+            <strong>mlgnight</strong> opened this issue on April 19, 2020, 7:50 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/226" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>At https://covidtracking.com/data/state/california#historical it appears that the data around April 10-12 seems odd. Flat, then big jump?</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-616196787">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 19, 2020, 11:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/226#issuecomment-616196787" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@mlgnight</strong>  Thank you for reporting. There was an earlier issue https://github.com/COVID19Tracking/issues/issues/217 and the data has been patched. It should be reflected on the site this afternoon around 5.30pm EST.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-616227963">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 19, 2020, 2:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/226#issuecomment-616227963" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This doesn't really explain CA's weird ups and downs, but more significantly, the total tests numbers on their data page are clearly rounded. Every day's total ends in -00. Your counts don't match theirs all the time, but they do right now.</p>
+<p>Of course you have to use what the states report, but it really would be good to get to the bottom of what's going on with CA's reporting.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-624569430">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 6, 2020, 3:33 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/226#issuecomment-624569430" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-629626513">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 16, 2020, 3:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/226#issuecomment-629626513" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-213">#213: CO: new daily report currently hospitalized=858, discharged last 24 hours=203 (4/17)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            213</p>
+          <p>
+            <strong>catawbasam</strong> opened this issue on April 17, 2020, 7:09 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/213" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>https://covid19.colorado.gov/hospital-data</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-615875592">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 18, 2020, 6:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/213#issuecomment-615875592" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you so much <strong>@catawbasam</strong></p>
+<p>We added this to our sources list for CO</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-615999350">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 18, 2020, 6:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/213#issuecomment-615999350" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<img src="../../assets/github/images/1749380/79676915-09b4d400-81b9-11ea-9787-55e5ccf28cc2.png" alt="CO Currently Hospitalized Before"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/1749380/79676923-1cc7a400-81b9-11ea-854a-7e29bdf12bed.png" alt="CO Currently Hospitalized After"></p>
+<p>Data patch was applied to the spreadsheet.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-200">#200: Standard GeoJSON format for the COVIDTracking API?</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            200</p>
+          <p>
+            <strong>ilkkarinne</strong> opened this issue on April 16, 2020, 9:02 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/200" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hi, a great initiative you have for consolidating US COVID-19 data. I'm the author of the <a href="https://covidjson.org">CovidJSON</a> initiative, a standards based GeoJSON data model for infection data. Our goal is to harmonize national and international data interchange of COVID-19 data as geospatial datasets, and to make it easier to collect, publish, analyze and visualize infection data across different data providers and uses.</p>
+<p>Would you be interested in testing out the CovidJSON format as an output format for the COVIDTracking API, providing input for improving it, and, in case you like it, promoting it's use for the different COVID-19 stakeholders within US?</p>
+<p>I have some live data samples from Finland at https://data.covidjson.org/ and some static examples at https://github.com/spatineo/covidjson/tree/master/examples</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623774949">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/200#issuecomment-623774949" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628958164">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 5:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/200#issuecomment-628958164" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-191">#191: JHU and statnews are using hospitalization data from COVID19Tracker</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            191</p>
+          <p>
+            <strong>catawbasam</strong> opened this issue on April 13, 2020, 6:48 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/191" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Both are very influential sources -- I'd like to propose we focus more on improving hospitalization counts.</p>
+<p>Statnews is using cumulative hospitalizations.  JHU unfortunately appears to be mixing current and cumulative hospitalizations in their 'hospitalization rate' tab.</p>
+<p>JHU dashboard: https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
+&quot;the COVID Tracking Project (testing and hospitalizations)&quot;</p>
+<p>STAT Tracker:<br>
+https://www.statnews.com/2020/03/26/covid-19-tracker/
+&quot;The datasets are drawn from the Johns Hopkins University Center for Systems Science and Engineering, from the COVID Tracking Project, and from USAFacts. In some cases, data on hospitalizations were not available.&quot;</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-613155311">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on April 13, 2020, 5:04 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/191#issuecomment-613155311" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Note: Deleted earlier comment advocating focus on cumulative hospitalizations.</p>
+<p>The weight of reporting by states is increasingly tilted toward currently hospitalized, so it might make more sense to fill that out. It is also more directly tied to capacity management.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623774978">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/191#issuecomment-623774978" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628958127">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 5:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/191#issuecomment-628958127" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-124">#124: Michigan negative counts -- COVID19Tracking is behind latest state report</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            124</p>
+          <p>
+            <strong>catawbasam</strong> opened this issue on April 2, 2020, 2:22 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/124" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>If they are on weekly updates, we should note that.  Otherwise they may not be tracking the tests.
+Worrisome for one of the top hot-spots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-608185298">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on April 2, 2020, 6:53 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/124#issuecomment-608185298" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated numbers are posted to https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html</p>
+<h2>Cumulative Number of Specimens Tested for COVID-19 - Last Updated 4/2/2020 14:45</h2>
+<table>
+<thead>
+<tr>
+<th>Lab Type</th>
+<th>Negative Tests</th>
+<th>Positive Tests</th>
+<th>Total Specimens Tested</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commercial</td>
+<td>2312</td>
+<td>592</td>
+<td>2909</td>
+</tr>
+<tr>
+<td>Hospital</td>
+<td>16930</td>
+<td>5906</td>
+<td>22450</td>
+</tr>
+<tr>
+<td>Public   Health</td>
+<td>4303</td>
+<td>1507</td>
+<td>5818</td>
+</tr>
+<tr>
+<td>Grand Total</td>
+<td>23545</td>
+<td>8005</td>
+<td>31177</td>
+</tr>
+</tbody>
+</table>
+<h3>Notes</h3>
+<p>Notes:
+This is a new reporting system and additional laboratories will be included over time.  Counts of specimens tested positive will not equal number of people with COVID-19. People may have more than one test or may have had their test from an out of state lab.
+Total samples tested includes test that were negative, positive, and inconclusive.
+Commercial labs only includes data from LabCorp.
+Public health labs include the Michigan Department of Health and Human Services Bureau of Laboratories.
+Counts represent the total specimens tested, not total patients tested. A patient can have more than one specimen tested, therefore the number of specimens tested may be more than the number of patients tested.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608604772">
+          <div class="frontmatter">
+            <div>
+              <strong>pfarus</strong> commented on April 3, 2020, 11:54 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/124#issuecomment-608604772" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Michigan negative counts were not updated &quot;Last updated: 4/02 11:00 ET&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612562388">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 11, 2020, 9:24 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/124#issuecomment-612562388" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Those counts are for specimens. I did update with even more accurate data. See issue #173</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-112">#112: The row of Colorado (CO) state data for 3/31 is a duplicate 3/30</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            112</p>
+          <p>
+            <strong>philgoetz</strong> opened this issue on April 1, 2020, 9:15 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/112" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>These can't both be right unless CO reported no data for 3/31:</p>
+<table>
+<thead>
+<tr>
+<th>20200331</th>
+<th>CO</th>
+<th>2,627</th>
+<th>12,737</th>
+<th></th>
+<th>414</th>
+<th>51</th>
+<th>15,364</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20200330</td>
+<td>CO</td>
+<td>2,627</td>
+<td>12,737</td>
+<td></td>
+<td>414</td>
+<td>51</td>
+<td>15,364</td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+</tbody>
+</table>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607466092">
+          <div class="frontmatter">
+            <div>
+              <strong>saewoonam</strong> commented on April 1, 2020, 1:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/112#issuecomment-607466092" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Same as issue #98.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-611703738">
+          <div class="frontmatter">
+            <div>
+              <strong>philgoetz</strong> commented on April 9, 2020, 12:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/112#issuecomment-611703738" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <blockquote>
+<p>Same as issue #98.
+I guess I should close this one, then.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-109">#109: Georgia (US) - links to data behind DPH COVID-19 Daily Status Report</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            109</p>
+          <p>
+            <strong>bbrewington</strong> opened this issue on March 12, 2020, 2:45 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/109" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The one you probably want to post in the States-info.csv file is the &quot;Daily updated status report&quot;.  Providing others in case you need to track data down to county level.</p>
+<p><strong>Daily updated status report</strong> - https://dph.georgia.gov/georgia-department-public-health-covid-19-daily-status-report</p>
+<p><strong>Links to JSON data behind the above report</strong>
+Total cases: https://sendss.state.ga.us/sendss/!ncovstatus.ajax?ptarget=obsummary
+Breakdown by Sex: https://sendss.state.ga.us/sendss/!ncovstatus.ajax?ptarget=gender
+Breakdown by Age Bucket: https://sendss.state.ga.us/sendss/!ncovstatus.ajax?ptarget=age
+Cases by County - https://sendss.state.ga.us/sendss/!ncovstatus.ajax_ncovmap</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623790154">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/109#issuecomment-623790154" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990038">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/109#issuecomment-628990038" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-98">#98: CO: Data integrity problem on March 31, 2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            98</p>
+          <p>
+            <strong>saewoonam</strong> opened this issue on March 31, 2020, 6:40 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/98" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>This is the data from the Colorado website
+<img width="687" alt="Screen Shot 2020-03-31 at 7 35 28 PM" src="https://user-images.githubusercontent.com/2872116/78090436-56aa4500-7387-11ea-859c-57867702f926.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-606979984">
+          <div class="frontmatter">
+            <div>
+              <strong>schwartzadev</strong> commented on March 31, 2020, 6:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/98#issuecomment-606979984" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for your contribution <strong>@saewoonam</strong> ! Can you please share more detail? What was the data integrity problem with the website?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607464381">
+          <div class="frontmatter">
+            <div>
+              <strong>saewoonam</strong> commented on April 1, 2020, 1:08 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/98#issuecomment-607464381" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>At least when I checked last night, the data from the Colorado website did not match what was on your website.   It is still not corrected... The data listed in the 10:03PM screenshot is what should be used not the 4:02PM... But, it kind of depends how you want to define boundaries in days.   If it is really 4:00 PM EDT, then most of your CO data is wrong since the reporting from CO usually occurs around 4:00PM MDT... And, for the data prior to yesterday, you were using the 4PM MDT values...</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790151">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/98#issuecomment-623790151" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-625293461">
+          <div class="frontmatter">
+            <div>
+              <strong>schmian</strong> commented on May 7, 2020, 7:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/98#issuecomment-625293461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>investigating</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631477856">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 20, 2020, 6:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/98#issuecomment-631477856" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@saewoonam</strong></p>
+<p>With our current publish shift times we often catch Colorado's updates only two days later. We are considering changing the publish times to be able to cover states that update late. Until then, I have updated the lastUpdateEt for CO entries to reflect the time of the data.</p>
+<p>I know it's not a perfect solution, but I hope it can help somewhat.</p>
+<p><img src="../../assets/github/images/1749380/82452453-45bfab00-9a7d-11ea-98c3-f0fb7ae8f86c.png" alt="Screenshot_2020-05-20 Coronavirus numbers by state (CovidTracking, DEV COPY)(1)"></p>
+<p><img src="../../assets/github/images/1749380/82452454-45bfab00-9a7d-11ea-9819-782eac85684c.png" alt="Screenshot_2020-05-20 Coronavirus numbers by state (CovidTracking, DEV COPY)"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-95">#95: CO: Potential Alternate Data Source</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            95</p>
+          <p>
+            <strong>johnindenver</strong> opened this issue on March 31, 2020, 3:41 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/95" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Colorado's data seems to come out first at https://covid19.colorado.gov/case-data
+today's was posted:   Colorado Case Summary (Updated 3/31/20 at 4:00 p.m.)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-619627649">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 26, 2020, 2:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/95#issuecomment-619627649" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you <strong>@johnindenver</strong></p>
+<p>Sorry for the delay in getting to your issue! We are now using this source</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-84">#84: QUALITY CONTROL LOGIC</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            84</p>
+          <p>
+            <strong>joshuaellinger</strong> opened this issue on March 30, 2020, 8:47 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/84" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I am going to extract a spreadsheet that contains the currently implemented logic for y'all to review.</p>
+<p>It will in Excel and checked into the repo as a living document.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

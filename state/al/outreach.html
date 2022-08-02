@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Alabama Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Alabama</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Alabama</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For both cases and deaths, we want to confirm that 100% for each chart (https://covid-tracking.slack.com/files/U010KL8E40J/F01LKJK6K2A/image.png) is is for the confirmed cases and confirmed deaths.</p>
+<p>Currently, any value over 1,000 rounds in the tooltip, so 36,4XX rounds to 36.4k, meaning that we lose information either by using the percentages or by using the rounded numbers. Would it be possible to display the extra digits?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 23, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We cannot provide changes to this data.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 22, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Cumulative number of resident deaths</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 22, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Alabama Department of Public Health (ADPH) reports 1,016 deaths attributable to COVID-19 in residents of Long Term Care (LTC) as of October 22, 2020.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 12, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are inquiring about interpreting &quot;Total Tested&quot; &gt; &quot;Diagnostic” from Alabama's COVID-19 Data and Surveillance Dashboard.  The dashboard says &quot;Total Tested represents unique individuals with tests satisfactorily performed by ADPH, BCL, and other commercial and clinical labs.&quot;
+We’d like to better understand whether the timeframe for uniqueness is for each day, or for all time.
+We’re assuming that the timeframe for uniqueness is “for each day” and therefore that the following statements are true. Can you please confirm?</p>
+<ol>
+<li>If a person was tested on Monday and then tested again on Friday, that person’s tests would cause the “total tested” number to increase by two.</li>
+<li>If a person was swabbed twice in one day and both swabs were tested, those two swabs (specimens) would be counted as one unique individual tested and thus increase the total tested number by one.</li>
+<li>If a person who had previously tested positive was re-tested on a subsequent day, that new test (or tests) would be counted towards the &quot;Total Tested&quot; number.</li>
+</ol>
+
+    </div>
+    
+  
+    <h2>September 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is the cumulative death total for LTC residents?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>As of September 10, 2020, the Alabama Department of Public Health (ADPH) reports 861 deaths attributable to COVID 19  in residents of Long Term Care.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 4, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On 9/1 the number of Total Tested / Diagnostic is <code>949,438</code> on https://alpublichealth.maps.arcgis.com/apps/opsdashboard/index.html#/6d2771faa9da4a2786a509d82c8cf0f7
+This is a drop 26,943 of from 8/31 Tested which was 976,381
+https://covidtracking.com/screenshots/AL/AL-20200901-060315.png
+What is the reason for the drop in the total number of tested?</p>
+
+    </div>
+    
+  
+    <h2>August 4, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>HHS changes</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 4, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Due to the Alabama Incident Management System (AIMS) already being in place in Alabama, there some additional metrics that will be tracked.  However, AIMS already tracked a number of the metrics for Alabama.  There is little if any effect for Alabama as hospitals enter data in AIMS daily. There are a few changes that have been added to AIMS.
+(RK following up on specifics)The process will likely streamline data reporting for hospitals.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Pooled testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>At this time, Alabama is not using pooled testing, but this is being discussed</p>
+
+        </div>
+      
+    
+  
+    <h2>July 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Antigen testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Alabama Department of Public Health (ADPH) accepts for diagnostic purposes, PCR and antigen testing.  ADPH through its Bureau of Clinical Laboratories (BCL) does not perform antigen testing at this time. As antigen has recently been approved under EUA, ADPH expects to accept antigen and report in a separate testing category when this is being utilized.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How many residents have died in LTC facilities?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Alabama Department of Public Health (ADPH) reports 448 deaths in residents of Long Term Care (LTC) as of July 2, 2020.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How does Alabama define Long-Term Care?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The Alabama Department of Public Health (ADPH) defines Long Term Care (LTC) as prolonged care of residents in licensed institutions and/or organized departments within a licensed institution where the average length of resident stay is 25 days or longer.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is the current death total for LTC residents?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>As of June 24, 2020, ADPH reports 412 deaths in residents of LTC.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For your positive tests for residents and staff, is there a date for when those totals are cumulative since?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Totals are cumulative since the first case of COVID 19 was reported in Alabama on March 13, 2020.  (This first case of COVID-19 was not in a LTC and was not a death.)</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is definition for AL's long-term care facilities?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;Long term care encompasses nursing homes, assisted living facilities, and special care assisted living facilities.&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>June 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does &quot;total tested&quot; refer to people tested or specimens tested?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Total tested = number of specimens</p>
+
+        </div>
+      
+    
+  
+    <h2>June 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On testing data: Are antibody tests included in this figure, and if so does the state have plans to break them out?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;ADPH does not consider antibody testing as part of the diagnostic criteria for COVID 19 and follows the guidance of the Infectious Disease Society of American concerning this.  While some antibody testing has been reported to ADPH, we do not report patients tested with antibodies as COVID 19 cases.  Less than 4% of tests reported to ADPH has been antibody testing from commercial entities, and ADPH is in the process of removing this from our testing data.&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>June 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Regarding the race/ethnicity data on AL's COVID dashboard: Is it possible to get the actual number for each category (rather than e.g. 2K) and / or tell us what it is a percentage of?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No</p>
+
+        </div>
+      
+    
+  
+    <h2>June 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Regarding the race/ethnicity data on AL's COVID dashboard: Could you tell us what race categories are included under the grouping it labels &quot;Other?&quot; Is it possible to report these as separate race categories as defined by US Census 2010?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;Race categories included as other on the ADPH dashboard are American Indian, Native Hawaiian or Pacific Islander, Other Race, and Multiple Races if persons identify as mixed or other race.&quot;</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

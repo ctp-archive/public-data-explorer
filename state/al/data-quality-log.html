@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Alabama Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Alabama</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Alabama</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>October 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On October 21, 2020, Alabama updated their COVID-19 data dashboard after the time of our daily update due to technical issues. Later on October 21, 2020, they updated Cases (confirmed + probable ) and Deaths (confirmed + probable). We are patching these metrics from our screenshots.</p>
+
+      </div>
+    
+    <h2>March 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On March 7, 2021, Alabama's **Deaths (probable)** decreased by 1 death, and **Deaths (confirmed)** did not increase, so **Deaths (confirmed and probable)** decreased by 1.</p>
+
+      </div>
+    
+    <h2>March 3, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On March 3, 2021, Alabama announced that the Alabama Department of Public Health processed 2114 positive PCR test results from tests preformed since May, 2020 on March 1, 2021. These test results will be included in the Confirmed cases and Cases (confirmed + probable) reported on March 3, 2021.</p>
+
+      </div>
+    
+    <h2>February 28, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 28, 2021, Alabama's Probable deaths decreased by 1 death, and Confirmed deaths did not increase, so Total deaths decreased by 1.</p>
+
+      </div>
+    
+    <h2>February 27, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 27, 2021, Alabama's Current ICU numbers were not updated.</p>
+
+      </div>
+    
+    <h2>February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCumulative</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 22, 2021, Alabama did not update its **Cumulative in ICU**, **Cumulative on Ventilator**, **Deaths (confirmed and probable)**, **Deaths (confirmed)**, or **Deaths (probable)** before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 6, 2021, Alabama's **Total Tested (Antibody)** decreased from 140,376 to 108,818 without explanation.</p>
+
+      </div>
+    
+    <h2>February 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 5, 2021, Alabama announced that they were experiencing a technical issue with their testing data. As a result, we were unable to update their **Total antibody tests (people)**, **Total PCR tests (people)**, and **Negative PCR tests (people)**, which is calculated as **Total PCR tests (people)** minus **Confirmed cases**.</p>
+
+      </div>
+    
+    <h2>February 2, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 02, 2021, Alabama reported a large increase in Total antibody tests (people) of approximately 33,000 without explanation. Additionally, Total PCR tests (people) decreased by approximately 11,000 without explanation, resulting in a decrease in Negative PCR tests (people).</p>
+
+      </div>
+    
+    <h2>January 30, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 30, 2021, Alabama noted on their data dashboard that due to maintenance and upgrades, the Alabama NEDSS Base System did not run on the evening of January 29, 2021, and as as result there would be no update to their dashboard on January 30, 2021. We were only able to update their Currently hospitalized and Ever hospitalized on January 30, 2021.</p>
+
+      </div>
+    
+    <h2>January 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 22, 2021, Alabama noted that the Alabama Department of Public Health processed a backlog of 409 positive PCR tests dating back to November 19, 2020 through January 20, 2021, and that these tests would be included in their Confirmed cases and Cases (confirmed + probable) for January 22, 2021. As a result, not all new cases reported on January 22, 2021 were reported within the previous 24 hour period.</p>
+
+      </div>
+    
+    <h2>October 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">Other</span>
+        </p>
+      
+      <div>
+        <p>On October 26, 2020, Alabama reported 80313 Total antibody tests (people), however on October 27, 2020, they tweeted a correction to that number. We are patching our Total antibody tests (people) for October 26, 2020 to 63,683 accordingly.</p>
+
+      </div>
+    
+    <h2>November 11, 2020
+       to December 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 13, 2021, Alabama reported that it is reviewing a large number of deaths from the Alabama Center for Health Statistics (ACHS), an endeavor which began on November 11, 2020 and will continue until further notice. As a result, death numbers during this time period reported may include historic deaths and may not accurately reflect new COVID-19 deaths. We urge caution when interpreting these numbers, and encourage the use of 7 and 14-day averages as more reliable metrics.</p>
+
+      </div>
+    
+    <h2>November 11, 2020
+       to January 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>Currently and since November 11, 2020, Alabama has reported that it is reviewing a large number of deaths from the Alabama Center for Health Statistics (ACHS). As a result, death numbers during this time period reported may include historic deaths and may not accurately reflect new COVID-19 deaths. We urge caution when interpreting these numbers, and encourage the use of 7 and 14-day averages as more reliable metrics.</p>
+
+      </div>
+    
+    <h2>January 1, 2021
+       to January 8, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 7, 2021, Alabama noted that cases and deaths reported through the week of January 7, 2021, may be affected by holiday related reporting delays. We urge caution in using figures from this time period, and encourage the use of 7 and 14-day averages as more reliable metrics.</p>
+
+      </div>
+    
+    <h2>January 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 5, 2021, Alabama noted on their COVID-19 dashboard that the cases reported on January 5, 2021 were high due to a delay in testing and reporting over the holiday weekend.</p>
+
+      </div>
+    
+    <h2>December 10, 2020
+       to December 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 18th, 2020, Alabama reported that they will be reporting a backlog of positive tests from December 10th, 2020 to December 13th, 2020.</p>
+
+      </div>
+    
+    <h2>December 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 15, 2020, Alabama announced that a backlog of 59 positive PCR tests and 479 positive antigen tests from September 29, 2020 through December 14, 2020 would be included in their data for December 15, 2020.</p>
+
+      </div>
+    
+    <h2>December 12, 2020
+       to December 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 12, 2020 through December 13, 2020, Alabama did not update their testing data by the time of our daily update. As a result, we were unable to update Total antibody tests (people), Total PCR tests (people), and Negative PCR tests (people), which is calculated from Total PCR tests (people) minus Positive PCR tests (people).”</p>
+
+      </div>
+    
+    <h2>December 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>AL did not update tests today</p>
+
+      </div>
+    
+    <h2>December 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 12, 2020, Alabama announced that they processed a backlog of 398 positive antigen tests from July 7, 2020 through December 9, 2020. These positive tests will be reported in Alabama’s Probable Cases and Cases (confirmed + probable).</p>
+
+      </div>
+    
+    <h2>December 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 9, 2020, Alabama processed a backlog of positive PCR and antigen test results from October 5, 2020 through December 7, 2020. This backlog makes up roughly 10% of** Cases (confirmed + probable)** reported on December 10, 2020.</p>
+
+      </div>
+    
+    <h2>December 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 8, 2020, Alabama announced that: &quot;The Alabama Department of Public Health processed two backlogs totaling 1038 positive PCR results and 473 positive antigen results from two facilities on December 7. These will be classified as 1038 confirmed cases and 473 probable cases reported on 12/08/20 even though the tests were performed during November 30 through December 5, 2020.&quot;</p>
+
+      </div>
+    
+    <h2>December 2, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 2, 2020, Alabama announced that a backlog of 706 positive PCR tests performed from November 23, 2020 through November 29, 2020 would be included in their daily update for December 2, 2020.</p>
+
+      </div>
+    
+    <h2>March 7, 2020
+       to December 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Alabama documents on its dashboard that the state's totals are unique people, but we had them stored in specimens because of (old) conflicting evidence received via outreach. We recently found social media posts from ADPH verifying that unique people was the correct interpretation. We are going to switch the state's timeseries to unique people. We will also switch totalTestResults to draw from unique people since it was previously drawing from specimens.</p>
+
+      </div>
+    
+    <h2>December 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 1, 2020, Alabama <a href="https://twitter.com/alpublichealth/status/1333790272648409093?s=21">announced </a>that increased new case and death counts are due to delayed data from Thanksgiving.</p>
+
+      </div>
+    
+    <h2>November 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 30, 2020, Alabama did not update their serology testing number.</p>
+
+      </div>
+    
+    <h2>November 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On November 25, 2020, Alabama announced that the Alabama Department of Public Health Infection Disease and Outbreak team reviewed their electronic disease surveillance system and “updated some parameters”. As a result, Recovered increased by roughly 71k on November 25, 2020.</p>
+
+      </div>
+    
+    <h2>November 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On November 14, 2020, Alabama announced that a backlog of 109 positive antigen results would be reported as probable cases on November 14, 2020. As a result, new probable cases reported on November 14, 2020 were not all reported in the previous 24 hour period.</p>
+
+      </div>
+    
+    <h2>November 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 12, 2020, Alabama did not provide an update for diagnostic testing. We carried over values for Total PCR tests (specimens) and Negative PCR tests (people), which is calculated using Total PCR tests (specimens).</p>
+
+      </div>
+    
+    <h2>November 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On November 11, 2020, Alabama released a public note saying that they &quot;recently began a review process for a large number of deaths.&quot; This resulted in a one day increase of 81 deaths, from 3,120 to 3,201, &quot;at least half&quot; of which are from historical data.</p>
+
+      </div>
+    
+    <h2>November 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On November 10, 2020, Alabama's Total PCR tests (specimens) decreased by 690 tests, from 1,406,829 to 1,406,139.</p>
+
+      </div>
+    
+    <h2>October 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On October 30, 2020, Alabama's Currently Hospitalized number did not update, possibly due to hurricane disruptions.</p>
+
+      </div>
+    
+    <h2>October 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On October 29, 2020, Alabama did not update their Currently Hospitalized number.</p>
+
+      </div>
+    
+    <h2>October 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/27/20, Alabama's Total antibody tests (specimens) dropped from 80313 to 63683. This was a correction from the previous day's spike.</p>
+
+      </div>
+    
+    <h2>October 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/26/2020, AL had just over a 25% increase in antibody tests (63508 to 80313). They did not release a note about this.</p>
+
+      </div>
+    
+    <h2>October 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/23, AL released a backlog of 2565 positive antigen results which were classified as Probable Cases, thus increasing the case count.</p>
+
+      </div>
+    
+    <h2>October 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateEt</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/21, AL did not update due to technical difficulties.</p>
+
+      </div>
+    
+    <h2>September 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On September 25, 2020, Alabama's Probable deaths and Total deaths decreased, presumably due to some Probable deaths being reclassified. Alabama also added over 1,600 Probable Cases that came from two labs that had previously not been able to send results electronically.</p>
+
+      </div>
+    
+    <h2>September 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Multiple states were switched to use direct columns</p>
+
+      </div>
+    
+    <h2>September 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/11, Total Antibody Test (People) decreased from 55,417 to 55,157 with no apparent explanation.</p>
+
+      </div>
+    
+    <h2>September 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/1, the number of tests has dropped 26,943, we think likely because of AL beginning to separate antibody and diagnostic test counts. We are counting antibody tests in the Total Antibody Tests (People) column. Additionally, AL's annotations now say that their diagnostic test number refers to unique individuals for both PCR and antigen tests. We've performed outreach on whether or not this is the case because this conflicts with a previous outreach.</p>
+
+      </div>
+    
+    <h2>August 29, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/29, AL released a backlog of 1297 positive cases due to new labs being onboarded.</p>
+
+      </div>
+    
+    <h2>August 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On August 24, 2020, the number of Total tests (people) for Alabama dropped by 339 with no explanation. We carried the previous day's value for Negative (people or cases).</p>
+
+      </div>
+    
+    <h2>August 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On August 21, 2020, due to technical issues Alabama did not update some of their data before out publish time so we were unable to update Total Tests (people), Ever hospitalized, Ever in ICU, Ever on ventilator, and Negative.</p>
+
+      </div>
+    
+    <h2>July 21, 2020
+       to August 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>AL current hospitalization numbers for a given day don't stabilize until after the data entry shift, so they are slightly off. Our current hospitalization now matches state data back to 7/21 (our previous backfill was on 7/22).</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>March 7, 2020
+       to July 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Annotation / Source Change</span>
+            <span class="tag">CTP Process / Source Change</span>
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On August 7, 2020, we moved Alabama's historical testing data between March 7, 2020 and July 15, 2020 from <code>totalTestsPeopleViral</code> to <code>totalTestsViral </code>in accordance with an outreach response from the state health response that the data represented specimens, not people.</p>
+
+      </div>
+    
+    <h2>May 31, 2020
+       to July 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On August 6, 2020, we backfilled Alabama's <code>probableCases</code> from the period between May 31, 2020 and July 28, 2020 by subtracting <code>confirmedCases</code> from <code>positive</code>.</p>
+
+      </div>
+    
+    <h2>March 24, 2020
+       to July 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Dataset / Timeseries</span>
+        </p>
+      
+      <div>
+        <p>On July 22, 2020, we updated all of Alabama's historical data for <code>hospitalizedCurrently</code> from its ArcGIS layer. This change allowed us to get data from March, 24, 2020 onward instead of June 9, 2020 onward.</p>
+
+      </div>
+    
+    <h2>July 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On July 19, 2020, Alabama provided only a partial value for <code>hospitalizedCurrently</code>, recording the number as 920. Later that day, they updated the value for 1465. We revised our historical data to match.</p>
+
+      </div>
+    
+    <h2>July 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Annotation / Source Change</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On July 10, 2020, we received an outreach response from Alabama's state health department that its total tests represented specimens, not people. On July 15, 2020, we moved its test data from <code>totalTestsPeopleViral</code> to <code>totalTestsViral</code>.</p>
+
+      </div>
+    
+    <h2>July 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Annotation / Source Change</span>
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On July 11, 2020, Alabama began using direct reports from hospitals to track cumulative hospitalizations rather than state case surveillance. Its number of <code>hospitalizedCumulative</code> increased by over 3,000 as a result.</p>
+
+      </div>
+    
+    <h2>June 2, 2020
+       to June 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On June 2, 2020 and June 3, 2020, Alabama's values for <code>inIcuCumulative</code> and <code>onVentilatorCumulative</code> decreased without explanation. We carried over the previous values.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

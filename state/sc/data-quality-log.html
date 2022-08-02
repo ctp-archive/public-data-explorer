@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>South Carolina Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">South Carolina</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">South Carolina</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>April 4, 2020
+       to May 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>We identified some gaps in South Carolina's Total tests
+(specimens) time series and have patched them using screenshots and extended the time series back to April 4, 2020. We also had recorded some values in Total tests (people), those were all moved to Total tests
+(specimens).</p>
+
+      </div>
+    
+    <h2>March 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Resumed Metric</span>
+        </p>
+      
+      <div>
+        <p>On March 6, 2021, South Carolina’s data on individuals with symptom onset data decreased by roughly 31,000 without explanation. As a result, their Recovered, which is calculated as individuals with symptom onset data multiplied by the percentage of these cases which are recovered, decreased by about 12,000.</p>
+
+      </div>
+    
+    <h2>February 23, 2021
+       to March 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>Since February 23, 2021, South Carolina’s Recovered metric has been absent from their data dashboard, potentially due to [technical issues](https://twitter.com/scdhec/status/1364619613313634304). As a result, we will be unable to update their Recovered metric until it returns.</p>
+
+      </div>
+    
+    <h2>March 3, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On March 3, 2021, Minnesota and South Carolina did not update their Currently hospitalized, Currently in ICU, or Currently on Ventilator by the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 23, 2021
+       to March 2, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021 through March 2, 2021, South Carolina’s **Recovered** metric was absent from their data dashboard, potentially due to [technical issues](https://twitter.com/scdhec/status/1364619613313634304). As a result, we were unable to update their **Recovered**.</p>
+
+      </div>
+    
+    <h2>February 28, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On <strong>February 23, 2021</strong> through <strong>February 27, 2021</strong>, South Carolina’s Recovered metric was absent from their data dashboard, potentially due to <a href="https://twitter.com/scdhec/status/1364619613313634304">technical issues</a>. As a result, we were unable to update their Recovered.</p>
+
+      </div>
+    
+    <h2>February 23, 2021
+       to February 27, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021 through February 27, 2021, South Carolina’s **Recovered** metric was absent from their data dashboard, potentially due to [technical issues](https://twitter.com/scdhec/status/1364619613313634304). As a result, we were unable to update their **Recovered**.</p>
+
+      </div>
+    
+    <h2>February 23, 2021
+       to February 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021 through February 26, 2021, South Carolina’s **Recovered** metric was absent from their data dashboard, potentially due to [technical issues](https://twitter.com/scdhec/status/1364619613313634304). As a result, we were unable to update their **Recovered**.</p>
+
+      </div>
+    
+    <h2>February 25, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021 through February 25, 2021, South Carolina’s Recovered metric was absent from their data dashboard, potentially due to [technical issues](<a href="https://twitter.com/scdhec/status/1364619613313634304">https://twitter.com/scdhec/status/1364619613313634304</a>). As a result, we were unable to update their <strong>Recovered.</strong></p>
+
+      </div>
+    
+    <h2>February 24, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021 through February 24, 2021, South Carolina’s Recovered metric was absent from their data dashboard, potentially due to [technical issues](<a href="https://twitter.com/scdhec/status/1364619613313634304">https://twitter.com/scdhec/status/1364619613313634304</a>). As a result, we were unable to update their <strong>Recovered.</strong></p>
+
+      </div>
+    
+    <h2>February 23, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021, South Carolina removed their testing and recovery data from their dashboard. As a result, we were unable to update their testing data or Recovered on February 23, 2021.</p>
+
+      </div>
+    
+    <h2>February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 22, 2021, South Carolina reported a greater increase in **Confirmed cases** than **Total PCR tests (specimens)**, resulting in a decrease in **Negative PCR tests (people)**.</p>
+
+      </div>
+    
+    <h2>February 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 05, 2021, South Carolina [noted](https://twitter.com/scdhec) that approximately 26,834 test results were reported which cover a timespan from December 22, 2020 through January 16, 2021. These results were reflected in the cumulative numbers reported today, and include approximately 23,329 negative and 3,505 positive results.</p>
+
+      </div>
+    
+    <h2>February 1, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 1, 2021, South Carolina announced via the official South Carolina Department of Health and Environmental control twitter that due to a vital statistics system update, they were reporting over 240 Deaths (confirmed + probable) from the last several weeks. As a result, not all new deaths reported on February 1, 2021 were identified in the previous 24 hour period.</p>
+
+      </div>
+    
+    <h2>January 28, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 28, 2021, South Carolina [announced](https://twitter.com/scdhec/status/1354893317398556673) via the official South Carolina Department of Health and Environmental control twitter that due to a vital statistics system update, they were reporting over 200 Deaths (confirmed + probable) from the last several weeks. As a result, not all new deaths reported on January 28, 2021 were identified in the previous 24 hour period.</p>
+
+      </div>
+    
+    <h2>January 8, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>On January 8, 2021, South Carolina's Recovered was calculated incorrectly. This error was patched on January 25, 2021.</p>
+
+      </div>
+    
+    <h2>January 11, 2021
+       to January 15, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 11, 2021 through January 15, 2021, South Carolina has [experienced](https://covid-tracking.slack.com/archives/C010RFJ0ZD3/p1610394906169500) an internal systems issue which has resulted in data missing from their dashboard. We urge caution when interpreting their data from this period, and encourage the use of 7 and 14-day averages as more reliable figures than individual metrics.</p>
+
+      </div>
+    
+    <h2>January 14, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 11, 2021 through January 14, 2021, South Carolina has experienced an internal systems issue which has resulted in data missing from their dashboard. We urge caution when interpreting their data from this period, and encourage the use of 7 and 14-day averages as more reliable figures than individual metrics.</p>
+
+      </div>
+    
+    <h2>January 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 11, 2021 through January 13, 2021, South Carolina has experienced an internal systems issue which has resulted in data missing from their dashboard. We urge caution when interpreting their data from this period, and encourage the use of 7 and 14-day averages as more reliable figures than individual metrics.</p>
+
+      </div>
+    
+    <h2>January 11, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 11, 2021, South Carolina announced that their case counts were low due to a &quot; internal systems issue&quot;.</p>
+
+      </div>
+    
+    <h2>January 1, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 1, 2021, Alaska, Connecticut, Kentucky, Louisiana, Massachusetts, Michigan, Minnesota, the Northern Mariana Islands, North Carolina, North Dakota, Ohio, South Carolina, South Dakota, Utah, and Vermont did not update their data, presumably due to the New Years holiday.</p>
+
+      </div>
+    
+    <h2>December 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 27, 2020, the District of Columbia, Oklahoma, South Carolina, and South Dakota noted that their data for December 27, 2020 would include two days of data due to holiday related reporting cadence changes.</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Alaska, California, Connecticut, the District of Columbia, Idaho, Kansas, Louisiana, Massachusetts,  Michigan, Minnesota, North Carolina, North Dakota, New Hampshire, Ohio, Rhode Island, South Carolina, South Dakota, Utah, and Vermont did not update their data due to the Christmas holiday.</p>
+
+      </div>
+    
+    <h2>December 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 20, 2020, South Carolina noted that their Currently hospitalized figure was larger than normal due to an error in facilities reporting. Their Currently hospitalized increased from 1461 to 1471.</p>
+
+      </div>
+    
+    <h2>December 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 16, 2020, South Carolina did not update its Currently hospitalized, Currently in ICU, or Currently on ventilator metrics.</p>
+
+      </div>
+    
+    <h2>December 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 12, 2020, South Carolina did not update their testing data. As a result, Negative (People or Cases) was carried over.</p>
+
+      </div>
+    
+    <h2>December 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 7, 2020, Hawaii and South Carolina did not update their <strong>Currently hospitalized</strong>, <strong>Currently in ICU</strong>, or **Currently on Ventilator **before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>November 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 26, 2020, the listed states either released partial updates or did not update their data at all.</p>
+
+      </div>
+    
+    <h2>October 20, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On 10/20, SC experienced some reporting difficulties. As a result, they did not update their Currently Hospitalized, Currently in ICU, and Currently on Ventilator numbers.</p>
+
+      </div>
+    
+    <h2>October 10, 2020
+      
+    </h2>
+    
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>Typo in positive antibody tests</p>
+
+      </div>
+    
+    <h2>March 4, 2020
+       to May 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On September 16, 2020, we backfilled the missing values of Positive Cases (PCR) from Cases(confirmed and probable) because prior to 6/16 all cases reported on South Carolina's dashboard were confirmed,</p>
+<p>Note: There were stray updates to two fields include in the batch due to spreadsheet format issues.</p>
+<pre><code>SC 2020-03-25
+    hospitalizedCumulative: 101.76 (was 102)
+SC 2020-08-21
+    dateChecked: 2020-08-21 20:28:00+00:00 (was 2020-08-21 20:28:33+00:00)
+</code></pre>
+
+      </div>
+    
+    <h2>September 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On 9/15, South Carolina started reporting antigen testing data, reporting 7,763 positive tests and 23,477 total tests. The “viral (i.e. molecular/PCR) tests” positives, negatives, and totals dropped by about the same amount, likely due to the removal of this data.</p>
+
+      </div>
+    
+    <h2>September 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On September 10, 2020, South Carolina noted that it received a data dump of cases from USC. This caused an artificial spike in the number of cases.</p>
+
+      </div>
+    
+    <h2>August 28, 2020
+       to September 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Annotation / Source Change</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On August 28, 2020, South Carolina redesigned their website/dashboard with new user guides, page formats, and data definitions. The 'Other' link on the state page was deactivated, and as a result, we no longer have a source for recovered values. On September 22, 2020, the reporting of recovered patients resumed.</p>
+
+      </div>
+    
+    <h2>August 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On 8/23, all three categories of testing went down on all three fronts (PCR, antibody, unknown; positive, negative, total). Totals difference: PCR: - &gt; 910,799 -&gt; 891,006 // Antibody: 62,733 -&gt; 61,190 // Unknown: 2,343 -&gt; 2,246
+According to 8/23 PR, this was due to a duplication processing error.
+<a href="https://scdhec.gov/news-releases/south-carolina-announces-latest-covid-19-update-august-23-2020">https://scdhec.gov/news-releases/south-carolina-announces-latest-covid-19-update-august-23-2020</a></p>
+
+      </div>
+    
+    <h2>March 25, 2020
+       to August 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Correction for recoveries on 8/18 due to incorrect formula.</p>
+
+      </div>
+    
+    <h2>March 25, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>July 18, 2020
+       to July 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>From July 18, 2020 to July 28, 2020, there were disruptions in reporting of <code>hospitalizedCurrently</code> in South Carolina due to the switch to an HHS reporting system.</p>
+
+      </div>
+    
+    <h2>July 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>Note on SC website reads: &quot;Since Wednesday, July 22, hospitals have actively been making a transition to a new federal reporting system for providing bed occupancy and other important information. DHEC is monitoring their efforts to transition to the new system. At this time, DHEC is aware that the information currently provided by hospitals through the new system has inaccuracies.&quot; Hospitalization issues with SC have been occurring since 7/18. On 7/27, we froze the curr. hosp., cum. hosp., and curr. ventilator values until further update and until SC can adapt to HHS changes.</p>
+
+      </div>
+    
+    <h2>July 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>onVentilatorCurrently</code>
+            </li>
+          
+            <li>
+              <code>onVentilatorCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>The state started reporting number of COVID patients on ventilators</p>
+
+      </div>
+    
+    <h2>July 23, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>SC today (7/23) had a sizable jump in Current Hospitalizations, from 1607 to 1723, a leap of 116 and worth noting given the media interest. This appears due to that metric not having been reported for several days and resuming reporting today.</p>
+
+      </div>
+    
+    <h2>July 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Resumed Metric</span>
+        </p>
+      
+      <div>
+        <p>Hospitalizations which disappeared after HHS switch back (missing since 7/17), but no historicals</p>
+
+      </div>
+    
+    <h2>July 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsPeopleAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On July 12, 2020, <code>totalTestsPeopleAntibody</code> and <code>negativeTestsPeopleAntibody</code> in South Carolina declined slightly</p>
+
+      </div>
+    
+    <h2>June 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On June 17, 2020, South Carolina started reporting probables for cases and deaths.</p>
+
+      </div>
+    
+    <h2>June 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>On June 16, 2020, we changed the calculation of negative to use a mixed unit calculation in line with other states &quot;totalTestsViral - positiveCasesViral&quot;</p>
+
+      </div>
+    
+    <h2>June 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On June 11, 2020, South Carolina started separating reporting of antibody and PCR tests. This caused the number of  PCR tests and negatives to drop.</p>
+
+      </div>
+    
+    <h2>May 7, 2020
+       to May 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On May 7, 2020, South Carolina announced that a calculating error caused the number of negatives to drop. Presumably, this is also the explanation behind the lower number of tests captured on May 8 , 2020.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

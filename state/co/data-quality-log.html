@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Colorado Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Colorado</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Colorado</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>May 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>In Colorado the Negative value is calculated from Total PCR tests (people) - Confirmed cases, however on May 10, 2020 the Negative value was entered incorrectly. Updating the value using Total PCR tests (people) and Confirmed cases from screenshots.</p>
+
+      </div>
+    
+    <h2>March 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On March 7, 2021, Colorado did not update its **Currently hospitalized**, **Confirmed cases,** **Probable cases,** **Recovered,** **Negative PCR tests (people)**, **Confirmed deaths**, and **Probable deaths** before our publication time.</p>
+
+      </div>
+    
+    <h2>April 24, 2020
+       to February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Clearing duplicate recoveries field after switch to hosp. discharges.</p>
+
+      </div>
+    
+    <h2>April 24, 2020
+       to February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">Other</span>
+        </p>
+      
+      <div>
+        <p>unclearing duplicate recoveries field until full switch to hosp. discharges.</p>
+
+      </div>
+    
+    <h2>April 24, 2020
+       to February 22, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Clearing duplicate recoveries field after switch to hosp. discharges.</p>
+
+      </div>
+    
+    <h2>February 19, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On February 19, 2021 we captured a typo for Colorado's Negative. The typo was 2156620 the correct value is 2126620. The issue has been corrected.</p>
+
+      </div>
+    
+    <h2>February 19, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On February 19, 2021 we captured a typo for Colorado's Total PCR Tests (People). The typo was 2552901 the correct value is 2522901. The issue has been corrected.</p>
+
+      </div>
+    
+    <h2>February 9, 2021
+       to February 11, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 10, 2021, Colorado noted that a temporary technical issue occurring on February 9, 2021, caused their dashboard to show incomplete case counts, while testing and percent positivity data did not update. As a result, we were unable to update testing data on February 10, 2021. A full update for all affected metrics is anticipated on February 11, 2021.</p>
+
+      </div>
+    
+    <h2>February 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Stagnant Source</span>
+        </p>
+      
+      <div>
+        <p>On February 6, 2021, it appears that the link to Colorado's GIS Query was changed. Since this link is where **Positive Antibody Tests** and **Negative Antibody Tests** are usually reported, these values were not captured in today's data.</p>
+
+      </div>
+    
+    <h2>January 31, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 30, 2021, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+    
+    <h2>January 30, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 30, 2021, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+    
+    <h2>January 27, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 26, 2021, Colorado reported that it would be adding over 3,000 past-dated cases from last year, particularly November and December 2020, reported by email and fax to its cumulative figures. This will cause larger than normal case counts over the next few days. We urge caution when using data from this period.</p>
+
+      </div>
+    
+    <h2>January 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On January 26, 2021, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time. This late update was patched in our historical data on January 27, 2021.</p>
+
+      </div>
+    
+    <h2>January 26, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 26, 2020, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+    
+    <h2>January 25, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 25, 2020, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+    
+    <h2>January 10, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On January 10, 2021, Colorado updated their Confirmed cases, Probable cases, Negative PCR tests (people), Currently hospitalized, Recoveries, Deaths (confirmed), and Deaths (probable) after the time of our daily update. This late update was patched shortly after the time of our daily update.</p>
+
+      </div>
+    
+    <h2>January 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On January 6, 2020, Colorado's Positive Cases PCR, Probable Cases, Negative Cases, Curr Hosp, Confirmed Deaths, and Probable Deaths did not update by our publication time.</p>
+
+      </div>
+    
+    <h2>December 22, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 22, 2020, Colorado’s Deaths (confirmed + probable) decreased by 9, and their Deaths (confirmed) decreased by 22 without explanation.</p>
+
+      </div>
+    
+    <h2>December 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 16, 2020, CO did not update its antibody test data, **Recovered,** or **Currently hospitalized.**</p>
+
+      </div>
+    
+    <h2>May 15, 2020
+       to December 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>As of December 11, 2020, we are switching our deaths source for Colorado from deaths due to COVID to deaths among cases. Colorado's deaths due to COVID-19 metric is lagging its deaths among cases metric. On September 1, 2020, there was only a 97 difference between the two figures: 1946 deaths among cases, vs. 1849 deaths due to COVID. On December 11, 2020, there is now a 759 difference—3759 deaths among cases, as opposed to 3005 deaths due to COVID. This means 20% of deaths among cases do not have death certificate data, vs. 5% in September, indicating a lag.</p>
+<p>We are also capturing a confirmed/probable breakdown from May 15, 2020 onward, which we did not capture previously since it was not provided for due to COVID.</p>
+
+      </div>
+    
+    <h2>December 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 6, 2020, Colorado's <strong>Total antibody tests (specimens)</strong> and <strong>Deaths (confirmed and probable)</strong> values were not updated.</p>
+
+      </div>
+    
+    <h2>December 2, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>On December 2, 2020, Colorado did not update their Positive antibody tests (specimens) or Negative antibody tests (specimens) before the time of our daily update. Later on December 2, 2020, this late update was patched</p>
+
+      </div>
+    
+    <h2>December 2, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 2, 2020, Colorado did not provide an update for their antibody testing data.</p>
+
+      </div>
+    
+    <h2>December 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 1, 2020, Colorado did not provide an update for their <strong>Positive antibody tests (specimens)</strong> or their <strong>Negative antibody tests (specimens)</strong>.</p>
+
+      </div>
+    
+    <h2>November 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On November 28, 2020, Colorado's Positive antibody tests (specimens) and Negative antibody tests (specimens) updated after we published our daily update. Early on November 29, 2020 this late update was patched in our historical data.</p>
+
+      </div>
+    
+    <h2>November 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 25, 2020, Colorado did not update their **Positive antibody tests (specimens)** and **Negative antibody tests (specimens)** numbers.</p>
+
+      </div>
+    
+    <h2>November 18, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Missed Update</span>
+        </p>
+      
+      <div>
+        <p>On November 18, 2020, Colorado updated their Positive antibody tests (specimens) and Negative antibody tests (specimens) after our daily update. On November 25, 2020, we patched this late update in our historical data.</p>
+
+      </div>
+    
+    <h2>March 17, 2020
+       to October 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Dataset / Timeseries</span>
+        </p>
+      
+      <div>
+        <p>On November 18, 2020, we updated a few values for Total PCR tests (people), Positive, Cumulative hospitalized, and Deaths, using a download file provided on Colorado's website</p>
+
+      </div>
+    
+    <h2>March 4, 2020
+       to November 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>privateNotes</code>
+            </li>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+            <li>
+              <code>doubleChecker</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>checker</code>
+            </li>
+          
+            <li>
+              <code>pending</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>On November 18, 2020, we shifted Colorado's time-series by one day to begin capturing information on the day it is reported instead of on a one day lag.</p>
+
+      </div>
+    
+    <h2>November 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>lastUpdateTime</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>On November 16, 2020, we corrected a mistake in our Last Update (ET) field for November 11, 2020.</p>
+
+      </div>
+    
+    <h2>November 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 13, 2020, Colorado did not provide an update for their Positive antibody tests (specimens) and Negative antibody tests (specimens).</p>
+
+      </div>
+    
+    <h2>November 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 13th, 2020, Colorado reported an increase in Positive PCR tests (people) that was less than that of the increase in Positive PCR Tests (people). This resulted in a large decrease in Negative (People or Cases) metric due to our calculations. For now, we are holding this metric, Negative PCR Tests (People), constant until further notice.</p>
+
+      </div>
+    
+    <h2>September 24, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 9/24, CO revised down their historical time series of antibody tests without releasing a public statement. We captured the lowered value and have sent out outreach to ask about this.</p>
+
+      </div>
+    
+    <h2>April 25, 2020
+       to August 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Backfill Mistake Correction</span>
+        </p>
+      
+      <div>
+        <p>Total positives came from PRs on 5/11, 5/8, 4/29 which caused probables to be misaligned. There were incorrect confirmed or total positive values on 8/27 and 6/13.</p>
+
+      </div>
+    
+    <h2>March 5, 2020
+       to July 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>n 7/28, CTP introduced an explicit probables column. Backfilling through 4/24 (when CO first separated out confirmed cases on their dashboard) by subtracting confirmed cases from total cases.</p>
+
+      </div>
+    
+    <h2>April 18, 2020
+       to September 1, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dateChecked</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>privateNotes</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Update data that was missing from dashboard and dataset after CO change dashboards</p>
+
+      </div>
+    
+    <h2>August 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/26, CO returned their breakdown table. Probable case capturing will resume as normal</p>
+
+      </div>
+    
+    <h2>August 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/21, CO updated their dashboard and no longer provides probable and confirmed cases separated -- did not update confirmed/probable and negative counts. We're looking into the ArcGIS query to see if we can get confirmed/probable case counts from there. The query failed.</p>
+
+      </div>
+    
+    <h2>March 4, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>As of August 13, 2020, Colorado's **total test results** reflect total test encounters. The number of unique people tested is available in our API as `totalTestsPeopleViral`.</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>July 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Note on CO website reads: &quot;Due to a server issue yesterday and today with our electronic laboratory reporting system, the number of tests completed and cases reported today, July 27, may be artificially low. We expect the issue to be resolved by the end of the day and any discrepancies accounted for in our data tomorrow.&quot;</p>
+
+      </div>
+    
+    <h2>July 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>The state of Colorado has released a new testing variable titled &quot;Testing Encounters&quot;, which captures the number of unique people tested each day, and might include people who were tested multiple times.</p>
+
+      </div>
+    
+    <h2>July 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Decreased their cumulative hospitalization by 13</p>
+
+      </div>
+    
+    <h2>July 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On July 6, 2020, Colorado’s Total deaths decreased by 10, and their Probable deaths decreased by 12 without explanation.</p>
+
+      </div>
+    
+    <h2>June 14, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On June 14, 2020, Colorado revised previous &quot;daily discharged&quot; numbers. This caused an overall decline in their **Hospital discharge** data available in our API.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

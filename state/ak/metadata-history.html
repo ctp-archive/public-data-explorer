@@ -1,0 +1,3247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Alaska Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Alaska</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Alaska</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-15T15:04:00.000-08:00">February 15, 2021, 3:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-14T17:29:21.000-08:00">February 14, 2021, 5:29 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-10T22:27:25.000-08:00">February 10, 2021, 10:27 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-06T15:03:55.000-08:00">February 6, 2021, 3:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-02T23:05:24.000-08:00">February 2, 2021, 11:05 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-27T23:26:40.000-08:00">January 27, 2021, 11:26 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-21T15:29:06.000-08:00">January 21, 2021, 3:29 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-20T15:46:50.000-08:00">January 20, 2021, 3:46 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-07T17:57:32.000-08:00">January 7, 2021, 5:57 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-27T17:18:14.000-08:00">November 27, 2020, 5:18 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-27T14:03:39.000-08:00">November 27, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-20T10:31:41.000-08:00">November 20, 2020, 10:31 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-18T01:02:45.000-08:00">November 18, 2020, 1:02 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-16T12:02:56.000-08:00">November 16, 2020, 12:02 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-15T17:22:14.000-08:00">November 15, 2020, 5:22 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-08T14:03:22.000-08:00">November 8, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-07T14:03:22.000-08:00">November 7, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-06T12:02:44.000-08:00">November 6, 2020, 12:02 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T12:03:13.000-07:00">September 18, 2020, 12:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T17:08:12.000-07:00">September 2, 2020, 5:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-17T09:03:32.000-07:00">August 17, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T19:02:38.000-07:00">July 28, 2020, 7:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-16T10:02:17.000-07:00">July 16, 2020, 10:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-06T13:02:41.000-07:00">July 6, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-22T14:02:01.000-07:00">June 22, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T12:02:16.000-07:00">May 25, 2020, 12:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-23T06:01:20.000-07:00">April 23, 2020, 6:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-05T09:00:01.000-07:00">April 5, 2020, 9:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-29T21:43:06.000-07:00">March 29, 2020, 9:43 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T13:00:05.000-07:00">March 27, 2020, 1:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-23T22:00:06.000-07:00">March 23, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of February 6, 2021, <a href="https://twitter.com/alaska_dhss/status/1355349178335944708?s=21">Alaska no longer updates</a> their COVID-19 dashboards on weekends. As a result, we will be unable to update their data on Saturdays and Sundays.</p>
+<p>On February 12, 2021, Alaska <a href="https://twitter.com/Alaska_DHSS/status/1360413364065767424?s=20">announced</a> via the official Alaska Department of Health and Social Services twitter that there would be no update to their data on February 15, 2021 due to the Presidents Day holiday.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their dashboard that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://alaska-coronavirus-vaccine-outreach-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Cases (confirmed plus probable)</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their data summary tables. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased also.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-15T15:04:00.000-08:00">February 15, 2021, 3:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of February 6, 2021, <a href="https://twitter.com/alaska_dhss/status/1355349178335944708?s=21">Alaska no longer updates</a> their COVID-19 dashboards on weekends. As a result, we will be unable to update their data on Saturdays and Sundays.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their dashboard that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://alaska-coronavirus-vaccine-outreach-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Cases (confirmed plus probable)</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their data summary tables. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased also.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-14T17:29:21.000-08:00">February 14, 2021, 5:29 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of February 6, 2021, <a href="https://twitter.com/alaska_dhss/status/1355349178335944708?s=21">Alaska no longer updates</a> their COVID-19 dashboards on weekends. As a result, we will be unable to update their data on Saturdays and Sundays.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their dashboard that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://alaska-coronavirus-vaccine-outreach-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Cases (confirmed plus probable)</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their data summary tables. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-10T22:27:25.000-08:00">February 10, 2021, 10:27 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of February 6, 2021, <a href="https://twitter.com/alaska_dhss/status/1355349178335944708?s=21">Alaska no longer updates</a> their COVID-19 dashboards on weekends. As a result, we will be unable to update their data on Saturdays and Sundays.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their dashboard that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://alaska-coronavirus-vaccine-outreach-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their data summary tables. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-06T15:03:55.000-08:00">February 6, 2021, 3:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their dashboard that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://alaska-coronavirus-vaccine-outreach-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their data summary tables. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-02T23:05:24.000-08:00">February 2, 2021, 11:05 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">COVID Response Hub</a>that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-27T23:26:40.000-08:00">January 27, 2021, 11:26 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">COVID Response Hub</a>that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for this metric is available in the historical data, and our data downloads.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-21T15:29:06.000-08:00">January 21, 2021, 3:29 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On January 20, 2021, Alaska <a href="https://www.adn.com/alaska-news/2021/01/20/tracking-covid-19-in-alaska-record-23-deaths-and-167-infections-reported-wednesday/">reported</a> a comparatively large increase of 23 deaths due to a review of death certificates.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">COVID Response Hub</a>that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s <strong>Recovered</strong> will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-20T15:46:50.000-08:00">January 20, 2021, 3:46 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On January 4, 2020, Alaska noted that &quot;counted deaths in Alaska include COVID-19 cases confirmed through a lab result as well as probable deaths based on confirmed COVID-19 clinical and epidemiological criteria as defined by the CDC with no confirmatory lab testing.&quot; Due to this change we are unable to update the <strong>Confirmed deaths</strong> metric after January 4, 2020.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">COVID Response Hub</a>that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s <strong>Recovered</strong> will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-07T17:57:32.000-08:00">January 7, 2021, 5:57 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On January 1, 2021, Alaska noted that there would be no update to their data on January 1, 2021.</p>
+<p>On December 25, 2020, Alaska announced on their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">COVID Response Hub</a>that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s <strong>Recovered</strong> will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 25, 2020, Alaska announced on their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">COVID Response Hub</a>that there would be no update to their data on December 25, 2020.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s <strong>Recovered</strong> will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s <strong>Recovered</strong> will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Total cases</strong> field to include only residents. We also deleted the time series for <strong>Confirmed cases</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> and <strong>Positive PCR tests (specimens)</strong> decreased without explanation. As a result, <code>Negative</code>, which is calculated by subtracting <strong>Total cases</strong> from <strong>Total PCR tests (specimens)</strong>, decreased as well.</p>
+<p>On November 5, 2020, Alaska’s <strong>Total PCR tests (specimens)</strong> increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 17, 2020, Alaska <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/cases-frequently-asked-questions">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s Recovered will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Positive</strong> field to include only residents. We also deleted the time series for <strong>Positive Cases (PCR)</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-27T17:18:14.000-08:00">November 27, 2020, 5:18 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 27, 2020, Alaska <a href="https://www.alaskasnewssource.com/2020/11/27/lab-performing-covid-19-tests-forgot-to-give-its-data-to-the-state/">announced</a> that its large increase in *<em>Total tests</em> and <strong>Total cases</strong> was due to a one-time data correction due to reporting delays from a lab.</p>
+<p>On November 17, 2020, Alaska <a href="https://ago-item-storage.s3.us-east-1.amazonaws.com/47788a51f7004a25bc87e0b08d41e832/Cases_Frequently_Asked_Questions.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQC51dO%2BzCpNwZut7sn0RuqpC6T7ASOo4nX0rlAdIKL0zAIgZWuDc0Op0UPuzORUBbN%2BUSZn8tCx%2BKAOGXluV2T8184qtAMIRxAAGgw2MDQ3NTgxMDI2NjUiDEwElmxx32eGSXrGGCqRAwTfUyPDX7CA6kPu7cWZujS4mp5iF4FMEzg5FSixBdZ%2Fp8UbvHKXVcCPrgTyhtOznuJ5eMZhr%2BMDplB8fJXq7LvQkWlIpNtwXyQSrZKzsrzCvTGWJWbgMfIjd86rMN8qcx5CaUAzQlrt64NrVMkonnsAXSvc%2Fsd8xaGHIY15UwGmZWK8oi65kdI09Uo3hG0GKi8IjzDiVHNWma%2BWR1gkcHd4KBZF4YNuxBAvgZJwLi51C4HSFwyXwpIm30UILL6DvwzurfhvBW161DJ8DFvVgMQ2clanq6MLGQxtVsPnbh4tX8CYqzVDXVgo5QabPoUjujP1B%2FT29QruGlwuk4XWiqG1I273yASInT0NNv7QqsMQPdtN%2Bi5FPUMdtfwPsx0sex59wzwJnarmzW6B3sEY2sWEIyiLipk%2FmJui7lsD%2BD0%2FIFlzvD6q8udNJbqC37j%2BYd11P0jO%2F%2Finnb0SnI5K3SaAkCvp2%2F5E6wuYMRO%2BvLaN6MdjcfmUC0GHLfOJv%2Bwu0NiIKiSTuWP9Bk5MiVvPg9imML3I1P0FOusBTS7fRsO3Vru9ONoAOAonkl6rHKmLXUvUS7PX9YjimhDsbQ1tKmh9trfGhpy2MyxAGc8HKIhkS491GXUYd4PGhDziYsho1wHOtHiHN6s5rRpQILEbagih3kt%2FHA1WfvmYuVWoI6f0QojE9JLkpgA%2F0AuxD6ruCrN1RU2G6sHmo1Dy%2F2XmS9%2F36lV2Cvyfsbt6Avg8IKjjf2zRzbv5YELHgkXdFJKzF9LJyPcPVcsC%2F1z%2FbG864Tu091xGjiOrn%2FPUv3E2ECYD33SsDDzNq16B7oETYDlMSyjd7j%2FTFnjPecH1VJYRhcdl8KWGPw%3D%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20201118T145717Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAYZTTEKKE6B5FUIYI%2F20201118%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=1c852d83f08caa65ec7b9859288dfa3cefe1567607c41447572810e771be0c2e">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s Recovered will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Positive</strong> field to include only residents. We also deleted the time series for <strong>Positive Cases (PCR)</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-27T14:03:39.000-08:00">November 27, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 17, 2020, Alaska <a href="https://ago-item-storage.s3.us-east-1.amazonaws.com/47788a51f7004a25bc87e0b08d41e832/Cases_Frequently_Asked_Questions.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQC51dO%2BzCpNwZut7sn0RuqpC6T7ASOo4nX0rlAdIKL0zAIgZWuDc0Op0UPuzORUBbN%2BUSZn8tCx%2BKAOGXluV2T8184qtAMIRxAAGgw2MDQ3NTgxMDI2NjUiDEwElmxx32eGSXrGGCqRAwTfUyPDX7CA6kPu7cWZujS4mp5iF4FMEzg5FSixBdZ%2Fp8UbvHKXVcCPrgTyhtOznuJ5eMZhr%2BMDplB8fJXq7LvQkWlIpNtwXyQSrZKzsrzCvTGWJWbgMfIjd86rMN8qcx5CaUAzQlrt64NrVMkonnsAXSvc%2Fsd8xaGHIY15UwGmZWK8oi65kdI09Uo3hG0GKi8IjzDiVHNWma%2BWR1gkcHd4KBZF4YNuxBAvgZJwLi51C4HSFwyXwpIm30UILL6DvwzurfhvBW161DJ8DFvVgMQ2clanq6MLGQxtVsPnbh4tX8CYqzVDXVgo5QabPoUjujP1B%2FT29QruGlwuk4XWiqG1I273yASInT0NNv7QqsMQPdtN%2Bi5FPUMdtfwPsx0sex59wzwJnarmzW6B3sEY2sWEIyiLipk%2FmJui7lsD%2BD0%2FIFlzvD6q8udNJbqC37j%2BYd11P0jO%2F%2Finnb0SnI5K3SaAkCvp2%2F5E6wuYMRO%2BvLaN6MdjcfmUC0GHLfOJv%2Bwu0NiIKiSTuWP9Bk5MiVvPg9imML3I1P0FOusBTS7fRsO3Vru9ONoAOAonkl6rHKmLXUvUS7PX9YjimhDsbQ1tKmh9trfGhpy2MyxAGc8HKIhkS491GXUYd4PGhDziYsho1wHOtHiHN6s5rRpQILEbagih3kt%2FHA1WfvmYuVWoI6f0QojE9JLkpgA%2F0AuxD6ruCrN1RU2G6sHmo1Dy%2F2XmS9%2F36lV2Cvyfsbt6Avg8IKjjf2zRzbv5YELHgkXdFJKzF9LJyPcPVcsC%2F1z%2FbG864Tu091xGjiOrn%2FPUv3E2ECYD33SsDDzNq16B7oETYDlMSyjd7j%2FTFnjPecH1VJYRhcdl8KWGPw%3D%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20201118T145717Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAYZTTEKKE6B5FUIYI%2F20201118%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=1c852d83f08caa65ec7b9859288dfa3cefe1567607c41447572810e771be0c2e">announced</a> that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s Recovered will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Positive</strong> field to include only residents. We also deleted the time series for <strong>Positive Cases (PCR)</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com">data summary tables</a>. After originally using the data summary tables on November 7th, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-20T10:31:41.000-08:00">November 20, 2020, 10:31 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 17, 2020, Alaska [announced] (https://ago-item-storage.s3.us-east-1.amazonaws.com/47788a51f7004a25bc87e0b08d41e832/Cases_Frequently_Asked_Questions.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQC51dO%2BzCpNwZut7sn0RuqpC6T7ASOo4nX0rlAdIKL0zAIgZWuDc0Op0UPuzORUBbN%2BUSZn8tCx%2BKAOGXluV2T8184qtAMIRxAAGgw2MDQ3NTgxMDI2NjUiDEwElmxx32eGSXrGGCqRAwTfUyPDX7CA6kPu7cWZujS4mp5iF4FMEzg5FSixBdZ%2Fp8UbvHKXVcCPrgTyhtOznuJ5eMZhr%2BMDplB8fJXq7LvQkWlIpNtwXyQSrZKzsrzCvTGWJWbgMfIjd86rMN8qcx5CaUAzQlrt64NrVMkonnsAXSvc%2Fsd8xaGHIY15UwGmZWK8oi65kdI09Uo3hG0GKi8IjzDiVHNWma%2BWR1gkcHd4KBZF4YNuxBAvgZJwLi51C4HSFwyXwpIm30UILL6DvwzurfhvBW161DJ8DFvVgMQ2clanq6MLGQxtVsPnbh4tX8CYqzVDXVgo5QabPoUjujP1B%2FT29QruGlwuk4XWiqG1I273yASInT0NNv7QqsMQPdtN%2Bi5FPUMdtfwPsx0sex59wzwJnarmzW6B3sEY2sWEIyiLipk%2FmJui7lsD%2BD0%2FIFlzvD6q8udNJbqC37j%2BYd11P0jO%2F%2Finnb0SnI5K3SaAkCvp2%2F5E6wuYMRO%2BvLaN6MdjcfmUC0GHLfOJv%2Bwu0NiIKiSTuWP9Bk5MiVvPg9imML3I1P0FOusBTS7fRsO3Vru9ONoAOAonkl6rHKmLXUvUS7PX9YjimhDsbQ1tKmh9trfGhpy2MyxAGc8HKIhkS491GXUYd4PGhDziYsho1wHOtHiHN6s5rRpQILEbagih3kt%2FHA1WfvmYuVWoI6f0QojE9JLkpgA%2F0AuxD6ruCrN1RU2G6sHmo1Dy%2F2XmS9%2F36lV2Cvyfsbt6Avg8IKjjf2zRzbv5YELHgkXdFJKzF9LJyPcPVcsC%2F1z%2FbG864Tu091xGjiOrn%2FPUv3E2ECYD33SsDDzNq16B7oETYDlMSyjd7j%2FTFnjPecH1VJYRhcdl8KWGPw%3D%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20201118T145717Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAYZTTEKKE6B5FUIYI%2F20201118%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=1c852d83f08caa65ec7b9859288dfa3cefe1567607c41447572810e771be0c2e) that “As of 11/17/2020, the cases dashboard will not be showing data on recovered and active cases due to the increasing State case load”. As a result, Alaska’s Recovered will no longer be updated.</p>
+<p>On November 16, 2020 we updated the <strong>Positive</strong> field to include only residents. We also deleted the time series for <strong>Positive Cases (PCR)</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their [data summary tables] (https://coronavirus-response-alaska-dhss.hub.arcgis.com). After originally using the data summary tables on November 7th, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-18T01:02:45.000-08:00">November 18, 2020, 1:02 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 16, 2020 we updated the <strong>Positive</strong> field to include only residents. We also deleted the time series for <strong>Positive Cases (PCR)</strong> because Alaska is lumping PCR and antigen testing for their case definition.</p>
+<p>On November 16, 2020 we added <strong>Cumulative Hospitalized</strong> (which includes both residents and non-residents), although the value does not reflect current hospitalizations.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their [data summary tables] (https://coronavirus-response-alaska-dhss.hub.arcgis.com). After originally using the data summary tables on November 7th, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-16T12:02:56.000-08:00">November 16, 2020, 12:02 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Negative%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_negative%27%7D%5D</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/Tests_Dataset/FeatureServer/0/query?where=Test_Result+%3D+%27Positive%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27count%27%2C+%27onStatisticField%27%3A+%27FID%27%2C+%27outStatisticFieldName%27%3A+%27tests_positive%27%7D%5D</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their [data summary tables] (https://coronavirus-response-alaska-dhss.hub.arcgis.com). After originally using the data summary tables on November 7th, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-15T17:22:14.000-08:00">November 15, 2020, 5:22 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their [data summary tables] (https://coronavirus-response-alaska-dhss.hub.arcgis.com). After originally using the data summary tables on November 7th, we have reversed that decision, and reverted the values to their November 6th state. The frozen values were replaced on November 10, with values from the state's <a href="https://coronavirus-response-alaska-dhss.hub.arcgis.com/datasets/tests-dataset">Tests Dataset</a>.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be &quot;temporarily disabled from November 6th to November 9th&quot; and that testing data could be accessed through their [data summary tables] (https://coronavirus-response-alaska-dhss.hub.arcgis.com). After originally using the data summary tables on November 7th, we have reversed that decision, reverted the values to their November 6th state, and will wait until November 9th to update testing data for Alaska, since the values in the data summary tables are significantly less than those previously reported by the dashboard.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-08T14:03:22.000-08:00">November 8, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 7, 2020, Alaska announced that their testing dashboard would be “temporarily disabled from November 6th to November 9th” and that testing data could be accessed through their [data summary tables] (https://coronavirus-response-alaska-dhss.hub.arcgis.com). On November 7, 2020, we sourced Total PCR tests (specimens), Positive PCR tests (specimens), and Negative PCR tests (specimens) from their data summary tables. As a result, Total PCR tests (specimens) and Negative PCR tests (specimens), and Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens) decreased.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-07T14:03:22.000-08:00">November 7, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 6, 2020, Alaska’s Total PCR tests (specimens) and Positive PCR tests (specimens) decreased without explanation. As a result, Negative PCR tests (people), which is calculated by subtracting Positive PCR tests (people) from Total PCR tests (specimens), decreased as well.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-06T12:02:44.000-08:00">November 6, 2020, 12:02 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 5, 2020, Alaska’s Total PCR tests (specimens) increased from roughly 628k to 782k. We were unable to find an explanation for the increase.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T12:03:13.000-07:00">September 18, 2020, 12:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of September 18, 2020, Alaska's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T17:08:12.000-07:00">September 2, 2020, 5:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Alaska reports a &quot;Total count&quot; of people who have been hospitalized, but we do not record that count in our <strong>Ever hospitalized</strong> metric, since it does not include people who are currently in the hospital.</p>
+<p>As of July 16, 2020, we are reporting non-resident cases as part of <strong>Cases or Positive PCR tests (people)</strong> for Alaska.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://experience.arcgis.com/experience/ed1c874ca60b4c15ab09095a070065ca</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.</p>
+<p>As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+<p>As of July 16, we are reporting adding non-resident cases as part of total case counts for Alaska</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-17T09:03:32.000-07:00">August 17, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.</p>
+<p>As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+<p>As of July 16, we are reporting adding non-resident cases as part of total case counts for Alaska</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.
+As of July 16, we are reporting adding non-resident cases as part of total case counts for Alaska</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T19:02:38.000-07:00">July 28, 2020, 7:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.
+On July 16, we are reporting adding non-resident cases as part of total case counts for Alaska</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-16T10:02:17.000-07:00">July 16, 2020, 10:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-06T13:02:41.000-07:00">July 6, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://alaska-dhss.maps.arcgis.com/apps/opsdashboard/index.html#/8782a14ef52342e99f866a3b8a3e624a</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (today's date + time = 00:00)
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-22T14:02:01.000-07:00">June 22, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (today's date + time = 00:00)
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (today's date + time = 00:00)
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (today's date + time = 00:00)
+As of May 16, Alaska reports specimens tested; because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T12:02:16.000-07:00">May 25, 2020, 12:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (today's date + time = 00:00)
+As of May 16, Alaska reports specimens tested, because some people may be tested more than once, this number may be higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (today's date + time = 00:00)</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-23T06:01:20.000-07:00">April 23, 2020, 6:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (todays date + time = 00:00)</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-05T09:00:01.000-07:00">April 5, 2020, 9:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (current date + time = 15:00) site says that cases reported as of 3pm</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-29T21:43:06.000-07:00">March 29, 2020, 9:43 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page.
+Negatives = (Totals – Positives)
+Positives occasionally update before totals do; do not revise negatives down, keep the last calculated negative.
+Last Updated (Local Time) = (current date + time = 15:00)</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total tests are taken from the annotations on the charts on the page. Negatives are inferred from (totals – positives). Negatives reported on site have decreased at various times, without explanation. Latest update time taken from <a href="http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx">this page</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T13:00:05.000-07:00">March 27, 2020, 1:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We count the reported number as &quot;persons tested&quot;. Total tests are taken from the annotations on the charts on the page. Negatives are inferred from (totals – positives). Negatives reported on site have decreased at various times, without explanation. Latest update time taken from <a href="http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx">this page</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We count the reported number as &quot;persons tested&quot;. Total tests are taken from the annotations on the charts on the page. Negatives are inferred from (totals – positives). Negatives reported on site have decreased at various times, without explanation. Latest update time taken from <a href="http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx">this page</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-23T22:00:06.000-07:00">March 23, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Unclear if their reported number means &quot;persons tested&quot; or &quot;specimens tested.&quot; We count them as &quot;persons tested&quot; because the header indicates this is the case. Total tests are taken from the annotations on the charts on the page. Negatives are calculated as totals – positives. Negatives reported on site have decreased at various times, without explanation. Latest update time taken from <a href="http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx">this page</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Unclear if their reported number means &quot;persons tested&quot; or &quot;specimens tested.&quot; We count them as &quot;persons tested&quot; because the header indicates this is the case. Negatives reported on site have decreased at various times in recent hours, without explanation.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Unclear if their reported number means &quot;persons tested&quot; or &quot;specimens tested.&quot; We count them as &quot;persons tested&quot; because the header indicates this is the case. Negatives reported on site have decreased at various times in recent hours, without explanation.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Unclear if they mean &quot;persons tested&quot; or &quot;specimens tested.&quot; We count them as &quot;persons tested&quot;.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Unclear if they mean &quot;persons tested&quot; or &quot;specimens tested.&quot; We count them as &quot;persons tested&quot; for now.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Unclear if they mean &quot;persons tested&quot; or &quot;specimens tested.&quot; We count them as &quot;persons tested&quot; for now.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>It's not clear if they refer to &quot;persons tested&quot; or &quot;specimens tested.&quot; We are counting them as &quot;persons tested&quot; for now.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We’ve combined the “Confirmed” and “Presumed Positive” numbers. Negatives are reported as “Ruled Out.”</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/default.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

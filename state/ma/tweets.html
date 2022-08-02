@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Massachusetts Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Massachusetts</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Massachusetts</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 8, 2020, 10:09 PM PDT</h2>
+    <div>
+      <p>New  update with state data up to midnight eastern: tally shows over 4000 tests.</p>
+<p>https://t.co/Zc39AZVRge</p>
+<p>WA and CA have conducted the most tests and have the most cases. Big gaps in our testing capacity knowledge: MA, TX, GA, PA.</p>
+
+    </div>
+  
+    <h2>March 11, 2020, 1:22 PM PDT</h2>
+    <div>
+      <p>We await updates from Massachusetts and California, which will also have large numbers. Colorado's numbers are also climbing, standing at 28 cases as of their last update.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 12:51 AM PDT</h2>
+    <div>
+      <p>As we close up the shop for the night, we've been able to track just under 8000 people tested for #COVID19. That's not a lot, and just a few thousand tests got reported today.</p>
+<p>We're missing fresh total test numbers from some big states: CA, NY, and MA.</p>
+<p>https://t.co/iERV2wLMmu https://t.co/dsb0GejjeI</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 12:51 AM PDT</h2>
+    <div>
+      <p>MA's case is instructive on why this is important. MA reported a cumulative 92 cases Tuesday. Wednesday's total went up only to 95. Is that because they didn't test many people (bad) or they tested a lot and only got three positives (good)?</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 12:51 AM PDT</h2>
+    <div>
+      <p>This puts MA citizens in a real bind. How can you make decisions if you don't know the severity of the outbreak? @MassGovernor @MassDPH The public needs comprehensive numbers.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 10:01 PM PDT</h2>
+    <div>
+      <p>The current number of people tested is now up to almost 14,000. Still far, far too low.</p>
+<p>GA, MA, TX remain data holes.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 10:38 PM PDT</h2>
+    <div>
+      <p>To clarify: these states only post positive tests, which doesn't allow us to understand the scope of their testing. Thankfully @WBUR got a number of out MA. 95 positives out of &quot;more than 200&quot; tests. Even if &quot;more than 200&quot; means 299, that's not good. https://t.co/uQPTQsetk5</p>
+
+    </div>
+  
+    <h2>March 13, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>These numbers are a lower bound for a few reasons:</p>
+<ol>
+<li>We are still waiting on accurate negative test counts from CA, MA, GA, and TX, among other states.</li>
+<li>Commercial labs only report positive results to the states.</li>
+</ol>
+
+    </div>
+  
+    <h2>March 13, 2020, 11:33 PM PDT</h2>
+    <div>
+      <p>Closing up the shop for the night. We're showing 19,066 tests. 2,182 positives. Here are the four states with the largest known outbreaks: WA, NY, CA, MA. https://t.co/LrCchHRS3V</p>
+
+    </div>
+  
+    <h2>March 14, 2020, 1:41 PM PDT</h2>
+    <div>
+      <p>The biggest news today is that we got a fresh total test number from MA, which had been lacking. We do not have a fresh number for Washington State, which is doing the most testing. Among smaller states, the situations in Louisiana and Colorado stand out. https://t.co/qSmFF4SLva</p>
+
+    </div>
+  
+    <h2>March 14, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>@joshtpm Washington and New York are driving the numbers. We're falling further behind on CA testing numbers. Now that MA is out in the open, the other big question mark is TX.</p>
+
+    </div>
+  
+    <h2>March 15, 2020, 1:35 PM PDT</h2>
+    <div>
+      <p>By known positive tests, the 10 states with the highest per capita number of cases are:
+Washington
+New York
+Colorado
+Massachusetts
+Louisiana
+Rhode Island
+New Jersey
+South Dakota
+New Hampshire
+Georgia</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 1:40 PM PDT</h2>
+    <div>
+      <p>One positive development is that Texas, Massachusetts, and several other states have begun to include total testing numbers from <em>commercial</em> labs, which are coming online. TX, for example: https://t.co/motgizKtMQ</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 1:49 PM PDT</h2>
+    <div>
+      <p>Worse, we're not able to tell you what the scale of that problem is on a state-by-state or national level. In Texas, private labs are doing ~50% of the testing. In MA, it's less than 25%. In AK, it's closer to 10%.</p>
+
+    </div>
+  
+    <h2>March 20, 2020, 1:07 PM PDT</h2>
+    <div>
+      <p>@davidgaliel @AdrienneLaF @TheAtlantic Most states report people tested explicitly. There are a few questions on the samples issue, specifically Massachusetts. Believe me, we'd like clarity on this, but I don't think it's nearly as big an issue with the dataset as the commercial testing invisibility. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 21, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>New York accelerated past Washington in per capita positive tests. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Massachusetts
+Colorado
+Rhode Island
+Illinois</p>
+
+    </div>
+  
+    <h2>April 18, 2020, 1:49 PM PDT</h2>
+    <div>
+      <p>Eight states have now reported over 1,000 deaths. Here are the 15 hardest-hit states. Massachusetts is a state we're keeping a close eye on right now. Last Saturday, MA reported 87 deaths. Today, 156. https://t.co/kMg96woG8j</p>
+
+    </div>
+  
+    <h2>April 20, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>Connecticut reported its single largest increase daily death toll.</p>
+<p>Other states we're watching for Tuesday: Massachusetts, Michigan, Georgia, Florida, Texas, Kentucky. https://t.co/iVJQMeS7yQ</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 10:55 PM PDT</h2>
+    <div>
+      <p>@covidtrace1 @dougnlamb @sonofrona @alexismadrigal We do, when that is possible (see, recently: MA and WA). It's not always possible. They just dump a bunch of negatives every few days. You could smooth out a lot of it with some multi-day averaging. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 28, 2020, 2:16 PM PDT</h2>
+    <div>
+      <p>We have a correction: in cleaning some older data, we introduced too high of a number into MA data over the weekend. This made yesterday's new test number lower than it should have been. We regret the error.</p>
+<p>With the fix in, the recent numbers are smoother, which is good. https://t.co/LxWwoUVkGC</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>9 states reported over 50 deaths:</p>
+<p>California: 98
+Florida: 74
+Illinois: 102
+Indiana: 54
+Massachusetts: 130
+Michigan: 154
+New Jersey: 204
+New York: 299
+Pennsylvania: 64</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>The 7-day rolling average of deaths for Texas and Florida has now surpassed some early hotspots like Michigan and Massachusetts.</p>
+<p>The trajectory looks more like harder hit states like New Jersey. https://t.co/D49edXZKXT</p>
+
+    </div>
+  
+    <h2>August 5, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Some of the testing fall off is attributable to IT trouble in MA today and storm-related closures in FL. Still, the problem is broader. Weekly testing declined for the first time ever in our dataset. https://t.co/50oeo4GU0l</p>
+
+    </div>
+  
+    <h2>September 2, 2020, 4:19 PM PDT</h2>
+    <div>
+      <p>Massachusetts revised their probable case definition, resulting in a drop of 7,757 cumulative cases. To allow a more reasonable view of the current nationwide trends, we placed a zero for MA's daily cases today. https://t.co/KdDo6UJR2C</p>
+
+    </div>
+  
+    <h2>September 17, 2020, 11:53 AM PDT</h2>
+    <div>
+      <p>Where possible, we now use states’ “Test Encounters” or “Specimens” as the unit for these total tests, rather than “Unique People.” (This is all fairly complicated, there’s tons of detail in the blog post.) So far, we’ve switched CO, MA, ND, and RI w/ many more on deck.</p>
+
+    </div>
+  
+    <h2>November 26, 2020, 4:01 PM PST</h2>
+    <div>
+      <p>The following jurisdictions did not report today: AS, CT, FL, KS, KY, LA, MA, MI, MN, MP, NC, NH, OH, RI, SC, SD, UT, VI, VT, WY. 10 more reported partial data. Some will report two days of data tomorrow.</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 4:54 PM PST</h2>
+    <div>
+      <p>Zooming into the state level, more than 10 states broke case records today: AK, AR, AZ, DE, IN, MA, ME, NJ, PA, RI, and VT. Note: AZ had a higher count on Dec. 1, but it was a data backlog. https://t.co/ao6T6EQxiH</p>
+
+    </div>
+  
+    <h2>December 25, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>20 states provided no update: AK, CA, CT, DC, ID, KS, KY, LA, MA, MI, MN, MP, NC, ND, NH, OH, RI, SC, SD, UT, VT.</p>
+<p>7 other states made partial updates.</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 12:42 PM PST</h2>
+    <div>
+      <p>On a more hopeful note, hospitalizations declined in almost every state over the past week. Only New York saw an increase in hospitalized patients (4% higher), while MA was essentially flat. https://t.co/TlTFT1oJjl</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:23 PM PST</h2>
+    <div>
+      <p>Today’s update includes no data from CT, KS, LA, or RI, and no data except hospitalizations from AL. The MA update includes data from approximately 24,800 PCR tests not reported yesterday due to a technical problem.</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

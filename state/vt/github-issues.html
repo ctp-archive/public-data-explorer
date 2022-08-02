@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Vermont Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Vermont</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Vermont</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>April 2, 2021, 6:41 AM PDT</td>
+          <td>1141</td>
+          <td>
+            <a href="#issue-1141">[VT] Carry over 12/8 confirmed cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 2, 2021, 6:41 AM PDT</td>
+          <td>1141</td>
+          <td>
+            <a href="#issue-1141">[VT] Carry over 12/8 confirmed cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 7, 2021, 3:54 PM PST</td>
+          <td>1053</td>
+          <td>
+            <a href="#issue-1053">[VT] Clear confirmed deaths from 1/4/21 onward</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 7, 2021, 3:54 PM PST</td>
+          <td>1053</td>
+          <td>
+            <a href="#issue-1053">[VT] Clear confirmed deaths from 1/4/21 onward</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 2, 2020, 10:32 AM PST</td>
+          <td>991</td>
+          <td>
+            <a href="#issue-991">[VT] changes to VT&#39;s Positive (confirmed + probable) and Totals  </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 16, 2020, 7:09 AM PST</td>
+          <td>952</td>
+          <td>
+            <a href="#issue-952">[VT] Patch 11/13 timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 29, 2020, 1:17 PM PDT</td>
+          <td>916</td>
+          <td>
+            <a href="#issue-916">[VT]Backfill Total Tests PCR from Vermont&#39;s website</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 7:51 AM PDT</td>
+          <td>616</td>
+          <td>
+            <a href="#issue-616">[VT] PCL Cases Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 26, 2020, 7:11 PM PDT</td>
+          <td>457</td>
+          <td>
+            <a href="#issue-457">[VT Historicals]May 20th numbers</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 20, 2020, 12:52 PM PDT</td>
+          <td>437</td>
+          <td>
+            <a href="#issue-437">Revise VT historical numbers to exclude serology tests</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 26, 2020, 9:36 AM PDT</td>
+          <td>303</td>
+          <td>
+            <a href="#issue-303">Remove Historical VT recovered number which was entered errornously</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1141">#1141: [VT] Carry over 12/8 confirmed cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1141</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 2, 2021, 6:41 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1141" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> VT</p>
+<p><strong>Dates affected:</strong> 12/08/20</p>
+<p><strong>Describe the issue:</strong> On December 12, 2020, we accidentally input Vermont's Cases (confirmed + probable) in their Confirmed cases for the day. We do not have coverage of confirmed cases from screenshots, and were not able to locate an archive of them, so we're carrying over their Confirmed cases for December 12, 2020.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-812537136">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 2, 2021, 6:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1141#issuecomment-812537136" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+VT 2020-12-08
+positiveCasesViral: 4944 (was 5180)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1141">#1141: [VT] Carry over 12/8 confirmed cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1141</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 2, 2021, 6:41 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1141" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> VT</p>
+<p><strong>Dates affected:</strong> 12/08/20</p>
+<p><strong>Describe the issue:</strong> On December 12, 2020, we accidentally input Vermont's Cases (confirmed + probable) in their Confirmed cases for the day. We do not have coverage of confirmed cases from screenshots, and were not able to locate an archive of them, so we're carrying over their Confirmed cases for December 12, 2020.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-812537136">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 2, 2021, 6:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1141#issuecomment-812537136" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+VT 2020-12-08
+positiveCasesViral: 4944 (was 5180)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1053">#1053: [VT] Clear confirmed deaths from 1/4/21 onward</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1053</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 7, 2021, 3:54 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1053" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Vermont</p>
+<p>Issue: On January 4, 2020, Vermont posted that &quot;the numbers of COVID-19 deaths now includes deaths among probable cases since September 6, 2020.&quot; Clearing confirmed deaths from January 4, 2021 onward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-756459431">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 7, 2021, 3:59 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1053#issuecomment-756459431" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img width="293" alt="Screen Shot 2021-01-07 at 3 55 18 PM" src="../../assets/github/images/66583275/103958201-46d34480-5101-11eb-8997-e05d2b46a627.png"></p>
+<p>After:
+<img width="299" alt="Screen Shot 2021-01-07 at 3 55 26 PM" src="../../assets/github/images/66583275/103958208-4aff6200-5101-11eb-8915-ee5d857fa57d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1053">#1053: [VT] Clear confirmed deaths from 1/4/21 onward</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1053</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 7, 2021, 3:54 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1053" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Vermont</p>
+<p>Issue: On January 4, 2020, Vermont posted that &quot;the numbers of COVID-19 deaths now includes deaths among probable cases since September 6, 2020.&quot; Clearing confirmed deaths from January 4, 2021 onward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-756459431">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 7, 2021, 3:59 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1053#issuecomment-756459431" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img width="293" alt="Screen Shot 2021-01-07 at 3 55 18 PM" src="../../assets/github/images/66583275/103958201-46d34480-5101-11eb-8997-e05d2b46a627.png"></p>
+<p>After:
+<img width="299" alt="Screen Shot 2021-01-07 at 3 55 26 PM" src="../../assets/github/images/66583275/103958208-4aff6200-5101-11eb-8915-ee5d857fa57d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-991">#991: [VT] changes to VT&#39;s Positive (confirmed + probable) and Totals  </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            991</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 2, 2020, 10:32 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/991" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: VT</p>
+<p><strong>Describe the problem</strong>
+Vermont is adding ~120 probables since September to its counts today, which previously were only confirmed.
+https://www.healthvermont.gov/sites/default/files/documents/pdf/Covid-19-Daily-Update.pdf
+They provide a cases timeseries where those probables are distributed over the full timeseries, so we are backfilling Positive so it doesn't appear as if cases rose by an additional 120 today.</p>
+<p>As a bonus, we're also backfilling Total PCR Tests (People) with a by-result timeseries so that we can get more history — we only have it back to May but this will get us back to March.</p>
+<p><strong>Link to data source</strong>
+https://geodata.vermont.gov/datasets/vt-covid-19-daily-counts-table</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-737415993">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 2, 2020, 10:34 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/991#issuecomment-737415993" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/15933271/100915959-1a456080-34a3-11eb-9e3b-c45152a480f9.png" alt="Columns C-D">
+<img src="../../assets/github/images/15933271/100915960-1a456080-34a3-11eb-92bb-445295961836.png" alt="Columns I-J"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-737420297">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 2, 2020, 10:41 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/991#issuecomment-737420297" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5631374/Changes.2.txt">Changes (2).txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-738960644">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on December 4, 2020, 11:02 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/991#issuecomment-738960644" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We have a time series for probable cases.
+Updating positives (lumped), confirmed &amp; probables.
+<a href="../../assets/github/files/5644847/Multi-edit.tool-PRODUCTION.-.VT-reb-20201204.csv.txt">Multi-edit tool-PRODUCTION - VT-reb-20201204.csv.txt</a>
+<a href="../../assets/github/files/5644848/Multi-edit.tool-PRODUCTION.-.VT-reb-20201204_post.csv.txt">Multi-edit tool-PRODUCTION - VT-reb-20201204_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-952">#952: [VT] Patch 11/13 timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            952</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 16, 2020, 7:09 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/952" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> VT</p>
+<p><strong>Dates affected:</strong> 11/13</p>
+<p><strong>Describe the issue:</strong> On 11/13 we used 11/13 11:03 for the timestamp, but should have used 11/12 23:59 per text on the website &quot;Case information is updated daily by 12:00pm ET, reflecting counts as of end of previous day.&quot;</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-728123080">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 16, 2020, 7:10 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/952#issuecomment-728123080" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="260" alt="Screen Shot 2020-11-16 at 10 09 54 AM" src="../../assets/github/images/68712382/99269036-e0fac880-27f3-11eb-9ab2-2c4290e49a08.png"></p>
+<p>AFTER:
+<img width="267" alt="Screen Shot 2020-11-16 at 10 10 33 AM" src="../../assets/github/images/68712382/99269102-f839b600-27f3-11eb-9354-515b95f2a62f.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-916">#916: [VT]Backfill Total Tests PCR from Vermont&#39;s website</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            916</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 29, 2020, 1:17 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/916" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Vermont</p>
+<p><strong>Describe the problem</strong>
+Vermont started publishing &quot;Total Tests&quot; on their dashboard today, and they provided a time series of this number going back to March 3rd. We are backfilling this data today.</p>
+<p><strong>Link to data source</strong>
+https://services1.arcgis.com/BkFxaEFNwHqX3tAw/ArcGIS/rest/services/V_EPI_LabSpecimensDaily_PUBLIC/FeatureServer/0</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-719006211">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on October 29, 2020, 1:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/916#issuecomment-719006211" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated!
+<a href="../../assets/github/files/5461120/VT.-.VT.data.2020-10-28.csv.txt">VT - VT data 2020-10-28.csv.txt</a>
+<a href="../../assets/github/files/5461119/VT.-.Analysis.PCR.Testing.20201029.GH.916.pdf">VT - Analysis PCR Testing 20201029 GH #916.pdf</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-616">#616: [VT] PCL Cases Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            616</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on July 13, 2020, 7:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/616" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: VT</p>
+<p><strong>Describe the problem</strong>
+<code>Positive Cases (PCR)</code> data was only added on 4/29. Need to make sure to extend that data back as far as possible. According to screenshots, the state of VT provided clear annotation that cases are confirmed only since March 21st, and have continued to be exclusively confirmed cases until now.
+<img src="https://user-images.githubusercontent.com/25627274/87318493-6c86e480-c4f6-11ea-9572-3537ac384f8d.png" alt="image">
+<strong>SOLUTION</strong>: Going to copy over values in the <code>Positive (Confirmed and Lumped)</code> column to the <code>Positive Cases (PCR)</code> column from 3/21 - 4/28 (inclusive) to make sure this column captures our entire historical.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/VT/VT-20200321-190955.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657610201">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 13, 2020, 7:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/616#issuecomment-657610201" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/25627274/87318911-fa62cf80-c4f6-11ea-8a50-86fe906d0f4f.png" alt="image">
+<img src="../../assets/github/images/25627274/87319015-15354400-c4f7-11ea-95be-40fb543e0c8c.png" alt="image">
+AFTER:<br>
+<img src="../../assets/github/images/25627274/87319224-575e8580-c4f7-11ea-8772-6b8162812105.png" alt="image">
+<img src="../../assets/github/images/25627274/87319419-98569a00-c4f7-11ea-9dcd-a84b88b60647.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-457">#457: [VT Historicals]May 20th numbers</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            457</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 26, 2020, 7:11 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/457" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>testing numbers from 5/19 to 5/20</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24a4x">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-642373112">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 10, 2020, 7:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/457#issuecomment-642373112" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-643306627">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on June 12, 2020, 7:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/457#issuecomment-643306627" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We will be able to fix this issue once https://github.com/COVID19Tracking/covid-public-api-build/issues/58 is resolved. The logic for calculating total tests may have caused this error.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650572696">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 27, 2020, 8:07 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/457#issuecomment-650572696" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-654954930">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 7, 2020, 8:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/457#issuecomment-654954930" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-702235404">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 1, 2020, 9:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/457#issuecomment-702235404" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Like <strong>@brianskli</strong> said above, this seems to be an issue with the positive+negative logic. Since we now report explicit totals for VT, so I'm closing this issue.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-437">#437: Revise VT historical numbers to exclude serology tests</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            437</p>
+          <p>
+            <strong>kissane</strong> opened this issue on May 20, 2020, 12:52 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/437" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>https://twitter.com/EPetenko/status/1263194375133241344</p>
+<p>Erin is in the Slack and presumably flagged this somewhere, IDK</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632075380">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 21, 2020, 6:07 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/437#issuecomment-632075380" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you <strong>@kissane</strong>! I found Erin's post in slack. We are going to revise VT numbers based on the link she provided https://geodata.vermont.gov/datasets/vt-covid-19-daily-counts-table/data?orderBy=date&amp;orderByAsc=false</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632098850">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 21, 2020, 6:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/437#issuecomment-632098850" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRoB1Yz2W8DXocpGlAkxdJzFNNkS5mxwKIEDL4_9ac91uKm4R_Hkez9zsOOzXpkDzWX4HGZxW5lQfN_/pubhtml">This spreadsheet </a>contains:</p>
+<p>[1] Current values of VT historicals
+[2] Before and After values for positives, negatives, and last updated columns for VT
+I made the update in States Daily. It should be reflected on the API/website in an hour.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-303">#303: Remove Historical VT recovered number which was entered errornously</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            303</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on April 26, 2020, 9:36 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/303" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <img width="581" alt="Screen Shot 2020-04-26 at 12 34 10 PM" src="https://user-images.githubusercontent.com/1749380/80313685-8d268480-87ba-11ea-8181-a6c129f6e89f.png">
+<img width="589" alt="Screen Shot 2020-04-26 at 12 34 34 PM" src="https://user-images.githubusercontent.com/1749380/80313686-8dbf1b00-87ba-11ea-9ea4-62a3c150cc8b.png">
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

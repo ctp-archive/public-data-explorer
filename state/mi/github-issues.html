@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Michigan Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Michigan</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Michigan</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>March 4, 2021, 5:21 PM PST</td>
+          <td>1129</td>
+          <td>
+            <a href="#issue-1129">[MI] Remove negative (people or cases)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 5:21 PM PST</td>
+          <td>1129</td>
+          <td>
+            <a href="#issue-1129">[MI] Remove negative (people or cases)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 4:16 PM PST</td>
+          <td>1128</td>
+          <td>
+            <a href="#issue-1128">[MI] Patching 03/10/20 - 03/16/20 due to copy paste error</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 4:16 PM PST</td>
+          <td>1128</td>
+          <td>
+            <a href="#issue-1128">[MI] Patching 03/10/20 - 03/16/20 due to copy paste error</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 29, 2020, 6:38 AM PDT</td>
+          <td>915</td>
+          <td>
+            <a href="#issue-915">[MI] Patch 10/27 Timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 18, 2020, 3:44 PM PDT</td>
+          <td>902</td>
+          <td>
+            <a href="#issue-902">[MI] Revert 10/17 numbers to dash numbers</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 17, 2020, 9:30 AM PDT</td>
+          <td>843</td>
+          <td>
+            <a href="#issue-843">[MI]Back-fill probable cases based on totals &amp; confirmed from 6/12-7/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 21, 2020, 9:13 AM PDT</td>
+          <td>784</td>
+          <td>
+            <a href="#issue-784">[MI] Filling in late update from 8/20</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 6:54 AM PDT</td>
+          <td>701</td>
+          <td>
+            <a href="#issue-701">[MI] Historical Positive Cases (PCR) are sometimes higher than lumped cases, need to be corrected</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 17, 2020, 5:37 PM PDT</td>
+          <td>644</td>
+          <td>
+            <a href="#issue-644">[MI] Hosp and ICU discrepancy on 6/21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 11, 2020, 1:39 PM PDT</td>
+          <td>487</td>
+          <td>
+            <a href="#issue-487">[MI Historicals] State added probable cases and deaths. Historic time series needs to be updated</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 26, 2020, 6:53 PM PDT</td>
+          <td>456</td>
+          <td>
+            <a href="#issue-456">[MI historicals] MI hospitalization numbers weren&#39;t updated in a few days</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 24, 2020, 10:45 AM PDT</td>
+          <td>451</td>
+          <td>
+            <a href="#issue-451">[MI historicals] negative tests for 5/23 because separation of antibody &amp; PCR tests by state</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 22, 2020, 12:17 PM PDT</td>
+          <td>443</td>
+          <td>
+            <a href="#issue-443">[Historical MI] Entry mistake on deaths. </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 27, 2020, 7:44 AM PDT</td>
+          <td>310</td>
+          <td>
+            <a href="#issue-310">Updating negative tests historicals for MI (4/26)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 16, 2020, 1:28 PM PDT</td>
+          <td>202</td>
+          <td>
+            <a href="#issue-202">MI: Positive Cases does not match screenshots</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 6:28 PM PDT</td>
+          <td>97</td>
+          <td>
+            <a href="#issue-97">MI: Latent data updates</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 29, 2020, 3:34 PM PDT</td>
+          <td>80</td>
+          <td>
+            <a href="#issue-80">MI: Screenshots Wrong</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 29, 2020, 3:39 PM PDT</td>
+          <td>79</td>
+          <td>
+            <a href="#issue-79">MI: screenshots not correct</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 26, 2020, 11:42 AM PDT</td>
+          <td>60</td>
+          <td>
+            <a href="#issue-60">MI: Data quality grade update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 23, 2020, 4:43 AM PDT</td>
+          <td>41</td>
+          <td>
+            <a href="#issue-41">AK, DC, ID, MI, NY, NV have non-cumulative results</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 21, 2020, 10:21 PM PDT</td>
+          <td>37</td>
+          <td>
+            <a href="#issue-37">MI: save screenshots for top-level page</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1129">#1129: [MI] Remove negative (people or cases)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1129</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on March 4, 2021, 5:21 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1129" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MI</p>
+<p><strong>Describe the problem</strong>
+Right now, MI's negative people field has negative tests. Because we do not rely on these anymore for totalTestResults, we can delete them. The full timeseries will remain available in the negative PCR tests field.</p>
+<p><strong>Link to data source</strong>
+N/A deleting</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-791075378">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 4, 2021, 5:28 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1129#issuecomment-791075378" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6087580/Changes.10.txt">Changes (10).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1129">#1129: [MI] Remove negative (people or cases)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1129</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on March 4, 2021, 5:21 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1129" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MI</p>
+<p><strong>Describe the problem</strong>
+Right now, MI's negative people field has negative tests. Because we do not rely on these anymore for totalTestResults, we can delete them. The full timeseries will remain available in the negative PCR tests field.</p>
+<p><strong>Link to data source</strong>
+N/A deleting</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-791075378">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 4, 2021, 5:28 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1129#issuecomment-791075378" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6087580/Changes.10.txt">Changes (10).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1128">#1128: [MI] Patching 03/10/20 - 03/16/20 due to copy paste error</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1128</p>
+          <p>
+            <strong>whobody</strong> opened this issue on March 4, 2021, 4:16 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1128" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]</p>
+<p><strong>Describe the problem</strong>
+When we copy pasted for #487 we missed 03/10/20 to 03/16/20.</p>
+<p><strong>Link to data source</strong>
+https://docs.google.com/spreadsheets/d/1n0dOR8Dxjtg_usQdgbYe4LuDPURi_HK6WFL3wvawRn0/edit#gid=500776026</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-791052805">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 4, 2021, 4:29 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1128#issuecomment-791052805" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6087378/Changes.9.txt">Changes (9).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1128">#1128: [MI] Patching 03/10/20 - 03/16/20 due to copy paste error</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1128</p>
+          <p>
+            <strong>whobody</strong> opened this issue on March 4, 2021, 4:16 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1128" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]</p>
+<p><strong>Describe the problem</strong>
+When we copy pasted for #487 we missed 03/10/20 to 03/16/20.</p>
+<p><strong>Link to data source</strong>
+https://docs.google.com/spreadsheets/d/1n0dOR8Dxjtg_usQdgbYe4LuDPURi_HK6WFL3wvawRn0/edit#gid=500776026</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-791052805">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 4, 2021, 4:29 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1128#issuecomment-791052805" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6087378/Changes.9.txt">Changes (9).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-915">#915: [MI] Patch 10/27 Timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            915</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 29, 2020, 6:38 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/915" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: MI</p>
+<p>Dates affected: 10/27</p>
+<p>Describe the issue: On 10/27 the timestamp for MI was not updated, however the data was. We should patch the 10/27 timestamp.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-718759015">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 29, 2020, 6:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/915#issuecomment-718759015" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="348" alt="Screen Shot 2020-10-29 at 9 38 56 AM" src="../../assets/github/images/68712382/97581121-917e6500-19ca-11eb-86ae-990564595884.png"></p>
+<p>AFTER:
+<img width="356" alt="Screen Shot 2020-10-29 at 9 39 25 AM" src="../../assets/github/images/68712382/97581177-a3600800-19ca-11eb-8125-3531c16f3af7.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-902">#902: [MI] Revert 10/17 numbers to dash numbers</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            902</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 18, 2020, 3:44 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/902" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Michigan</p>
+<p><strong>Describe the problem</strong>
+On 10/17 the MI dash updated late and we used numbers from data downloads. These numbers were higher than the updated dash numbers. In order for these to make sense, we backfilled 10/17 numbers from the dash.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/MI/MI-20201017-122050.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-720769182">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on November 2, 2020, 2:50 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/902#issuecomment-720769182" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-726409841">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on November 12, 2020, 3:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/902#issuecomment-726409841" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-843">#843: [MI]Back-fill probable cases based on totals &amp; confirmed from 6/12-7/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            843</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 17, 2020, 9:30 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/843" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Michigan</p>
+<p><strong>Describe the problem</strong>
+CTP did not capture explicit probable cases before 7/28. We can backfill the number of probable cases from 6/12 - 7/28 by subtracting confirmed cases from total.</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-812544356">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 2, 2021, 7:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/843#issuecomment-812544356" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Done in #701, closing issue.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-784">#784: [MI] Filling in late update from 8/20</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            784</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on August 21, 2020, 9:13 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/784" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Michigan</p>
+<p><strong>Describe the problem</strong>
+MI's update came after our scheduled publication shift. Filling in the 8/20 values.</p>
+<p><strong>Link to data source</strong>
+State website/dashboard</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-678376455">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 21, 2020, 9:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/784#issuecomment-678376455" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/90912035-c2209d80-e38e-11ea-905d-c5477e8e57af.png" alt="image"></p>
+<p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/90912658-d618cf00-e38f-11ea-8cb5-29407b750efb.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-701">#701: [MI] Historical Positive Cases (PCR) are sometimes higher than lumped cases, need to be corrected</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            701</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on July 30, 2020, 6:54 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/701" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MI</p>
+<p><strong>Describe the problem</strong>
+Before 4/12, the value for Positive Cases (PCR) are sometimes higher than the value for the Positives column (it appears for every day except 4/10-4/11). E.g., on 3/17 we record 4491 confirmed cases, but only 3659 lumped. This appears to be the result of a backfill on 6/11. We should fill in these values from the most recent backfill data provided by MI, making sure that Positive Cases (PCR) are allotted to the right date</p>
+<p><strong>Link to data source</strong>
+usual MI spot</p>
+<p><strong>Action Plan</strong></p>
+<ul>
+<li>[x] Backfill <code>Probable Cases</code> from 6/12 - 7/27 from total-confirmed</li>
+<li>[x] <code>Positive Cases PCR</code> - timeseries corrections</li>
+</ul>
+<ol>
+<li>on june 9th , 59278 was duplicated on 6/9 by mistake</li>
+<li>on march 17th, a number was missed</li>
+</ol>
+<ul>
+<li>[x] <code>Positive Cases (confirmed+probable)</code> time series<br>
+the number from 3/1-3/16 were not updated by 6/11 backfill by mistake</li>
+<li>[x] Backfill <code>Probable Cases</code> from 3/1-6/11 using the numbers from the file MI gave us on 6/11 (we didn't have the column yet then so we couldn't stash that anywhere)</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-694346388">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 17, 2020, 9:25 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/701#issuecomment-694346388" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Previous Backfill GH issue https://github.com/COVID19Tracking/issues/issues/487</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-697981788">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 23, 2020, 2:26 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/701#issuecomment-697981788" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and After values are in the attached sheet.
+<a href="../../assets/github/files/5272000/Probable-Confirmed-Total.Cases.Timeseries.Backfill.MI.xlsx">Probable-Confirmed-Total Cases Timeseries Backfill  MI.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-644">#644: [MI] Hosp and ICU discrepancy on 6/21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            644</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 17, 2020, 5:37 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/644" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hosp and ICU are typically sourced from the patient census table, but it appears as though these values were sourced from elsewhere on 6/21, interrupting the time-series.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_26fkh">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660396552">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 17, 2020, 5:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/644#issuecomment-660396552" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Upon reviewing screenshots, numbers from the patient census were used: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MI/MI-secondary-20200621-183853.png
+After:
+<img width="768" alt="After" src="../../assets/github/images/66738237/87840829-a1d16080-c86f-11ea-81dd-d539aa596b03.png">
+Before:
+<img width="703" alt="Before" src="../../assets/github/images/66738237/87840830-a269f700-c86f-11ea-9596-b07992109d45.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660402781">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 17, 2020, 6:33 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/644#issuecomment-660402781" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>A second look was taken at 6/15-/30. Fixed using screenshots of the patient census table.
+Other issues found: Inaccurate vents on 6/21 (298 -&gt; 209)
+Before:
+<img width="599" alt="MIBefore" src="../../assets/github/images/66738237/87841690-338f9c80-c875-11ea-8e02-85a587baa41b.png">
+After:
+<img width="596" alt="MIAfter" src="../../assets/github/images/66738237/87841691-368a8d00-c875-11ea-90be-198035d124f8.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-487">#487: [MI Historicals] State added probable cases and deaths. Historic time series needs to be updated</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            487</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 11, 2020, 1:39 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/487" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>XLS provided via MI DHHS
+<a href="https://github.com/COVID19Tracking/issues/files/4767201/MI.Special.Request.Testing.Confirmed.and.Probable.Cases.By.Date.xlsx">MI Special Request Testing, Confirmed and Probable Cases By Date.xlsx</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-643028779">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 11, 2020, 7:24 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/487#issuecomment-643028779" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We updated the data based on XL provided by Michigan's DHHS
+See before and after snapshots here
+https://docs.google.com/spreadsheets/d/1n0dOR8Dxjtg_usQdgbYe4LuDPURi_HK6WFL3wvawRn0/edit#gid=500776026</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-456">#456: [MI historicals] MI hospitalization numbers weren&#39;t updated in a few days</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            456</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 26, 2020, 6:53 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/456" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/1749380/82968411-4b485400-9f9b-11ea-9615-39fe989e5e16.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-634666648">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on May 27, 2020, 6:37 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/456#issuecomment-634666648" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@muamichali</strong>, thanks for opening the issue. After reviewing our screenshots of <a href="https://www.michigan.gov/coronavirus/0,9753,7-406-98159-523641--,00.html">Michigan's COVID-19 site</a>, I'm confirming Michigan reported the # of Inpatients as 953 on 5/24, 5/25 and 5/26.</p>
+<p>In addition, on 5/26, Michigan also updated the # of Inpatients from 953 to 882 after we published. We publish the daily stats every afternoon. If a state updates the number of tests or cases after that time, we catch that update on the following day.</p>
+<p>Thank you,
+Camille</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-451">#451: [MI historicals] negative tests for 5/23 because separation of antibody &amp; PCR tests by state</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            451</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 24, 2020, 10:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/451" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Data is here</strong>
+<a href="https://github.com/COVID19Tracking/issues/files/4674159/MI-Historicals.txt">MI-Historicals.txt</a>
+Source: <a href="https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173_99225---,00.html">MI Lab Tests page</a></p>
+<p><img src="https://user-images.githubusercontent.com/1749380/82760910-a70cb480-9dc4-11ea-8cdd-19f770739d51.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-640818459">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 8, 2020, 12:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/451#issuecomment-640818459" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-646278203">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 18, 2020, 1:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/451#issuecomment-646278203" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653680147">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 3, 2020, 2:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/451#issuecomment-653680147" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-657807880">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 13, 2020, 2:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/451#issuecomment-657807880" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-443">#443: [Historical MI] Entry mistake on deaths. </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            443</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on May 22, 2020, 12:17 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/443" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>There was a typo for data entry for deaths at MI on 5/21. Screenshot attached
+Should be 5129 intead of 5219
+<img src="https://user-images.githubusercontent.com/25627274/82702074-4c961b80-9c3f-11ea-8d83-0098d4929e07.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632869265">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 22, 2020, 12:21 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/443#issuecomment-632869265" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixing it now:
+Before
+<img src="../../assets/github/images/25627274/82702331-cdedae00-9c3f-11ea-93a3-e72b7ef2c116.png" alt="image">
+After:
+<img src="../../assets/github/images/25627274/82702366-df36ba80-9c3f-11ea-8584-dee12a8bef78.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-310">#310: Updating negative tests historicals for MI (4/26)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            310</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on April 27, 2020, 7:44 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/310" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>There was a data entry mistake on 4/26 publish shift. The number of reported negatives should be 113,228 instead of 156,101 (which was the reported TOTAL tests).</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-620102216">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 27, 2020, 9:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/310#issuecomment-620102216" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated, Quang!</p>
+<p><strong>Before</strong>
+<img width="271" alt="Screen Shot 2020-04-27 at 12 42 50 PM" src="../../assets/github/images/1749380/80397881-d8a56500-8884-11ea-9f50-dd6c5c0c2ea7.png"></p>
+<p><strong>After</strong>
+<img width="215" alt="Screen Shot 2020-04-27 at 12 43 54 PM" src="../../assets/github/images/1749380/80397886-d93dfb80-8884-11ea-829f-5c40e2e30513.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-620153529">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on April 27, 2020, 11:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/310#issuecomment-620153529" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you! This looks good.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-202">#202: MI: Positive Cases does not match screenshots</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            202</p>
+          <p>
+            <strong>J6Szczecin</strong> opened this issue on April 16, 2020, 1:28 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/202" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Prior to April 9th, the historical data does not match that in the screen captures.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623774939">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/202#issuecomment-623774939" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628958171">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 5:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/202#issuecomment-628958171" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-97">#97: MI: Latent data updates</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            97</p>
+          <p>
+            <strong>saewoonam</strong> opened this issue on March 31, 2020, 6:28 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/97" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The values for Saturday March 28th are not correct.   They are just the daily figures from the previous day.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623800961">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 7:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/97#issuecomment-623800961" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626721009">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on May 11, 2020, 7:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/97#issuecomment-626721009" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@saewoonam</strong>,
+Thanks for bringing this to our attention. We've since backfilled the MI data for 3/28 so this issue is no longer relevant. However, this lag was likely due to the data for MI updating after our publication cutoff. We publish the daily stats every afternoon. If a state updates the number of tests or cases after that time, we catch that update on the following day.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-80">#80: MI: Screenshots Wrong</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            80</p>
+          <p>
+            <strong>zachlankton</strong> opened this issue on March 29, 2020, 3:34 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/80" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Michigan screen shots and link to best data source are out of date.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607008628">
+          <div class="frontmatter">
+            <div>
+              <strong>schwartzadev</strong> commented on March 31, 2020, 8:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/80#issuecomment-607008628" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Potential duplicate of #79</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790194">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/80#issuecomment-623790194" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-625285603">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 7, 2020, 7:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/80#issuecomment-625285603" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Please reference issue #173 for a more comprehensive response.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-79">#79: MI: screenshots not correct</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            79</p>
+          <p>
+            <strong>maxerickson</strong> opened this issue on March 29, 2020, 3:39 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/79" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>3/29 and 3/28 are not current data. I guess they changed their format yet again...</p>
+<p>Using total - new from 3/29, the new for 3/28 are 993 cases and 19 deaths.</p>
+<p>The totals for 3/28 are then 4650 cases and 111 deaths.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607008652">
+          <div class="frontmatter">
+            <div>
+              <strong>schwartzadev</strong> commented on March 31, 2020, 8:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/79#issuecomment-607008652" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Potential duplicate of #80</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-612959346">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 13, 2020, 8:54 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/79#issuecomment-612959346" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hello,</p>
+<p>We did update Michigan data after the state updated its reporting process. Please find more detailed information at #173</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-60">#60: MI: Data quality grade update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            60</p>
+          <p>
+            <strong>rmontroy</strong> opened this issue on March 26, 2020, 11:42 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  State Data Quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/60" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>MDHHS is reporting negative test numbers again as of today.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-604704307">
+          <div class="frontmatter">
+            <div>
+              <strong>kevee</strong> commented on March 26, 2020, 2:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/60#issuecomment-604704307" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi, <strong>@rmontroy</strong>, I'm reassigning this to the general issues queue so that the data team sees it.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604963895">
+          <div class="frontmatter">
+            <div>
+              <strong>catawbasam</strong> commented on March 27, 2020, 5:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/60#issuecomment-604963895" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Michigan is not being updated according to the covid19tracking web page because it is reporting specimens rather than people tested.   I urge you to report the specimen counts (with caveats) for the following reasons:</p>
+<ol>
+<li>Other states are very likely double-counting people who have been tested multiple times.</li>
+<li>Michigan’s confirmed case count is close to the reported positive count, suggesting they are not systematically taking multiple specimens (e.g. nose and mouth) per person.</li>
+<li>Ramp up in total test capacity is important to track in its own right.</li>
+</ol>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607018177">
+          <div class="frontmatter">
+            <div>
+              <strong>schwartzadev</strong> commented on March 31, 2020, 9:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/60#issuecomment-607018177" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This seems to have been resolved. See the <a href="https://covidtracking.com/data/state/michigan/">Michigan page</a> on the site.</p>
+<ul>
+<li>The data grade is now a B, accounting for reporting negatives.</li>
+<li>The data is noted to be reporting &quot;total specimens&quot;</li>
+</ul>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-41">#41: AK, DC, ID, MI, NY, NV have non-cumulative results</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            41</p>
+          <p>
+            <strong>nickblink</strong> opened this issue on March 23, 2020, 4:43 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>For DC and NV, there is a day when positive tests decrease from the previous day. For the other four states, there are days when negative tests decrease.</p>
+<p>Thanks for putting this together!</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-604027085">
+          <div class="frontmatter">
+            <div>
+              <strong>mymil</strong> commented on March 25, 2020, 12:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-604027085" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Uploading a spreadsheet of <strong>all</strong> decreases (more than documented previously), current as of today:
+<a href="../../assets/github/files/4382958/covidtracking_problemdates.xlsx">covidtracking_problemdates.xlsx</a></p>
+<p>States affected: AK, AL, AZ, CO, DC, DE, FL, HI, IA, KS, MA, MD, MI, NJ, NM, NV, NY, OH, OK, PR, RI, SC, WI</p>
+<p>This is my R code to calculate new cases and pull records that decreased from the prior day (any variable) AND the prior day's row for comparison:</p>
+<pre><code>library(tidyverse)
+covidtracking %&gt;% 
+    arrange(state, date) %&gt;% 
+    group_by(state) %&gt;% 
+    mutate_at(vars(c(&quot;positive&quot;, &quot;death&quot;, &quot;total&quot;)), 
+              list(new = ~ coalesce(. - lag(.), .))) %&gt;%
+    filter_at(vars(ends_with(&quot;new&quot;)), any_vars(. &lt; 0 | lead(.) &lt; 0)) %&gt;% 
+    ungroup()
+</code></pre>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604194160">
+          <div class="frontmatter">
+            <div>
+              <strong>breyed</strong> commented on March 25, 2020, 7:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-604194160" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I wonder if the problem is an error in the data source in which corrections for prior day results are included as adjustments on the day the error was discovered. This is common in the banking world because of the value of keeping past transactions immutable. It's poor practice for scientific data, however, because the test counts on a given day matter.</p>
+<p>If the problem is deferred adjustment, the idea solution is to inform the data sources and ask for better quality data. Short of that, an corrective approach is to reverse the error to the best extent that the data allows: Where a daily result is negative, set that day to zero, and decrease the count of the previous day by the corresponding amount.</p>
+<p>Such a correction would not be perfect since (a) you don't know for sure whether the error was from the previous day versus earlier and (b) it doesn't correct any of the cases where adjustments didn't cause negative result. Still, it leads to better data quality than making no correction and avoids the confusion of negative daily counts.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604422947">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 26, 2020, 6:12 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-604422947" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hello, and thank you for helping us clean our data. Please see the following:</p>
+<p><strong>New York:</strong></p>
+<ul>
+<li>[ ] 3/7 to 3/8 the total changed due to pending tests no longer being reported.</li>
+<li>[ ] 3/10 to 3/11 should be correct
+<img src="../../assets/github/images/43073915/77547108-280e0500-6e83-11ea-8d52-fc3378aa959f.png" alt="Screen Shot 2020-03-25 at 10 24 00 AM"></li>
+</ul>
+<p><strong>Oklahoma</strong></p>
+<ul>
+<li>[ ] 3/20 to 3/21 the variance in totals is tied to the unreliable Pending category. It may be that the data point was phased out and our data was affected by this transition;
+<img src="" alt="Uploading Screen Shot 2020-03-25 at 10.29.12 AM.png…"></li>
+</ul>
+<p><strong>Ohio</strong></p>
+<ul>
+<li>[ ] 3/16 to 3/17 variation in data is due to Pending data no longer being published.
+<img src="../../assets/github/images/43073915/77549590-6b1da780-6e86-11ea-9e54-ee33802827fd.png" alt="Screen Shot 2020-03-25 at 10 49 57 AM"></li>
+</ul>
+<p><strong>New Jersey</strong></p>
+<ul>
+<li>[ ] 3/16 is infact incorrect:
+<img src="../../assets/github/images/43073915/77649235-e1321500-6f3f-11ea-87a8-749714362f47.png" alt="Screen Shot 2020-03-26 at 8 57 10 AM"></li>
+<li>[ ] corrected
+<img src="../../assets/github/images/43073915/77649263-f313b800-6f3f-11ea-9e68-24b605c42926.png" alt="Screen Shot 2020-03-26 at 8 57 23 AM"></li>
+</ul>
+<p><strong>Hawaii</strong></p>
+<ul>
+<li>[ ] Pending for 3/19 decrease per the state
+<img src="../../assets/github/images/43073915/77649432-3bcb7100-6f40-11ea-98cc-35068a179919.png" alt="Screen Shot 2020-03-26 at 8 59 28 AM"></li>
+</ul>
+<p><strong>Michigan</strong> stopped reporting pending data as of 3/17</p>
+<p><strong>Kansas</strong> stopped reporting pending data as of 3/11
+<img src="../../assets/github/images/43073915/77650192-7aadf680-6f41-11ea-9b0c-bc01d40e3c44.png" alt="Screen Shot 2020-03-26 at 9 08 59 AM"></p>
+<p><strong>Iowa</strong> stopped reporting pending data as of 3/14
+<strong>Deleware</strong> stopped reporting pending data as of 3/17
+<strong>DC</strong> has fluctuating pending data
+<img src="../../assets/github/images/43073915/77650352-c365af80-6f41-11ea-99a5-fd33d3814a95.png" alt="Screen Shot 2020-03-26 at 9 10 51 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604474721">
+          <div class="frontmatter">
+            <div>
+              <strong>mymil</strong> commented on March 26, 2020, 7:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-604474721" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for these clarifications, <strong>@careeningspace</strong>, and for working on providing these data so accessibly! In terms of cleaning up these records for use:</p>
+<ol>
+<li>Has the NJ correction been applied to the live data?</li>
+<li>Given the inconsistencies with pending data, do you foresee any problems with subtracting pending cases from the totals?</li>
+</ol>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604808719">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 26, 2020, 9:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-604808719" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The NJ correction should be in the live feed. Going forward, our API will no longer be focusing on including Pending in our &quot;Total&quot;. You can find more detail on our <a href="https://covidtracking.com/api/">API Page</a></p>
+<ul>
+<li>[ ] totalTestResults - Calculated value (positive + negative) of total test results.</li>
+<li>[ ] total - DEPRECATED Will be removed in the future. (positive + negative + pending). Pending has been an unstable value and should not count in any totals.</li>
+</ul>
+<p>As for subtracting historical &quot;Pending&quot; data - if you want a clean Total, you can sum Positive and Negative.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-604981218">
+          <div class="frontmatter">
+            <div>
+              <strong>mymil</strong> commented on March 27, 2020, 5:45 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-604981218" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Great, thanks. That fixes problems in many states and leaves only AK, DC, HI, ID, KY, MI, NV, and SC with negative &quot;increases&quot;:
+<a href="../../assets/github/files/4393534/covidtracking_problemdates.xlsx">covidtracking_problemdates.xlsx</a></p>
+<p><code>covidtracking %&gt;% arrange(state, date) %&gt;% group_by(state) %&gt;%  filter_at(vars(ends_with(&quot;Increase&quot;)), any_vars(. &lt; 0 | lead(.) &lt; 0)) %&gt;% ungroup()</code></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607946910">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 2, 2020, 9:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-607946910" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>-[ ] Alaska has a period of data flux that needs more research 3/17 - 3/19:
+Data Log:
+<img src="../../assets/github/images/43073915/78261233-fa513d80-74cc-11ea-8fd6-501820e8cb3c.png" alt="Screen Shot 2020-04-02 at 10 28 34 AM"></p>
+<p>Daily Report:
+<img src="../../assets/github/images/43073915/78261437-3b495200-74cd-11ea-8d4b-2b75b34e8146.png" alt="Screen Shot 2020-04-02 at 10 31 38 AM"></p>
+<p>State Data from 3/17 14:09 ET:
+<img src="../../assets/github/images/43073915/78272770-f37df700-74db-11ea-9642-413955f3aefa.png" alt="Screen Shot 2020-04-02 at 12 15 47 PM"></p>
+<p>State Data from 3/17 18:00 ET:
+<img src="../../assets/github/images/43073915/78270937-879a8f00-74d9-11ea-8621-d32f1333b8e6.png" alt="Screen Shot 2020-04-02 at 11 57 45 AM"></p>
+<p>State Data from 3/18:
+<img src="../../assets/github/images/43073915/78271051-ae58c580-74d9-11ea-8031-f4618c4662f2.png" alt="Screen Shot 2020-04-02 at 11 56 53 AM"></p>
+<p>Updated Daily after correction:
+<img src="../../assets/github/images/43073915/78272980-33dd7500-74dc-11ea-993c-114ab2683a64.png" alt="Screen Shot 2020-04-02 at 12 19 02 PM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607951727">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 2, 2020, 9:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-607951727" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>District of Columbia 3/10 - 3/11</p>
+<ul>
+<li>[ ] We do not have screen grabs from this time period</li>
+<li>[ ] It looks like DC changed how they were reporting data. I am going to make both days match</li>
+</ul>
+<p>DC Before update:
+<img src="../../assets/github/images/43073915/78273887-6b005600-74dd-11ea-92fc-c1c9ce8824bd.png" alt="Screen Shot 2020-04-02 at 12 25 36 PM"></p>
+<p>DC after update:
+<img src="../../assets/github/images/43073915/78273915-70f63700-74dd-11ea-8fb6-bdb152ae6af7.png" alt="Screen Shot 2020-04-02 at 12 28 00 PM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608199727">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 2, 2020, 7:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-608199727" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>
+<p>[ ] ID has an issue with a change in data from 3/18 to 3/19
+<img src="../../assets/github/images/43073915/78318525-f952f700-7532-11ea-8fda-612743140fea.png" alt="Screen Shot 2020-04-02 at 10 40 26 PM"></p>
+</li>
+<li>
+<p>[ ] Screen cap of State Data from 3/18 14:04:
+<img src="../../assets/github/images/43073915/78318751-9150e080-7533-11ea-9d07-d69c33588458.png" alt="Screen Shot 2020-04-02 at 10 44 18 PM"></p>
+</li>
+<li>
+<p>[ ] Screencap of State Data from 3/19 14:04:
+<img src="../../assets/github/images/43073915/78318595-2a332c00-7533-11ea-9668-cfe3def8edf1.png" alt="Screen Shot 2020-04-02 at 10 41 13 PM"></p>
+</li>
+<li>
+<p>[ ] The positives increase, while the total tests reported did not. Our methodology is to leave the negatives unchanged in this case. Fixed data below:
+<img src="../../assets/github/images/43073915/78318873-dc6af380-7533-11ea-9487-5d3c2932acdb.png" alt="Screen Shot 2020-04-02 at 10 46 48 PM"></p>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790137">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-623790137" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990054">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/41#issuecomment-628990054" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-37">#37: MI: save screenshots for top-level page</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            37</p>
+          <p>
+            <strong>timeFractal</strong> opened this issue on March 21, 2020, 10:21 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data Tech
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/37" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hi, presently I'm only seeing screenshots for dashboard. I explained the difference btw the two in the last comment in #29. since site updates only post at 2p, I would say the 5a screenshot is not needed. Also, on a few occasions, the website doesn't update till after 2p (but 6p and 11p should be sufficiently time-buffered for update latency).</p>
+<p>why this matters: I have noticed a day where the daily reported new cases (top page) is greater than the difference btw dashboard from day before and day of. each table respectively does add up correctly. I have reached out to state officials for further clarification to account for either lack or abundance of cases.</p>
+<p>I would like top-level page cached for future usage in case mistakes like this occur again in the future.</p>
+<p>note: both pages Are updated at the same time. this would be a correction for your footnote for MI.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-602256076">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 22, 2020, 12:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/37#issuecomment-602256076" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I'm trying to understand the issue.</p>
+<p>Julia archives specific states.  Here is MI: http://covid-data-archive.s3-website.us-east-2.amazonaws.com/state_screenshots/MI.</p>
+<p>Did you want an additional page capture for MI (which we can do)?  Or an alternative time for everything (which we can do)?  Or are you looking at a completely different set of pages (so it is not a task for us)?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-602256076">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 22, 2020, 12:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/37#issuecomment-602256076" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I'm trying to understand the issue.</p>
+<p>Julia archives specific states.  Here is MI: http://covid-data-archive.s3-website.us-east-2.amazonaws.com/state_screenshots/MI.</p>
+<p>Did you want an additional page capture for MI (which we can do)?  Or an alternative time for everything (which we can do)?  Or are you looking at a completely different set of pages (so it is not a task for us)?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-602257199">
+          <div class="frontmatter">
+            <div>
+              <strong>timeFractal</strong> commented on March 22, 2020, 12:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/37#issuecomment-602257199" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am asking screenshots for</p>
+<p>https://www.michigan.gov/coronavirus (not saved)</p>
+<p>to be taken in addition to</p>
+<p>https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html (saved)</p>
+<p>the mentioning of time is if it would make you guys' lives easier, the 5am capture isn't needed bc MI only updates once / day.</p>
+<p>and also to update the footnote regarding the two sites being out of date, they aren't. I believe that's a misunderstanding. I explained why the two pages differ in #29 .</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623800986">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 7:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/37#issuecomment-623800986" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628818930">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 14, 2020, 11:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/37#issuecomment-628818930" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We are currently capturing two URLs for MI</p>
+<p>https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html
+and
+https://www.michigan.gov/coronavirus/0,9753,7-406-98159-523641--,00.html</p>
+<p>You can see them at
+http://covid-tracking-project-data.s3-website.us-east-1.amazonaws.com/state_screenshots/MI/</p>
+<p>I hope this is sufficient to close this issue</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

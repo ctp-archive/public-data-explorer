@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>South Carolina Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">South Carolina</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">South Carolina</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 25, 2021, 7:02 AM PST</td>
+          <td>1111</td>
+          <td>
+            <a href="#issue-1111">[SC] Patch 02/18, 02/18, and 02/20 recoveries error</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 25, 2021, 7:02 AM PST</td>
+          <td>1111</td>
+          <td>
+            <a href="#issue-1111">[SC] Patch 02/18, 02/18, and 02/20 recoveries error</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 25, 2021, 7:34 AM PST</td>
+          <td>1078</td>
+          <td>
+            <a href="#issue-1078">[SC] Patch 01/08/21 Recovered</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 25, 2021, 7:34 AM PST</td>
+          <td>1078</td>
+          <td>
+            <a href="#issue-1078">[SC] Patch 01/08/21 Recovered</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 19, 2020, 3:53 PM PDT</td>
+          <td>779</td>
+          <td>
+            <a href="#issue-779">[SC] Incorrect recovered value entered On 8/18. </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 4, 2020, 1:43 PM PDT</td>
+          <td>732</td>
+          <td>
+            <a href="#issue-732">[SC] Incorrect PCR test negatives input on 8/3</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 7:32 AM PDT</td>
+          <td>693</td>
+          <td>
+            <a href="#issue-693">[SC] PCL Historicals: Backfill Positive Cases PCR values (before 4/29,5-3-5/17) from Positive cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 22, 2020, 7:34 AM PDT</td>
+          <td>510</td>
+          <td>
+            <a href="#issue-510">[SC Historical] 6/6 Numbers</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 7, 2020, 12:30 PM PDT</td>
+          <td>477</td>
+          <td>
+            <a href="#issue-477">Missing data for hospitalizedCurrently in SC</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 28, 2020, 8:33 AM PDT</td>
+          <td>463</td>
+          <td>
+            <a href="#issue-463">[SC Historicals] Cases when SC reporting seems to not match CTP reporting</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 27, 2020, 5:46 AM PDT</td>
+          <td>458</td>
+          <td>
+            <a href="#issue-458">[SC Historicals] 13 cases where the state changed the data but our report does not reflect it</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 28, 2020, 9:12 AM PDT</td>
+          <td>318</td>
+          <td>
+            <a href="#issue-318">SC recoveries</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 23, 2020, 9:13 AM PDT</td>
+          <td>267</td>
+          <td>
+            <a href="#issue-267">SC data with 0 increases does not match 6PM screenshot </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 12, 2020, 2:51 AM PDT</td>
+          <td>185</td>
+          <td>
+            <a href="#issue-185">SC Hospitalization numbers 3/31 - 4/2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 20, 2020, 5:41 AM PDT</td>
+          <td>24</td>
+          <td>
+            <a href="#issue-24">SC: Data not updating</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1111">#1111: [SC] Patch 02/18, 02/18, and 02/20 recoveries error</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1111</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 25, 2021, 7:02 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1111" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> SC</p>
+<p><strong>Dates affected:</strong> 02/18/21 - 02/20/21</p>
+<p><strong>Describe the issue:</strong> On February 18, 2021, we incorrectly calculated South Carolina's recoveries as &quot;individuals for which we have symptom onset data&quot; multiplied by .90, but it should have been .901.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-785993973">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 25, 2021, 7:39 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1111#issuecomment-785993973" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>After further investigation, it was discovered that no error was made, and no patch is necessary.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1111">#1111: [SC] Patch 02/18, 02/18, and 02/20 recoveries error</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1111</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 25, 2021, 7:02 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1111" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> SC</p>
+<p><strong>Dates affected:</strong> 02/18/21 - 02/20/21</p>
+<p><strong>Describe the issue:</strong> On February 18, 2021, we incorrectly calculated South Carolina's recoveries as &quot;individuals for which we have symptom onset data&quot; multiplied by .90, but it should have been .901.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-785993973">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 25, 2021, 7:39 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1111#issuecomment-785993973" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>After further investigation, it was discovered that no error was made, and no patch is necessary.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1078">#1078: [SC] Patch 01/08/21 Recovered</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1078</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 25, 2021, 7:34 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1078" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> SC</p>
+<p><strong>Dates affected:</strong> 01/08/21</p>
+<p><strong>Describe the issue:</strong> On January 8, 2021, South Carolina's Recovered was calculated incorrectly. This error was patched on January 25, 2021.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-766903945">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 25, 2021, 7:39 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1078#issuecomment-766903945" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+SC 2021-01-08
+recovered: 161183 (was 164575)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1078">#1078: [SC] Patch 01/08/21 Recovered</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1078</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 25, 2021, 7:34 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1078" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> SC</p>
+<p><strong>Dates affected:</strong> 01/08/21</p>
+<p><strong>Describe the issue:</strong> On January 8, 2021, South Carolina's Recovered was calculated incorrectly. This error was patched on January 25, 2021.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-766903945">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 25, 2021, 7:39 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1078#issuecomment-766903945" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+SC 2021-01-08
+recovered: 161183 (was 164575)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-779">#779: [SC] Incorrect recovered value entered On 8/18. </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            779</p>
+          <p>
+            <strong>whobody</strong> opened this issue on August 19, 2020, 3:53 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/779" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: South Carolina</p>
+<p><strong>Describe the problem</strong></p>
+<p>The recovered amount was entered incorrectly on 8/18. Someone used the wrong n value for the calculation.</p>
+<p><strong>Link to data source</strong></p>
+<p>https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/sc-demographic-data-covid-19</p>
+<p><img src="https://user-images.githubusercontent.com/69436257/90697693-3565ca80-e23c-11ea-9c0e-888c5b4dc627.png" alt="Screen Shot 2020-08-19 at 3 50 01 PM"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-676837081">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 19, 2020, 6:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/779#issuecomment-676837081" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Based on the screenshot, a recovered formula of <code>=FLOOR(49676*0.91,1)</code> is needed. The resulting correct value of 45205 was entered in States Daily.</p>
+<p>Before:
+<img src="../../assets/github/images/66738237/90704608-f8f79600-e25e-11ea-8fa4-dc7a139f7638.png" alt="Screen Shot 2020-08-19 at 8 58 33 PM">
+After:
+<img src="../../assets/github/images/66738237/90704614-fbf28680-e25e-11ea-8b54-57ad09c0d73e.png" alt="Screen Shot 2020-08-19 at 8 58 49 PM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-732">#732: [SC] Incorrect PCR test negatives input on 8/3</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            732</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on August 4, 2020, 1:43 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/732" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: South Carolina</p>
+<p><strong>Describe the problem</strong>
+An incorrect quantity for negative PCR tests was input on 8/3.</p>
+<p><strong>Link to data source</strong>
+https://scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/sc-testing-data-projections-covid-19</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-668816428">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 4, 2020, 1:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/732#issuecomment-668816428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Using screenshots, it was found that 666538 was input instead of 614339 (https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/SC/SC-20200804-122613.png). States Daily was edited accordingly.</p>
+<p>Before:
+<img width="776" alt="Screen Shot 2020-08-04 at 4 45 17 PM" src="../../assets/github/images/66738237/89343201-ecc1e500-d671-11ea-8a17-2bf641021249.png">
+After:
+<img width="761" alt="Screen Shot 2020-08-04 at 4 45 28 PM" src="../../assets/github/images/66738237/89343206-ef243f00-d671-11ea-911a-71de02a1d597.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-693">#693: [SC] PCL Historicals: Backfill Positive Cases PCR values (before 4/29,5-3-5/17) from Positive cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            693</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on July 29, 2020, 7:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/693" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> SC</p>
+<p><strong>Dates impacted:</strong> 5/03-5/17, before 4/29</p>
+<p><img src="https://user-images.githubusercontent.com/57415941/88812982-5f205a00-d186-11ea-970d-c94029feca16.png" alt="Screen Shot 2020-07-29 at 10 27 44 AM"></p>
+<p><strong>Issue:</strong> We had a gap in data reporting for positive cases (PCR) from 5/03-5/17. We reported values prior to 5/03. We need to backfill these values.
+<a href="https://scdhec.gov/news-releases/south-carolina-announces-latest-covid-19-update-june-17-2020#:~:text=COLUMBIA%2C%20S.C.%20%E2%80%94%20This%20week%2C%20the%20S.C.%20Department,Disease%20Control%20and%20Prevention%20to%20report%20this%20information">Prior to 6/16 all the values reported by South Caroline were confirmed cases. </a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-667302699">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 31, 2020, 12:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/693#issuecomment-667302699" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@jesseandersonumd</strong>
+Do we have the source for this or do we need back-fill team to get it? I am not sure based on the issue here..</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667555529">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 1, 2020, 9:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/693#issuecomment-667555529" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Update (8/1):</strong> The gap in the values from 5/03-5/17 for positive cases (PCR) appears to easily be remedied by a simple copy and paste from positive cases (people, confirmed and probable). I think it might be a good idea for back-fill to confirm that this is doable. The source would simply be where we usually source data for these values, which is here: https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/sc-testing-data-projections-covid-19. Thank you for asking, Michal, and calling attention to this issue!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674550714">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 16, 2020, 9:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/693#issuecomment-674550714" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-681017463">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 26, 2020, 10:25 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/693#issuecomment-681017463" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-693425888">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 16, 2020, 7:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/693#issuecomment-693425888" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and After snapshots in the attached sheet
+<a href="../../assets/github/files/5232622/GH.693.-.SC.-.Positive.Cases.PCR.Timeseries.Backfill.xlsx">GH 693 - SC - Positive Cases PCR Timeseries Backfill.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-510">#510: [SC Historical] 6/6 Numbers</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            510</p>
+          <p>
+            <strong>schmian</strong> opened this issue on June 22, 2020, 7:34 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/510" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>SC data was not updated on 6/6. The last screenshot of the day has the new data.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24xe9">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647775339">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 22, 2020, 2:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/510#issuecomment-647775339" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The current hospitalization number is on a different page that doesn't seem to be screenshotted, but I was able to update everything else using the last 6/6 screenshot.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/85336291-616b0680-b4ac-11ea-8d85-37f4c633e528.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/85336497-af800a00-b4ac-11ea-8717-99d36bf31788.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-477">#477: Missing data for hospitalizedCurrently in SC</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            477</p>
+          <p>
+            <strong>cout</strong> opened this issue on June 7, 2020, 12:30 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/477" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: SC</p>
+<p><strong>Describe the problem</strong>
+There is no <code>hospitalizedCurrently</code> data for South Carolina prior to May 21.</p>
+<p><strong>Link to data source</strong>
+The number of hospitalized COVID-19 patients was added to the daily update starting on April 29.  These updates are available from SC DHEC in URLs such as: https://www.dhec.sc.gov/news-releases/south-carolina-announces-latest-covid-19-update-april-29-2020</p>
+<p>I was able to scrape the data for all dates for which <code>hospitalizedCurrently</code> is blank.</p>
+<pre><code>Date,beds_available,beds_in_use,beds_in_use_covid
+2020/04/29,4480,6932,311
+2020/04/30,4512,6894,307
+2020/05/01,4653,6743,300
+2020/05/02,4824,6573,370
+2020/05/03,5016,6389,310
+2020/05/05,3241,6415,447
+2020/05/06,3461,6601,485
+2020/05/07,3345,6674,484
+2020/05/08,3388,6622,460
+2020/05/09,3482,6514,461
+2020/05/10,3620,6354,446
+2020/05/14,3301,7077,443
+2020/05/15,3405,6970,423
+2020/05/16,3567,6799,434
+2020/05/17,3798,6583,392
+2020/05/18,3792,6481,412
+2020/05/19,3292,7046,444
+2020/05/20,3030,7209,414
+</code></pre>
+<p>Most of the covidtracking data for May 21 and later do match what I scraped, though there are a few dates that do not:</p>
+<pre><code>Date,beds_available,beds_in_use,beds_in_use_covid
+2020/05/21,3142,7199,438
+2020/06/05,3055,7337,482
+2020/06/06,3055,7337,482
+</code></pre>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647745137">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 1:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/477#issuecomment-647745137" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653220042">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 2, 2020, 2:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/477#issuecomment-653220042" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-463">#463: [SC Historicals] Cases when SC reporting seems to not match CTP reporting</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            463</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 28, 2020, 8:33 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>From Front https://app.frontapp.com/open/msg_dlyhb2p</p>
+<p><a href="https://github.com/COVID19Tracking/issues/files/4696620/South_Carolina_out.xlsx">South_Carolina_out.xlsx</a></p>
+<p>Here is the Excel file for South Carolina. The individual numbers are colored. Black is for when the numbers have been verified through the daily state reports. Blue is for when I could not find a copy of the daily report and relied on the numbers from The COVID Tracking Project. Orange is when I verified the numbers through a tertiary source. This is almost always the Twitter feed for the state's Department of Health. Red is for when I verified the number through the state's daily reports and those numbers did not correspond to the one presented in The COVID Tracking Project.</p>
+<p>The red numbers can be compared to the daily state screenshots. Sometimes the variance is minor. In South Carolina, The COVID Tracking Project had several instances where the numbers were repeated from date to date when the numbers did change in the daily screenshots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-643350617">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 12, 2020, 8:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-643350617" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647645935">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 9:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-647645935" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655029399">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 7, 2020, 11:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-655029399" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660290087">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 17, 2020, 12:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-660290087" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-458">#458: [SC Historicals] 13 cases where the state changed the data but our report does not reflect it</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            458</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 27, 2020, 5:46 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/458" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Secondly, there are several states that for some reason on the COVID Tracking Project sometimes repeat the numbers from day to day. This happens at South Carolina in 13 instances. In none of those 13 instances did the numbers fail to change in the daily reports.</p>
+<p>From https://app.frontapp.com/open/msg_dl7uc7l</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-640268436">
+          <div class="frontmatter">
+            <div>
+              <strong>cout</strong> commented on June 7, 2020, 12:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/458#issuecomment-640268436" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Is this the same as #375?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647745127">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 1:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/458#issuecomment-647745127" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653220051">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 2, 2020, 2:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/458#issuecomment-653220051" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-318">#318: SC recoveries</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            318</p>
+          <p>
+            <strong>goldfarb</strong> opened this issue on April 28, 2020, 9:12 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/318" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Past Hospitalization values were calculated as a percentage of the total cases, rather than of the number specified in the text.</p>
+<p><img src="https://user-images.githubusercontent.com/3722037/80510978-7c584900-8949-11ea-8119-c81ccb1de131.png" alt="image"></p>
+<p>For 4/16-4/19
+2,063</p>
+<p><img src="https://user-images.githubusercontent.com/3722037/80509263-2c788280-8947-11ea-85f5-d056e6ee79cb.png" alt="image"></p>
+<p>For 4/20-4/22
+72% of ? =</p>
+<p><img src="https://user-images.githubusercontent.com/3722037/80509470-78c3c280-8947-11ea-9317-80c1c7901890.png" alt="image"></p>
+<p>SC had 4,377 total cases at the time
+<img src="https://user-images.githubusercontent.com/3722037/80509687-bcb6c780-8947-11ea-840a-3c2b81969889.png" alt="image"></p>
+<p>but the recovery percentages are not for the full case number</p>
+<p>For 4/23-
+73% of 3,878 = 2,830</p>
+<p><img src="https://user-images.githubusercontent.com/3722037/80509215-19fe4900-8947-11ea-83bb-0e2a2207ed86.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-628094237">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 13, 2020, 9:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/318#issuecomment-628094237" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638924536">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 4, 2020, 8:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/318#issuecomment-638924536" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-267">#267: SC data with 0 increases does not match 6PM screenshot </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            267</p>
+          <p>
+            <strong>nhinze</strong> opened this issue on April 23, 2020, 9:13 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/267" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>SC data for 4/20, 4/16, 4/13, 4/6, 4/3, 3/27, 3/19 show 0 new cases, but the evening screenshot shows that the total cases increased that day.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-625946281">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 8, 2020, 11:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/267#issuecomment-625946281" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-630361263">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 18, 2020, 11:31 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/267#issuecomment-630361263" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-185">#185: SC Hospitalization numbers 3/31 - 4/2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            185</p>
+          <p>
+            <strong>hammer</strong> opened this issue on April 12, 2020, 2:51 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/185" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>SC's hospitalization numbers look wrong from 3/31 - 4/2 https://covidtracking.com/data/state/south-carolina.</p>
+<ul>
+<li>4/2: the number &quot;896&quot; appears to come from a survey of 896 cases in which 27% were reported to be hospitalized at time of reported illness. Later days use 896 * .27 = 241 as cumulative number hospitalized, so we should probably just change this day to 241.</li>
+<li>3/31 - 4/1: I have no theory about the origin of these numbers. There's a survey of 424 cases in which 24% are reported hospitalized at time of illness; using the logic from 4/1 we'd have 424 * .24 = 101 as a lower bound on cumulative.</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-616221503">
+          <div class="frontmatter">
+            <div>
+              <strong>mlgnight</strong> commented on April 19, 2020, 1:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/185#issuecomment-616221503" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Also, the data goes from 129 to 259 to 349 to 241 to 896 and back down to 241</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623774906">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/185#issuecomment-623774906" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626754190">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on May 11, 2020, 7:52 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/185#issuecomment-626754190" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@hammer</strong> and <strong>@mlgnight</strong>,
+Thanks for catching this. The 4/2 number does look like a misreading of the charts. According to records we noticed the mistake for hospitalizations 4/3 and corrected but did not update the historical data.
+<img src="../../assets/github/images/15933271/81573304-49af4700-9372-11ea-8c8b-268ad33fa897.png" alt="comment 4/3">
+I've gone in and updated that value.
+The values from 3/26 - 4/1 do appear to have no origin. To maintain consistency with the later policy (past 4/2) of using the hospitalized numbers reporting the number from &quot;Hospitalization Reported at Time of Reported Illness,&quot; I've gone through screenshots for those days and changed the number to 102 for all cases, as that chart reflects.
+Before:
+<img src="../../assets/github/images/15933271/81575525-21751780-9375-11ea-9e08-4a2f7cc6e259.png" alt="Screen Shot 2020-05-11 at 10 26 39 AM">
+After:
+<img src="../../assets/github/images/15933271/81575544-2934bc00-9375-11ea-89e2-2cb848d5301c.png" alt="Screen Shot 2020-05-11 at 10 49 13 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-24">#24: SC: Data not updating</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            24</p>
+          <p>
+            <strong>eric-czech</strong> opened this issue on March 20, 2020, 5:41 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/24" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I noticed that the SC counts didn't update last night (https://covidtracking.com/data/state/south-carolina/):</p>
+<p><img src="https://user-images.githubusercontent.com/6130352/77164033-c7975600-6a85-11ea-8f1b-c4ebd0614cf0.png" alt="Screen Shot 2020-03-20 at 8 35 05 AM"></p>
+<p>Is there some way to verify that this was due to the underlying source (currently https://scdhec.gov/monitoring-testing-covid-19) not updating rather than some collection bug?</p>
+<p>Similarly, is it possible to get a sense of how often underlying source pages are changing?  I'm not sure if the SC monitoring page is being updated multiple times daily or not, and I thought something collected by the current crawlers might give me that sense.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-601695460">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 20, 2020, 6:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/24#issuecomment-601695460" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@eric-czech</strong> the current count for SC is 81 so looks like this was due to either SC reporting late or us not checking it near enough to 4 pm. It's an acknowledged caveat with our data: https://covidtracking.com/newsroom-expert-faq. We do keep a log of each time a state has been checked, so we could conceivably generate a report on which states update multiple times per day, but that's not something we do currently nor do we plan to do it soon.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601695460">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 20, 2020, 6:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/24#issuecomment-601695460" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@eric-czech</strong> the current count for SC is 81 so looks like this was due to either SC reporting late or us not checking it near enough to 4 pm. It's an acknowledged caveat with our data: https://covidtracking.com/newsroom-expert-faq. We do keep a log of each time a state has been checked, so we could conceivably generate a report on which states update multiple times per day, but that's not something we do currently nor do we plan to do it soon.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

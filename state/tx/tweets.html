@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Texas Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Texas</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Texas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 8, 2020, 10:09 PM PDT</h2>
+    <div>
+      <p>New  update with state data up to midnight eastern: tally shows over 4000 tests.</p>
+<p>https://t.co/Zc39AZVRge</p>
+<p>WA and CA have conducted the most tests and have the most cases. Big gaps in our testing capacity knowledge: MA, TX, GA, PA.</p>
+
+    </div>
+  
+    <h2>March 11, 2020, 12:53 AM PDT</h2>
+    <div>
+      <p>@adamwulf We’re largely following the state heath departments, though we have enriched with media reports, and probably will do so with TX if the state continues to update slowly. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 10:01 PM PDT</h2>
+    <div>
+      <p>The current number of people tested is now up to almost 14,000. Still far, far too low.</p>
+<p>GA, MA, TX remain data holes.</p>
+
+    </div>
+  
+    <h2>March 13, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>These numbers are a lower bound for a few reasons:</p>
+<ol>
+<li>We are still waiting on accurate negative test counts from CA, MA, GA, and TX, among other states.</li>
+<li>Commercial labs only report positive results to the states.</li>
+</ol>
+
+    </div>
+  
+    <h2>March 14, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>@joshtpm Washington and New York are driving the numbers. We're falling further behind on CA testing numbers. Now that MA is out in the open, the other big question mark is TX.</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 1:40 PM PDT</h2>
+    <div>
+      <p>One positive development is that Texas, Massachusetts, and several other states have begun to include total testing numbers from <em>commercial</em> labs, which are coming online. TX, for example: https://t.co/motgizKtMQ</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 1:49 PM PDT</h2>
+    <div>
+      <p>And yet: we have known that our numbers were a lower bound on the number of tests for a while. We were just missing some total test numbers from big states. Now that some of those have been filled (thanks TX, MA!)—we have more data going uncaptured: private lab testing.</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 1:49 PM PDT</h2>
+    <div>
+      <p>Worse, we're not able to tell you what the scale of that problem is on a state-by-state or national level. In Texas, private labs are doing ~50% of the testing. In MA, it's less than 25%. In AK, it's closer to 10%.</p>
+
+    </div>
+  
+    <h2>March 18, 2020, 2:22 PM PDT</h2>
+    <div>
+      <p>We want to thank some states for excellent new dashboards that now include all negative tests, including those from commercial laboratories. Thank you, @TexasDSHS, @GaDPH, @HealthyFla.</p>
+
+    </div>
+  
+    <h2>March 18, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>@doughardy_ct @TexasDSHS @GaDPH @HealthyFla Fantastic!</p>
+
+    </div>
+  
+    <h2>March 20, 2020, 1:45 PM PDT</h2>
+    <div>
+      <p>For example, here is the page for Texas: https://t.co/Wq0UFOUPqh.</p>
+<p>You can see on this page that Texas reported 2,922 new test results today, after having only performed 2,355 cumulative tests prior to today!</p>
+
+    </div>
+  
+    <h2>April 20, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>Connecticut reported its single largest increase daily death toll.</p>
+<p>Other states we're watching for Tuesday: Massachusetts, Michigan, Georgia, Florida, Texas, Kentucky. https://t.co/iVJQMeS7yQ</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 20, 2020, 2:28 PM PDT</h2>
+    <div>
+      <p>We are still determining how widespread this problem is at the state level, but it is certain to have some effect on this data.</p>
+<p>For example, the @TexasObserver got Texas on the record:
+https://t.co/BrhdVyntB1</p>
+
+    </div>
+  
+    <h2>May 20, 2020, 2:37 PM PDT</h2>
+    <div>
+      <p>@nogenderid @TexasObserver Oh yes. Some did not know they were doing it, as Vermont admitted in a press conference @EPetenko reported on, after @asuozzo
+asked about it. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>May 20, 2020, 2:38 PM PDT</h2>
+    <div>
+      <p>@jfhenry1876 @TexasObserver And then his health department reconfirmed that they were. https://t.co/MmWnZLYn8U</p>
+
+    </div>
+  
+    <h2>May 20, 2020, 2:39 PM PDT</h2>
+    <div>
+      <p>@jgarmend @TexasObserver The saga continues. Clearly a messy situation. -@alexismadrigal https://t.co/MmWnZLYn8U https://t.co/LtiOaejX1k</p>
+
+    </div>
+  
+    <h2>May 20, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>@cardlaw35 @TexasObserver Also a possibility! The point is: I can't think of anybody who wants this data commingled. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>May 23, 2020, 3:12 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. We’ve now tracked 13.8 million tests, up 343k from yesterday.</p>
+<p>5 states showed a decline in total tests due to separating out their antibody results: MI, MO, MS, TX, WV.</p>
+<p>Details in this thread. https://t.co/y9aPPSnnor</p>
+
+    </div>
+  
+    <h2>May 23, 2020, 3:48 PM PDT</h2>
+    <div>
+      <p>Last thing: Texas updated just as we were publishing. We just caught picked up their numbers.</p>
+
+    </div>
+  
+    <h2>June 1, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>The number of new cases was low—about 16k—after a series of higher days. The 7-day average fell under 21k.</p>
+<p>NY was under 1,000 new cases for the first time in 11 weeks!</p>
+<p>California and Texas, which had new highs yesterday, were much lower today. https://t.co/E1yZfBBEym</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 10:42 AM PDT</h2>
+    <div>
+      <p>Another 7 states — HI, ME, MT, NM, SD, UT, WY — are not reporting race / ethnicity for deaths.</p>
+<p>TX is reporting but &gt;70% of cases and deaths are listed as unknown.</p>
+<p>Some data <em>is</em> better than none, but it's still not enough.</p>
+<p>See the rest of the data: https://t.co/Ek3yOTKBgq</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>States reported fewer than 21k new cases today. The 7-day average fell a bit. After last week's higher numbers, we've seen some lower numbers, especially in the big states like CA and TX. https://t.co/zFXlGJiVJJ</p>
+
+    </div>
+  
+    <h2>June 7, 2020, 3:37 PM PDT</h2>
+    <div>
+      <p>There are several other states we're keeping an eye on. California, Minnesota, North Carolina, and Texas. https://t.co/FZWIFuMWLT</p>
+
+    </div>
+  
+    <h2>June 8, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. We’ve now tracked 20.6 million tests, up 379k from yesterday, the lowest total in a couple of weeks.</p>
+<p>One reason for the low number: Texas still hasn't reported.</p>
+<p>For details, see: https://t.co/PZrmH4bl5Y https://t.co/QnfWxOn1gF</p>
+
+    </div>
+  
+    <h2>June 9, 2020, 2:59 PM PDT</h2>
+    <div>
+      <p>But Texas, North Carolina, and South Carolina also saw spikes in hospitalizations. https://t.co/3mb7FMS2Zf</p>
+
+    </div>
+  
+    <h2>June 10, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Let's take a look at California, Florida, and Texas. CA has a lot of cases, but it also has a lot of people and tests. Florida, though it had a larger outbreak earlier, looks much the same. (We only had a FL hospitalization number for a few days.) https://t.co/xVmyOdMLf8</p>
+
+    </div>
+  
+    <h2>June 10, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Look at Texas, though. We see the rise in cases outpacing the rise in testing. Hospitalizations are also increasing. https://t.co/U39BeDXiV8</p>
+
+    </div>
+  
+    <h2>June 11, 2020, 2:39 PM PDT</h2>
+    <div>
+      <p>Today's numbers right now do not include Texas, which has not yet reported.</p>
+<p>South Carolina separated out antibody tests from viral diagnostic tests today. Antibody tests represented ~10-11% of the tests that had been reported by the state.</p>
+
+    </div>
+  
+    <h2>June 11, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We also just a number of new cases for Texas—1,826—in line with the state's recent growing numbers.</p>
+<p>Arizona remains a trouble spot.</p>
+<p>Alabama, which is experiencing an increase in cases, recently began reporting hospitalization. https://t.co/GtgfKkinE8</p>
+
+    </div>
+  
+    <h2>June 12, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Here are four states—Texas, Arizona, North Carolina, and Arkansas—that had worrisome numbers today.</p>
+<p>(Arizona's data dashboard crashed today, so we don't have a full set of their numbers. But we were able to capture these two metrics.) https://t.co/NDEfzp9cjn</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We saw 3 states report more than 2,000 cases today: California, Florida, and Texas. https://t.co/EqiqthVEp0</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We are seeing new hospitalization highs in Texas, Arizona, and North Carolina. We're showing Louisiana here as well for context, since it had an early COVID-19 outbreak. https://t.co/BvbW8DYEyt</p>
+
+    </div>
+  
+    <h2>June 14, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>Four states we've been watching closely—Texas, Arizona, North Carolina, and South Carolina—have not seen a leveling off yet in this new round of outbreaks. https://t.co/P0Ht5xsI7P</p>
+
+    </div>
+  
+    <h2>June 16, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>States reported ~23.5k cases today.</p>
+<p>The 7-day average is now at its highest point since May 24.</p>
+<p>One important caveat from Texas: 1500 of these cases are older data that local health authorities had not previously reported. https://t.co/Q8bADZ9q3P</p>
+
+    </div>
+  
+    <h2>June 17, 2020, 3:29 PM PDT</h2>
+    <div>
+      <p>Texas reported 4k new confirmed cases yesterday with some caveats. Today, the state reported 3,129 — without the caveats. https://t.co/1pGhGkmILK</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Here are 5 states we looked at closely today.</p>
+<p>Cases and hospitalizations are tracking closely in TX, AZ, and the Carolinas, but not in California. California's positive rate also has not gone up. https://t.co/xqOUjRWpbo</p>
+
+    </div>
+  
+    <h2>June 20, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>Florida continues not to report current hospitalizations, but it would not be a surprise if their numbers look a lot like the Texas chart. https://t.co/9dUA7wupH4</p>
+
+    </div>
+  
+    <h2>June 22, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>Let's take a closer look at TX and CA.</p>
+<p>These states have similar case numbers, but very different positions.</p>
+<p>In CA, the positive rate has remained low and hospitalizations steady.</p>
+<p>In TX, the positive rate and hospitalizations are rising alongside cases. https://t.co/I9LlNIRqAh</p>
+
+    </div>
+  
+    <h2>June 23, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>Texas reported very large numbers today. There are now more than 4,000 people hospitalized. There were fewer than 3,000 people hospitalized 5 days ago (and roughly 2,000 two weeks ago). https://t.co/EY3paio6uN</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>6 states set new record highs today, including 3 of the 4 largest (California, Florida, Texas).</p>
+<p>13 states set new highs in the last 5 days. You can see that most of them are in the South (red) or West (orange). https://t.co/mha5IeUs6j</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:50 PM PDT</h2>
+    <div>
+      <p>While we’re in the Monday lull in data reporting, let’s look at a couple of concerning states outside AZ-CA-FL-TX outbreaks.</p>
+<p>Missouri’s percent positive rate has gone from 4.3% the week of June 14 to 6.5% this week, with hospitalizations rising. https://t.co/ahvI7Gdn7W</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>Arizona, California, Florida, and Texas are still at the center of the current surge of new cases. Hospitalization for AZ, CA, and TX all climbing. We expect Florida's data has a similar shape. https://t.co/8G9RRQta6j</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>California, Texas, and Florida all reported over 6000 new cases today. https://t.co/9N1UNR4rCR</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 4:06 PM PDT</h2>
+    <div>
+      <p>A second optimistic point: New Mexico looks to be in  good shape, despite the huge outbreaks in neighboring states Arizona and Texas. https://t.co/lZDFiyxIyN</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:43 PM PDT</h2>
+    <div>
+      <p>Several big states reported record numbers today: Arizona, California, Georgia, North Carolina, Texas. https://t.co/ZKTM496d2T</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 5:08 PM PDT</h2>
+    <div>
+      <p>The number of currently hospitalized COVID patients in Texas surpassed California today. https://t.co/O4Kqm7zD7V</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>Before we get to the daily numbers, here's our weekly look at the numbers.</p>
+<p>One topline: While Arizona, California, Florida, and Texas are dominating the headlines, many other areas also have serious problems.</p>
+<p>https://t.co/2eZOamhZla https://t.co/Qu70PjuDNO</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:04 PM PDT</h2>
+    <div>
+      <p>In Texas, too, daily average deaths have risen ~50% in the last two weeks.</p>
+<p>Read more on the complexities of lag times, changing demographics, and COVID-19 deaths here: https://t.co/ZXFERIyS6I https://t.co/mVKwD3RdbM</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>You can see the states that did not report here as well as Florida's new record high of 11,458 new cases, which dwarfs even the 8000+ cases reported by Texas. https://t.co/ifvE1YV5y5</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:28 PM PDT</h2>
+    <div>
+      <p>Texas, meanwhile, set a new record for the number of patients currently hospitalized with COVID-19. https://t.co/EtGME0RyqA</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:34 PM PDT</h2>
+    <div>
+      <p>The South dominated new case counts today. Florida and Texas alone represented nearly 40% of new cases. https://t.co/3BKcVTUdOr</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:19 PM PDT</h2>
+    <div>
+      <p>Seven states saw the number of people hospitalized rise by 100 or more today. In Texas, this figure is almost 5 times higher than it was 30 days ago on June 7 (1,878 to 9,286). https://t.co/z39Q1vJ6B0</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>California, Florida, and Texas combined accounted for 45% of all new cases today. https://t.co/Oi172TYX0q</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:44 PM PDT</h2>
+    <div>
+      <p>There’s been a lot of discussions about deaths continuing to trend down as cases have surged. This chart provides a partial answer to what’s been happening. The falling numbers in the NE were offsetting rising deaths in AZ, TX, FL. https://t.co/hmZkhZXTPS</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:48 PM PDT</h2>
+    <div>
+      <p>This is the same pattern we saw for cases and hospitalizations over the last couple months. Compare Arizona, New Jersey, New York, and Texas. https://t.co/Uz6d2aQ9LU</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:49 PM PDT</h2>
+    <div>
+      <p>Sadly, cases are rising in many states beyond Florida, Texas, and Arizona. 23 states have seen their highest day of cases in the past 2 weeks. https://t.co/C5SC2UYLjg</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>This rise in deaths is concentrated in states with large outbreaks. Texas, California, and Florida all reported their single highest day of deaths for the entire pandemic today.</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>The upward trend holds for death data. Though the data is less smooth, between June 10 and July 10, the seven-day average of deaths reported by Arizona, California, Florida, South Carolina, and Texas has almost doubled. https://t.co/POzXF5GJG7</p>
+
+    </div>
+  
+    <h2>July 11, 2020, 3:29 PM PDT</h2>
+    <div>
+      <p>This chart doesn't require much analysis. Texas. https://t.co/I3RBfCUrtr</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>In Texas, the number of currently hospitalized COVID-19 patients has been over 10k for the last three days. New York, at its peak, had 18.8k hospitalized COVID-19 patients. https://t.co/vhn6Z512DU</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>Six states saw a rise of over 100 (FL, CA, TX, AZ, GA, TN) in their number of currently hospitalized COVID-19 patients. All six set new record highs for their states. https://t.co/1qvm9AEdMh</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>18 states reported over 900 new cases today. Nevada and Texas hit new highs. https://t.co/mb81voZYNR</p>
+
+    </div>
+  
+    <h2>July 16, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>Eight Southern states outside Texas and Florida currently have over 1,000 patients hospitalized with COVID-19. https://t.co/3JDRdkdvTk</p>
+
+    </div>
+  
+    <h2>July 17, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>Our update is published. States reported record tests completed (852k) and cases (77k) for the second day in a row, as well as 951 deaths.</p>
+<p>One significant caveat: the total cases include ~5k cases from a reporting backlog in Texas. https://t.co/Ky60XDlluD</p>
+
+    </div>
+  
+    <h2>July 20, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Populous states can generate large case counts, but if you look at the new cases per million today, 9 smaller states are showing more cases per million than California or Texas: AL, AR, ID, KS, KY, LA, MS, NV, and SC. https://t.co/1pYW6cWRaS</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>Here’s what’s going on. As states switch from the long-established CDC system to the new HHS one, some hospitals appear to be having trouble reporting their numbers. That led both Texas and California to place advisories on their dashboards. https://t.co/fbq1Su5Nz2</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>With the incomplete data, both CA and TX reported significant drops in their number of hospitalizations. Based on existing trends, we believe this drop to be primarily an artifact of the reporting. We reverted both states to yesterday’s numbers as better indicators of reality.</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 4:02 PM PDT</h2>
+    <div>
+      <p>Texas moved into the top 10 in the total number of COVID-19 deaths that the state has reported this year. Washington, hit hard early, has now fallen out of the top 20. https://t.co/XFiutAyId6</p>
+
+    </div>
+  
+    <h2>July 24, 2020, 4:33 PM PDT</h2>
+    <div>
+      <p>Yesterday’s problems with COVID-19 hospitalization data continue today in CA and TX. Both states still warn that their hospitalization data is incomplete due to the changeover to HHS systems. We’ve carried over their hosp. data from Wednesday, before the warnings went up.</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Another day of uneven current COVID-19 hospitalizations data. California and Texas are still not getting complete data from hospitals due to the HHS changeover. We’ve frozen their figures for now.</p>
+
+    </div>
+  
+    <h2>July 26, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Hospitalizations fell a bit again. CA and TX (and maybe other states) are still not getting complete data due to the HHS changeover. We’ve frozen the CA and TX figures for now — and will reevaluate tomorrow. We’re hoping the CDC-HHS changeover issues get cleared up this week.</p>
+
+    </div>
+  
+    <h2>July 27, 2020, 3:05 PM PDT</h2>
+    <div>
+      <p>Please hold off on using the data for just a moment, we're working on a fix for Texas death data that includes a backfill dump.</p>
+
+    </div>
+  
+    <h2>July 27, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>(*) Texas has begun using death certificates to count COVID-19 deaths, and has added 675 deaths to their cumulative total, only 44 of which are meant to be associated with today’s data update. https://t.co/WgUUlCBiJL</p>
+
+    </div>
+  
+    <h2>July 27, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>Once again, the state data on current COVID-19 hospitalizations is unstable. CA, SC, and TX have all posted notices stating their hosp. data is incomplete because of the HHS changeover. We’ve maintained the freeze on their hospitalization data again. More on that tomorrow.</p>
+
+    </div>
+  
+    <h2>July 29, 2020, 3:42 PM PDT</h2>
+    <div>
+      <p>Texas has changed their method of counting deaths, and Hurricane Hanna has hit the state. This may have caused some backlog, which could have influenced the large number of deaths (313) they reported today. https://t.co/wsM9O4LUZO</p>
+
+    </div>
+  
+    <h2>July 29, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>The hotspot states remain hotspots, even as their cases plateau a little or even decline. However, we’re now seeing more deaths reported in these states. Today, 773 deaths were reported by Arizona, California, Florida, and Texas alone. https://t.co/wv3NWzsJxk</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Our number of newly reported COVID-19 deaths includes 322 deaths in Texas, as the state reported today. However, Texas also removed 200+ deaths from its cumulative totals due to an “automation error,” so the cumulative counts on https://t.co/PZrmH4bl5Y reflect this adjustment.</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Texas recently changed the way it counts COVID-19 deaths, and also retroactively adjusts death counts by day of death. We report by date reported for all jurisdictions we track. Blog post with details coming later this week.</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>But there is good news to report as well. The 7-day new-case average is declining in all four of our major hotspot states: AZ, CA, FL, and TX. https://t.co/6c3MJLCLLl</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>The 7-day rolling average of deaths for Texas and Florida has now surpassed some early hotspots like Michigan and Massachusetts.</p>
+<p>The trajectory looks more like harder hit states like New Jersey. https://t.co/D49edXZKXT</p>
+
+    </div>
+  
+    <h2>August 2, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>Our update is published. Major caveat to the data: Texas did not report today. The other states reported 49k new cases and 726k new tests. There were 515 deaths reported, about the same level as last Sunday. For perspective, last Sunday TX reported 6k new cases and 153 deaths. https://t.co/NHzFl3mZ3f</p>
+
+    </div>
+  
+    <h2>August 3, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Texas did not report yesterday, so their numbers are for 2 days. They’ve also changed their method of counting deaths to a more comprehensive, but slower method. Read more about the complex accounting of COVID-19 deaths in our most recent blog post: https://t.co/J8sdFTYlug</p>
+
+    </div>
+  
+    <h2>August 7, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Georgia has consistently reported thousands of new cases each day—and has the fourth-largest number of hospitalized COVID-19 patients today, trailing only much larger states (CA, FL, TX). https://t.co/xtINB3o8bx</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>In better news, the great state of Texas is now reporting antigen tests. TX is doing it right, separating antigen results from PCR and reporting both positives and totals. You’ll see the numbers in our dataset as soon as we get antigens into the API. https://t.co/fAQa3XwZA5</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>Getting Texas antigen test results into public view has been a tangled process, and we’re very glad to see them. The @houstonchron reported on the whole story last weekend: https://t.co/aZL1Yt1QPF</p>
+
+    </div>
+  
+    <h2>August 10, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>The 7-day avg tests in Texas is now back to late-June levels, reinforcing a trend of falling testing numbers in recent weeks. This is especially concerning as schools are preparing to reopen in the state. https://t.co/FUPIvNyfMP</p>
+
+    </div>
+  
+    <h2>August 10, 2020, 4:13 PM PDT</h2>
+    <div>
+      <p>Another note on TX: Due to a large backlog, the state did not report case counts for Nueces County today. https://t.co/HqY5MqOy8J</p>
+
+    </div>
+  
+    <h2>August 12, 2020, 4:39 PM PDT</h2>
+    <div>
+      <p>Texas is another major question mark. For reasons that are not quite clear yet, the state has been aggressively reducing the number of tests it had counted but not assigned to a county for the last 10 days since a system upgrade.</p>
+
+    </div>
+  
+    <h2>August 13, 2020, 3:56 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 881k tests, 200k more than yesterday. Texas alone reported 124k tests. States also reported 52k cases and 1,163 deaths. https://t.co/7602tY9XlU</p>
+
+    </div>
+  
+    <h2>August 13, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>Testing numbers have begun to rise again in California. Texas seems to have begun solving their test issues, reporting over 124k tests today alone. Florida testing remains far from peak numbers in July. https://t.co/0GIsmgooup</p>
+
+    </div>
+  
+    <h2>August 14, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Texas testing data seems to have rebounded from very low numbers last week. However, the state has not provided clear answers on what is happening in its reporting systems and positivity calculations. Read more here about what we can and cannot know</p>
+<p>https://t.co/Vf6vzZv1IR</p>
+
+    </div>
+  
+    <h2>August 16, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>For those following the saga of Texas testing, we’re seeing a lot more tests reported there. The state still hasn’t provided much detail about what happened over the last two weeks, and we look forward to learning more soon. https://t.co/zVWnxEfBbR</p>
+
+    </div>
+  
+    <h2>August 17, 2020, 3:24 PM PDT</h2>
+    <div>
+      <p>One major caveat today: Texas reported a backlog of 5k cases, which are included in today's numbers. Even for a Monday, which is subject to weekend lag, this is a very, very small number of cases.</p>
+
+    </div>
+  
+    <h2>August 20, 2020, 4:16 PM PDT</h2>
+    <div>
+      <p>Texas started clearing multiple case backlogs this week. The state’s health department noted that case numbers might be inaccurate for several days as counts &quot;will include some older cases over the next few days.&quot; https://t.co/hNQeIO4rtI</p>
+
+    </div>
+  
+    <h2>August 24, 2020, 4:56 PM PDT</h2>
+    <div>
+      <p>Due to a network outage reported by the Texas DSHS, testing numbers were not updated today. https://t.co/8Zbcbq0IZw</p>
+
+    </div>
+  
+    <h2>September 12, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 763k tests, 37k cases, and 663 COVID-19 deaths. Important caveat: this update does not include Texas’s daily data, which is still not in today. https://t.co/gRVcvQlarp</p>
+
+    </div>
+  
+    <h2>September 14, 2020, 4:20 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 743k tests, 30k cases, and 382 COVID-19 deaths. Important caveat: this update does not include Texas's daily data. Normal weekend lags are also reflected. https://t.co/tqTAdY78Dh</p>
+
+    </div>
+  
+    <h2>September 21, 2020, 3:39 PM PDT</h2>
+    <div>
+      <p>Daily numbers from Texas included a backlog of 8,000 COVID-19 cases. We removed the historical count from the daily value for trend consistency, but have included them in our cumulative numbers on the website. https://t.co/W2Q4CGocJU</p>
+
+    </div>
+  
+    <h2>September 22, 2020, 4:13 PM PDT</h2>
+    <div>
+      <p>For the second day in a row, Texas reported a significant backlog of cases. Daily numbers included 3,964 new cases and over 13,000 backlogged cases. The cumulative numbers are reflected on the website.</p>
+
+    </div>
+  
+    <h2>October 3, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>Texas reported a backlog of older cases recently reported by labs, which are included in our cumulative API, though not in today’s total.</p>
+
+    </div>
+  
+    <h2>October 16, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>Cases nationwide are on the rise. Two states - Illinois and Texas - are each reporting over 5k cases. https://t.co/1sgCu73Piu</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:24 PM PDT</h2>
+    <div>
+      <p>TX, FL, and WI all reported over 5k cases today. IL reported a new daily record of over 8k cases. Here's how these states looked over the last two months for comparison. https://t.co/pQhRRDTkGQ</p>
+
+    </div>
+  
+    <h2>November 5, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>While long-term care facility data continues to be patchy, what we do know is grim: Cases continued to rocket upward last week with 19,086 new cases and 1,839 new deaths among staff and residents. More than a quarter of these cases were in just three states: IL, OH, and TX.</p>
+
+    </div>
+  
+    <h2>November 11, 2020, 5:35 PM PST</h2>
+    <div>
+      <p>Texas made a late update to deaths, reporting 141. That brings our national death toll for today to 1562. That's the highest number of fatalities since May 14. https://t.co/c9U3EQeNoU</p>
+
+    </div>
+  
+    <h2>November 13, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>Illinois reported 15K cases today. A new record for the state. Cases in Texas are back over 10k. https://t.co/IRtsex4Ll0</p>
+
+    </div>
+  
+    <h2>November 15, 2020, 4:59 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 139K cases, and 583 deaths. 69k people are currently hospitalized with COVID-19 in the US. Texas has not reported its data yet today. https://t.co/KD0j5Qe8bJ</p>
+
+    </div>
+  
+    <h2>November 16, 2020, 4:20 PM PST</h2>
+    <div>
+      <p>Our daily update is published. States reported 1.5M tests, 149K cases, and 581 deaths. A record 73k people are currently hospitalized with COVID-19. Texas did not report testing data today. https://t.co/brjIHCylb3</p>
+
+    </div>
+  
+    <h2>November 18, 2020, 5:33 PM PST</h2>
+    <div>
+      <p>26 states have over 1k people currently hospitalized with COVID-19. Hospitalizations in CA, TX, and IL account for almost a quarter of all COVID-19 current hospitalizations. https://t.co/E7aUzNBlmt</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 4:34 PM PST</h2>
+    <div>
+      <p>CA (18k) and TX (15k) both reported the highest single-day case count to date. https://t.co/8zIIjicvgh</p>
+
+    </div>
+  
+    <h2>December 1, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>A handful of states reported data for more than one day today, a result of data disruptions caused by the Thanksgiving holiday. On the other hand, CO, NJ, TX, WA, and WY only published partial updates today.</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Seven states reported more than 10k cases today: CA, FL, IL, NY, PA, OH, and TX. https://t.co/L93HHx9vjH</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 6:06 PM PST</h2>
+    <div>
+      <p>The past few days have brought an important new set of metrics to state dashboards: vaccine data! So far, we’ve learned of six states—ID, MI, OH, SD, TX and UT—that are posting the number of vaccines administered on their dashboards.</p>
+
+    </div>
+  
+    <h2>December 22, 2020, 5:27 PM PST</h2>
+    <div>
+      <p>But this view masks the seriousness of the situation in the three largest southern states. Hospitalizations are rapidly rising in Texas, Florida, and Georgia. https://t.co/MerIVz8tIF</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>California, Florida, and Texas alone reported 80 thousand cases today. https://t.co/NuCJYqmCC8</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 2:01 PM PST</h2>
+    <div>
+      <p>As of today, vaccine data is readily available across 49 states and territories, but our team only found vaccine data on doses administered in LTCs in seven states: Arkansas, Illinois, Kentucky, Michigan, South Carolina, Tennessee, and Texas.</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:46 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 in the US is now below 100k for the first time since December 1. Almost all US states are seeing hospitalizations decline or flatten, and CA, FL, and TX all posted big drops today. https://t.co/ZbV4kUoiWh</p>
+
+    </div>
+  
+    <h2>February 17, 2021, 4:17 PM PST</h2>
+    <div>
+      <p>Weather-related outages in Texas have resulted in significant case and fatality reporting delays. It's likely that winter storms across the country have partially resulted in artificially low numbers.</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 2:51 PM PST</h2>
+    <div>
+      <p>We urge caution in interpreting any wobbles in the data in the next week or two, given disruptions from the storms in Texas and elsewhere.</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 4:11 PM PST</h2>
+    <div>
+      <p>As previously mentioned, we’ve been unable to update Texas’ testing data for the past 4 days due to the winter storms. Case and death reporting is also likely affected. https://t.co/Ao6yJjqena</p>
+
+    </div>
+  
+    <h2>February 19, 2021, 4:06 PM PST</h2>
+    <div>
+      <p>In our weekly update, we warned that Texas numbers could be erratic for some time because of the storms and power outages. We recommend keeping an eye on hospitalizations as the sturdiest metric there.</p>
+<p>https://t.co/vjwxr5ABXs https://t.co/pF3fwUM4xs</p>
+
+    </div>
+  
+    <h2>February 20, 2021, 4:10 PM PST</h2>
+    <div>
+      <p>Data from TX is still a bit wobbly. Total PCR tests (specimens) decreased by 85k without explanation, after increasing by over 400k yesterday.</p>
+
+    </div>
+  
+    <h2>February 23, 2021, 4:07 PM PST</h2>
+    <div>
+      <p>Texas reported relatively high numbers for new cases and deaths today, likely due in part to backlog clearing following the recent winter storms. https://t.co/8vBauaqjaH</p>
+
+    </div>
+  
+    <h2>February 24, 2021, 4:00 PM PST</h2>
+    <div>
+      <p>Data from Texas is still a bit wobbly due to storm-related reporting disruptions. It's likely that backlogs from the state have affected the 7-day case averages in the South. https://t.co/cFGhEhlZde</p>
+
+    </div>
+  
+    <h2>February 26, 2021, 5:00 PM PST</h2>
+    <div>
+      <p>A close look at the topline metrics in Texas shows evidence of major disruption in COVID-19 data reporting across our second-most populous state. When Texas has big problems, they really move the national numbers. https://t.co/b4Tc85tPut</p>
+
+    </div>
+  
+    <h2>March 4, 2021, 4:49 PM PST</h2>
+    <div>
+      <p>Today’s update includes 31k previously unreported tests in MN and 2125 previously unreported cases in TX.</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

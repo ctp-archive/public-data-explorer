@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Alabama Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Alabama</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Alabama</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 11, 2020, 4:20 PM PDT</h2>
+    <div>
+      <p>@MadeUpMasters MANUAL. We have scrapers running, but there is a ton of nuance to the data. https://t.co/unIBICkhpo from Danny Yang is the most up-to-date we have seen. That's an independent effort, but he's in our Slack, too, and he's done an incredible job. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 16, 2020, 12:28 AM PDT</h2>
+    <div>
+      <p>For perspective, that jump is 4 times greater than the TOTAL number of tests that had been done when we published this story on March 6, and launched this project with @hackingdata. https://t.co/RnIKdMJCGc</p>
+
+    </div>
+  
+    <h2>March 17, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>A few states reported shortly after our daily update: AL, FL, SC. https://t.co/uhD8fa6x8P</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>We'd also draw your attention to a cluster of southern states that are undertested, but have rising case loads, especially on a per-capita basis: Alabama, Arkansas, Georgia, Mississippi. https://t.co/7yChSLGK6x</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>May 9, 2020, 2:23 PM PDT</h2>
+    <div>
+      <p>One unusual situation: Mississippi testing is ~slowing~ as the state re-opens.</p>
+<p>(For comparison, see neighboring states like Alabama, Tennessee, and Arkansas.) https://t.co/aHf8wia9sD</p>
+
+    </div>
+  
+    <h2>May 30, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>In addition to the states we've mentioned recently, Alabama, Arizona, California, and Wisconsin are worth keeping eyes on.</p>
+<p>California and Arizona had new highs for cases today. Alabama and Wisconsin set highs yesterday. https://t.co/M2JTnIfchI</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>1/2 A list of states/territories in which African American COVID deaths substantially exceed the community's share of the population:</p>
+<p>Alabama
+Arkansas
+California
+Colorado
+Connecticut
+D.C.
+Florida
+Georgia
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Maryland
+Michigan
+Mississippi</p>
+
+    </div>
+  
+    <h2>June 9, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Current hospitalizations ticked up for the first time since early May today. That's largely because Alabama began reporting hospitalizations today, which added 600 people to the known national total of ~31k. https://t.co/sDAOWT6QYg</p>
+
+    </div>
+  
+    <h2>June 11, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We also just a number of new cases for Texas—1,826—in line with the state's recent growing numbers.</p>
+<p>Arizona remains a trouble spot.</p>
+<p>Alabama, which is experiencing an increase in cases, recently began reporting hospitalization. https://t.co/GtgfKkinE8</p>
+
+    </div>
+  
+    <h2>June 14, 2020, 2:53 PM PDT</h2>
+    <div>
+      <p>Alabama reported over 1000 new daily cases for the first time. https://t.co/M7fZuCitmK</p>
+
+    </div>
+  
+    <h2>June 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>A few other states to keep an eye on: Arkansas, Florida, Alabama.</p>
+<p>(Note: Florida does not provide a &quot;currently hospitalized figure) https://t.co/dpSELg9SC0</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Mississippi, Alabama, South Carolina, North Carolina, Georgia, and Florida all reported more than 1000 cases today. https://t.co/RysGHFrCF1</p>
+
+    </div>
+  
+    <h2>June 26, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>Here's a map of the number of new cases reported today. Note that Ohio and Alabama both almost broke 1,000. https://t.co/Fe2iixSRnH</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 3:03 PM PDT</h2>
+    <div>
+      <p>Though Mondays are typically low reporting days, three states broke that trend. Alabama, Georgia, and Tennessee reported large numbers today. https://t.co/O2QhlEsJVz</p>
+
+    </div>
+  
+    <h2>July 15, 2020, 2:58 PM PDT</h2>
+    <div>
+      <p>Alabama set a new record for deaths (47), breaking their previous record, which was set yesterday. Oklahoma set a new record for cases today, breaking 1000 for the first time. Both states also set new records for hospitalized COVID-19 patients. https://t.co/pbOJ2T5wLi</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>Today, ID is back, but we’re missing hospitalization updates from states including AL, AR, CT, IA, LA, MI, MO, MS, NH, OR, RI, SC, and WY. Some due to the new HHS directive, others because it’s the weekend.</p>
+<p>We will keep reporting on the availability of this data.</p>
+
+    </div>
+  
+    <h2>July 19, 2020, 2:44 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 769k tests, 64k new cases, and 523 deaths. Hospitalizations fell a little but there’s a major caveat there: The decline is due to strange data from Alabama. https://t.co/vlnciB4q18</p>
+
+    </div>
+  
+    <h2>July 19, 2020, 2:45 PM PDT</h2>
+    <div>
+      <p>Our hospitalization data became very solid with the inclusion of Florida’s numbers on July 10. Then came the new HHS guidelines. Since then, some individual states' numbers have become more erratic. See, for example, Alabama today. https://t.co/G5zOAVA7kg</p>
+
+    </div>
+  
+    <h2>July 20, 2020, 11:11 AM PDT</h2>
+    <div>
+      <p>UPDATE: Alabama’s reporting returned to normal, indicating that its hospitalizations did not drastically fall yesterday. Once the error was fixed, the national number of patients hospitalized with COVID-19 rose. https://t.co/vcM9C9CctX</p>
+
+    </div>
+  
+    <h2>July 20, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Populous states can generate large case counts, but if you look at the new cases per million today, 9 smaller states are showing more cases per million than California or Texas: AL, AR, ID, KS, KY, LA, MS, NV, and SC. https://t.co/1pYW6cWRaS</p>
+
+    </div>
+  
+    <h2>July 22, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>A note: we found a better official source of Alabama data. This pushed up the historical numbers of hospitalizations by ~400 in mid-April. Without that backfill, today would have set the new peak for hospitalized COVID-19 patients the U.S. Even so, today’s figure is 3rd all-time.</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 12:43 PM PDT</h2>
+    <div>
+      <p>Update for our data users - we continued to implement changes to our original totalTestResults API field, resulting in a ~600k cumulative test increase since March.</p>
+<p>We updated test totals for 14 states: AK, AL, AR, AS, CA, DC, GA, ID, KY, MN, NH, SD, VA, and WA.</p>
+
+    </div>
+  
+    <h2>October 21, 2020, 4:37 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 870k tests, 57k cases, 40k currently hospitalized, and 994 COVID-19 deaths. Note: Updates were not available from FL, GA, and AL. https://t.co/W7soJvLKw5</p>
+
+    </div>
+  
+    <h2>October 23, 2020, 4:10 PM PDT</h2>
+    <div>
+      <p>An important caveat to today's record high numbers. AL reported ~4k cases due to a backlog of antigen tests. CA reported 6k cases, 2k of which were backlogs.</p>
+
+    </div>
+  
+    <h2>October 23, 2020, 4:11 PM PDT</h2>
+    <div>
+      <p>AL, CO, OR, UT, SD, and RI all reported record high case counts. Both ND and SD are reporting more than 1,000 cases per million people. https://t.co/gwe2HgVquJ</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>But some small states have severe problems, too. Alabama, Arizona, and Nevada have very high hospitalization rates per capita. https://t.co/Sz9H82Boz8</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Our eyes are on 5 states this week: AL, AZ, CA, GA, and FL―where surges in cases, hospitalizations, and deaths are steadily growing. Alarmingly, AZ currently has the worst per-capita new case numbers in the world.</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>We recently released a visualization of the @HHSGOV hospital data. It is a weekly average for COVID-19 metrics for each individual hospital across the country. This week, facilities across the South (though especially in Alabama) are under serious pressure. https://t.co/1HNKXyNPyE</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:23 PM PST</h2>
+    <div>
+      <p>Today’s update includes no data from CT, KS, LA, or RI, and no data except hospitalizations from AL. The MA update includes data from approximately 24,800 PCR tests not reported yesterday due to a technical problem.</p>
+
+    </div>
+  
+    <h2>March 3, 2021, 4:17 PM PST</h2>
+    <div>
+      <p>AL added over 2k cases to the data today which is reflected in today's total case count. https://t.co/ijBN83GgnN</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

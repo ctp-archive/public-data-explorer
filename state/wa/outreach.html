@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Washington Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Washington</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Washington</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Currently, the federal government does not use data directly provided by WA in its PCR testing dataset (accessible here: https://healthdata.gov/dataset/covid-19-diagnostic-laboratory-testing-pcr-testing-time-series), as it does for most jurisdictions. Instead, it uses data submitted directly by laboratories in WA, which appears to be incomplete data—about 26% lower than WA's test count on its dashboard.</p>
+<p>Does WA submit any COVID-19 testing data to the federal government, either in aggregate or at the line level? If so, do you know why the CDC and HHS do not use WA's submitted data in public datasets? If not, why doesn’t WA submit data to the federal government?</p>
+
+    </div>
+    
+  
+    <h2>January 29, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Two weeks ago, South Carolina released a full, facility-level data page of vaccination in Long Term Care centers: https://cvshealth.com/sites/default/files/cvs-health-covid-19-vaccination-data.pdf. Since South Carolina released facility-level vaccination data in LTC, we believe every state likely has the same access to this data. Is this true for Washington? Can you provide facility-level data of vaccine distribution to long-term-care facilities on your website?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>January 29, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are not sharing facility-level data for any type of facility at this time.</p>
+
+        </div>
+      
+        <h4>February 3, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We don't share facility-level data out of privacy concerns. However, total long-term care doses can be found on our dashboard (<a href="https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard">https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard</a>)</p>
+
+        </div>
+      
+    
+  
+    <h2>January 25, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We noticed a conflict between two notes on your data dashboard page (https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard) with regard to how Washington reports COVID deaths. Within the dashboard, there is some text stating &quot;Probable cases are individuals with a positive antigen test for COVID-19...&quot; and &quot;Hospitalizations and deaths are reported among confirmed and probable cases.&quot; This led us to believe that a positive molecular or antigen test was required in order for a death to be counted as a COVID death. But at the bottom of the same page, there is text stating: &quot;As of December 10, 2020, death counts on our dashboard reflect those... where the cause of death was confirmed or suspected to have been COVID-19...&quot; The presence of the word &quot;suspected&quot; here indicates to us that a positive antigen test is not necessary for a death to count as a COVID death.  Could you please clarify?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 25, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>While the notes probably aren’t worded quite right, the upshot is that the dashboard is correct.</p>
+<p>We report confirmed and suspected deaths to confirmed and probable cases. There are different definitions for deaths and cases.</p>
+
+        </div>
+      
+    
+  
+    <h2>December 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is the current criteria for a death being counted in the ‘Deaths’ column?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Confirmed, Suspect, and Pending/Missing COVID-19 deaths are reported on our DOH dashboard and updated every working day</p>
+
+        </div>
+      
+    
+  
+    <h2>December 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does Washington currently have data on each of the four COVID-19 death classifications mentioned above?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>In July, we published a detailed COVID-19 preliminary death data report that broke down some of the different categories of COVID-19 deaths and provides more detailed definitions. Link to report: <a href="https://www.doh.wa.gov/Newsroom/Articles/ID/1289/Washington-State-Department-of-Health-publishes-detailed-COVID-19-preliminary-death-data-report">https://www.doh.wa.gov/Newsroom/Articles/ID/1289/Washington-State-Department-of-Health-publishes-detailed-COVID-19-preliminary-death-data-report</a></p>
+
+        </div>
+      
+    
+  
+    <h2>December 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How are you planning on making the process of reporting deaths better?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Next week, we plan to announce and implement a number of changes to ensure we are reporting out on COVID-19 deaths in an easily understandable way that is as accurate as possible. Please watch for our newsroom page for more detail. Link to newsroom page: <a href="https://www.doh.wa.gov/Newsroom">https://www.doh.wa.gov/Newsroom</a></p>
+
+        </div>
+      
+    
+  
+    <h2>November 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Data about antigen-positive COVID cases as of September 30, 2020</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>See attached file</p>
+
+        </div>
+      
+    
+  
+    <h2>November 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>I noticed on your website that the Total COVID-19 Patients Hospitalized table seems to include the totals from both confirmed and suspected cases. I’ve attached a picture of the table here. Which two columns were you referring to when you said to add the columns?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>You’re right that both confirmed and suspected cases hospitalized are combined and displayed under “Hospitalizations and ventilations.” No need to add two columns, as we thought.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We were hoping to get clarification on WA’s definition for a current COVID hospitalization. Your website states that the total includes patients with confirmed and suspected cases. Is this still accurate?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Washington state continues to track both suspected and positive (confirmed) COVID patients in our hospitals. We receive these data from hospitals and display them in separate columns on our dashboards. The numbers you’ve provided seem to be for COVID positive cases only; for the total number of COVID suspected and positive patients in Washington hospitals, you’d need to add these columns.</p>
+<p>Hospitals in Washington state are required to report metrics on their bed capacity and occupancy, critical staffing needs, equipment, and PPE supplies to the state every day using the WA HEALTH data system. This requirement is separate from (and in addition to) hospital reporting requirements for the federal government. Hospital staff manually input these data each day. This work is often done by frontline staff who already have very limited time available, so some variances may result.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Why do your numbers for hospitalizations differ from the HHS?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hospitals in our state have reported directly to HHS since July, however we’re now working to be able to upload these data to HHS on their behalf. This should reduce variances between federal and state data platforms as well as the burden on hospital staff. However, the timing of reporting by both WA HEALTH and HHS can also cause some differences in the data.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>There is a persistent (but small) difference between the Total Tests number on the Current Status tab and the sum of all the tests shown on the Testing tab. (calculated using the CSV download available on that tab). A similar difference exists for “confirmed cases” vs. positive tests. What is the reason for these differences?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The testing data we display in the DOH dashboard includes data as of January 16, 2020. However, the data available for download from the same page includes data as of February 29, 2020. This explains the minor difference between these two sources.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you provide me some information about Washington's antigen testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>See attached file</p>
+
+        </div>
+      
+    
+  
+    <h2>July 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Washington performing pool testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Not at this time. A couple labs (UW and NW Pathology) have trialed it, but none are using this at this time.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How is this testing reported? (pools)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>If done for diagnosis it would be reported like all others positive, negative or indeterminant.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are they conducting antigen testing? Are these testing results reported on the state site?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, but not pooling. We are not actively tracking or reporting on antigen testing at this time. However, if a lab collects it and reports it, it would go into our electronic system. Any of that preliminary data, without proper review, would be incomplete, inaccurate, and not helpful in producing worthwhile analysis.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How many tests have they conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>From pooling? None that we have been made aware of. Without a system in place to ensure we are capturing the full scope of antigen testing taking place, any data we may have captured would be highly preliminary, incomplete, and therefore not useful. (Reporter note: I had sent this with the antigen question, but they separated out the follow-up questions.)</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

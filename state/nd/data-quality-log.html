@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>North Dakota Data Quality Log</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">North Dakota</a>
+              
+            </li>
+          
+            <li>
+              
+                Data Quality Log
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">North Dakota</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>July 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On July 8, 2020 North Dakota's Total deaths decreased by 4 with no clear explanation.</p>
+
+      </div>
+    
+    <h2>December 15, 2020
+       to March 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Stagnant Source</span>
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 15, 2020, North Dakota stopped updating its serology data and on March 5, 2021 they removed the values from their page. On April 7, 2021, we cleared values that were carried over from December 15, 2020 onward.</p>
+
+      </div>
+    
+    <h2>March 7, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On March 7, 2021, North Dakota’s **Total PCR tests (people)** decreased by 75 and **Negatives** decreased by 109 without explanation.</p>
+
+      </div>
+    
+    <h2>March 5, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On March 5, 2021, North Dakota did not update its **Currently hospitalized**, **Cumulative hospitalized**, **Currently in ICU**, or **Cumulative in ICU** before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>March 3, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On March 3, 2021, North Dakota's Ever hospitalized decreased by 3 without explanation.</p>
+
+      </div>
+    
+    <h2>February 27, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 27, 2021, North Dakota's Current Hospitalizations and Deaths numbers were not updated.</p>
+
+      </div>
+    
+    <h2>February 23, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 23, 2021, North Dakota's Ever hospitalized decreased by 1 without explanation.</p>
+
+      </div>
+    
+    <h2>February 19, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 19, 2021, North Dakota did not update its **Total antigen tests (specimens)**, **Total PCR tests (test encounters)**, **Total PCR tests (specimens)**, **Negative PCR tests (people)**, **Cumulative in ICU**, or **Deaths (confirmed and probable)** before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>February 18, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 18, 2021, North Dakota's reported number for **Cumulative hospitalized** decreased from 3,850 to 3,845 without explanation.</p>
+
+      </div>
+    
+    <h2>February 16, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 16, 2021, North Dakota's Negative PCR tests (people) decreased by roughly 450 without explanation.</p>
+
+      </div>
+    
+    <h2>February 14, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 14, 2021, North Dakota's **Negative PCR tests (people)** did not update in time for our publication.</p>
+
+      </div>
+    
+    <h2>February 13, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 13, 2021 North Dakota's reported **Total Tests (PCR)** declined by 822 without explanation.</p>
+
+      </div>
+    
+    <h2>February 10, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On February 10, 2021, North Dakota's Confirmed cases decreased by 32 due to an [assessment of software malfunction](https://www.health.nd.gov/news/update-public-health-laboratory-completes-assessment-software-malfunction) which rendered these cases inconclusive.</p>
+
+      </div>
+    
+    <h2>February 9, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <blockquote>
+<p>On February 9, 2021, North Dakota’s Confirmed cases dropped by 62 without explanation, from 93,610 to 93,548 and their Cases (confirmed and probable) dropped by 11. Additionally, their Ever in ICU decreased by 1.</p>
+</blockquote>
+
+      </div>
+    
+    <h2>February 6, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On February 6, 2021, North Dakota’s **Confirmed cases** decreased by 36 without explanation.</p>
+
+      </div>
+    
+    <h2>February 2, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On February 02, 2021, North Dakota did not update its Cumulative in ICU or Deaths (confirmed and probable) before the time of our daily update.</p>
+
+      </div>
+    
+    <h2>January 9, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On January 9, 2021, North Dakota's Total PCR tests (people) decreased by 98 and their Negative PCR tests (people) decreased by 118 without explanation.</p>
+
+      </div>
+    
+    <h2>September 1, 2020
+       to January 4, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntigen</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>Un-lump PCR specimens and encounters from NDs data download files, and backfill antigen specimens.
+Also update frozen negatives</p>
+
+      </div>
+    
+    <h2>January 1, 2021
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On January 1, 2021, Alaska, Connecticut, Kentucky, Louisiana, Massachusetts, Michigan, Minnesota, the Northern Mariana Islands, North Carolina, North Dakota, Ohio, South Carolina, South Dakota, Utah, and Vermont did not update their data, presumably due to the New Years holiday.</p>
+
+      </div>
+    
+    <h2>December 30, 2020
+       to December 31, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>From December 30, 2020 to December 31, 2020, we carried over the existing value for **Negative PCR Tests (people)** while we evaluated the source for that metric. On January 5, 2021 the values for Negatives were backfilled from the states data downloads, and decreased by approximately 2,000 on December 30 and 600 on December 31, 2020.</p>
+
+      </div>
+    
+    <h2>December 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>As of December 30, 2020, North Dakota's total test metrics [now include both antigen and PCR test results](https://twitter.com/NDDOH/status/1344329384262451201).</p>
+
+      </div>
+    
+    <h2>December 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 25, 2020, Alaska, California, Connecticut, the District of Columbia, Idaho, Kansas, Louisiana, Massachusetts,  Michigan, Minnesota, North Carolina, North Dakota, New Hampshire, Ohio, Rhode Island, South Carolina, South Dakota, Utah, and Vermont did not update their data due to the Christmas holiday.</p>
+
+      </div>
+    
+    <h2>December 21, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 21, 2020, North Dakota's Negative PCR tests (people) decreased by 31 without explanation.</p>
+
+      </div>
+    
+    <h2>December 15, 2020
+       to December 17, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 15, 2020 through December 17, 2020, North Dakota announced that they were resolving a technical issue with their dashboard. As a result, the hospitalization dashboard was unavailable, and we were unable to update their **Currently hospitalized**, **Currently in ICU**, **Ever hospitalized**, and **Ever in ICU**.</p>
+
+      </div>
+    
+    <h2>December 15, 2020
+       to December 16, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 15, 2020 through December 16, 2020, North Dakota announced that they were resolving a technical issue with their dashboard. As a result, the hospitalization dashboard was unavailable, and we were unable to update their Currently hospitalized, Currently in ICU, Ever hospitalized, and Even in ICU.</p>
+
+      </div>
+    
+    <h2>December 15, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 15, 2020, North Dakota temporarily removed their hospitalization data from their COVID-19 page due to technical difficulties. As a result, we were unable to update their *Currently hospitalized**, **Currently in ICU**, **Ever hospitalized**, and **Ever in ICU** on December 15, 2020.</p>
+
+      </div>
+    
+    <h2>December 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 13, 2020, we obtained ND *Now hospitalized** data from ND social media.</p>
+
+      </div>
+    
+    <h2>December 10, 2020
+       to December 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On December 12, 2020, North Dakota had significant dashboard issues due to the addition of antigen tests. As a result, their hospitalization and ICU metrics are not available. We have made the decision to temporarily use the Currently hospitalized value posted by the state on Twitter until the metrics return to the dash.</p>
+
+      </div>
+    
+    <h2>December 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Anomalies</span>
+        </p>
+      
+      <div>
+        <p>On On December 11, 2020, North Dakota continued having significant dashboard issues due to the addition of antigen tests. As a result, their hospitalization and ICU metrics are not showing. We have made the decision to temporarily use the Currently hospitalized value posted by the state on Twitter until the metrics return to the dash.</p>
+
+      </div>
+    
+    <h2>December 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 10, North Dakota continued having significant dashboard issues due to the addition of antigen tests. As a result, their hospitalization and ICU metrics are not showing, and we were unable to update these metrics today.</p>
+
+      </div>
+    
+    <h2>March 10, 2020
+       to December 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+        </p>
+      
+      <div>
+        <p>The state started reporting probables cases, and published a time series for confirmed and probables cases (starting in the beginning of October, 2020). We're using this data to backfill the <em>Positive Cases (PCR)</em>, <em>positive</em> and <em>probable cases</em> metrics</p>
+
+      </div>
+    
+    <h2>May 27, 2020
+       to December 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>On December 9, 2020, North Dakota reported that their deaths included those who had a positive PCR or antigen test. We were previously capturing positive deaths as confirmed and presumptive deaths as probable, but since it is now clear that they include antigen and PCR positives, and since North Dakota does not call these confirmed deaths, we are now reporting these deaths as Deaths (confirmed + probable).</p>
+
+      </div>
+    
+    <h2>May 3, 2020
+       to December 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>On December 9, 2020, North Dakota reported that their deaths included those who had a positive PCR or antigen test. We were previously capturing positive deaths as confirmed, but since it is now clear that they include antigen and PCR positives, and since North Dakota does not call these confirmed deaths, we are now reporting these deaths as Deaths (confirmed + probable).</p>
+
+      </div>
+    
+    <h2>December 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>probableCases</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+            <span class="tag">Other</span>
+        </p>
+      
+      <div>
+        <p>ND: On December 9, 2020, North Dakota began reporting antigen tests, which we are reporting as Probable Cases. Until we can obtain a time series of the previous dates these tests were conducted, they will all be reported for 12/09/2020. North Dakota also made a number of changes to its data dashboard on this date that might affect our data reporting.</p>
+
+      </div>
+    
+    <h2>December 8, 2020
+       to December 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 8, 2020, North Dakota announced that they would not be updating their website on December 8, 2020 due to site construction as they prepare to add antigen tests to their dashboard. As a result, we were unable to update their data on December 8, 2020.</p>
+
+      </div>
+    
+    <h2>December 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On December 3, 2020, North Dakota stopped reporting patients Hospitalized with COVID on their COVID-19 dashboard to “eliminate the discrepancy” between patients Hospitalized with COVID and patients Hospitalized due to COVID. To allow our data quality team time to investigate this matter, we carried over North Dakota's Currently hospitalized and Currently in ICU on December 3, 2020, and patched them on December 4, 2020. As of December 3, 2020, North Dakota’s Currently hospitalized will include only patients hospitalized due to COVID.</p>
+
+      </div>
+    
+    <h2>December 3, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On December 3, 2020, North Dakota posted on their dashboard: “Because two data sets are being used to populate the DUE TO and WITH COVID numbers, we’re removing WITH COVID to eliminate the discrepancy.” As a result, we carried over the previous day's <strong>Currently hospitalized</strong> and <strong>Currently in ICU</strong> values.</p>
+
+      </div>
+    
+    <h2>December 2, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On December 2, 2020, North Dakota did not provide an update to their serology testing data.</p>
+
+      </div>
+    
+    <h2>May 3, 2020
+       to November 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Annotation / Source Change</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>Over the past week, a gap has opened between the number of COVID-19 deaths North Dakota's health department reports and The COVID Tracking Project’s counts of deaths in the state. On November 30, North Dakota’s health department dashboard reported 927 cumulative COVID-19 deaths, but The COVID Tracking Project recorded 680. This is because we track deaths due to COVID, instead of deaths among cases in the state.</p>
+<p>It’s clear that a reporting backlog is to blame for most of the widening discrepancy between figures: The share of COVID-19-positive individuals who died in North Dakota with death certificates still pending has doubled since the beginning of November. To better reflect the reality of rising deaths in North Dakota, we are changing our method for counting deaths in the state to the other main paradigm for tracking deaths: counting deaths among cases.</p>
+
+      </div>
+    
+    <h2>November 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 30, 2020, North Dakota did not update their serology testing numbers.</p>
+
+      </div>
+    
+    <h2>November 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 27, 2020, North Dakota did not update their deaths data.</p>
+
+      </div>
+    
+    <h2>November 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 26, 2020, the listed states either released partial updates or did not update their data at all.</p>
+
+      </div>
+    
+    <h2>November 26, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On November 26, 2020, North Dakota did not update their antibody testing and deaths numbers for the third straight day.</p>
+
+      </div>
+    
+    <h2>November 25, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>Starting November 24th, and continuing on November 25th, North Dakota has not updated its deaths reporting.</p>
+
+      </div>
+    
+    <h2>November 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 13, 2020, the dashboard (942,125) and file download (942,103) for Total PCR tests (test encounters) had inconsistent values. We used the number from the dashboard.</p>
+
+      </div>
+    
+    <h2>November 12, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Anomalies</span>
+            <span class="tag">State Data Note</span>
+        </p>
+      
+      <div>
+        <p>On November 12, 2020, North Dakota [announced] (<a href="https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases">https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases</a>) that the higher than normal fluctuations in tests, cases, hospitalizations and recoveries may be seen in the data from the week of November 9, 2020, due to a software issue which has been resolved.</p>
+
+      </div>
+    
+    <h2>November 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>hospitalizedCumulative</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Resumed Metric</span>
+        </p>
+      
+      <div>
+        <p>On November 11, 2020, North Dakota reported two days of data for all metrics except for Total PCR tests (specimens), Positive PCR tests (people), and Positive cases (confirmed + probable).</p>
+
+      </div>
+    
+    <h2>November 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State Data Note</span>
+            <span class="tag">CTP Process / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On November 10, 2020, North Dakota reported that their software for hospitalization metrics was down, an issue which also impacts active cases. We updated Total PCR tests (specimens), Positive PCR tests (people), and Positive cases (confirmed + probable) from their daily news release. We carried over all other values.</p>
+
+      </div>
+    
+    <h2>October 28, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/28/20, North Dakota did not update their serology testing numbers.</p>
+
+      </div>
+    
+    <h2>October 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/27/20, North Dakota's Total antibody tests (specimens), Positive antibody tests (specimens), and Negative antibody tests (specimens) did not update.</p>
+
+      </div>
+    
+    <h2>October 8, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/8, ND provided new hospitalization metrics, separating between DUE TO COVID (where COVID was not the primary reason but there exists a positive test) and WITH COVID (where COVID is the primary reason). For Currently Hospitalized and Currently in ICU, we used the WITH COVID numbers.</p>
+
+      </div>
+    
+    <h2>October 7, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/7, the serology testing data returned to ND's website.</p>
+
+      </div>
+    
+    <h2>October 6, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 10/6, the serology testing section from ND's website disappeared. We carried over values for Total Antibody Tests, Positive Antibody Tests, and Negative Antibody Tests.</p>
+
+      </div>
+    
+    <h2>March 10, 2020
+       to September 11, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestResults</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP API / Logic Changes</span>
+        </p>
+      
+      <div>
+        <p>As of September 11, 2020, North Dakota’s <code>totalTestResults</code> are drawn from <code>totalTestEncountersViral</code>. The number of unique people tested is available in our API as <code>totalTestsPeopleViral.</code></p>
+
+      </div>
+    
+    <h2>March 10, 2020
+       to September 10, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+            <li>
+              <code>positiveCasesViral</code>
+            </li>
+          
+            <li>
+              <code>positive</code>
+            </li>
+          
+            <li>
+              <code>totalTestsPeopleViral</code>
+            </li>
+          
+            <li>
+              <code>totalTestsViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">New Dataset / Timeseries</span>
+        </p>
+      
+      <div>
+        <p>Fill North Dakota's PCR testing data: encounters, positives (including confirmed) specimens and people.
+From a new data file published by ND on 2020-09-08</p>
+
+      </div>
+    
+    <h2>September 9, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>totalTestEncountersViral</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On September 9, 2020, North Dakota began reporting “Susceptible Encounters” on its dashboard, which are defined as test encounters excluding those who have tested positive after the first time. We have begun recording the value in our Total PCR tests (test encounters) field.</p>
+
+      </div>
+    
+    <h2>August 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>negative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>Because of the ND dashboard update on 8/19, negatives are no longer reported on their dash, so we now calculate Negatives by summing the “Total Negative” column in the table titled “By County - Total Unique Tests, Positives, Negatives, Recovered, and Deaths”.</p>
+
+      </div>
+    
+    <h2>August 19, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>inIcuCurrently</code>
+            </li>
+          
+            <li>
+              <code>inIcuCumulative</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>On 8/19, ND redesigned their dashboard, and started reporting both current and cumulative ICU, which we have never had values for before.</p>
+
+      </div>
+    
+    <h2>August 12, 2020
+       to August 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>dataQualityGrade</code>
+            </li>
+          
+        </ul>
+      
+      
+      <div>
+        <p>States Grades not published for 8/12-8/13</p>
+
+      </div>
+    
+    <h2>July 13, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>All Metrics</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">State / Metric No Update</span>
+        </p>
+      
+      <div>
+        <p>On July 13, 2020, North Dakota's dashboard was unavailable during our publish shift due to technical problems. The data was added to our time series late July 13, 2020 when the dashboard was restored.</p>
+
+      </div>
+    
+    <h2>May 3, 2020
+       to June 30, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>death</code>
+            </li>
+          
+            <li>
+              <code>deathConfirmed</code>
+            </li>
+          
+            <li>
+              <code>deathProbable</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">CTP Process / Source Change</span>
+            <span class="tag">CTP Backfill</span>
+            <span class="tag">State Annotation / Source Change</span>
+        </p>
+      
+      <div>
+        <p>On May 3, 2020, North Dakota began providing counts of deaths for lab-confirmed individuals with death records still pending, and lab-confirmed individuals who died but not due to COVID. As of July 1, 2020, we have edited our figures to exclude these numbers from our death counts, resulting in an apparent drop from 24 deaths on May 2, 2020 to 16 on May 3, 2020.</p>
+
+      </div>
+    
+    <h2>May 31, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>positiveTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>totalTestsAntibody</code>
+            </li>
+          
+            <li>
+              <code>negativeTestsAntibody</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On May 31, 2020, North Dakota began reporting positive, negative and total antibody tests.</p>
+
+      </div>
+    
+    <h2>April 5, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>hospitalizedCurrently</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On April 5, 2020, North Dakota started reporting <strong>Now hospitalized</strong>.</p>
+
+      </div>
+    
+    <h2>March 27, 2020
+      
+    </h2>
+    
+      <p>
+        <strong>Variables affected:</strong>
+        <ul>
+          
+            <li>
+              <code>recovered</code>
+            </li>
+          
+        </ul>
+      
+      
+        <p>
+          <strong>Tags:</strong>
+          
+            <span class="tag">New Metric</span>
+        </p>
+      
+      <div>
+        <p>On March 27, 2020, North Dakota started reporting recovered cases. We began capturing the metric in our <code>recovered</code> field.</p>
+
+      </div>
+    
+  
+    </main>
+  </body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Ohio Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Ohio</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Ohio</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 19, 2020, 11:33 AM PDT</h2>
+    <div>
+      <p>@NateSilver538 WA also a usable example simply because the data is gloriously solid, relatively speaking. (OTOH, one other shade to this data: they hit a testing wall, which might be part of the flatter trend. Happy to discuss if you are interested.) -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 2:20 PM PDT</h2>
+    <div>
+      <p>Over the past two days, it is worth noting that two large states have begun reporting more complete testing data. NJ yesterday and OH today both moved the numbers.</p>
+<p>CA remains a major question mark. We hope to see movement there later today.</p>
+<p>WA is not yet reporting outcomes.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 6:08 PM PDT</h2>
+    <div>
+      <p>Add Ohio to both lists. Thanks for the pointer @tytusplanck and @LorenzoGrooms.
+https://t.co/hwNTCES0yh</p>
+
+    </div>
+  
+    <h2>April 19, 2020, 1:56 PM PDT</h2>
+    <div>
+      <p>One confounding data issue right now: New York City is reporting confirmed and presumptive deaths, but the state is not, so we are not. However, at least one state (Ohio) is lumping those numbers together. This may get messy in the coming days.</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>2/2</p>
+<p>Missouri
+Nevada
+New Jersey
+New York
+North Carolina
+Ohio
+Pennsylvania
+South Carolina
+Tennessee
+Wisconsin</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:28 PM PDT</h2>
+    <div>
+      <p>Here's a quick focus on Ohio. The situation does not look as dire as some places, but the state is now seeing hospitalizations turn upwards, too. https://t.co/pE1RGP7J5s</p>
+
+    </div>
+  
+    <h2>June 26, 2020, 3:41 PM PDT</h2>
+    <div>
+      <p>Here's a map of the number of new cases reported today. Note that Ohio and Alabama both almost broke 1,000. https://t.co/Fe2iixSRnH</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:52 PM PDT</h2>
+    <div>
+      <p>In Ohio, percent-positive rose from 3.7% week of June 14 to 5.4% this week, and the hospital curve is also concerning. We’ll be watching these two closely over the coming weeks. https://t.co/Q8AMI2kskQ</p>
+
+    </div>
+  
+    <h2>July 3, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>The record new cases are coming from many states. Notable jumps in Georgia, Louisiana, North Carolina, and South Carolina. (Ohio looks bad today but this number is for two days.) https://t.co/L6CJXXbuuP</p>
+
+    </div>
+  
+    <h2>August 29, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>The Washington State DOH noted that they will no longer report COVID-19 deaths over the weekend starting today. Weekend COVID-19 deaths in the state will be included in Monday and Tuesday counts.</p>
+
+    </div>
+  
+    <h2>October 14, 2020, 4:31 PM PDT</h2>
+    <div>
+      <p>Ohio reported the highest COVID-19 case count to date.  The state reported 1,042 people are currently hospitalized - the highest number since early August. https://t.co/9QvwnjXiqG</p>
+
+    </div>
+  
+    <h2>October 24, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Daily cases in Ohio have hit a new high four days in a row, including today. OK also reported a new case high today. https://t.co/7OYvKY12g7</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 12:49 PM PDT</h2>
+    <div>
+      <p>In some states with worsening outbreaks, the virus has already arrived in nursing homes and other long-term care facilities: Ohio, Wisconsin, and Wyoming have posted record high numbers of COVID-19 cases in these facilities this week.</p>
+
+    </div>
+  
+    <h2>November 5, 2020, 4:19 PM PST</h2>
+    <div>
+      <p>While long-term care facility data continues to be patchy, what we do know is grim: Cases continued to rocket upward last week with 19,086 new cases and 1,839 new deaths among staff and residents. More than a quarter of these cases were in just three states: IL, OH, and TX.</p>
+
+    </div>
+  
+    <h2>November 15, 2020, 5:36 PM PST</h2>
+    <div>
+      <p>We had an error in our Ohio hospitalization data. Ohio hospitalizations are 3,175 today, and national hospitalizations are 69,864, another record day. https://t.co/TXvaRX0KnH</p>
+
+    </div>
+  
+    <h2>November 17, 2020, 4:37 PM PST</h2>
+    <div>
+      <p>The Midwest is now the epicenter of COVID-19 outbreaks, where 38% of all new cases in LTC facilities were reported this week. Nearly every state in the region hit new peaks in either cases, deaths, or both. Ohio recorded 3,123 cases - the highest of this last week. https://t.co/o3nJkFTd58</p>
+
+    </div>
+  
+    <h2>November 20, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>OH has reported incomplete data for 3 consecutive days and GA dashboards will be under scheduled maintenance on Sunday, Nov 22, from 8am - 6pm.</p>
+
+    </div>
+  
+    <h2>November 24, 2020, 4:32 PM PST</h2>
+    <div>
+      <p>Cases and hospitalizations are increasing at an extremely fast rate in Pennsylvania and Ohio. https://t.co/UYIQzWT7RT</p>
+
+    </div>
+  
+    <h2>November 26, 2020, 4:01 PM PST</h2>
+    <div>
+      <p>The following jurisdictions did not report today: AS, CT, FL, KS, KY, LA, MA, MI, MN, MP, NC, NH, OH, RI, SC, SD, UT, VI, VT, WY. 10 more reported partial data. Some will report two days of data tomorrow.</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:48 PM PST</h2>
+    <div>
+      <p>The Midwest remains the epicenter of COVID-19 in long-term care facilities. The region has seen the highest number of reported LTC cases &amp; deaths every week since mid-November. Four states—IL, OH, IN &amp; MN—topped the nation in new reported LTC deaths last week. https://t.co/bp1sBO7RmF</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Seven states reported more than 10k cases today: CA, FL, IL, NY, PA, OH, and TX. https://t.co/L93HHx9vjH</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 6:06 PM PST</h2>
+    <div>
+      <p>The past few days have brought an important new set of metrics to state dashboards: vaccine data! So far, we’ve learned of six states—ID, MI, OH, SD, TX and UT—that are posting the number of vaccines administered on their dashboards.</p>
+
+    </div>
+  
+    <h2>December 25, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>20 states provided no update: AK, CA, CT, DC, ID, KS, KY, LA, MA, MI, MN, MP, NC, ND, NH, OH, RI, SC, SD, UT, VT.</p>
+<p>7 other states made partial updates.</p>
+
+    </div>
+  
+    <h2>February 11, 2021, 4:21 PM PST</h2>
+    <div>
+      <p>Today’s deaths include 650 additional deaths reported by Ohio as part of the state adjusting for underreported deaths.</p>
+<p>https://t.co/Xz9YPcwmzc</p>
+
+    </div>
+  
+    <h2>February 12, 2021, 4:48 PM PST</h2>
+    <div>
+      <p>Today’s deaths include 2,500 additional deaths from Ohio as part of the state adjusting for underreported deaths. Note: this backlog is not reflected in today's total as they do not represent the current trends. The increase is reflected on the website. https://t.co/Xz9YPcNXqK</p>
+
+    </div>
+  
+    <h2>February 13, 2021, 5:01 PM PST</h2>
+    <div>
+      <p>Ohio is including what are likely the final 1125 previously unreported deaths as part of reconciling their records. While not included in the daily update above, these additional deaths are in the API data, and are reflected in the number of total deaths.</p>
+<p>https://t.co/Xz9YPcwmzc</p>
+
+    </div>
+  
+    <h2>February 18, 2021, 4:11 PM PST</h2>
+    <div>
+      <p>Data users may notice differences in 7-day average deaths between our social posts and website. We have removed major death backlogs reported by OH and IN in these daily social posts to clarify the trend. Those backlogs remain in our cumulative numbers.</p>
+
+    </div>
+  
+    <h2>March 5, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Our daily deaths is impacted by a change in Ohio's death reporting. The state is now only reporting COVID-19 deaths twice a week as they receive verified death certificates from the NCHS.</p>
+<p>See their dashboard note here: https://t.co/xVfN7mUSrC https://t.co/IJBnRF5wg6</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

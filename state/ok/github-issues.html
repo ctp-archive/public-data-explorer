@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Oklahoma Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Oklahoma</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Oklahoma</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>December 27, 2020, 10:40 AM PST</td>
+          <td>1030</td>
+          <td>
+            <a href="#issue-1030">[OK] Clear confirmed cases from 10/19 onward</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 18, 2020, 2:40 PM PST</td>
+          <td>1018</td>
+          <td>
+            <a href="#issue-1018">[OK] Backfill 12/16-12/17 Cur. hosp + cur. icu</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 2, 2020, 10:49 PM PDT</td>
+          <td>809</td>
+          <td>
+            <a href="#issue-809">[OK] Removing negative serology/antibody calculation &amp; adding total and positive antibody values for 5/15-5/21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 7:03 PM PDT</td>
+          <td>720</td>
+          <td>
+            <a href="#issue-720">[OK] PCL Cases Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 7:40 AM PDT</td>
+          <td>694</td>
+          <td>
+            <a href="#issue-694">[OK] Incorrect ICU Value on 7/28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 23, 2020, 1:48 PM PDT</td>
+          <td>663</td>
+          <td>
+            <a href="#issue-663">[OK] Page updated after Pub Shift 7/21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 15, 2020, 4:18 PM PDT</td>
+          <td>637</td>
+          <td>
+            <a href="#issue-637">[OK] Positive Cases (PCR) is wrong for 6/13 and 6/14</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 15, 2020, 11:13 AM PDT</td>
+          <td>634</td>
+          <td>
+            <a href="#issue-634">[OK] 6/28 Incorrect Total Cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 7:59 AM PDT</td>
+          <td>534</td>
+          <td>
+            <a href="#issue-534">[OK] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 19, 2020, 2:44 PM PDT</td>
+          <td>506</td>
+          <td>
+            <a href="#issue-506">[OK] 6/18 publish missed the daily update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 27, 2020, 12:48 PM PDT</td>
+          <td>68</td>
+          <td>
+            <a href="#issue-68">OK: Negative test results note</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1030">#1030: [OK] Clear confirmed cases from 10/19 onward</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1030</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 27, 2020, 10:40 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1030" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: OK</p>
+<p><strong>Describe the problem</strong>
+On September 8, 2020, OK <a href="https://oklahoma.gov/covid19/newsroom/2020/september/situation-update-covid-19-09082020.html">announced</a> that it would transition to counting both confirmed and probable cases, instead of just confirmed cases. This change appears to have taken effect on October 19, 2020, when OK <a href="https://oklahoma.gov/covid19/newsroom/2020/october/situation-update-covid-19-10192020.html">stopped calling</a> its cases &quot;confirmed positive cases&quot; in press releases, as it had before, switching the wording to &quot;cases.&quot; We should clear the confirmed cases field from 10/19 onward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-751502420">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 27, 2020, 10:43 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1030#issuecomment-751502420" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5745015/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1018">#1018: [OK] Backfill 12/16-12/17 Cur. hosp + cur. icu</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1018</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on December 18, 2020, 2:40 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1018" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> OK</p>
+<p><strong>Dates affected:</strong> 12/16/2020-12/17/2020</p>
+<p><strong>Describe the issue:</strong> On December 16, 2020, Oklahoma stopped reporting people under investigation currently hospitalized. To allow our data quality team time to investigate, we did not update their Currently hospitalized or Currently in ICU on December 16, 2020 through December 17, 2020. We have decided to continue reporting their hospitalization numbers from executive order reports, including only confirmed cases and are applying this change retroactively through December 16, 2020.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-748355382">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 18, 2020, 2:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1018#issuecomment-748355382" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="299" alt="Screen Shot 2020-12-18 at 5 45 25 PM" src="../../assets/github/images/68712382/102667986-d1570280-4158-11eb-9f81-fc955dc391d1.png"></p>
+<p>AFTER:
+<img width="301" alt="Screen Shot 2020-12-18 at 5 43 50 PM" src="../../assets/github/images/68712382/102667916-98b72900-4158-11eb-9b75-383bd2fbd7d5.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-809">#809: [OK] Removing negative serology/antibody calculation &amp; adding total and positive antibody values for 5/15-5/21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            809</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 2, 2020, 10:49 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/809" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: OK</p>
+<p>Describe the problem: CTP started calculating negative serology tests on 5/22/2020 based on OK's Total antibody tests - Positive antibody tests. We are removing this metric.</p>
+<p>While verifying that the metric was always calculated, we realized that OK started reporting Total and Positive Antibody a week before CTP started recording it. Backfilling that week (the values only update weekly) from the May 8-May 14 Weekly Epidemiology and Surveillance Report.
+Source:
+<a href="https://github.com/COVID19Tracking/issues/files/5166431/2020.05.15_weekly_epi_report.pdf">2020.05.15_weekly_epi_report.pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-686270741">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 2, 2020, 10:53 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/809#issuecomment-686270741" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="316" alt="Screen Shot 2020-09-02 at 10 51 58 PM" src="../../assets/github/images/66583275/92076255-181e1980-ed6f-11ea-97ac-054519b582b3.png"></p>
+<p>AFTER:
+<img width="273" alt="Screen Shot 2020-09-02 at 10 52 46 PM" src="../../assets/github/images/66583275/92076270-1fddbe00-ed6f-11ea-933b-8df6381f6e27.png"></p>
+<p>Values:
+65958
+65958
+65958
+65958
+65958
+64466
+64466
+64466
+64466
+64466
+64466
+64466
+62826
+62826
+62826
+62826
+62826
+62826
+62826
+62826
+60056
+60056
+60056
+60056
+60056
+60056
+58021
+58021
+58021
+58021
+58021
+58021
+58021
+55612
+55612
+55612
+55612
+55612
+55612
+55612
+53331
+53331
+53331
+53331
+53331
+53331
+53331
+47880
+47880
+47880
+47880
+47880
+47880
+47880
+43548
+43548
+43548
+43548
+33319
+33319
+33319
+33319
+33319
+33319
+33319
+33319
+33319
+33319
+28963
+28963
+28963
+28963
+28963
+28963
+28963
+26441
+26441
+26441
+26441
+26441
+26441
+26441
+26441
+22539
+22539
+22539
+22539
+22539
+22539
+22539
+19532
+19532
+19532
+19532
+19532
+19532
+19532
+16532
+16532
+16532
+16532
+16532
+16532
+13183</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-686271855">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 2, 2020, 10:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/809#issuecomment-686271855" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="254" alt="Screen Shot 2020-09-02 at 10 54 33 PM" src="../../assets/github/images/66583275/92076521-8d89ea00-ed6f-11ea-9cf6-64b898d3e1d7.png"></p>
+<p>AFTER:
+<img width="263" alt="Screen Shot 2020-09-02 at 10 55 01 PM" src="../../assets/github/images/66583275/92076546-98447f00-ed6f-11ea-9efb-1316c322db38.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694728159">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 18, 2020, 1:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/809#issuecomment-694728159" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-699897009">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 28, 2020, 2:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/809#issuecomment-699897009" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-700340692">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 28, 2020, 4:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/809#issuecomment-700340692" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was completed. I just forgot to close the issue.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-720">#720: [OK] PCL Cases Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            720</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on July 31, 2020, 7:03 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/720" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Describe the Issue:</strong> We didn't start recording pos. pcr cases for OK until 6/9. EORs from previous dates have a case number which is defined as &quot;*Case: Meets confirmatory laboratory evidence.&quot;. We can use this figure to backfill historical pcr cases up to 4/14 when they added to clear definition for the number.</p>
+<p>Data Source:
+https://coronavirus.health.ok.gov/executive-order-reports</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-668192966">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 3, 2020, 12:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/720#issuecomment-668192966" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>On 4/13, there is a <a href="https://coronavirus.health.ok.gov/sites/g/files/gmc786/f/eo_-_covid-19_report_-_4-13-20.pdf">note</a> that the total includes 5 probable cases. Perhaps we could just subtract 5 from the total positives to account for that, but I suppose it doesn't quite say explicitly that all the other cases are confirmed.</p>
+<p>Before (point where <strong>Positive Cases (PCR)</strong> stopped):
+<img src="../../assets/github/images/404503/89217881-f593b780-d59a-11ea-8ca7-7cf016a88309.png" alt="image"></p>
+<p>After (new point where <strong>Positive Cases (PCR)</strong> stops):
+<img src="../../assets/github/images/404503/89218004-3ee40700-d59b-11ea-9555-791d9f6213a1.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-694">#694: [OK] Incorrect ICU Value on 7/28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            694</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 29, 2020, 7:40 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/694" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Oklahoma</p>
+<p><strong>Describe the problem</strong>
+We reported 307 (285+22) for curr. ICU value instead of 207 (185+22)</p>
+<p><strong>Link to data source</strong>
+<img src="https://user-images.githubusercontent.com/67408226/88814248-b1ee1780-d16e-11ea-91b3-00eff592eed0.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665706157">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on July 29, 2020, 7:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/694#issuecomment-665706157" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/67408226/88814391-dfd35c00-d16e-11ea-96b1-1623a92a2677.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/67408226/88814449-f7aae000-d16e-11ea-8c97-42a7437a3f3f.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-663">#663: [OK] Page updated after Pub Shift 7/21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            663</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on July 23, 2020, 1:48 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/663" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Describe Issue</strong>
+On 7/21 the OK page did not update before we published. They updated later that evening and we caught it in our last screenshot. We need to patch cases, deaths, and recoveries.</p>
+<p><strong>Data Source</strong>
+Screenshot from 6:21 pm on 6/21
+<img src="https://user-images.githubusercontent.com/68712382/88337179-41756f80-cd04-11ea-98a7-b7bb5f693945.png" alt="OK-20200721-182114"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663566313">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on July 24, 2020, 7:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/663#issuecomment-663566313" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/88400954-f13af380-cd7d-11ea-8772-ad8927385226.png" alt="image"></p>
+<p>Noticed that there were three consecutive 7/20's, and they had updated values for each. Changed them to 7/20, 7/21, 7/22, accordingly.</p>
+<p>AFTER:
+<img src="../../assets/github/images/67408226/88401783-07957f00-cd7f-11ea-92eb-d75eecfeae13.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-637">#637: [OK] Positive Cases (PCR) is wrong for 6/13 and 6/14</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            637</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on July 15, 2020, 4:18 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/637" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: OK</p>
+<p><strong>Describe the problem</strong>
+For OK, we use the same dashboard number to populate both <code>Positives</code> and <code>Positive Cases (PCR)</code>. Accordingly, the numbers are the same for each day...except for 6/13 and 6/14. 6/13 repeats the value for 6/12 and 6/14 has the value that should be in 6/13. Not sure how this happened but OK screenshots agree with our Positives column.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/OK/OK-20200613-184553.png
+https://covidtracking.com/screenshots/OK/OK-20200614-184350.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-659064281">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 15, 2020, 4:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/637#issuecomment-659064281" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/404503/87609298-238a8800-c6d0-11ea-8d2a-e36b7cf80eed.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/87609328-38ffb200-c6d0-11ea-97c0-b14bc1d55853.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-634">#634: [OK] 6/28 Incorrect Total Cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            634</p>
+          <p>
+            <strong>schmian</strong> opened this issue on July 15, 2020, 11:13 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/634" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>&quot;Hello and thank you for the service you are doing. I spend a lot of time every day on your site while doing about 10 hours of research daily on the pandemic.</p>
+<p>I noticed a small error, probably a typo, in the Oklahoma data for yesterday 28 June. The State reported 302 new cases and 12,944 total cases. The numbers are listed as 352 and 12,994 respectively in your Oklahoma listing.&quot;</p>
+<p>This can also be confirmed in the screenshots from 6/28: https://covidtracking.com/screenshots/OK/OK-20200628-184700.png</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_2672p">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-659062070">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 15, 2020, 4:13 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/634#issuecomment-659062070" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Agree it looks like a simple typo, 12994 instead of 12944.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/87608650-7d8a4e00-c6ce-11ea-80af-11444ab2efa7.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/87608709-9b57b300-c6ce-11ea-86cc-5976a4120409.png" alt="image"></p>
+<p>I also notice that our &quot;Positive Cases (PCR)&quot; column was not changed that day even though it otherwise tracks OK positives exactly. I believe this was an oversight and so corrected this as well:</p>
+<p>Before:
+<img src="../../assets/github/images/404503/87608964-3ea8c800-c6cf-11ea-8457-c60f7a458118.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/87608984-49635d00-c6cf-11ea-9f4b-c0c4cebeff3f.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-534">#534: [OK] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            534</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on June 25, 2020, 7:59 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/534" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for OK. However, OK's death values represent lumped probable and confirmed figures, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649835343">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 2:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/534#issuecomment-649835343" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Removed from Deaths (confirmed). The values matched Deaths from today back to when these started getting recorded so this screenshot is just evidence of when that was (spoiler: 5/12):
+<img src="../../assets/github/images/404503/85798763-0c2d3000-b70c-11ea-8b81-b6f559728cda.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650186400">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on June 26, 2020, 6:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/534#issuecomment-650186400" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DZL is DCing this - 6/26 9:57</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-506">#506: [OK] 6/18 publish missed the daily update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            506</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 19, 2020, 2:44 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/506" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Oklahoma</p>
+<p>Front Issue
+Your most recent data for Oklahoma shows Thursday June 18 the total cases were 8,904 which is the same number as Wednesday for positive cases. However, the State Dept. of Health is showing a 450 jump in cases with a total of 9354 cases.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/OK/OK-20200618-184250.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647033176">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 20, 2020, 11:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/506#issuecomment-647033176" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oklahoma's <a href="https://coronavirus.health.ok.gov/sites/g/files/gmc786/f/eo_-_covid-19_report_-_6-18-20.pdf">executive order report for 6/18</a> has the correct numbers. This looks like a state where we are typically off by one day for hospitalization and testing information...that data in the report matches what we have for 6/19, whereas 6/18 has distinct values from 6/17 for testing and hospitalization numbers. For now I'm leaving those as-is; fixing that without screwing up people's trend analysis would mean a re-sync of all OK historicals (after which we'd once more be off a day going forward).</p>
+<p>The more important issue here is we didn't get an updated number for cases, recovered, and deaths on 6/18 but did get updated numbers for hospitalizations and tests. Therefore I'm patching in the executive order numbers for positives, recovered, and deaths.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/85209410-be788800-b305-11ea-90e6-a08516861bc9.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/85209431-f7b0f800-b305-11ea-9e12-60bdf1adedb8.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-68">#68: OK: Negative test results note</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            68</p>
+          <p>
+            <strong>lesleemoore</strong> opened this issue on March 27, 2020, 12:48 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  State Notes
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/68" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Please note the comment on https://coronavirus.health.ok.gov/,</p>
+<p>&quot;*Negative testing results are only from the State Public Health Laboratory and do not include private laboratory negative results.&quot;</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607299544">
+          <div class="frontmatter">
+            <div>
+              <strong>una-smith</strong> commented on April 1, 2020, 7:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/68#issuecomment-607299544" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oklahoma State Department of Health is trying to get negative test results:</p>
+<p><a href="https://coronavirus.health.ok.gov/articles/osdh-commissioner-urges-private-labs-report-all-covid-19-test-results-daily-state">OSDH Commissioner Urges Private Labs to Report All COVID-19 Test Results Daily to State (March 31, 2020)</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607318741">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 1, 2020, 8:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/68#issuecomment-607318741" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>🤞</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790172">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/68#issuecomment-623790172" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-625288628">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 7, 2020, 7:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/68#issuecomment-625288628" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Late update but as of now OK is reporting results from both public and private labs in their daily executive orders. This data has been captured.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

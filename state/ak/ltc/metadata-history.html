@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Alaska: Long-term metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="../index.html">Alaska</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Long-term care</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="../index.html">Alaska</a>
+      : Long-term care metadata history
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="../index.html">Data</a>
+        </li>
+        <li>
+          <a href="../metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="../outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="../data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="../annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="../github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="../tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="../ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="../ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="../ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="../ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="../crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-05T12:49:36.000-08:00">March 5, 2021, 12:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-12T11:12:42.000-08:00">February 12, 2021, 11:12 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T13:44:04.000-08:00">December 25, 2020, 1:44 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-24T06:46:36.000-08:00">December 24, 2020, 6:46 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-04T09:35:04.000-08:00">December 4, 2020, 9:35 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T15:49:32.000-08:00">November 2, 2020, 3:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-30T08:33:01.000-07:00">October 30, 2020, 8:33 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-02T10:10:31.000-07:00">October 2, 2020, 10:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-17T22:10:08.000-07:00">September 17, 2020, 10:10 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+    <h2 id="2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+
+December 24, 2020: Alaska did not update their data. Carried over previous weeks information and outbreak data removed.
+
+February 11, 2021: Cumulative resident cases decreased by 1. 
+
+March 4, 2021: Alaska did not update their data.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-03-05T12:49:36.000-08:00">March 5, 2021, 12:49 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+
+December 24, 2020: Alaska did not update their data. Carried over previous weeks information and outbreak data removed.
+
+February 11, 2021: Cumulative resident cases decreased by 1. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-02-12T11:12:42.000-08:00">February 12, 2021, 11:12 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+
+December 24, 2020: Alaska did not update their data. Carried over previous weeks information and outbreak data removed.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-25T13:44:04.000-08:00">December 25, 2020, 1:44 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+
+December 23, 2020: Alaska did not update their data. Carried over previous weeks information and outbreak data removed.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-24T06:46:36.000-08:00">December 24, 2020, 6:46 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-04T09:35:04.000-08:00">December 4, 2020, 9:35 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      Alaska does not report COVID-19 data for long-term care facilities.
+    </div>
+  
+    <h2 id="2020-11-02T15:49:32.000-08:00">November 2, 2020, 3:49 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      Alaska does not report COVID-19 data for LTC facilities.
+    </div>
+  
+    <h2 id="2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release. Data carried to most recent day.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-30T08:33:01.000-07:00">October 30, 2020, 8:33 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-02T10:10:31.000-07:00">October 2, 2020, 10:10 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska sometimes reports long-term care data in press releases.
+
+August 12, 2020: Alaska Department of Health and Social Services reported 10 resident and 2 staff cases at the Anchorage Pioneer Home in a press release.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-09-17T22:10:08.000-07:00">September 17, 2020, 10:10 PM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Alaska does not report COVID-19 data for LTC facilities.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+
+    </main>
+  </body>
+</html>

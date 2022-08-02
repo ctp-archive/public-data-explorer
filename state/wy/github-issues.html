@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wyoming Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wyoming</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wyoming</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 10, 2021, 4:33 PM PST</td>
+          <td>1094</td>
+          <td>
+            <a href="#issue-1094">[WY] Backfill timeseries to reflect duplicate negative tests removed from the count by Wyoming </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 10, 2021, 4:33 PM PST</td>
+          <td>1094</td>
+          <td>
+            <a href="#issue-1094">[WY] Backfill timeseries to reflect duplicate negative tests removed from the count by Wyoming </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 10, 2021, 2:43 PM PST</td>
+          <td>1093</td>
+          <td>
+            <a href="#issue-1093">[WY] Patch 02/09/21 Total PCR tests (specimens)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 10, 2021, 2:43 PM PST</td>
+          <td>1093</td>
+          <td>
+            <a href="#issue-1093">[WY] Patch 02/09/21 Total PCR tests (specimens)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 14, 2021, 12:06 PM PST</td>
+          <td>1066</td>
+          <td>
+            <a href="#issue-1066">[WY] Correcting Cumulative hospitalization value for 1/12/2021-1/13/2021</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 14, 2021, 12:06 PM PST</td>
+          <td>1066</td>
+          <td>
+            <a href="#issue-1066">[WY] Correcting Cumulative hospitalization value for 1/12/2021-1/13/2021</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 25, 2020, 4:11 PM PST</td>
+          <td>975</td>
+          <td>
+            <a href="#issue-975">[WY] Backfill time-series in specimens units </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 16, 2020, 6:47 AM PST</td>
+          <td>951</td>
+          <td>
+            <a href="#issue-951">[WY] Patch 11/13 cur. hosp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 18, 2020, 2:40 PM PDT</td>
+          <td>851</td>
+          <td>
+            <a href="#issue-851">[WY]Timestamp was entered as 9/16 instead of 9/17</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 6, 2020, 6:23 AM PDT</td>
+          <td>739</td>
+          <td>
+            <a href="#issue-739">[WY] Probables Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 20, 2020, 2:14 PM PDT</td>
+          <td>651</td>
+          <td>
+            <a href="#issue-651">[WY] Backfilling 7/17-19 data after release</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 18, 2020, 1:49 PM PDT</td>
+          <td>647</td>
+          <td>
+            <a href="#issue-647">[WY] 7/17 Testing Data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 6:27 AM PDT</td>
+          <td>609</td>
+          <td>
+            <a href="#issue-609">[Correction] WY Total Tests People was entered incorrectly on 7/10</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 10, 2020, 7:31 AM PDT</td>
+          <td>595</td>
+          <td>
+            <a href="#issue-595">[WY] PCL Cases Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 7:44 AM PDT</td>
+          <td>530</td>
+          <td>
+            <a href="#issue-530">[WY] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 21, 2020, 3:06 PM PDT</td>
+          <td>507</td>
+          <td>
+            <a href="#issue-507">WY began reporting People tested, which made negatives go down</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 30, 2020, 7:12 AM PDT</td>
+          <td>337</td>
+          <td>
+            <a href="#issue-337">WY data for 4/29 includes probable cases, while it didn&#39;t before</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1094">#1094: [WY] Backfill timeseries to reflect duplicate negative tests removed from the count by Wyoming </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1094</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on February 10, 2021, 4:33 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wyoming</p>
+<p><strong>Describe the problem</strong>
+On February 9, 2021, Wyoming’s Total PCR tests (specimens) fell from 704,836 to 595,970. We carried the previous day’s number as we believed this may have been an error and wanted to allow them time to correct it. On February 10, 2021, we learned that the decrease &quot;Due to recent changes in reporting by commercial laboratories, some test results were being counted twice. Testing numbers have been corrected to reflect these changes therefore a decrease in the testing numbers will be observed for Non-WPHL labs. That decrease is attributed to the removal of duplicate tests being reported&quot;. As a result of this new information, we are backfilling our Total PCR tests (specimens) to reflect this new information and ensure that our data aligns as closely as possible with the states.</p>
+<p>We should backfill Total Tests (PCR), Positive Tests (PCR) and Negative Tests (PCR)</p>
+<p><strong>Link to data source</strong></p>
+<p><img src="https://user-images.githubusercontent.com/1749380/107590565-66fd9400-6bd6-11eb-9093-c2f9d4a9d3c2.png" alt="image"></p>
+<p><a href="https://github.com/COVID19Tracking/issues/files/5962499/Lab.by.date.6.xlsx">Lab by date (6).xlsx</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-786360081">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 25, 2021, 6:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-786360081" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-800652221">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 16, 2021, 3:21 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-800652221" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-808891840">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 28, 2021, 5:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-808891840" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814441051">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-814441051" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was already handled by https://github.com/COVID19Tracking/issues/issues/1093</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1094">#1094: [WY] Backfill timeseries to reflect duplicate negative tests removed from the count by Wyoming </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1094</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on February 10, 2021, 4:33 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wyoming</p>
+<p><strong>Describe the problem</strong>
+On February 9, 2021, Wyoming’s Total PCR tests (specimens) fell from 704,836 to 595,970. We carried the previous day’s number as we believed this may have been an error and wanted to allow them time to correct it. On February 10, 2021, we learned that the decrease &quot;Due to recent changes in reporting by commercial laboratories, some test results were being counted twice. Testing numbers have been corrected to reflect these changes therefore a decrease in the testing numbers will be observed for Non-WPHL labs. That decrease is attributed to the removal of duplicate tests being reported&quot;. As a result of this new information, we are backfilling our Total PCR tests (specimens) to reflect this new information and ensure that our data aligns as closely as possible with the states.</p>
+<p>We should backfill Total Tests (PCR), Positive Tests (PCR) and Negative Tests (PCR)</p>
+<p><strong>Link to data source</strong></p>
+<p><img src="https://user-images.githubusercontent.com/1749380/107590565-66fd9400-6bd6-11eb-9093-c2f9d4a9d3c2.png" alt="image"></p>
+<p><a href="https://github.com/COVID19Tracking/issues/files/5962499/Lab.by.date.6.xlsx">Lab by date (6).xlsx</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-786360081">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 25, 2021, 6:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-786360081" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-800652221">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 16, 2021, 3:21 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-800652221" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-808891840">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 28, 2021, 5:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-808891840" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814441051">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1094#issuecomment-814441051" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was already handled by https://github.com/COVID19Tracking/issues/issues/1093</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1093">#1093: [WY] Patch 02/09/21 Total PCR tests (specimens)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1093</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 10, 2021, 2:43 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1093" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WY</p>
+<p><strong>Dates affected:</strong> 02/09/21</p>
+<p><strong>Describe the issue:</strong>  On February 9, 2021, Wyoming’s <strong>Total PCR tests (specimens)</strong> fell from 704,836 to 595,970. We carried the previous day’s number as we believed this may have been an error and wanted to allow them time to correct it. On February 10, 2021, we learned that the decrease &quot;Due to recent changes in reporting by commercial laboratories, some test results were being counted twice. Testing numbers have been corrected to reflect these changes therefore a decrease in the testing numbers will be observed for Non-WPHL labs. That decrease is attributed to the removal of duplicate tests being reported&quot;. As a result of this new information, we are backfilling our Total PCR tests (specimens) to reflect this new information and ensure that our data aligns as closely as possible with the states.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-777085841">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 10, 2021, 2:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1093#issuecomment-777085841" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+WY 2021-02-09
+totalTestsViral: 595970 (was 704836)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1093">#1093: [WY] Patch 02/09/21 Total PCR tests (specimens)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1093</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 10, 2021, 2:43 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1093" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WY</p>
+<p><strong>Dates affected:</strong> 02/09/21</p>
+<p><strong>Describe the issue:</strong>  On February 9, 2021, Wyoming’s <strong>Total PCR tests (specimens)</strong> fell from 704,836 to 595,970. We carried the previous day’s number as we believed this may have been an error and wanted to allow them time to correct it. On February 10, 2021, we learned that the decrease &quot;Due to recent changes in reporting by commercial laboratories, some test results were being counted twice. Testing numbers have been corrected to reflect these changes therefore a decrease in the testing numbers will be observed for Non-WPHL labs. That decrease is attributed to the removal of duplicate tests being reported&quot;. As a result of this new information, we are backfilling our Total PCR tests (specimens) to reflect this new information and ensure that our data aligns as closely as possible with the states.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-777085841">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 10, 2021, 2:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1093#issuecomment-777085841" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+WY 2021-02-09
+totalTestsViral: 595970 (was 704836)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1066">#1066: [WY] Correcting Cumulative hospitalization value for 1/12/2021-1/13/2021</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1066</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 14, 2021, 12:06 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1066" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wyoming</p>
+<p>Issue: Wyoming only reports the number of people <em>Ever hospitalized</em> with COVID-19 as a percentage of “Lab Confirmed Cases by Reported Hospitalization,” in the absence of a better data source we convert this percentage to an integer. On 1/12 and 1/13 part of the calculation was entered incorrectly, as .29 rather than .029, causing the appearance of a big spike in hospitalization. Correcting the calculation and values.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-760446941">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 14, 2021, 12:08 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1066#issuecomment-760446941" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values corrected:
+<a href="../../assets/github/files/5816771/Changes.2.txt">Changes (2).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1066">#1066: [WY] Correcting Cumulative hospitalization value for 1/12/2021-1/13/2021</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1066</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 14, 2021, 12:06 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1066" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wyoming</p>
+<p>Issue: Wyoming only reports the number of people <em>Ever hospitalized</em> with COVID-19 as a percentage of “Lab Confirmed Cases by Reported Hospitalization,” in the absence of a better data source we convert this percentage to an integer. On 1/12 and 1/13 part of the calculation was entered incorrectly, as .29 rather than .029, causing the appearance of a big spike in hospitalization. Correcting the calculation and values.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-760446941">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 14, 2021, 12:08 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1066#issuecomment-760446941" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values corrected:
+<a href="../../assets/github/files/5816771/Changes.2.txt">Changes (2).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-975">#975: [WY] Backfill time-series in specimens units </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            975</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on November 25, 2020, 4:11 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/975" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wyoming</p>
+<p><strong>Describe the problem</strong>
+There is a time-series of positive &amp; negative tests on the state and county page that sums up to the tests number on the</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-734005306">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 25, 2020, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/975#issuecomment-734005306" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5599770/Multi-edit.tool-PRODUCTION.-.WY-reb-20201126.csv.txt">Multi-edit tool-PRODUCTION - WY-reb-20201126.csv.txt</a>
+<a href="../../assets/github/files/5599771/Multi-edit.tool-PRODUCTION.-.WY-reb-20201126_post.csv.txt">Multi-edit tool-PRODUCTION - WY-reb-20201126_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-734027799">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 25, 2020, 5:54 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/975#issuecomment-734027799" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The data taken from <a href="https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-state-and-county-dashboards/">County Dashboard</a> page, the chart &quot;Laboratory Results by Date&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-951">#951: [WY] Patch 11/13 cur. hosp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            951</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 16, 2020, 6:47 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/951" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: WY</p>
+<p>Dates affected: 11/13</p>
+<p>Describe the issue: On 11/13, we missed the update for WY cur. hosp. We should patch this update.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-728111486">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 16, 2020, 6:52 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/951#issuecomment-728111486" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="174" alt="Screen Shot 2020-11-16 at 9 49 15 AM" src="../../assets/github/images/68712382/99266657-fe7a6300-27f0-11eb-9d67-cd7b9652ebdc.png"></p>
+<p>AFTER:</p>
+<img width="184" alt="Screen Shot 2020-11-16 at 9 52 02 AM" src="../../assets/github/images/68712382/99266984-62049080-27f1-11eb-9bf6-3dfac0c05080.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-851">#851: [WY]Timestamp was entered as 9/16 instead of 9/17</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            851</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 18, 2020, 2:40 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/851" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Wyoming</p>
+<p><strong>Describe the problem</strong>
+On 9/17 the timestamp was entered as 9/16 by mistake</p>
+<p><img src="https://user-images.githubusercontent.com/1749380/93647354-3f632080-f9d6-11ea-832c-601af91b4a73.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-695103059">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 18, 2020, 2:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/851#issuecomment-695103059" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1749380/93648129-06c44680-f9d8-11ea-9854-92adeadb4a4c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-739">#739: [WY] Probables Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            739</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on August 6, 2020, 6:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WY</p>
+<p><strong>Dates impacted:</strong> 4/29 - 7/27</p>
+<p><strong>Issue description:</strong> We started reporting probable cases on 7/28. The states probables can be calculated from total cases - confirmed cases. We can backfill these values back to 4/29.</p>
+<p><strong>Source:</strong> https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-669926086">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 6, 2020, 6:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-669926086" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE:</strong>
+<img src="../../assets/github/images/57415941/89537219-03c61b80-d7c7-11ea-9533-460ceef8b45b.png" alt="Screen Shot 2020-08-06 at 9 27 01 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669951821">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 6, 2020, 7:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-669951821" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>AFTER:</strong>
+<img src="../../assets/github/images/57415941/89542028-20655200-d7cd-11ea-9139-c657e286c741.png" alt="Screen Shot 2020-08-06 at 10 10 47 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-678425751">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 21, 2020, 11:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-678425751" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-684063719">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 31, 2020, 2:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-684063719" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-699099492">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on September 25, 2020, 11:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-699099492" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We found some discrepancies in Positive Cases (PCR) and Probables. We also found Probables that were not filled out prior to May. The plan is as follows:</p>
+<ol>
+<li>
+<p>Backfill Positive Cases (PCR) for all dates 4/8 - 5/13 due to being a day off or having some small discrepancies.</p>
+</li>
+<li>
+<p>Fix Positives Cases (PCR) for 5/16, 5/18, 5/19, 5/21, 5/24, 5/25 due to discrepancies and duplicates.</p>
+</li>
+<li>
+<p>Backfill probables from 4/8 - 4/30 for dates we did not collect.</p>
+</li>
+<li>
+<p>Fix probables for  5/1 - 5/4, 5/8, 5/9, 5/11, 5/13, 5/16, 5/18, 5/19, 5/21, 5/24, 5/25, 5/27, 6/2, 6/15, 6/24, 7/6, 7/13</p>
+</li>
+<li>
+<p>Fix prob+confirm for entire time series due to being off by a day and not having probables.</p>
+</li>
+</ol>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-701670180">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 30, 2020, 3:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-701670180" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5308459/Probable.Timeseries.Backfill.WY.xlsx">Probable Timeseries Backfill WY.xlsx</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-709626291">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 15, 2020, 3:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-709626291" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-716229053">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 25, 2020, 4:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/739#issuecomment-716229053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-651">#651: [WY] Backfilling 7/17-19 data after release</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            651</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 20, 2020, 2:14 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/651" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Wyoming did not report data for several days due to new HHS regulations. On 7/20, the missing data points were released.</p>
+<p>https://sites.google.com/wyo.gov/exec-covid19/hospital-resources</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-661338273">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 20, 2020, 2:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/651#issuecomment-661338273" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data was obtained for this graph:
+<img width="1152" alt="Screen Shot 2020-07-20 at 5 17 04 PM" src="../../assets/github/images/66738237/87987560-d716c200-caac-11ea-8162-107bd9e001aa.png"></p>
+<p>Corresponding data points (which were carried over during the period of missing data) were replaced in States Daily.</p>
+<p>Before:
+<img width="780" alt="Screen Shot 2020-07-20 at 5 15 40 PM" src="../../assets/github/images/66738237/87987612-e72ea180-caac-11ea-906a-68498a4df513.png"></p>
+<p>After:
+<img width="780" alt="Screen Shot 2020-07-20 at 5 18 22 PM" src="../../assets/github/images/66738237/87987683-06c5ca00-caad-11ea-959d-91e825bead9a.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-647">#647: [WY] 7/17 Testing Data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            647</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 18, 2020, 1:49 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/647" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Transposition error on 7/17 total tests performed, creating issues for test counts</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660545968">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 18, 2020, 2:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/647#issuecomment-660545968" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Testing Data page (tertiary screenshot) was used:
+<img width="218" alt="Screen Shot 2020-07-18 at 5 26 23 PM" src="../../assets/github/images/66738237/87862232-d8fd4b80-c91b-11ea-9eb1-74b7119dc05e.png"></p>
+<p>The following data was changed (all on 7/17):
+Total Tests (PCR): 61302 to 61032
+Positive Tests (PCR): <code>=floor(61302*0.029,1)</code>=1777 to <code>=floor(61032*0.029,1)</code>=1769
+Negative Tests (PCR): <code>=floor(61302*0.971,1)</code>=59524  to <code>=floor(61032*0.971,1)</code>=59262</p>
+<p>Before:
+<img width="120" alt="Screen Shot 2020-07-18 at 5 34 37 PM" src="../../assets/github/images/66738237/87862345-f8e13f00-c91c-11ea-875e-ce1223c49846.png">
+After:
+<img width="120" alt="Screen Shot 2020-07-18 at 5 36 04 PM" src="../../assets/github/images/66738237/87862364-3645cc80-c91d-11ea-80f9-460527fe2bef.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-609">#609: [Correction] WY Total Tests People was entered incorrectly on 7/10</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            609</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on July 13, 2020, 6:27 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/609" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: WY</p>
+<p><strong>Describe the problem</strong>
+On 7/10, there was an entry mistake for <code>Total Tests (People)</code>. The number should have been 39552 instead of 39522.
+Screenshot on 7/10 ~22:00 EST
+<img src="https://user-images.githubusercontent.com/25627274/87309682-ea44f300-c4ea-11ea-8fa8-0d6efbdc0abb.png" alt="image"></p>
+<p><strong>Link to data source</strong>
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WY/WY-tertiary-20200710-183049.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657561577">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 13, 2020, 6:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/609#issuecomment-657561577" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/25627274/87310009-54f62e80-c4eb-11ea-85c1-8ed20c515751.png" alt="image">
+AFTER:
+<img src="../../assets/github/images/25627274/87310043-65a6a480-c4eb-11ea-8881-113fc153effe.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-595">#595: [WY] PCL Cases Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            595</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 10, 2020, 7:31 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wyoming</p>
+<p><strong>Describe the problem</strong>
+CTP Positive Cases (PCR) goes back until 4/29. There's also a gap for Positive and Negative Tests (PCR) from 5/5 - 5/14. WY provides hover-over graphs for lab-confirmed cases (line graph - people) until 3/12 and tests (bar graph - specimens) back until 3/4.</p>
+<p><strong>Link to data source</strong>
+Lab-Confirmed Cases: https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-map-and-statistics/</p>
+<p>COVID-19 Resulted Tests by Collection Date: https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-testing-data/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-656711663">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 10, 2020, 7:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-656711663" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data backfilled using https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-map-and-statistics/ Data recorded on graph on a day will be recorded in sheet as the subsequent day</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-656720440">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 10, 2020, 7:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-656720440" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BACKFILLED (BEFORE)
+<img src="../../assets/github/images/57415941/87168377-65649a00-c29c-11ea-9683-04fcf070e287.png" alt="Screen Shot 2020-07-10 at 10 35 49 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-656720785">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 10, 2020, 7:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-656720785" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BACKFILLED (AFTER) BACK TO 3/12
+<img src="../../assets/github/images/57415941/87168401-6dbcd500-c29c-11ea-821a-be76deb7c793.png" alt="Screen Shot 2020-07-10 at 10 58 10 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-657539274">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 13, 2020, 5:45 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-657539274" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am seeing some slight discrepancies. Need to look at this again. Might be shifted by one day.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-664412437">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 27, 2020, 6:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-664412437" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Note for backfill team - we've backfilled the confirmed cases (PCR) but have yet to adjust for negatives. Please adjust negatives and review the graph &quot;<strong>Lab Confirmed Cases by Date of Report,</strong> Total Number of Recovered Lab Confirmed Cases; and Percent of Cases with Community Spread or Unknown Exposure&quot; located at: https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-map-and-statistics/</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671985702">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 11, 2020, 7:37 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-671985702" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-699097761">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on September 25, 2020, 11:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/595#issuecomment-699097761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We're handling this in #739</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-530">#530: [WY] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            530</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on June 25, 2020, 7:44 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/530" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for WY. However, WY's death values represent lumped probable and confirmed figures, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649603652">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 25, 2020, 8:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/530#issuecomment-649603652" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Added note in Worksheet 2</p>
+<p><img src="../../assets/github/images/67423649/85744553-d7908880-b6b9-11ea-8c65-8b09e2e30fd2.png" alt="Screen Shot 2020-06-25 at 7 59 39 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649604184">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 25, 2020, 8:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/530#issuecomment-649604184" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/67423649/85744738-f8f17480-b6b9-11ea-819b-048f1efd7953.png" alt="Screen Shot 2020-06-25 at 8 00 35 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649842532">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 3:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/530#issuecomment-649842532" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Confirmed the data matched &quot;Deaths&quot;, then removed &quot;Deaths (Confirmed)&quot; between yesterday and 5/12 (today's cell was blank).</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649898079">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 6:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/530#issuecomment-649898079" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated WY's source note for Deaths (confirmed) to Not Provided. KWS already wrote a private note about this.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650189436">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on June 26, 2020, 6:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/530#issuecomment-650189436" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'ed by JJA 6/26 9:48:00 a.m. ET</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-507">#507: WY began reporting People tested, which made negatives go down</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            507</p>
+          <p>
+            <strong>amandafrench</strong> opened this issue on June 21, 2020, 3:06 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/507" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+Wyoming</p>
+<p><strong>Describe the problem</strong>
+On 6/19 Wyoming began reporting how many <em>people</em> have been tested for COVID; previously they had only been reporting specimens. Today (6/21) we incorporated the new data into our calculations, which made our &quot;Negatives&quot; number decrease. Might need to fix historicals for 6/20 and perhaps 6/19.</p>
+<p><strong>Link to data source</strong>
+https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/covid-19-testing-data/</p>
+<p>https://covidtracking.com/data/state/wyoming</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647793361">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 22, 2020, 3:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/507#issuecomment-647793361" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Complicating factors:</p>
+<ul>
+<li>We don't actually have the value for 6/19. We didn't get screenshots of the relevant page until 6/21. Data entry didn't record it until 6/20.</li>
+<li>The value for Total PCR Tests (People) hasn't changed yet since it was first recorded, even though positive cases (PCR) has been rising.</li>
+</ul>
+<p>Under these circumstances, I think we should leave the 6/19 number as-is. I'm editing the Negatives number for 6/20 to move the big decrease back a day. To avoid a needless tiny drop in negatives, I have to use the same number as from 6/21 (since the positives increased slightly day to day but the total tests number hasn't been updated by the state).</p>
+<p>Before:
+<img src="../../assets/github/images/404503/85339929-1accda80-b4b3-11ea-95f0-696af1ddd471.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/85339945-26b89c80-b4b3-11ea-9a0d-2dde2513bbaa.png" alt="image"></p>
+<p>I also updated the public note to say we took the change starting on 6/20 instead of 6/21.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-337">#337: WY data for 4/29 includes probable cases, while it didn&#39;t before</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            337</p>
+          <p>
+            <strong>thejinghao</strong> opened this issue on April 30, 2020, 7:12 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/337" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-622080082">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 30, 2020, 1:05 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/337#issuecomment-622080082" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@jinghao1994</strong> Thank you for writing about this.</p>
+<p>The CDC has issued a guidance on 4/14 that case counts and death counts include confirmed and probable cases <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html">There is more information about the definitions of confirmed and suspected here </a></p>
+<p>We are going to standardize this guideline across all the states that report both numbers. We are also tracking the number of confirmed cases and deaths and we will enahnce our reporting to expose those numbers on the website.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

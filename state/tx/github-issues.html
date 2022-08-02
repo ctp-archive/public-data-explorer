@@ -1,0 +1,3034 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Texas Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Texas</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Texas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 14, 2020, 2:07 PM PST</td>
+          <td>1014</td>
+          <td>
+            <a href="#issue-1014">[TX] Backfill PCR and Antigen totals and positives</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 11, 2020, 6:48 PM PST</td>
+          <td>1008</td>
+          <td>
+            <a href="#issue-1008">[TX] Patching missed Now hospitalized update 12/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 11, 2020, 3:00 PM PST</td>
+          <td>1007</td>
+          <td>
+            <a href="#issue-1007">[TX] Backfill timeseries of cases and antigen tests released on 12/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 1, 2020, 10:22 PM PST</td>
+          <td>989</td>
+          <td>
+            <a href="#issue-989">[TX] Patching late update of all testing metrics and in ICU for 12/1/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 25, 2020, 10:54 AM PST</td>
+          <td>974</td>
+          <td>
+            <a href="#issue-974">[TX] - Errata not being subtracted from daily case totals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 16, 2020, 10:20 AM PST</td>
+          <td>955</td>
+          <td>
+            <a href="#issue-955">[TX] - Testing Update for 11/15/20 arrived morning 11/16/20</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 12, 2020, 10:05 AM PST</td>
+          <td>947</td>
+          <td>
+            <a href="#issue-947">[TX] Patch 11/11 Deaths</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 2, 2020, 3:56 PM PST</td>
+          <td>922</td>
+          <td>
+            <a href="#issue-922">[TX] Updated testing metrics after publish time on 11/1/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 29, 2020, 7:46 PM PDT</td>
+          <td>875</td>
+          <td>
+            <a href="#issue-875">[TX] The Recoveries metric was not updated by Texas before publish on 9/29</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 25, 2020, 7:51 AM PDT</td>
+          <td>868</td>
+          <td>
+            <a href="#issue-868">[TX] Incorrect Current ICU values on 9/17, 9/21, 9/22, 9/24</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 17, 2020, 7:05 PM PDT</td>
+          <td>844</td>
+          <td>
+            <a href="#issue-844">[TX] Removing negative serology/antibody calculation</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 15, 2020, 8:22 AM PDT</td>
+          <td>833</td>
+          <td>
+            <a href="#issue-833">[TX] Updated after pub shift on 9/14 and needs backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 14, 2020, 8:35 AM PDT</td>
+          <td>826</td>
+          <td>
+            <a href="#issue-826">[TX] Updated after pub shift on 9/12 and needs backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 20, 2020, 2:43 PM PDT</td>
+          <td>782</td>
+          <td>
+            <a href="#issue-782">[TX] ICU update missed on 8/13, 18-19</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 3, 2020, 2:29 PM PDT</td>
+          <td>729</td>
+          <td>
+            <a href="#issue-729">[TX] Patch Data for 8/2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 7:27 AM PDT</td>
+          <td>692</td>
+          <td>
+            <a href="#issue-692">[TX] PCL Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 27, 2020, 3:10 PM PDT</td>
+          <td>682</td>
+          <td>
+            <a href="#issue-682">[TX] Texas added ~600 deaths to their count today but the deaths are from previous dates. We should back-fill them </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 25, 2020, 2:07 PM PDT</td>
+          <td>674</td>
+          <td>
+            <a href="#issue-674">[TX] 7/22 hospitalization freeze needs to be reflected in ICU data as well</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 22, 2020, 1:11 PM PDT</td>
+          <td>656</td>
+          <td>
+            <a href="#issue-656">[TX] New ICU data source found</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 24, 2020, 9:14 AM PDT</td>
+          <td>449</td>
+          <td>
+            <a href="#issue-449">[TX Historical] cases for 5/11,5/12,5/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 24, 2020, 8:51 AM PDT</td>
+          <td>448</td>
+          <td>
+            <a href="#issue-448">[TX Historicals] Texas deaths number appears static between May 20-21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 22, 2020, 9:47 AM PDT</td>
+          <td>442</td>
+          <td>
+            <a href="#issue-442">TX is providing separated serology &amp; PCR tests as of 5/13</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 1, 2020, 8:56 PM PDT</td>
+          <td>346</td>
+          <td>
+            <a href="#issue-346">TX some of 4/30 data is the same as 4/29 in the states historical API endpoint</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 30, 2020, 1:37 PM PDT</td>
+          <td>85</td>
+          <td>
+            <a href="#issue-85">TX: Incorrect tests number for 3/29</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1014">#1014: [TX] Backfill PCR and Antigen totals and positives</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1014</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on December 14, 2020, 2:07 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1014" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+Backfill the time series of Positive Tests (PCR), Total Tests (PCR), Positive Tests (Antigen), Total Tests (Antigen)</p>
+<p><strong>Link to data source</strong>
+<a href="https://services5.arcgis.com/ACaLB9ifngzawspq/arcgis/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6/query?where=1%3D1&amp;objectIds=&amp;time=&amp;resultType=none&amp;outFields=Date%2COldPositive%2CNewPositive%2COldTest%2CNewTest&amp;returnIdsOnly=false&amp;returnUniqueIdsOnly=false&amp;returnCountOnly=false&amp;returnDistinctValues=false&amp;cacheHint=false&amp;orderByFields=Date+DESC&amp;groupByFieldsForStatistics=&amp;outStatistics=&amp;having=&amp;resultOffset=&amp;resultRecordCount=&amp;sqlFormat=none&amp;f=html&amp;token=">SpecimenTest.csv</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-744754649">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on December 14, 2020, 2:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1014#issuecomment-744754649" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Backfilling antigen tests and positive antigen test results.
+<a href="../../assets/github/files/5691941/Multi-edit.tool-PRODUCTION.-.TX-reb-20201214.csv.txt">Multi-edit tool-PRODUCTION - TX-reb-20201214.csv.txt</a>
+<a href="../../assets/github/files/5691942/Multi-edit.tool-PRODUCTION.-.TX-reb-20201214_post.csv.txt">Multi-edit tool-PRODUCTION - TX-reb-20201214_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-744759428">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on December 14, 2020, 2:46 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1014#issuecomment-744759428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>PCR testing: Total tests and positive test results backfill
+<a href="../../assets/github/files/5692024/Multi-edit.tool-PRODUCTION.-.TX-reb-20201214_pcr.csv.txt">Multi-edit tool-PRODUCTION - TX-reb-20201214_pcr.csv.txt</a>
+<a href="../../assets/github/files/5692025/Multi-edit.tool-PRODUCTION.-.TX-reb-20201214_pcr_post.csv.txt">Multi-edit tool-PRODUCTION - TX-reb-20201214_pcr_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-744937962">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on December 14, 2020, 5:08 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1014#issuecomment-744937962" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Negative updates
+<a href="../../assets/github/files/5692527/Multi-edit.tool-PRODUCTION.-.TX-reb-20201214_neg.csv.txt">Multi-edit tool-PRODUCTION - TX-reb-20201214_neg.csv.txt</a>
+<a href="../../assets/github/files/5692528/Multi-edit.tool-PRODUCTION.-.TX-reb-20201214_neg_post.csv.txt">Multi-edit tool-PRODUCTION - TX-reb-20201214_neg_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1008">#1008: [TX] Patching missed Now hospitalized update 12/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1008</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on December 11, 2020, 6:48 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  Publish Time
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1008" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Texas</p>
+<p>Issue: Texas updated Now hospitalized after publish time. Patched using updated website.</p>
+<p>Source:
+<img width="1680" alt="Screen Shot 2020-12-11 at 6 45 32 PM" src="https://user-images.githubusercontent.com/66583275/101970774-4ff3f300-3be1-11eb-8f2d-382e9d2152ea.png"></p>
+<p>Values: from 9045 to 9109</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-1007">#1007: [TX] Backfill timeseries of cases and antigen tests released on 12/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1007</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on December 11, 2020, 3:00 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1007" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+On  December 11, 2020, Texas reported probable cases for the first time &amp; released a timeseries of probable cases going back to XX/YY. We are backfilling the timeseries: Positive, Positive Cases (PCR), Probable Cases, Total Antigen Tests, Total Antibody Tests and Positive Antibody Tests from the information provided on Texas Arcgis layers.</p>
+<p><strong>Link to data source</strong>
+https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/4/query?where=1%3D1&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1
+https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Cases_Service/FeatureServer/2/query?where=1%3D1&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-743903907">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on December 12, 2020, 1:36 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1007#issuecomment-743903907" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5683783/TX-2_After.xlsx">TX-2_After.xlsx</a>
+<a href="../../assets/github/files/5683784/TX-1-Before.xlsx">TX-1-Before.xlsx</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-751526331">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 27, 2020, 3:04 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1007#issuecomment-751526331" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-755777454">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 6, 2021, 3:29 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1007#issuecomment-755777454" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-989">#989: [TX] Patching late update of all testing metrics and in ICU for 12/1/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            989</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on December 1, 2020, 10:22 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/989" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Texas</p>
+<p>Issue: Texas updated all testing metrics and currently in ICU late (8:40 pm according to the Texas dashboard) on 12/1. Patching from the now updated website.</p>
+<p>Source: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-secondary-20201201-235751.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-737020646">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on December 1, 2020, 10:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/989#issuecomment-737020646" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1306" alt="Screen Shot 2020-12-01 at 10 12 48 PM" src="../../assets/github/images/66583275/100836209-c182b300-3423-11eb-8359-c5e5d1e03902.png"></p>
+<p>AFTER:
+<img width="1340" alt="Screen Shot 2020-12-01 at 10 18 31 PM" src="../../assets/github/images/66583275/100836256-d4958300-3423-11eb-8892-25244aa5c48a.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-974">#974: [TX] - Errata not being subtracted from daily case totals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            974</p>
+          <p>
+            <strong>MattLud</strong> opened this issue on November 25, 2020, 10:54 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/974" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong></p>
+<p>Errata that is subtracted from the official site is not being subtracted when totals are published. For instance, yesterday(11/24) reported 14392 but the data page notes that 394 were older cases for several counties. The accurate case count should have been 13998, with DSHS backing adding to the proper date, but as a result, we're left with a discrepancy.</p>
+<p><strong>Link to data source</strong></p>
+<p>https://www.dshs.state.tx.us/coronavirus/CaseNotes/November2020.aspx</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-742787353">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 10, 2020, 12:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/974#issuecomment-742787353" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-748673363">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 20, 2020, 1:29 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/974#issuecomment-748673363" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-955">#955: [TX] - Testing Update for 11/15/20 arrived morning 11/16/20</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            955</p>
+          <p>
+            <strong>whobody</strong> opened this issue on November 16, 2020, 10:20 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/955" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+TX</p>
+<p><strong>Describe the problem</strong>
+TX updated their testing for 11/15/20 in the morning of 11/16/20. We need to patch it.</p>
+<p>Antigen was not included in the update due to a dashboard error.</p>
+<p>We updated case, hosp and death data in the early morning of 11/16/20.</p>
+<p><strong>Link to data source</strong>
+https://covid-tracking.slack.com/archives/C016R3SR605/p1605504092124700
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-20201116-115409.png (main dash)
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-secondary-20201116-115446.png (testing dash)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-728248469">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on November 16, 2020, 10:37 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/955#issuecomment-728248469" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Antigen updated right after and I'm patching it now.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-728253663">
+          <div class="frontmatter">
+            <div>
+              <strong>whobody</strong> commented on November 16, 2020, 10:47 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/955#issuecomment-728253663" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We have patched all data for TX 11/15/20</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-947">#947: [TX] Patch 11/11 Deaths</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            947</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 12, 2020, 10:05 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/947" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> TX</p>
+<p><strong>Dates affected:</strong> 11/11</p>
+<p><strong>Describe the issue:</strong> On 11/11 Texas updated fatalities late due to technical issues. We should patch 11/11 Deaths and timestamps.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-726247254">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 12, 2020, 10:09 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/947#issuecomment-726247254" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="381" alt="Screen Shot 2020-11-12 at 1 08 54 PM" src="../../assets/github/images/68712382/98978584-38452400-24e8-11eb-95d9-3e48960ed95e.png"></p>
+<p>AFTER:</p>
+<img width="380" alt="Screen Shot 2020-11-12 at 1 09 42 PM" src="../../assets/github/images/68712382/98978675-5579f280-24e8-11eb-8c06-eadaed525b02.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-922">#922: [TX] Updated testing metrics after publish time on 11/1/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            922</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 2, 2020, 3:56 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/922" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Texas</p>
+<p>Problem: They updated the values for Total PCR tests; Total and Positive Antigen and Antibody testing after our publish time.</p>
+<p>Solution: Update from screenshots.</p>
+<p>Source: Screenshot
+<a href="https://github.com/COVID19Tracking/issues/files/5478642/screencapture-txdshs-maps-arcgis-apps-opsdashboard-index-html-2020-11-02-15_50_38.pdf">screencapture-txdshs-maps-arcgis-apps-opsdashboard-index-html-2020-11-02-15_50_38.pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-720792782">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 2, 2020, 3:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/922#issuecomment-720792782" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img width="830" alt="Screen Shot 2020-11-02 at 3 56 08 PM" src="../../assets/github/images/66583275/97932115-11d2fc00-1d24-11eb-9b92-8d4b3133600f.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-875">#875: [TX] The Recoveries metric was not updated by Texas before publish on 9/29</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            875</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 29, 2020, 7:46 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/875" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Texas</p>
+<p>Problem: Texas made some changes to how they calculate recoveries and it caused the day's recoveries metric to be updates after our publish time.</p>
+<p>Screenshot:
+<img width="1305" alt="Screen Shot 2020-09-29 at 7 36 00 PM" src="https://user-images.githubusercontent.com/66583275/94637427-6221ee80-028c-11eb-9f09-388b66d16e5d.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-701125557">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 29, 2020, 7:49 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/875#issuecomment-701125557" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="350" alt="Screen Shot 2020-09-29 at 7 47 36 PM" src="../../assets/github/images/66583275/94637598-d9f01900-028c-11eb-8f03-1a031fe131ef.png"></p>
+<p>AFTER:
+<img width="402" alt="Screen Shot 2020-09-29 at 7 47 48 PM" src="../../assets/github/images/66583275/94637604-df4d6380-028c-11eb-9091-717a0e3bc258.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-868">#868: [TX] Incorrect Current ICU values on 9/17, 9/21, 9/22, 9/24</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            868</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 25, 2020, 7:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/868" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+On 9/24, TX did not update their ICU value in time for our daily data publication. I'm backfilling now.</p>
+<p><strong>Link to data source</strong>
+https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698977000">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 25, 2020, 7:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/868#issuecomment-698977000" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/94282226-6b196580-ff04-11ea-9b5e-9b20f501b651.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698977665">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 25, 2020, 7:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/868#issuecomment-698977665" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/94282363-9734e680-ff04-11ea-9c70-28738d848f0c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-844">#844: [TX] Removing negative serology/antibody calculation</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            844</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 17, 2020, 7:05 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/844" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State or Territory: Texas</p>
+<p>Describe the problem: CTP started calculating negative serology tests on 5/23/2020 based on Texas's Total antibody tests - Positive antibody tests. Slack thread where this metric was added: https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1590265654141800</p>
+<p>We are removing this metric.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-694607419">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 17, 2020, 7:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/844#issuecomment-694607419" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE
+<img width="382" alt="Screen Shot 2020-09-17 at 7 06 19 PM" src="../../assets/github/images/66583275/93547148-3c562a80-f919-11ea-8918-8434ad6322ac.png"></p>
+<p>AFTER
+<img width="348" alt="Screen Shot 2020-09-17 at 7 10 08 PM" src="../../assets/github/images/66583275/93547510-0b2a2a00-f91a-11ea-82d9-eeb0f065a6dc.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-695359549">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on September 19, 2020, 2:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/844#issuecomment-695359549" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>clearing one additional day
+<img src="../../assets/github/images/15933271/93689826-5b32f900-faa0-11ea-94a9-1bdb16c8347c.png" alt="Screen Shot 2020-09-19 at 5 48 22 PM">
+<img src="../../assets/github/images/15933271/93689827-5bcb8f80-faa0-11ea-81de-8dd58ba7b78e.png" alt="Screen Shot 2020-09-19 at 5 48 16 PM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-833">#833: [TX] Updated after pub shift on 9/14 and needs backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            833</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 15, 2020, 8:22 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/833" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+On 9/14, Texas updated after our publication shift ended. We need to backfill values for that day.</p>
+<p><strong>Link to data source</strong></p>
+<ul>
+<li>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-20200915-062715.png</li>
+<li>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-tertiary-20200915-062756.png</li>
+<li><a href="https://github.com/COVID19Tracking/issues/files/5226020/TX-secondary-20200915-062755.xlsx">TX-secondary-20200915-062755.xlsx</a></li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-692794239">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 15, 2020, 8:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/833#issuecomment-692794239" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/93231543-b0cc7600-f72d-11ea-971f-fe28abef16db.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-692801477">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 15, 2020, 8:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/833#issuecomment-692801477" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/93232929-4ddbde80-f72f-11ea-8c26-80a80e6a9d25.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-826">#826: [TX] Updated after pub shift on 9/12 and needs backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            826</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 14, 2020, 8:35 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/826" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+On 9/12, Texas updated after our publication shift ended. We need to backfill values for that day.</p>
+<p><strong>Link to data source</strong>
+Using state screenshots and the hospitalization pdf to backfill all values:</p>
+<ul>
+<li>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-20200913-002900.png</li>
+<li>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/TX/TX-tertiary-20200913-002943.png</li>
+<li><a href="https://github.com/COVID19Tracking/issues/files/5219493/TX-secondary-20200913-002942.xlsx">TX-secondary-20200913-002942.xlsx</a></li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-692141613">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 14, 2020, 8:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/826#issuecomment-692141613" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/93107110-01789c00-f666-11ea-9556-71c5c8dcf27a.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-692149999">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 14, 2020, 8:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/826#issuecomment-692149999" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/93108731-02aac880-f668-11ea-8ad6-9b896e2d605a.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-782">#782: [TX] ICU update missed on 8/13, 18-19</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            782</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on August 20, 2020, 2:43 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/782" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+Due to a late update, TX's ICU count was not updated on 8/18-19. Using the state's Excel, this number can be patched.</p>
+<p><strong>Link to data source</strong>
+https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-678430577">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 21, 2020, 11:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/782#issuecomment-678430577" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/66738237/90923162-2ce7ce00-e3bb-11ea-9401-4fb957dac993.png" alt="Screen Shot 2020-08-21 at 2 31 56 PM">
+After:
+<img src="../../assets/github/images/66738237/90923172-307b5500-e3bb-11ea-8154-d0c423dee1be.png" alt="Screen Shot 2020-08-21 at 2 32 26 PM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-729">#729: [TX] Patch Data for 8/2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            729</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on August 3, 2020, 2:29 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  good_first_issue
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/729" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Describe the Issue:</strong> On 8/2, Texas did not release any new data (with the exception of current icu numbers, which we carried over anyway due to a mistake in their calculation) due to planned system maintenance. They said they would release the data for 8/2 on 8/3, but we did not find all of it during the pub shift. However they do have a section on their dashboard with daily new cases and deaths, which only include numbers from 8/3. If we subtract those from the total number of cases/deaths on 8/3 we can patch columns AK, AN, and AX.</p>
+<p><strong>Data Source:</strong> https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-678425774">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 21, 2020, 11:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/729#issuecomment-678425774" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-684063709">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 31, 2020, 2:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/729#issuecomment-684063709" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-702749864">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on October 2, 2020, 6:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/729#issuecomment-702749864" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am closing this ticket, because I don't think we want to mix up &quot;new&quot; numbers with cumulative numbers. If the state is backfilling while also reporting new cases &amp; deaths as separate numbers, we will end up with a number that they would not have reported had they reported on that day.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-692">#692: [TX] PCL Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            692</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 29, 2020, 7:27 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/692" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+TX does not explicitly say it reports in lab-confirmed, but it says that probables are not included. Positives are not being recorded in Positive Cases (PCR).</p>
+<p><strong>Link to data source</strong>
+https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665704706">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 29, 2020, 7:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/692#issuecomment-665704706" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data was confirmed to be reported in lab-confirmed cases only.</p>
+<p>Action items:</p>
+<p><strong>1/5 File private note in WS2</strong>
+Before:
+<img width="480" alt="Screen Shot 2020-07-29 at 10 23 32 AM" src="../../assets/github/images/66738237/88813653-32207700-d187-11ea-93a8-cf6ea748b474.png">
+After:
+<img width="478" alt="Screen Shot 2020-07-29 at 10 23 46 AM" src="../../assets/github/images/66738237/88813665-35b3fe00-d187-11ea-8a1f-1cbc1abefdbe.png"></p>
+<p><strong>2/5 Change pop-up in State Matrix</strong>
+Before:
+<img width="1191" alt="Screen Shot 2020-07-29 at 10 24 22 AM" src="../../assets/github/images/66738237/88813722-45cbdd80-d187-11ea-8c4b-3b6f08430160.png">
+After:
+<img width="1191" alt="Screen Shot 2020-07-29 at 10 24 36 AM" src="../../assets/github/images/66738237/88813730-495f6480-d187-11ea-8b66-660bb3645dba.png"></p>
+<p><strong>3/5 File GH issue</strong></p>
+<p><strong>4/5  Copy over in States Daily</strong>
+Before:
+<img width="784" alt="Screen Shot 2020-07-29 at 10 36 53 AM" src="../../assets/github/images/66738237/88814121-b7a42700-d187-11ea-87f3-04a1d107b0f4.png">
+After:
+<img width="783" alt="Screen Shot 2020-07-29 at 10 49 50 AM" src="../../assets/github/images/66738237/88815343-42395600-d189-11ea-86f2-095d255faec0.png"></p>
+<p><strong>5/5 File patch note form</strong></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-668070420">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 3, 2020, 7:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/692#issuecomment-668070420" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We found an unexplained gap in our Positive Cases (PCR) from 7/29-7/30. Filling it in here.</p>
+<p>BEFORE:
+<img src="../../assets/github/images/67408226/89196453-14745880-d55f-11ea-97cc-e206201cc013.png" alt="image"></p>
+<p>AFTER:
+<img src="../../assets/github/images/67408226/89196560-3bcb2580-d55f-11ea-8c91-2042b0b79710.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-682">#682: [TX] Texas added ~600 deaths to their count today but the deaths are from previous dates. We should back-fill them </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            682</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 27, 2020, 3:10 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/682" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+<img src="https://user-images.githubusercontent.com/1749380/88597139-9979e200-d034-11ea-9f8a-051dc114eb87.png" alt="image"></p>
+<p><strong>Link to data source</strong>
+https://www.dshs.texas.gov/coronavirus/TexasCOVID19DailyCountyFatalityCountData.xlsx</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665801453">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 29, 2020, 10:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/682#issuecomment-665801453" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We've updated the time series for death (by date), to account for the new fatality reporting TX is doing. The new time series matches the site dashboard, and accounts for all new death added</p>
+<p><img src="../../assets/github/images/62236447/88833353-dd7c0b00-d21d-11ea-9e6b-7e3cab34924c.png" alt="Screenshot from 2020-07-28 07-07-33"></p>
+<p><a href="../../assets/github/files/4996485/TX.-.Analysis.682.TX.death.pdf">TX - Analysis #682 [TX] death.pdf</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-665903229">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 29, 2020, 1:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/682#issuecomment-665903229" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We undid the backfill, based on internal discussion, because the available data for backfilling only reaches to 7/24, which makes the last week death numbers flat, but this is not the case.
+We'll do it again, <em>once Texas publishes a time series up to today</em>
+For now, it'll look like there was a big spike on 7/27</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667304529">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 31, 2020, 12:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/682#issuecomment-667304529" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is blocked now, and we cannot backfill based on the cumulative time series published on TX's dashboard because all the recent additions are either not visible in the cumulative time series, or added historically, so daily increments will not presented correctly</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-674">#674: [TX] 7/22 hospitalization freeze needs to be reflected in ICU data as well</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            674</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 25, 2020, 2:07 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/674" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem:</strong> On 7/22, it was decided that hospitalization coverage would be frozen. However, ICU coverage was not stopped until 7/25. ICU values should be carried forward until 7/25.</p>
+<p><strong>Link to data source:</strong> https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663907009">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 25, 2020, 2:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/674#issuecomment-663907009" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>ICU values on 7/23 and 7/24 were modified to reflect the data freeze.</p>
+<p>Before:
+<img width="780" alt="Screen Shot 2020-07-25 at 5 14 56 PM" src="../../assets/github/images/66738237/88466460-79aeb680-ce9a-11ea-909e-d792454f5e8e.png">
+After:
+<img width="783" alt="Screen Shot 2020-07-25 at 5 15 12 PM" src="../../assets/github/images/66738237/88466462-803d2e00-ce9a-11ea-97fc-8198a3ac90d5.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-656">#656: [TX] New ICU data source found</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            656</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 22, 2020, 1:11 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/656" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Texas</p>
+<p><strong>Describe the problem</strong>
+A Front user shared a source which was previously unnoticed. The &quot;COVID-19 Hospitalizations byTSA&quot; Excel has data since April, and so backfill is needed</p>
+<p><strong>Link to data source</strong>
+https://www.dshs.texas.gov/coronavirus/additionaldata/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-678647542">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 22, 2020, 7:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/656#issuecomment-678647542" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-449">#449: [TX Historical] cases for 5/11,5/12,5/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            449</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 24, 2020, 9:14 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/449" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <blockquote>
+<p>Looking at the “Positive” data for Texas I’m seeing two likely errors. First on, 5/11/20 and 5/12/20 the number of reported cases was 39,869 for both days. This would mean that no new cases occurred of 5/12/20 at a time when the daily average number of new cases in the two weeks before and after 5/11/20 was 1,256. Second, the “Positive” count for 5/22/20 and 5/23/20 was 53,449 for both days. Again, this occurred during a period where the daily average new cases was 1,202. Entries for 5/12/20 and 5/23/20 appear suspect.</p>
+</blockquote>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_247f5">Front conversations</a></p>
+<p>CASES Source:</p>
+<p>05/22/2020 | 53,449
+05/23/2020 | 54,509
+05/24/2020 | 55,348</p>
+<p><em>BEFORE</em>
+<img src="https://user-images.githubusercontent.com/1749380/82768005-e86b8700-9df9-11ea-873c-b44337c5743d.png" alt="image"></p>
+<p><em>AFTER</em>
+<img src="https://user-images.githubusercontent.com/1749380/82768094-abec5b00-9dfa-11ea-8942-38533974e138.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-633269160">
+          <div class="frontmatter">
+            <div>
+              <strong>johndhancock</strong> commented on May 24, 2020, 11:07 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/449#issuecomment-633269160" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Seconded on the 5/23 data. Looks like Texas DSHS data has the total for 5/22 at 54509 (1060 new cases). See OBJECTID 81 <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/DSHS_COVID19_Cases_Service/FeatureServer/8/query?where=1%3D1&amp;objectIds=&amp;time=&amp;resultType=none&amp;outFields=*&amp;returnIdsOnly=false&amp;returnUniqueIdsOnly=false&amp;returnCountOnly=false&amp;returnDistinctValues=false&amp;cacheHint=false&amp;orderByFields=&amp;groupByFieldsForStatistics=&amp;outStatistics=&amp;having=&amp;resultOffset=&amp;resultRecordCount=&amp;sqlFormat=none&amp;f=pjson&amp;token=">here</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-640965191">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 8, 2020, 5:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/449#issuecomment-640965191" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-646388875">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 18, 2020, 6:44 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/449#issuecomment-646388875" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-448">#448: [TX Historicals] Texas deaths number appears static between May 20-21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            448</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 24, 2020, 8:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Publish Time
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/448" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <blockquote>
+<p>Something is wrong with the Texas data.</p>
+<p>The chart has no change in deaths from the 20th to 21st. I’m very sure there were deaths reported on the 21st.</p>
+<p>This is so unfortunate because it’s skewing the graph
+.
+Is there someone who can look into this?</p>
+</blockquote>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_247dd">Front conversations</a></p>
+<p>NOTE: Deaths should be adjusted based on the 6pm screenshots for May 20th onwards</p>
+<p>5/20 1419 https://covidtracking.com/screenshots/TX/TX-20200520-184547.png
+5/21 1440 https://covidtracking.com/screenshots/TX/TX-20200521-184637.png
+5/22 1480 https://covidtracking.com/screenshots/TX/TX-20200522-185301.png
+5/23 1506 https://covidtracking.com/screenshots/TX/TX-20200523-184456.png</p>
+<p><strong>BEFORE</strong>
+<img src="https://user-images.githubusercontent.com/1749380/82758683-fc8d9500-9db5-11ea-9857-744be2c5920b.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="https://user-images.githubusercontent.com/1749380/82758761-7f165480-9db6-11ea-973a-a5ee21415311.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-442">#442: TX is providing separated serology &amp; PCR tests as of 5/13</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            442</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 22, 2020, 9:47 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Update historical data to reflect</p>
+<p>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/DSHS_COVID19_Testing_Service/FeatureServer/3/query?where=1%3D1&amp;outFields=*&amp;orderByFields=Date+desc&amp;resultRecordCount=10</p>
+<p>Thanks, https://github.com/space-buzzer for the query</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632798262">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 9:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632798262" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1749380/82690655-9aecef80-9c2a-11ea-9253-34215fc3f5b8.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632889096">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 12:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632889096" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I added the data into the new columns. We still need to make sure that the totals in columns pos and neg are matching this though</p>
+<p><img src="../../assets/github/images/1749380/82699266-536e5f80-9c3a-11ea-8c93-f5fce79f0c7c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632952282">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on May 22, 2020, 5:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632952282" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I came here to submit an issue but it was already in the works :-)</p>
+<p>There is a daily published file here: https://www.dshs.state.tx.us/coronavirus/TexasCOVID19CaseCountData.xlsx</p>
+<p>The tab <strong>Tests by day</strong> contains the same information.</p>
+<p>I have an archive of this Excel workbook since May 7 and can provide it if it is helpful.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632954441">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 5:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632954441" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks, Kevin for letting us know about the file! If you have the history of positive anti body tests from the files you saved we can plug those into our data, because it looks like only cumulative positives are provided for the serology tests.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632954584">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on May 22, 2020, 5:29 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632954584" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>OK, let me see if I can dig out the old versions.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632955114">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 5:33 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632955114" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue is still open because we need to patch the total number of tests we remove. Right now TX is showing negative tests because we didn't do that yet.</p>
+<p><img src="../../assets/github/images/1749380/82717631-6cdbcf80-9c6b-11ea-868f-170e30ab413f.png" alt="image"></p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/82718627-94359b00-9c71-11ea-9c42-ece1bb939035.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/82718906-c2b47580-9c73-11ea-8a13-416e50daff8f.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632961265">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on May 22, 2020, 6:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632961265" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> , here is a ZIP file containing all of the daily files from 5-12 to 5-22:</p>
+<p><a href="../../assets/github/files/4670928/TexasCOVID19CaseCountData-2020-05-12.to.05-22.zip">TexasCOVID19CaseCountData-2020-05-12 to 05-22.zip</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632961394">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 6:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632961394" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks, Kevin!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-632961522">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on May 22, 2020, 6:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-632961522" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <blockquote>
+<p><strong>@muamichali</strong> , here is a ZIP file containing all of the daily files from 5-12 to 5-22:</p>
+<p><a href="../../assets/github/files/4670928/TexasCOVID19CaseCountData-2020-05-12.to.05-22.zip">TexasCOVID19CaseCountData-2020-05-12 to 05-22.zip</a></p>
+</blockquote>
+<p>It could be that the best file to use is 5-22.  I am not clear on what the positivity rate refers to.  It could be the positivity rate for that day (hopefully) or the positivity rate cumulative.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-633053519">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on May 23, 2020, 6:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-633053519" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi folks, I just checked out the Texas page, but it looks like one number is likely not correct:</p>
+<p>https://covidtracking.com/data/state/texas</p>
+<p>The negative number is 687,913 for both May 21 and May 22, which is unlikely to stay the same for a large state.</p>
+<p>I appreciate all the work that y'all do.  Let me know if I can be of help.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-636915545">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 1, 2020, 8:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-636915545" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>HI <strong>@kevinp2</strong> Let me re-open the ticket and look at your comment. Sorry I missed it.</p>
+<p>Also, do you happen to have the XLS from 5/30 saved? We need to start those XLS files too it seems.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-637772812">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on June 2, 2020, 12:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-637772812" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@muamichali</strong> , I've attached the file for 5/30.<br>
+<a href="../../assets/github/files/4719395/TexasCOVID19CaseCountData-2020-05-30T200023.xlsx">TexasCOVID19CaseCountData-2020-05-30T200023.xlsx</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638198103">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 3, 2020, 6:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-638198103" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you so much!!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-638506658">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on June 3, 2020, 4:07 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-638506658" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@muamichali</strong> ,</p>
+<p>Unfortunately, it looks like there is still a big mismatch.  The last correct date when both CovidTracking and TX DSHS matched was on 5/21.  I have attached an Excel file where I lined up Covid Tracking and TX DSHS numbers and colored them.  It should be self-explanatory, but please let me know if you need more help.</p>
+<p>You will see on the sheet <em>Covid Tracking</em>:</p>
+<ul>
+<li>On May 22, there is a discrepancy</li>
+<li>On May 23, there is a BLANK.  <strong>DSHS did not report a number for that date</strong> in their Excel file.</li>
+<li>May 24,  there is a discrepancy.</li>
+<li>May 25 onwards, the CovidTracking number is what DSHS reported <strong>for the previous day</strong> and this continues to the present day.</li>
+</ul>
+<p>Possible resolution:
+I would suggest that since TX DSHS left blank entries for 5/23 and also for their positivity rate on 5/30, that Covid Tracking should also simply leave those blank as well.  TX DSHS is the ultimate owner of the data.
+<a href="../../assets/github/files/4726624/CovidTracking.vs.TX.DSHS.xlsx">CovidTracking vs TX DSHS.xlsx</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-640063408">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 6, 2020, 6:43 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-640063408" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi Kevin,
+Sorry, I an just seeing this. I will re-open the issue and we will look into this on Monday.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647131824">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 21, 2020, 6:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-647131824" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-652460145">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 1, 2020, 7:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-652460145" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655006012">
+          <div class="frontmatter">
+            <div>
+              <strong>Swebask</strong> commented on July 7, 2020, 10:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-655006012" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@kevinp2</strong> Hi Kevin,
+Are you still archiving TexasCOVID19CaseCountData.xlsx? I'm looking for a timeline of cases in texas by age.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655182340">
+          <div class="frontmatter">
+            <div>
+              <strong>kevinp2</strong> commented on July 7, 2020, 4:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/442#issuecomment-655182340" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <blockquote>
+<p><strong>@kevinp2</strong> Hi Kevin,
+Are you still archiving TexasCOVID19CaseCountData.xlsx? I'm looking for a timeline of cases in texas by age.</p>
+</blockquote>
+<p>Hi <strong>@</strong>Swebask , I started my archive on 5/8/20 and I have attached it here.  I hope it helps.</p>
+<p><a href="../../assets/github/files/4887543/TexasCOVID19CaseCountDataArchive.zip">TexasCOVID19CaseCountDataArchive.zip</a></p>
+<p>The Zip contains the files with the timestamp in the name.</p>
+<p>I am also interested in the timeline of changing ages and perhaps you can let me know what you find.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-346">#346: TX some of 4/30 data is the same as 4/29 in the states historical API endpoint</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            346</p>
+          <p>
+            <strong>mathcoder3141</strong> opened this issue on May 1, 2020, 8:56 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/346" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I noticed that the data for TX is the same for some of the fields in the JSON file. Looks like it is affecting the <code>positive</code>, <code>negative</code>, <code>death</code>, <code>recovered</code>, <code>total</code>, <code>PosNeg</code>, and the associated increases i.e., <code>deathIncrease</code>, <code>positiveIncrease</code> etc.</p>
+<p>I'm doing some analysis and this data quality issue is causing me to do some manual work. This may be the same for other states as well. Can this be fixed?
+<img src="https://user-images.githubusercontent.com/22652147/80854706-fdd90100-8bff-11ea-976b-1aa43036a0e7.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-622947210">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 2, 2020, 5:37 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/346#issuecomment-622947210" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@mathcoder3141</strong>
+Thanks for reporting this issue. We are going to update the 4/30 data based on https://covidtracking.com/screenshots/TX/TX-20200430-182114.png You should see the correct data reflected on the site this afternoon.</p>
+<p><strong>Before</strong>
+<img src="../../assets/github/images/1749380/80864360-14a74400-8c50-11ea-883c-30771a235775.png" alt="Screenshot_2020-05-02 Coronavirus numbers by state (CovidTracking, DEV COPY)"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/1749380/80864359-14a74400-8c50-11ea-945f-526e4baea97d.png" alt="Screenshot_2020-05-02 Coronavirus numbers by state (CovidTracking, DEV COPY)(1)"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-622968928">
+          <div class="frontmatter">
+            <div>
+              <strong>mathcoder3141</strong> commented on May 2, 2020, 8:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/346#issuecomment-622968928" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> that looks to be consistent with what I hardcoded yesterday, thanks for updating!</p>
+<p>If this happens again in the future, how can I help troubleshoot? Is this y'all manually updating or what? I have little knowledge of APIs and I genuinely want to learn
+.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623000846">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 2, 2020, 12:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/346#issuecomment-623000846" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@mathcoder3141</strong></p>
+<p>That’s great</p>
+<p>We have a data entry team manually check and enter the data. TX updated late that day so it missed our publication cut off.
+You are always welcome to let us know here when the data doesn’t match the state data and we will look into it as soon as we can.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-85">#85: TX: Incorrect tests number for 3/29</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            85</p>
+          <p>
+            <strong>johndhancock</strong> opened this issue on March 30, 2020, 1:37 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/85" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>For Texas, the number of Negative tests did not increase from 3/28 to 3/29, despite an increase in testing shown on the Texas dashboard, as seen on the screenshots on this page: https://covidtracking.com/data/state/texas/.</p>
+<p>One possible issue, there were more positive cases reported from 3/28 to 3/29 (500) than tests administered (25,260 on 3/28, 25,483 on 3/29, according to the state dashboard). Having been keeping an eye on the state dashboard pretty closely for a couple of weeks now, I could see how this could happen, as the state only updates the dashboard once per day, and often times individual counties will update after that or multiple times a day.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-606236561">
+          <div class="frontmatter">
+            <div>
+              <strong>johndhancock</strong> commented on March 30, 2020, 1:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/85#issuecomment-606236561" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/2925642/77959645-8b8d9d80-729c-11ea-8755-115de16b1c22.png" alt="TX-20200328-191515">
+<img src="../../assets/github/images/2925642/77959654-90eae800-729c-11ea-8765-767e0d55cf5c.png" alt="TX-20200329-191254"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790197">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/85#issuecomment-623790197" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-624672598">
+          <div class="frontmatter">
+            <div>
+              <strong>erfgottlieb</strong> commented on May 6, 2020, 7:10 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/85#issuecomment-624672598" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for bringing our attention to this <strong>@johndhancock.</strong> When states are not reporting actual negatives, we are calculating a number. Lots of states say the lag on total tests reported can be &gt; 72hrs. By our publish time on 3/29 it looked like there was a lag in the state reporting for the number of tests administered, so we carried over the Negative numbers from the previous day.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

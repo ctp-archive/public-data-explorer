@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>New Mexico Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">New Mexico</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">New Mexico</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 10, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>In the 2/8 hospitalization report (https://cv.nmhealth.org/wp-content/uploads/2021/02/hospitalizations_covid19_public-report_2.8.21_final-1.pdf), the White and Other Race categories were removed and the percentage of hospitalizations that were NHPI people increased from 0.2% (from the previous week) to 20.9%. We think this is a mistake, and would like to alert them and get the real data.</p>
+
+    </div>
+    
+  
+    <h2>February 2, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>NM is currently displaying race/ethnicity data for cases as a percent. We kindly ask them to display this data as integers instead of percentages to increase accuracy. If this is not possible, we kindly ask them to increase the number of decimal places being displayed. Thanks ahead of time for this consideration.</p>
+
+    </div>
+    
+  
+    <h2>January 14, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Will they publish vaccine data for LTC facilities?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 14, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We’re releasing our public dashboard very soon.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On the Overview page of the New Mexico COVID-19 dashboard, you report “Total # of Tests Performed,” and on the NMDOH COVID-19 info page you say “numbers are cumulative persons tested.” Can you please clarify what “Total # of Tests Performed” refers to? Does it refer to the number of unique people tested or the number of specimens tested overall? If “Total # of Tests Performed” refers to total individuals tested, do you have plans to release the total number of specimens tested? If “Total # of Tests Performed” refers to total specimens tested, do you have plans to release the number of total individuals tested?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>At the beginning of testing in New Mexico, we reported on number of persons tested. This was the Governor’s office request for testing all New Mexicans. This wasn’t a problem because tests were so sparse most people were tested once, unless positive. We only count positives the first time because of circulating bits of RNA which is no longer infectious after 10 days of infection. On 5/13 we changed to reporting all tests done daily including positive repeats to better measure resources used. The info page is not reflective of the testing to date. They are the total # of tests not persons tested. We are working to correct that information. There is a discussion of what to report going forward on the info page and dashboard. We can provide information on total tests and total persons tested.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We only have a record of “total tests” beginning from 5/13. Do you have plans to release a full historical time-series for these metrics?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>As we work out improvements to the COVID-19 page we can release a full historical time-series set.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware, New Mexico does not at this time. Do you plan to release a historical time series of all testing values and outcomes in a machine readable format (i.e. csv or json)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We can provide this information on request within certain time constraints.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach the “total tests” figure? If so, how? (i.e. instances swabbed, day, week, or recording only one positive test per person, but multiple negative tests for the same person)?
+If the same person gets different tests results on different days, would you report the raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?
+We’re interested in testing data in units of “testing encounters,” which can be defined as “the number of people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two tests, however, if the same person has two samples collected at a testing center visit, then that only counts as one testing encounter. Might New Mexico be willing to release testing encounters? If so, will you be able to provide historical data consistently in a machine readable format?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We will count all testing per day, whether they have been tested in the past. Deduplication is done for all test results by counting only one record for person id and collection date. Because New Mexico is a dual reporting state both the lab and testing site (e.g. hospital, physician, etc) need to report the same test. Deduplication of the event is necessary to count only one test per person per day.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 4, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>When is an outbreak considered active? When is an outbreak considered closed?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 4, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>It's an active outbreak when at least positive test is reported. The outbreak is closed after 28 days of no new positive tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What challenges are you facing in adjusting to the new HHS guidelines?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>HHS demands much more data than the CDC ever did. We’re handling it, but as you’d suspect, it’s more work for everybody.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Which metrics that you report were impacted, or could be impacted by HHS procedure changes?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No negative impact truly.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How does this affect the reporting relationship between hospitals and DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>It’s stronger than ever. Hospitals report all the additional required info to us, rather than report separately to HHS which was actually part of the initial plan. We remain the pipeline for receiving all the data needed to make informed decisions in our state…only now we have to send it to HHS</p>
+
+        </div>
+      
+    
+  
+    <h2>August 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are there changes in regulations on which hospitals are now required or not required to report to state DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 5, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I believe no – but I should double check this one. If you don’t hear from me on this – no changes.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are probable cases included in “Number of Cases” in the dashboard?  For a probable case diagnosis, which lab tests were considered (e.g. antigen, antibody)? If using non-PCR tests, were they considered alone or alongside an epidemiological/clinical co-diagnosis? If probable cases are not included, does “Number of Cases” in the dashboard include only cases where a (SARS-CoV-2 RNA) was detected in a clinical specimen using a molecular amplification detection test? If not, what other test results are included?</p>
+
+    </div>
+    
+  
+    <h2>July 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is New Mexico performing pool testing? If so, how is this testing reported? What types of tests are they using for the pooled tests?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Every long-term care facility in New Mexico is required to complete weekly surveillance testing of its staff and residents, the percentage (based on supply capacity) is 25% residents and 20% staff;  Type? nasopharyngeal</p>
+
+        </div>
+      
+    
+  
+    <h2>July 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are they conducting antigen testing? Are these testing results reported on the state site? How many tests have they conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>TriCore – our in state lab partner -  offers the SARS-COV-2 Serological Test - unlike molecular tests used to detect the SARS-CoV-2 viral RNA from nasopharyngeal and other respiratory specimens, serological tests are blood tests that are used to detect the presence of antibodies produced by the immune system in response to the infection. TriCore offers this test for specific indications with a provider order. We don’t conduct or track antigen testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>May 31, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Will NM report race and ethnicity for deaths?
+What should we use for n= (is the % of cases for all cases currently reported?)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>May 31, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The percentage of cases on race and ethnicity below is from all confirmed cases.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>California Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">California</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">California</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>June 7, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <ol>
+<li>
+<p>The National Center for Health Statistics, which, like Alameda County, tracks deaths caused by COVID-19 or where COVID-19 is a contributing factor, currently lists 147 more deaths for Alameda County than the Alameda dashboard does (1415 vs. Alameda County's 1268). Why is this the case?</p>
+</li>
+<li>
+<p>I saw in one report that Alameda is using the state surveillance system, CalREDIE, to access information about cause of death entered by coroners, rather than the state vital records system. Are full texts of vital records available in CalREDIE? If not, what vital records information is available in CalREDIE that was used for the review?</p>
+</li>
+</ol>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 8, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Alameda County’s methodology for counting COVID-19 deaths matches that used by the State of California. In California, all confirmed COVID-19 cases, including confirmed COVID-19 deaths, require laboratory confirmation with a nucleic acid-amplification test (PCR or similar). 
+ 
+COVID-19 death data for Alameda County published by the National Center for Health Statistics includes additional deaths that meet the NCHS criteria, and for which there was no laboratory confirmation of COVID-19. NCHS technical notes state the following, “Death counts in [their] report include laboratory confirmed COVID-19 deaths and clinically confirmed COVID-19 deaths. This includes deaths where COVID-19 is listed as a “presumed” or “probable” cause. Some local and state health departments only report laboratory-confirmed COVID-19 deaths. This may partly account for differences between NCHS reported death counts and death counts reported in other sources”: <a href="https://www.cdc.gov/nchs/nvss/vsrr/covid19/tech_notes.htm">https://www.cdc.gov/nchs/nvss/vsrr/covid19/tech_notes.htm</a>.  
+ 
+Of note, COVID-19 deaths meeting the NCHS definition and not the State of California's were not included in Alameda County’s prior death report total so any discrepancy was not affected by the recent Alameda County update. Additionally, COVID-19 deaths for which there is no date of death entered are not included in the County’s dashboard total. We utilize a Quality Assurance process to obtain and enter this information, which can result in a reporting lag. 
+ 
+We report all known confirmed and probable COVID-19 cases and deaths into CalREDIE, the California statewide communicable disease reporting system.  COVID-19 death data is collected directly from multiple sources including death certificates received from the Alameda County Office of Vital Registration (which is part of the Alameda County Public Health Department) and data from the California Department of Public Health, the County Coroner’s Office, the California Comprehensive Death File, and (rarely) directly from medical providers. That death information is then entered into and organized in CalREDIE. We do not obtain coroner reports or death certificates via CalREDIE. 
+ 
+For additional background, deaths assigned to Alameda County and reported to NCHS by the State of California include deaths from City of Berkeley, a separate health jurisdiction.</p>
+
+        </div>
+      
+    
+  
+    <h2>April 9, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>In the new dataset (https://data.chhs.ca.gov/dataset/covid-19-time-series-metrics-by-county-and-state) it is unclear what is the dating scheme for the <code>deaths</code> column (not the <code>reported_deaths</code> one). Is it by day of death? or the earliest among the event dates mentioned in the <code>date</code> column?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 12, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The dating scheme is by day of death. Please refer to the data dictionary: <a href="https://covid19.ca.gov/data-and-tools/">https://covid19.ca.gov/data-and-tools/</a>.</p>
+
+        </div>
+      
+    
+  
+    <h2>April 5, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>CA's data portal used to have a dataset for testing information (old link: https://data.ca.gov/dataset/covid-19-testing) it was replaced with a newer dataset, that included testing both by report date and by test date. This new dataset stopped updating and now it's no longer available.
+Is it possible to bring it back? or create a new public testing dataset that replaces the old one?</p>
+<p>The same for cases, death information.</p>
+
+    </div>
+    
+  
+    <h2>February 5, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are very excited (please commend them!) about CA's new equity dashboard (https://covid19.ca.gov/equity/) and have some questions about the new testing data.</p>
+<ol>
+<li>Would it be possible for them to provide this data in integers in addition to the percents they're currently reporting?</li>
+<li>Given that they are percents now: are these percents of [total tests minus (percent of tests marked as Other + percent of tests marked as Unknown)]? It would seem that way from how the numbers add up but we'd like to confirm. If they're only going to provide this data in percents, could they give us the exact N, e.g. &quot;of 22,698,547 tests with known race, 0.7% were Latino people&quot;?</li>
+<li>Would it be possible for them to also provide an age breakdown for tests like they do for cases and deaths (https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Race-Ethnicity.aspx#)? Race-age crosstabs are ideal because disparities can be masked by the fact that different racial groups have different age distributions in their populations, but age on its own would also be nice.</li>
+</ol>
+
+    </div>
+    
+  
+    <h2>September 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The COVID Tracking Project is asking states for more detail on how test results are counted – whether by individual results, by number of specimens, or by “testing encounters.” We currently interpret the term “total tests reported” on California’s COVID-19 data portal to mean the total number of tests conducted in the state, regardless of how many times one person gets tested. Is that correct? If so, do you have plans to release the total number of individuals tested.</p>
+<p>Do you perform any de-duplication to arrive at the number of total tests you report? If so, how? (e.g. number of times one individual is swabbed per day/week; recording only one positive test per individual who does multiple tests; reporting mutiple negative tests for the same person.)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>At this time, we are reporting total tests conducted in the state. If that changes, we will let you know.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are also interested in tracking testing by units of “testing encounters,” which can be defined as “the number of unique individuals who are tested on a given day.”
+Do you plan to, or would you be willing to, release the number of testing encounters?
+If so, might you be able to provide historical data in a machine-readable format (e.g. csv or json)?</p>
+
+    </div>
+    
+  
+  
+    </main>
+  </body>
+</html>

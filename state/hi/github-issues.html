@@ -1,0 +1,3568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Hawaii Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Hawaii</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Hawaii</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 5, 2021, 8:07 AM PST</td>
+          <td>1089</td>
+          <td>
+            <a href="#issue-1089">[HI] Duplicate Deaths (confirmed + probable) timeseries to Deaths (confirmed)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 5, 2021, 8:07 AM PST</td>
+          <td>1089</td>
+          <td>
+            <a href="#issue-1089">[HI] Duplicate Deaths (confirmed + probable) timeseries to Deaths (confirmed)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 19, 2021, 5:24 PM PST</td>
+          <td>1072</td>
+          <td>
+            <a href="#issue-1072">[HI] Remove values carried over after Hawaii stopped reporting Recovered on 11/6/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 19, 2021, 5:24 PM PST</td>
+          <td>1072</td>
+          <td>
+            <a href="#issue-1072">[HI] Remove values carried over after Hawaii stopped reporting Recovered on 11/6/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 13, 2021, 10:17 PM PST</td>
+          <td>1065</td>
+          <td>
+            <a href="#issue-1065">[HI] Remove values carried over after Hawaii stopped reporting Total Tests (people) and Total test (specimens) on 10/7</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 13, 2021, 10:17 PM PST</td>
+          <td>1065</td>
+          <td>
+            <a href="#issue-1065">[HI] Remove values carried over after Hawaii stopped reporting Total Tests (people) and Total test (specimens) on 10/7</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 18, 2020, 8:09 AM PST</td>
+          <td>959</td>
+          <td>
+            <a href="#issue-959">[HI] Patch 11/10-11.17 cur.hosp, cur. icu, cur. vent</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 18, 2020, 7:36 AM PST</td>
+          <td>958</td>
+          <td>
+            <a href="#issue-958">[HI] Patch 11/16-11/17 timestamps</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 6, 2020, 11:36 AM PST</td>
+          <td>934</td>
+          <td>
+            <a href="#issue-934">[HI] remove cumulative hospitalization and ICU numebrs from old reporting </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 26, 2020, 10:12 AM PDT</td>
+          <td>913</td>
+          <td>
+            <a href="#issue-913">[HI] Patch 10/23 Timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 9, 2020, 10:21 AM PDT</td>
+          <td>892</td>
+          <td>
+            <a href="#issue-892">[HI] Use the new encounters data from the state for &quot;Total Test Encounter PCR&quot; (and PCR positives)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 1, 2020, 11:43 AM PDT</td>
+          <td>880</td>
+          <td>
+            <a href="#issue-880">[HI] Backfilling confirmed/probable cases through 9/9 and updating Positive field</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 13, 2020, 6:05 PM PDT</td>
+          <td>761</td>
+          <td>
+            <a href="#issue-761">[HI] Hospitalization Data for 8/13</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 12, 2020, 6:16 PM PDT</td>
+          <td>756</td>
+          <td>
+            <a href="#issue-756">[HI] Test Data 7/27-28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 12, 2020, 7:52 AM PDT</td>
+          <td>753</td>
+          <td>
+            <a href="#issue-753">[HI] Total PCR Tests (People) 5/13 - 5/22 </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 5, 2020, 12:45 PM PDT</td>
+          <td>737</td>
+          <td>
+            <a href="#issue-737">[HI]Back fill current ICU numbers from the lt. governor&#39;s Instagram page </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 3:06 PM PDT</td>
+          <td>696</td>
+          <td>
+            <a href="#issue-696">[HI] Incorrect negatives value 7/28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 24, 2020, 12:03 PM PDT</td>
+          <td>670</td>
+          <td>
+            <a href="#issue-670">[HI]Back-fill hospitalizations from official website news digest links</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 3, 2020, 7:28 AM PDT</td>
+          <td>571</td>
+          <td>
+            <a href="#issue-571">[HI] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 1, 2020, 1:39 PM PDT</td>
+          <td>472</td>
+          <td>
+            <a href="#issue-472">[HI Historicals] Total tests need to be adjusted to refelct people tested </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 22, 2020, 11:54 PM PDT</td>
+          <td>272</td>
+          <td>
+            <a href="#issue-272">[HI] Hawaii positive increase on 4/22 is a negative number</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 8:50 PM PDT</td>
+          <td>99</td>
+          <td>
+            <a href="#issue-99">HI: Pending tests clarification</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1089">#1089: [HI] Duplicate Deaths (confirmed + probable) timeseries to Deaths (confirmed)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1089</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 5, 2021, 8:07 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1089" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> HI</p>
+<p><strong>Dates affected:</strong> 04/01/20 - 02/04/21</p>
+<p><strong>Describe the issue:</strong> On February 3, 2021, we learned via outreach that Hawaii's &quot;Total fatalities&quot; include only covid confirmed deaths which are confirmed through PCR testing. As a result, we are able to capture Deaths (confirmed) for Hawaii, and are duplicating our Deaths (confirmed + probable) timeseries to Deaths (confirmed), as only confirmed deaths are included.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-774127637">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 5, 2021, 8:09 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1089#issuecomment-774127637" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 310
+HI 2021-02-04
+deathConfirmed: 416 (was None)
+HI 2021-02-03
+deathConfirmed: 414 (was None)
+HI 2021-02-02
+deathConfirmed: 410 (was None)
+HI 2021-02-01
+deathConfirmed: 410 (was None)
+HI 2021-01-31
+deathConfirmed: 410 (was None)
+HI 2021-01-30
+deathConfirmed: 407 (was None)
+HI 2021-01-29
+deathConfirmed: 407 (was None)
+HI 2021-01-28
+deathConfirmed: 406 (was None)
+HI 2021-01-27
+deathConfirmed: 404 (was None)
+HI 2021-01-26
+deathConfirmed: 401 (was None)
+HI 2021-01-25
+deathConfirmed: 342 (was None)
+HI 2021-01-24
+deathConfirmed: 342 (was None)
+HI 2021-01-23
+deathConfirmed: 336 (was None)
+HI 2021-01-22
+deathConfirmed: 332 (was None)
+HI 2021-01-21
+deathConfirmed: 328 (was None)
+HI 2021-01-20
+deathConfirmed: 325 (was None)
+HI 2021-01-19
+deathConfirmed: 324 (was None)
+HI 2021-01-18
+deathConfirmed: 322 (was None)
+HI 2021-01-17
+deathConfirmed: 322 (was None)
+HI 2021-01-16
+deathConfirmed: 320 (was None)
+HI 2021-01-15
+deathConfirmed: 318 (was None)
+HI 2021-01-14
+deathConfirmed: 318 (was None)
+HI 2021-01-13
+deathConfirmed: 312 (was None)
+HI 2021-01-12
+deathConfirmed: 309 (was None)
+HI 2021-01-11
+deathConfirmed: 309 (was None)
+HI 2021-01-10
+deathConfirmed: 309 (was None)
+HI 2021-01-09
+deathConfirmed: 307 (was None)
+HI 2021-01-08
+deathConfirmed: 303 (was None)
+HI 2021-01-07
+deathConfirmed: 299 (was None)
+HI 2021-01-06
+deathConfirmed: 299 (was None)
+HI 2021-01-05
+deathConfirmed: 289 (was None)
+HI 2021-01-04
+deathConfirmed: 289 (was None)
+HI 2021-01-03
+deathConfirmed: 289 (was None)
+HI 2021-01-02
+deathConfirmed: 289 (was None)
+HI 2021-01-01
+deathConfirmed: 289 (was None)
+HI 2020-12-31
+deathConfirmed: 288 (was None)
+HI 2020-12-30
+deathConfirmed: 285 (was None)
+HI 2020-12-29
+deathConfirmed: 285 (was None)
+HI 2020-12-28
+deathConfirmed: 285 (was None)
+HI 2020-12-27
+deathConfirmed: 285 (was None)
+HI 2020-12-26
+deathConfirmed: 285 (was None)
+HI 2020-12-25
+deathConfirmed: 285 (was None)
+HI 2020-12-24
+deathConfirmed: 285 (was None)
+HI 2020-12-23
+deathConfirmed: 285 (was None)
+HI 2020-12-22
+deathConfirmed: 282 (was None)
+HI 2020-12-21
+deathConfirmed: 282 (was None)
+HI 2020-12-20
+deathConfirmed: 282 (was None)
+HI 2020-12-19
+deathConfirmed: 281 (was None)
+HI 2020-12-18
+deathConfirmed: 281 (was None)
+HI 2020-12-17
+deathConfirmed: 280 (was None)
+HI 2020-12-16
+deathConfirmed: 278 (was None)
+HI 2020-12-15
+deathConfirmed: 274 (was None)
+HI 2020-12-14
+deathConfirmed: 274 (was None)
+HI 2020-12-13
+deathConfirmed: 274 (was None)
+HI 2020-12-12
+deathConfirmed: 271 (was None)
+HI 2020-12-11
+deathConfirmed: 269 (was None)
+HI 2020-12-10
+deathConfirmed: 268 (was None)
+HI 2020-12-09
+deathConfirmed: 266 (was None)
+HI 2020-12-08
+deathConfirmed: 262 (was None)
+HI 2020-12-07
+deathConfirmed: 262 (was None)
+HI 2020-12-06
+deathConfirmed: 262 (was None)
+HI 2020-12-05
+deathConfirmed: 261 (was None)
+HI 2020-12-04
+deathConfirmed: 256 (was None)
+HI 2020-12-03
+deathConfirmed: 246 (was None)
+HI 2020-12-02
+deathConfirmed: 244 (was None)
+HI 2020-12-01
+deathConfirmed: 244 (was None)
+HI 2020-11-30
+deathConfirmed: 244 (was None)
+HI 2020-11-29
+deathConfirmed: 244 (was None)
+HI 2020-11-28
+deathConfirmed: 240 (was None)
+HI 2020-11-27
+deathConfirmed: 240 (was None)
+HI 2020-11-26
+deathConfirmed: 237 (was None)
+HI 2020-11-25
+deathConfirmed: 235 (was None)
+HI 2020-11-24
+deathConfirmed: 233 (was None)
+HI 2020-11-23
+deathConfirmed: 233 (was None)
+HI 2020-11-22
+deathConfirmed: 233 (was None)
+HI 2020-11-21
+deathConfirmed: 231 (was None)
+HI 2020-11-20
+deathConfirmed: 224 (was None)
+HI 2020-11-19
+deathConfirmed: 223 (was None)
+HI 2020-11-18
+deathConfirmed: 223 (was None)
+HI 2020-11-17
+deathConfirmed: 222 (was None)
+HI 2020-11-16
+deathConfirmed: 222 (was None)
+HI 2020-11-15
+deathConfirmed: 222 (was None)
+HI 2020-11-14
+deathConfirmed: 222 (was None)
+HI 2020-11-13
+deathConfirmed: 222 (was None)
+HI 2020-11-12
+deathConfirmed: 222 (was None)
+HI 2020-11-11
+deathConfirmed: 222 (was None)
+HI 2020-11-10
+deathConfirmed: 221 (was None)
+HI 2020-11-09
+deathConfirmed: 221 (was None)
+HI 2020-11-08
+deathConfirmed: 220 (was None)
+HI 2020-11-07
+deathConfirmed: 219 (was None)
+HI 2020-11-06
+deathConfirmed: 219 (was None)
+HI 2020-11-05
+deathConfirmed: 219 (was None)
+HI 2020-11-04
+deathConfirmed: 219 (was None)
+HI 2020-11-03
+deathConfirmed: 219 (was None)
+HI 2020-11-02
+deathConfirmed: 219 (was None)
+HI 2020-11-01
+deathConfirmed: 219 (was None)
+HI 2020-10-31
+deathConfirmed: 216 (was None)
+HI 2020-10-30
+deathConfirmed: 215 (was None)
+HI 2020-10-29
+deathConfirmed: 213 (was None)
+HI 2020-10-28
+deathConfirmed: 215 (was None)
+HI 2020-10-27
+deathConfirmed: 212 (was None)
+HI 2020-10-26
+deathConfirmed: 212 (was None)
+HI 2020-10-25
+deathConfirmed: 212 (was None)
+HI 2020-10-24
+deathConfirmed: 209 (was None)
+HI 2020-10-23
+deathConfirmed: 206 (was None)
+HI 2020-10-22
+deathConfirmed: 203 (was None)
+HI 2020-10-21
+deathConfirmed: 189 (was None)
+HI 2020-10-20
+deathConfirmed: 187 (was None)
+HI 2020-10-19
+deathConfirmed: 187 (was None)
+HI 2020-10-18
+deathConfirmed: 186 (was None)
+HI 2020-10-17
+deathConfirmed: 185 (was None)
+HI 2020-10-16
+deathConfirmed: 184 (was None)
+HI 2020-10-15
+deathConfirmed: 183 (was None)
+HI 2020-10-14
+deathConfirmed: 173 (was None)
+HI 2020-10-13
+deathConfirmed: 169 (was None)
+HI 2020-10-12
+deathConfirmed: 169 (was None)
+HI 2020-10-11
+deathConfirmed: 168 (was None)
+HI 2020-10-10
+deathConfirmed: 166 (was None)
+HI 2020-10-09
+deathConfirmed: 164 (was None)
+HI 2020-10-08
+deathConfirmed: 163 (was None)
+HI 2020-10-07
+deathConfirmed: 160 (was None)
+HI 2020-10-06
+deathConfirmed: 157 (was None)
+HI 2020-10-05
+deathConfirmed: 156 (was None)
+HI 2020-10-04
+deathConfirmed: 153 (was None)
+HI 2020-10-03
+deathConfirmed: 142 (was None)
+HI 2020-10-02
+deathConfirmed: 139 (was None)
+HI 2020-10-01
+deathConfirmed: 136 (was None)
+HI 2020-09-30
+deathConfirmed: 132 (was None)
+HI 2020-09-29
+deathConfirmed: 132 (was None)
+HI 2020-09-28
+deathConfirmed: 132 (was None)
+HI 2020-09-27
+deathConfirmed: 131 (was None)
+HI 2020-09-26
+deathConfirmed: 127 (was None)
+HI 2020-09-25
+deathConfirmed: 124 (was None)
+HI 2020-09-24
+deathConfirmed: 122 (was None)
+HI 2020-09-23
+deathConfirmed: 120 (was None)
+HI 2020-09-22
+deathConfirmed: 120 (was None)
+HI 2020-09-21
+deathConfirmed: 120 (was None)
+HI 2020-09-20
+deathConfirmed: 120 (was None)
+HI 2020-09-19
+deathConfirmed: 120 (was None)
+HI 2020-09-18
+deathConfirmed: 107 (was None)
+HI 2020-09-17
+deathConfirmed: 103 (was None)
+HI 2020-09-16
+deathConfirmed: 100 (was None)
+HI 2020-09-15
+deathConfirmed: 99 (was None)
+HI 2020-09-14
+deathConfirmed: 99 (was None)
+HI 2020-09-13
+deathConfirmed: 97 (was None)
+HI 2020-09-12
+deathConfirmed: 96 (was None)
+HI 2020-09-11
+deathConfirmed: 94 (was None)
+HI 2020-09-10
+deathConfirmed: 91 (was None)
+HI 2020-09-09
+deathConfirmed: 88 (was None)
+HI 2020-09-08
+deathConfirmed: 86 (was None)
+HI 2020-09-07
+deathConfirmed: 85 (was None)
+HI 2020-09-06
+deathConfirmed: 84 (was None)
+HI 2020-09-05
+deathConfirmed: 81 (was None)
+HI 2020-09-04
+deathConfirmed: 79 (was None)
+HI 2020-09-03
+deathConfirmed: 75 (was None)
+HI 2020-09-02
+deathConfirmed: 74 (was None)
+HI 2020-09-01
+deathConfirmed: 70 (was None)
+HI 2020-08-31
+deathConfirmed: 63 (was None)
+HI 2020-08-30
+deathConfirmed: 62 (was None)
+HI 2020-08-29
+deathConfirmed: 59 (was None)
+HI 2020-08-28
+deathConfirmed: 55 (was None)
+HI 2020-08-27
+deathConfirmed: 51 (was None)
+HI 2020-08-26
+deathConfirmed: 49 (was None)
+HI 2020-08-25
+deathConfirmed: 49 (was None)
+HI 2020-08-24
+deathConfirmed: 47 (was None)
+HI 2020-08-23
+deathConfirmed: 47 (was None)
+HI 2020-08-22
+deathConfirmed: 46 (was None)
+HI 2020-08-21
+deathConfirmed: 45 (was None)
+HI 2020-08-20
+deathConfirmed: 45 (was None)
+HI 2020-08-19
+deathConfirmed: 42 (was None)
+HI 2020-08-18
+deathConfirmed: 40 (was None)
+HI 2020-08-17
+deathConfirmed: 40 (was None)
+HI 2020-08-16
+deathConfirmed: 40 (was None)
+HI 2020-08-15
+deathConfirmed: 40 (was None)
+HI 2020-08-14
+deathConfirmed: 40 (was None)
+HI 2020-08-13
+deathConfirmed: 40 (was None)
+HI 2020-08-12
+deathConfirmed: 38 (was None)
+HI 2020-08-11
+deathConfirmed: 34 (was None)
+HI 2020-08-10
+deathConfirmed: 31 (was None)
+HI 2020-08-09
+deathConfirmed: 31 (was None)
+HI 2020-08-08
+deathConfirmed: 31 (was None)
+HI 2020-08-07
+deathConfirmed: 29 (was None)
+HI 2020-08-06
+deathConfirmed: 27 (was None)
+HI 2020-08-05
+deathConfirmed: 27 (was None)
+HI 2020-08-04
+deathConfirmed: 26 (was None)
+HI 2020-08-03
+deathConfirmed: 26 (was None)
+HI 2020-08-02
+deathConfirmed: 26 (was None)
+HI 2020-08-01
+deathConfirmed: 26 (was None)
+HI 2020-07-31
+deathConfirmed: 26 (was None)
+HI 2020-07-30
+deathConfirmed: 26 (was None)
+HI 2020-07-29
+deathConfirmed: 26 (was None)
+HI 2020-07-28
+deathConfirmed: 26 (was None)
+HI 2020-07-27
+deathConfirmed: 26 (was None)
+HI 2020-07-26
+deathConfirmed: 26 (was None)
+HI 2020-07-25
+deathConfirmed: 26 (was None)
+HI 2020-07-24
+deathConfirmed: 26 (was None)
+HI 2020-07-23
+deathConfirmed: 25 (was None)
+HI 2020-07-22
+deathConfirmed: 24 (was None)
+HI 2020-07-21
+deathConfirmed: 24 (was None)
+HI 2020-07-20
+deathConfirmed: 24 (was None)
+HI 2020-07-19
+deathConfirmed: 24 (was None)
+HI 2020-07-18
+deathConfirmed: 23 (was None)
+HI 2020-07-17
+deathConfirmed: 22 (was None)
+HI 2020-07-16
+deathConfirmed: 22 (was None)
+HI 2020-07-15
+deathConfirmed: 22 (was None)
+HI 2020-07-14
+deathConfirmed: 22 (was None)
+HI 2020-07-13
+deathConfirmed: 19 (was None)
+HI 2020-07-12
+deathConfirmed: 19 (was None)
+HI 2020-07-11
+deathConfirmed: 19 (was None)
+HI 2020-07-10
+deathConfirmed: 19 (was None)
+HI 2020-07-09
+deathConfirmed: 19 (was None)
+HI 2020-07-08
+deathConfirmed: 19 (was None)
+HI 2020-07-07
+deathConfirmed: 19 (was None)
+HI 2020-07-06
+deathConfirmed: 19 (was None)
+HI 2020-07-05
+deathConfirmed: 19 (was None)
+HI 2020-07-04
+deathConfirmed: 19 (was None)
+HI 2020-07-03
+deathConfirmed: 18 (was None)
+HI 2020-07-02
+deathConfirmed: 18 (was None)
+HI 2020-07-01
+deathConfirmed: 18 (was None)
+HI 2020-06-30
+deathConfirmed: 18 (was None)
+HI 2020-06-29
+deathConfirmed: 18 (was None)
+HI 2020-06-28
+deathConfirmed: 18 (was None)
+HI 2020-06-27
+deathConfirmed: 17 (was None)
+HI 2020-06-26
+deathConfirmed: 17 (was None)
+HI 2020-06-25
+deathConfirmed: 17 (was None)
+HI 2020-06-24
+deathConfirmed: 17 (was None)
+HI 2020-06-23
+deathConfirmed: 17 (was None)
+HI 2020-06-22
+deathConfirmed: 17 (was None)
+HI 2020-06-21
+deathConfirmed: 17 (was None)
+HI 2020-06-20
+deathConfirmed: 17 (was None)
+HI 2020-06-19
+deathConfirmed: 17 (was None)
+HI 2020-06-18
+deathConfirmed: 17 (was None)
+HI 2020-06-17
+deathConfirmed: 17 (was None)
+HI 2020-06-16
+deathConfirmed: 17 (was None)
+HI 2020-06-15
+deathConfirmed: 17 (was None)
+HI 2020-06-14
+deathConfirmed: 17 (was None)
+HI 2020-06-13
+deathConfirmed: 17 (was None)
+HI 2020-06-12
+deathConfirmed: 17 (was None)
+HI 2020-06-11
+deathConfirmed: 17 (was None)
+HI 2020-06-10
+deathConfirmed: 17 (was None)
+HI 2020-06-09
+deathConfirmed: 17 (was None)
+HI 2020-06-08
+deathConfirmed: 17 (was None)
+HI 2020-06-07
+deathConfirmed: 17 (was None)
+HI 2020-06-06
+deathConfirmed: 17 (was None)
+HI 2020-06-05
+deathConfirmed: 17 (was None)
+HI 2020-06-04
+deathConfirmed: 17 (was None)
+HI 2020-06-03
+deathConfirmed: 17 (was None)
+HI 2020-06-02
+deathConfirmed: 17 (was None)
+HI 2020-06-01
+deathConfirmed: 17 (was None)
+HI 2020-05-31
+deathConfirmed: 17 (was None)
+HI 2020-05-30
+deathConfirmed: 17 (was None)
+HI 2020-05-29
+deathConfirmed: 17 (was None)
+HI 2020-05-28
+deathConfirmed: 17 (was None)
+HI 2020-05-27
+deathConfirmed: 17 (was None)
+HI 2020-05-26
+deathConfirmed: 17 (was None)
+HI 2020-05-25
+deathConfirmed: 17 (was None)
+HI 2020-05-24
+deathConfirmed: 17 (was None)
+HI 2020-05-23
+deathConfirmed: 17 (was None)
+HI 2020-05-22
+deathConfirmed: 17 (was None)
+HI 2020-05-21
+deathConfirmed: 17 (was None)
+HI 2020-05-20
+deathConfirmed: 17 (was None)
+HI 2020-05-19
+deathConfirmed: 17 (was None)
+HI 2020-05-18
+deathConfirmed: 17 (was None)
+HI 2020-05-17
+deathConfirmed: 17 (was None)
+HI 2020-05-16
+deathConfirmed: 17 (was None)
+HI 2020-05-15
+deathConfirmed: 17 (was None)
+HI 2020-05-14
+deathConfirmed: 17 (was None)
+HI 2020-05-13
+deathConfirmed: 17 (was None)
+HI 2020-05-12
+deathConfirmed: 17 (was None)
+HI 2020-05-11
+deathConfirmed: 17 (was None)
+HI 2020-05-10
+deathConfirmed: 17 (was None)
+HI 2020-05-09
+deathConfirmed: 17 (was None)
+HI 2020-05-08
+deathConfirmed: 17 (was None)
+HI 2020-05-07
+deathConfirmed: 17 (was None)
+HI 2020-05-06
+deathConfirmed: 17 (was None)
+HI 2020-05-05
+deathConfirmed: 17 (was None)
+HI 2020-05-04
+deathConfirmed: 17 (was None)
+HI 2020-05-03
+deathConfirmed: 16 (was None)
+HI 2020-05-02
+deathConfirmed: 16 (was None)
+HI 2020-05-01
+deathConfirmed: 16 (was None)
+HI 2020-04-30
+deathConfirmed: 16 (was None)
+HI 2020-04-29
+deathConfirmed: 16 (was None)
+HI 2020-04-28
+deathConfirmed: 16 (was None)
+HI 2020-04-27
+deathConfirmed: 14 (was None)
+HI 2020-04-26
+deathConfirmed: 14 (was None)
+HI 2020-04-25
+deathConfirmed: 13 (was None)
+HI 2020-04-24
+deathConfirmed: 12 (was None)
+HI 2020-04-23
+deathConfirmed: 12 (was None)
+HI 2020-04-22
+deathConfirmed: 12 (was None)
+HI 2020-04-21
+deathConfirmed: 10 (was None)
+HI 2020-04-20
+deathConfirmed: 10 (was None)
+HI 2020-04-19
+deathConfirmed: 9 (was None)
+HI 2020-04-18
+deathConfirmed: 9 (was None)
+HI 2020-04-17
+deathConfirmed: 9 (was None)
+HI 2020-04-16
+deathConfirmed: 9 (was None)
+HI 2020-04-15
+deathConfirmed: 9 (was None)
+HI 2020-04-14
+deathConfirmed: 9 (was None)
+HI 2020-04-13
+deathConfirmed: 9 (was None)
+HI 2020-04-12
+deathConfirmed: 8 (was None)
+HI 2020-04-11
+deathConfirmed: 8 (was None)
+HI 2020-04-10
+deathConfirmed: 6 (was None)
+HI 2020-04-09
+deathConfirmed: 5 (was None)
+HI 2020-04-08
+deathConfirmed: 5 (was None)
+HI 2020-04-07
+deathConfirmed: 5 (was None)
+HI 2020-04-06
+deathConfirmed: 4 (was None)
+HI 2020-04-05
+deathConfirmed: 4 (was None)
+HI 2020-04-04
+deathConfirmed: 3 (was None)
+HI 2020-04-03
+deathConfirmed: 2 (was None)
+HI 2020-04-02
+deathConfirmed: 1 (was None)
+HI 2020-04-01
+deathConfirmed: 1 (was None)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1089">#1089: [HI] Duplicate Deaths (confirmed + probable) timeseries to Deaths (confirmed)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1089</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 5, 2021, 8:07 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1089" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> HI</p>
+<p><strong>Dates affected:</strong> 04/01/20 - 02/04/21</p>
+<p><strong>Describe the issue:</strong> On February 3, 2021, we learned via outreach that Hawaii's &quot;Total fatalities&quot; include only covid confirmed deaths which are confirmed through PCR testing. As a result, we are able to capture Deaths (confirmed) for Hawaii, and are duplicating our Deaths (confirmed + probable) timeseries to Deaths (confirmed), as only confirmed deaths are included.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-774127637">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 5, 2021, 8:09 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1089#issuecomment-774127637" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 310
+HI 2021-02-04
+deathConfirmed: 416 (was None)
+HI 2021-02-03
+deathConfirmed: 414 (was None)
+HI 2021-02-02
+deathConfirmed: 410 (was None)
+HI 2021-02-01
+deathConfirmed: 410 (was None)
+HI 2021-01-31
+deathConfirmed: 410 (was None)
+HI 2021-01-30
+deathConfirmed: 407 (was None)
+HI 2021-01-29
+deathConfirmed: 407 (was None)
+HI 2021-01-28
+deathConfirmed: 406 (was None)
+HI 2021-01-27
+deathConfirmed: 404 (was None)
+HI 2021-01-26
+deathConfirmed: 401 (was None)
+HI 2021-01-25
+deathConfirmed: 342 (was None)
+HI 2021-01-24
+deathConfirmed: 342 (was None)
+HI 2021-01-23
+deathConfirmed: 336 (was None)
+HI 2021-01-22
+deathConfirmed: 332 (was None)
+HI 2021-01-21
+deathConfirmed: 328 (was None)
+HI 2021-01-20
+deathConfirmed: 325 (was None)
+HI 2021-01-19
+deathConfirmed: 324 (was None)
+HI 2021-01-18
+deathConfirmed: 322 (was None)
+HI 2021-01-17
+deathConfirmed: 322 (was None)
+HI 2021-01-16
+deathConfirmed: 320 (was None)
+HI 2021-01-15
+deathConfirmed: 318 (was None)
+HI 2021-01-14
+deathConfirmed: 318 (was None)
+HI 2021-01-13
+deathConfirmed: 312 (was None)
+HI 2021-01-12
+deathConfirmed: 309 (was None)
+HI 2021-01-11
+deathConfirmed: 309 (was None)
+HI 2021-01-10
+deathConfirmed: 309 (was None)
+HI 2021-01-09
+deathConfirmed: 307 (was None)
+HI 2021-01-08
+deathConfirmed: 303 (was None)
+HI 2021-01-07
+deathConfirmed: 299 (was None)
+HI 2021-01-06
+deathConfirmed: 299 (was None)
+HI 2021-01-05
+deathConfirmed: 289 (was None)
+HI 2021-01-04
+deathConfirmed: 289 (was None)
+HI 2021-01-03
+deathConfirmed: 289 (was None)
+HI 2021-01-02
+deathConfirmed: 289 (was None)
+HI 2021-01-01
+deathConfirmed: 289 (was None)
+HI 2020-12-31
+deathConfirmed: 288 (was None)
+HI 2020-12-30
+deathConfirmed: 285 (was None)
+HI 2020-12-29
+deathConfirmed: 285 (was None)
+HI 2020-12-28
+deathConfirmed: 285 (was None)
+HI 2020-12-27
+deathConfirmed: 285 (was None)
+HI 2020-12-26
+deathConfirmed: 285 (was None)
+HI 2020-12-25
+deathConfirmed: 285 (was None)
+HI 2020-12-24
+deathConfirmed: 285 (was None)
+HI 2020-12-23
+deathConfirmed: 285 (was None)
+HI 2020-12-22
+deathConfirmed: 282 (was None)
+HI 2020-12-21
+deathConfirmed: 282 (was None)
+HI 2020-12-20
+deathConfirmed: 282 (was None)
+HI 2020-12-19
+deathConfirmed: 281 (was None)
+HI 2020-12-18
+deathConfirmed: 281 (was None)
+HI 2020-12-17
+deathConfirmed: 280 (was None)
+HI 2020-12-16
+deathConfirmed: 278 (was None)
+HI 2020-12-15
+deathConfirmed: 274 (was None)
+HI 2020-12-14
+deathConfirmed: 274 (was None)
+HI 2020-12-13
+deathConfirmed: 274 (was None)
+HI 2020-12-12
+deathConfirmed: 271 (was None)
+HI 2020-12-11
+deathConfirmed: 269 (was None)
+HI 2020-12-10
+deathConfirmed: 268 (was None)
+HI 2020-12-09
+deathConfirmed: 266 (was None)
+HI 2020-12-08
+deathConfirmed: 262 (was None)
+HI 2020-12-07
+deathConfirmed: 262 (was None)
+HI 2020-12-06
+deathConfirmed: 262 (was None)
+HI 2020-12-05
+deathConfirmed: 261 (was None)
+HI 2020-12-04
+deathConfirmed: 256 (was None)
+HI 2020-12-03
+deathConfirmed: 246 (was None)
+HI 2020-12-02
+deathConfirmed: 244 (was None)
+HI 2020-12-01
+deathConfirmed: 244 (was None)
+HI 2020-11-30
+deathConfirmed: 244 (was None)
+HI 2020-11-29
+deathConfirmed: 244 (was None)
+HI 2020-11-28
+deathConfirmed: 240 (was None)
+HI 2020-11-27
+deathConfirmed: 240 (was None)
+HI 2020-11-26
+deathConfirmed: 237 (was None)
+HI 2020-11-25
+deathConfirmed: 235 (was None)
+HI 2020-11-24
+deathConfirmed: 233 (was None)
+HI 2020-11-23
+deathConfirmed: 233 (was None)
+HI 2020-11-22
+deathConfirmed: 233 (was None)
+HI 2020-11-21
+deathConfirmed: 231 (was None)
+HI 2020-11-20
+deathConfirmed: 224 (was None)
+HI 2020-11-19
+deathConfirmed: 223 (was None)
+HI 2020-11-18
+deathConfirmed: 223 (was None)
+HI 2020-11-17
+deathConfirmed: 222 (was None)
+HI 2020-11-16
+deathConfirmed: 222 (was None)
+HI 2020-11-15
+deathConfirmed: 222 (was None)
+HI 2020-11-14
+deathConfirmed: 222 (was None)
+HI 2020-11-13
+deathConfirmed: 222 (was None)
+HI 2020-11-12
+deathConfirmed: 222 (was None)
+HI 2020-11-11
+deathConfirmed: 222 (was None)
+HI 2020-11-10
+deathConfirmed: 221 (was None)
+HI 2020-11-09
+deathConfirmed: 221 (was None)
+HI 2020-11-08
+deathConfirmed: 220 (was None)
+HI 2020-11-07
+deathConfirmed: 219 (was None)
+HI 2020-11-06
+deathConfirmed: 219 (was None)
+HI 2020-11-05
+deathConfirmed: 219 (was None)
+HI 2020-11-04
+deathConfirmed: 219 (was None)
+HI 2020-11-03
+deathConfirmed: 219 (was None)
+HI 2020-11-02
+deathConfirmed: 219 (was None)
+HI 2020-11-01
+deathConfirmed: 219 (was None)
+HI 2020-10-31
+deathConfirmed: 216 (was None)
+HI 2020-10-30
+deathConfirmed: 215 (was None)
+HI 2020-10-29
+deathConfirmed: 213 (was None)
+HI 2020-10-28
+deathConfirmed: 215 (was None)
+HI 2020-10-27
+deathConfirmed: 212 (was None)
+HI 2020-10-26
+deathConfirmed: 212 (was None)
+HI 2020-10-25
+deathConfirmed: 212 (was None)
+HI 2020-10-24
+deathConfirmed: 209 (was None)
+HI 2020-10-23
+deathConfirmed: 206 (was None)
+HI 2020-10-22
+deathConfirmed: 203 (was None)
+HI 2020-10-21
+deathConfirmed: 189 (was None)
+HI 2020-10-20
+deathConfirmed: 187 (was None)
+HI 2020-10-19
+deathConfirmed: 187 (was None)
+HI 2020-10-18
+deathConfirmed: 186 (was None)
+HI 2020-10-17
+deathConfirmed: 185 (was None)
+HI 2020-10-16
+deathConfirmed: 184 (was None)
+HI 2020-10-15
+deathConfirmed: 183 (was None)
+HI 2020-10-14
+deathConfirmed: 173 (was None)
+HI 2020-10-13
+deathConfirmed: 169 (was None)
+HI 2020-10-12
+deathConfirmed: 169 (was None)
+HI 2020-10-11
+deathConfirmed: 168 (was None)
+HI 2020-10-10
+deathConfirmed: 166 (was None)
+HI 2020-10-09
+deathConfirmed: 164 (was None)
+HI 2020-10-08
+deathConfirmed: 163 (was None)
+HI 2020-10-07
+deathConfirmed: 160 (was None)
+HI 2020-10-06
+deathConfirmed: 157 (was None)
+HI 2020-10-05
+deathConfirmed: 156 (was None)
+HI 2020-10-04
+deathConfirmed: 153 (was None)
+HI 2020-10-03
+deathConfirmed: 142 (was None)
+HI 2020-10-02
+deathConfirmed: 139 (was None)
+HI 2020-10-01
+deathConfirmed: 136 (was None)
+HI 2020-09-30
+deathConfirmed: 132 (was None)
+HI 2020-09-29
+deathConfirmed: 132 (was None)
+HI 2020-09-28
+deathConfirmed: 132 (was None)
+HI 2020-09-27
+deathConfirmed: 131 (was None)
+HI 2020-09-26
+deathConfirmed: 127 (was None)
+HI 2020-09-25
+deathConfirmed: 124 (was None)
+HI 2020-09-24
+deathConfirmed: 122 (was None)
+HI 2020-09-23
+deathConfirmed: 120 (was None)
+HI 2020-09-22
+deathConfirmed: 120 (was None)
+HI 2020-09-21
+deathConfirmed: 120 (was None)
+HI 2020-09-20
+deathConfirmed: 120 (was None)
+HI 2020-09-19
+deathConfirmed: 120 (was None)
+HI 2020-09-18
+deathConfirmed: 107 (was None)
+HI 2020-09-17
+deathConfirmed: 103 (was None)
+HI 2020-09-16
+deathConfirmed: 100 (was None)
+HI 2020-09-15
+deathConfirmed: 99 (was None)
+HI 2020-09-14
+deathConfirmed: 99 (was None)
+HI 2020-09-13
+deathConfirmed: 97 (was None)
+HI 2020-09-12
+deathConfirmed: 96 (was None)
+HI 2020-09-11
+deathConfirmed: 94 (was None)
+HI 2020-09-10
+deathConfirmed: 91 (was None)
+HI 2020-09-09
+deathConfirmed: 88 (was None)
+HI 2020-09-08
+deathConfirmed: 86 (was None)
+HI 2020-09-07
+deathConfirmed: 85 (was None)
+HI 2020-09-06
+deathConfirmed: 84 (was None)
+HI 2020-09-05
+deathConfirmed: 81 (was None)
+HI 2020-09-04
+deathConfirmed: 79 (was None)
+HI 2020-09-03
+deathConfirmed: 75 (was None)
+HI 2020-09-02
+deathConfirmed: 74 (was None)
+HI 2020-09-01
+deathConfirmed: 70 (was None)
+HI 2020-08-31
+deathConfirmed: 63 (was None)
+HI 2020-08-30
+deathConfirmed: 62 (was None)
+HI 2020-08-29
+deathConfirmed: 59 (was None)
+HI 2020-08-28
+deathConfirmed: 55 (was None)
+HI 2020-08-27
+deathConfirmed: 51 (was None)
+HI 2020-08-26
+deathConfirmed: 49 (was None)
+HI 2020-08-25
+deathConfirmed: 49 (was None)
+HI 2020-08-24
+deathConfirmed: 47 (was None)
+HI 2020-08-23
+deathConfirmed: 47 (was None)
+HI 2020-08-22
+deathConfirmed: 46 (was None)
+HI 2020-08-21
+deathConfirmed: 45 (was None)
+HI 2020-08-20
+deathConfirmed: 45 (was None)
+HI 2020-08-19
+deathConfirmed: 42 (was None)
+HI 2020-08-18
+deathConfirmed: 40 (was None)
+HI 2020-08-17
+deathConfirmed: 40 (was None)
+HI 2020-08-16
+deathConfirmed: 40 (was None)
+HI 2020-08-15
+deathConfirmed: 40 (was None)
+HI 2020-08-14
+deathConfirmed: 40 (was None)
+HI 2020-08-13
+deathConfirmed: 40 (was None)
+HI 2020-08-12
+deathConfirmed: 38 (was None)
+HI 2020-08-11
+deathConfirmed: 34 (was None)
+HI 2020-08-10
+deathConfirmed: 31 (was None)
+HI 2020-08-09
+deathConfirmed: 31 (was None)
+HI 2020-08-08
+deathConfirmed: 31 (was None)
+HI 2020-08-07
+deathConfirmed: 29 (was None)
+HI 2020-08-06
+deathConfirmed: 27 (was None)
+HI 2020-08-05
+deathConfirmed: 27 (was None)
+HI 2020-08-04
+deathConfirmed: 26 (was None)
+HI 2020-08-03
+deathConfirmed: 26 (was None)
+HI 2020-08-02
+deathConfirmed: 26 (was None)
+HI 2020-08-01
+deathConfirmed: 26 (was None)
+HI 2020-07-31
+deathConfirmed: 26 (was None)
+HI 2020-07-30
+deathConfirmed: 26 (was None)
+HI 2020-07-29
+deathConfirmed: 26 (was None)
+HI 2020-07-28
+deathConfirmed: 26 (was None)
+HI 2020-07-27
+deathConfirmed: 26 (was None)
+HI 2020-07-26
+deathConfirmed: 26 (was None)
+HI 2020-07-25
+deathConfirmed: 26 (was None)
+HI 2020-07-24
+deathConfirmed: 26 (was None)
+HI 2020-07-23
+deathConfirmed: 25 (was None)
+HI 2020-07-22
+deathConfirmed: 24 (was None)
+HI 2020-07-21
+deathConfirmed: 24 (was None)
+HI 2020-07-20
+deathConfirmed: 24 (was None)
+HI 2020-07-19
+deathConfirmed: 24 (was None)
+HI 2020-07-18
+deathConfirmed: 23 (was None)
+HI 2020-07-17
+deathConfirmed: 22 (was None)
+HI 2020-07-16
+deathConfirmed: 22 (was None)
+HI 2020-07-15
+deathConfirmed: 22 (was None)
+HI 2020-07-14
+deathConfirmed: 22 (was None)
+HI 2020-07-13
+deathConfirmed: 19 (was None)
+HI 2020-07-12
+deathConfirmed: 19 (was None)
+HI 2020-07-11
+deathConfirmed: 19 (was None)
+HI 2020-07-10
+deathConfirmed: 19 (was None)
+HI 2020-07-09
+deathConfirmed: 19 (was None)
+HI 2020-07-08
+deathConfirmed: 19 (was None)
+HI 2020-07-07
+deathConfirmed: 19 (was None)
+HI 2020-07-06
+deathConfirmed: 19 (was None)
+HI 2020-07-05
+deathConfirmed: 19 (was None)
+HI 2020-07-04
+deathConfirmed: 19 (was None)
+HI 2020-07-03
+deathConfirmed: 18 (was None)
+HI 2020-07-02
+deathConfirmed: 18 (was None)
+HI 2020-07-01
+deathConfirmed: 18 (was None)
+HI 2020-06-30
+deathConfirmed: 18 (was None)
+HI 2020-06-29
+deathConfirmed: 18 (was None)
+HI 2020-06-28
+deathConfirmed: 18 (was None)
+HI 2020-06-27
+deathConfirmed: 17 (was None)
+HI 2020-06-26
+deathConfirmed: 17 (was None)
+HI 2020-06-25
+deathConfirmed: 17 (was None)
+HI 2020-06-24
+deathConfirmed: 17 (was None)
+HI 2020-06-23
+deathConfirmed: 17 (was None)
+HI 2020-06-22
+deathConfirmed: 17 (was None)
+HI 2020-06-21
+deathConfirmed: 17 (was None)
+HI 2020-06-20
+deathConfirmed: 17 (was None)
+HI 2020-06-19
+deathConfirmed: 17 (was None)
+HI 2020-06-18
+deathConfirmed: 17 (was None)
+HI 2020-06-17
+deathConfirmed: 17 (was None)
+HI 2020-06-16
+deathConfirmed: 17 (was None)
+HI 2020-06-15
+deathConfirmed: 17 (was None)
+HI 2020-06-14
+deathConfirmed: 17 (was None)
+HI 2020-06-13
+deathConfirmed: 17 (was None)
+HI 2020-06-12
+deathConfirmed: 17 (was None)
+HI 2020-06-11
+deathConfirmed: 17 (was None)
+HI 2020-06-10
+deathConfirmed: 17 (was None)
+HI 2020-06-09
+deathConfirmed: 17 (was None)
+HI 2020-06-08
+deathConfirmed: 17 (was None)
+HI 2020-06-07
+deathConfirmed: 17 (was None)
+HI 2020-06-06
+deathConfirmed: 17 (was None)
+HI 2020-06-05
+deathConfirmed: 17 (was None)
+HI 2020-06-04
+deathConfirmed: 17 (was None)
+HI 2020-06-03
+deathConfirmed: 17 (was None)
+HI 2020-06-02
+deathConfirmed: 17 (was None)
+HI 2020-06-01
+deathConfirmed: 17 (was None)
+HI 2020-05-31
+deathConfirmed: 17 (was None)
+HI 2020-05-30
+deathConfirmed: 17 (was None)
+HI 2020-05-29
+deathConfirmed: 17 (was None)
+HI 2020-05-28
+deathConfirmed: 17 (was None)
+HI 2020-05-27
+deathConfirmed: 17 (was None)
+HI 2020-05-26
+deathConfirmed: 17 (was None)
+HI 2020-05-25
+deathConfirmed: 17 (was None)
+HI 2020-05-24
+deathConfirmed: 17 (was None)
+HI 2020-05-23
+deathConfirmed: 17 (was None)
+HI 2020-05-22
+deathConfirmed: 17 (was None)
+HI 2020-05-21
+deathConfirmed: 17 (was None)
+HI 2020-05-20
+deathConfirmed: 17 (was None)
+HI 2020-05-19
+deathConfirmed: 17 (was None)
+HI 2020-05-18
+deathConfirmed: 17 (was None)
+HI 2020-05-17
+deathConfirmed: 17 (was None)
+HI 2020-05-16
+deathConfirmed: 17 (was None)
+HI 2020-05-15
+deathConfirmed: 17 (was None)
+HI 2020-05-14
+deathConfirmed: 17 (was None)
+HI 2020-05-13
+deathConfirmed: 17 (was None)
+HI 2020-05-12
+deathConfirmed: 17 (was None)
+HI 2020-05-11
+deathConfirmed: 17 (was None)
+HI 2020-05-10
+deathConfirmed: 17 (was None)
+HI 2020-05-09
+deathConfirmed: 17 (was None)
+HI 2020-05-08
+deathConfirmed: 17 (was None)
+HI 2020-05-07
+deathConfirmed: 17 (was None)
+HI 2020-05-06
+deathConfirmed: 17 (was None)
+HI 2020-05-05
+deathConfirmed: 17 (was None)
+HI 2020-05-04
+deathConfirmed: 17 (was None)
+HI 2020-05-03
+deathConfirmed: 16 (was None)
+HI 2020-05-02
+deathConfirmed: 16 (was None)
+HI 2020-05-01
+deathConfirmed: 16 (was None)
+HI 2020-04-30
+deathConfirmed: 16 (was None)
+HI 2020-04-29
+deathConfirmed: 16 (was None)
+HI 2020-04-28
+deathConfirmed: 16 (was None)
+HI 2020-04-27
+deathConfirmed: 14 (was None)
+HI 2020-04-26
+deathConfirmed: 14 (was None)
+HI 2020-04-25
+deathConfirmed: 13 (was None)
+HI 2020-04-24
+deathConfirmed: 12 (was None)
+HI 2020-04-23
+deathConfirmed: 12 (was None)
+HI 2020-04-22
+deathConfirmed: 12 (was None)
+HI 2020-04-21
+deathConfirmed: 10 (was None)
+HI 2020-04-20
+deathConfirmed: 10 (was None)
+HI 2020-04-19
+deathConfirmed: 9 (was None)
+HI 2020-04-18
+deathConfirmed: 9 (was None)
+HI 2020-04-17
+deathConfirmed: 9 (was None)
+HI 2020-04-16
+deathConfirmed: 9 (was None)
+HI 2020-04-15
+deathConfirmed: 9 (was None)
+HI 2020-04-14
+deathConfirmed: 9 (was None)
+HI 2020-04-13
+deathConfirmed: 9 (was None)
+HI 2020-04-12
+deathConfirmed: 8 (was None)
+HI 2020-04-11
+deathConfirmed: 8 (was None)
+HI 2020-04-10
+deathConfirmed: 6 (was None)
+HI 2020-04-09
+deathConfirmed: 5 (was None)
+HI 2020-04-08
+deathConfirmed: 5 (was None)
+HI 2020-04-07
+deathConfirmed: 5 (was None)
+HI 2020-04-06
+deathConfirmed: 4 (was None)
+HI 2020-04-05
+deathConfirmed: 4 (was None)
+HI 2020-04-04
+deathConfirmed: 3 (was None)
+HI 2020-04-03
+deathConfirmed: 2 (was None)
+HI 2020-04-02
+deathConfirmed: 1 (was None)
+HI 2020-04-01
+deathConfirmed: 1 (was None)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1072">#1072: [HI] Remove values carried over after Hawaii stopped reporting Recovered on 11/6/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1072</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 19, 2021, 5:24 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1072" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Hawaii</p>
+<p>Issue: On November 6, 2020, Hawaii removed the <strong>Recovered</strong> metric from their dashboards. We carried over the last available value, but the metric has not returned, so the value is out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from November 6, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-763260162">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 19, 2021, 5:25 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1072#issuecomment-763260162" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values
+<s>add chart annotation</s> no chart annotation added because we don't have a chart with this metric</li>
+<li>[x]  add public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-763280187">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 19, 2021, 6:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1072#issuecomment-763280187" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values Removed:
+<a href="../../assets/github/files/5839636/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1072">#1072: [HI] Remove values carried over after Hawaii stopped reporting Recovered on 11/6/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1072</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 19, 2021, 5:24 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1072" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Hawaii</p>
+<p>Issue: On November 6, 2020, Hawaii removed the <strong>Recovered</strong> metric from their dashboards. We carried over the last available value, but the metric has not returned, so the value is out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from November 6, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-763260162">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 19, 2021, 5:25 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1072#issuecomment-763260162" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values
+<s>add chart annotation</s> no chart annotation added because we don't have a chart with this metric</li>
+<li>[x]  add public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-763280187">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 19, 2021, 6:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1072#issuecomment-763280187" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values Removed:
+<a href="../../assets/github/files/5839636/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1065">#1065: [HI] Remove values carried over after Hawaii stopped reporting Total Tests (people) and Total test (specimens) on 10/7</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1065</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 13, 2021, 10:17 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1065" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Hawaii</p>
+<p>Issue:  On October 7, 2020, Hawaii removed the Total tests (people) and the Total test (specimens) metrics from their dashboards. We carried over the last available value for both Total tests (people) and Negative, as the negative value was calculated from Total tests (people) - Confirmed Cases, but the metrics have not returned, so the values are out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from October 8th, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-759952785">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 13, 2021, 10:17 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1065#issuecomment-759952785" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  check public note - there is already a public note, will need to adjust the last sentence when removed</li>
+<li>[x]  add chart annotation</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values</li>
+<li>[x]  revisit public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-760587582">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 14, 2021, 5:39 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1065#issuecomment-760587582" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values removed:
+<a href="../../assets/github/files/5817730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1065">#1065: [HI] Remove values carried over after Hawaii stopped reporting Total Tests (people) and Total test (specimens) on 10/7</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1065</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 13, 2021, 10:17 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1065" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Hawaii</p>
+<p>Issue:  On October 7, 2020, Hawaii removed the Total tests (people) and the Total test (specimens) metrics from their dashboards. We carried over the last available value for both Total tests (people) and Negative, as the negative value was calculated from Total tests (people) - Confirmed Cases, but the metrics have not returned, so the values are out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from October 8th, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-759952785">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 13, 2021, 10:17 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1065#issuecomment-759952785" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  check public note - there is already a public note, will need to adjust the last sentence when removed</li>
+<li>[x]  add chart annotation</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values</li>
+<li>[x]  revisit public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-760587582">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 14, 2021, 5:39 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1065#issuecomment-760587582" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values removed:
+<a href="../../assets/github/files/5817730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-959">#959: [HI] Patch 11/10-11.17 cur.hosp, cur. icu, cur. vent</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            959</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 18, 2020, 8:09 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/959" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> HI</p>
+<p><strong>Dates affected:</strong> 11/10-11/17</p>
+<p><strong>Describe the issue:</strong> The hospitalization, icu, and ventilation graphs on HI's dashboard, are updated more frequently than the numbers on the dashboard. We should patch our data from 11/10 (when HI updated their dashboard) to 11/17 so that it is more consistent.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-729817272">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 18, 2020, 9:04 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/959#issuecomment-729817272" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="419" alt="Screen Shot 2020-11-18 at 11 52 35 AM" src="../../assets/github/images/68712382/99561048-8ea4dd80-2994-11eb-889a-1dd9b96672a2.png"></p>
+<p>AFTER:
+<img width="413" alt="Screen Shot 2020-11-18 at 12 04 32 PM" src="../../assets/github/images/68712382/99562542-3969cb80-2996-11eb-8851-3921b00b7bf8.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-958">#958: [HI] Patch 11/16-11/17 timestamps</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            958</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 18, 2020, 7:36 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/958" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> HI</p>
+<p><strong>Dates affected:</strong> 11/16-11/17</p>
+<p><strong>Describe the issue:</strong> On 11/17 we discovered a new timestamp for HI, with &quot;data as of&quot; language, which is our preferred timestamp. This language has been on the page since 11/16, we should patch the timestamps for 11/17 and 11/16 according to this language.</p>
+<p><strong>Screenshot links:</strong> https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/HI/HI-quaternary-20201118-051843.png https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/HI/HI-quaternary-20201116-231931.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-729761762">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 18, 2020, 7:38 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/958#issuecomment-729761762" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="260" alt="Screen Shot 2020-11-18 at 10 37 30 AM" src="../../assets/github/images/68712382/99551607-10433e00-298a-11eb-9d16-84f08a87858c.png"></p>
+<p>AFTER:
+<img width="265" alt="Screen Shot 2020-11-18 at 10 38 06 AM" src="../../assets/github/images/68712382/99551686-2650fe80-298a-11eb-8714-be298ece74b0.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-934">#934: [HI] remove cumulative hospitalization and ICU numebrs from old reporting </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            934</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on November 6, 2020, 11:36 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/934" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/62236447/98407040-d4bc8180-2023-11eb-8f84-3e4f49c755d3.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-913">#913: [HI] Patch 10/23 Timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            913</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 26, 2020, 10:12 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/913" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> HI</p>
+<p><strong>Dates affected:</strong> 10/23</p>
+<p><strong>Describe the issue:</strong> On 10/23, the HI timestamp was input as 10/21, and it should have been 10/22. We should fix this mistake.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-716696902">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 26, 2020, 10:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/913#issuecomment-716696902" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="448" alt="Screen Shot 2020-10-26 at 1 13 26 PM" src="../../assets/github/images/68712382/97204880-0a907900-178d-11eb-9adb-c309c2a1521b.png"></p>
+<p>AFTER:
+<img width="440" alt="Screen Shot 2020-10-26 at 1 13 57 PM" src="../../assets/github/images/68712382/97204925-1c721c00-178d-11eb-9349-4d543795e31d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-892">#892: [HI] Use the new encounters data from the state for &quot;Total Test Encounter PCR&quot; (and PCR positives)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            892</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on October 9, 2020, 10:21 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/892" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>HI started publishing PCR testing encounters on the dashboard
+https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/#testing
+And we should start using these numbers.
+The new data includes a CSV download file with: <code>New Positive Lab</code>, <code>Total Lab Encounters</code></p>
+<p>For us, this change includes:</p>
+<ul>
+<li>Stop reporting Total PCR Tests (because this metric will no longer be available)</li>
+<li>Start reporting PCR Test Encounters</li>
+<li>Backfill PCR Test Encounters</li>
+<li>Start reporting + backfill positive PCR testing</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-706311359">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on October 9, 2020, 10:33 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/892#issuecomment-706311359" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated &quot;Test Encounters PCR&quot; and &quot;Positive Tests PCR&quot; from the files HI published on the dashboard yesterday (2020-10-07 1st day of posting testing encounters data).</p>
+<p><a href="../../assets/github/files/5356572/HI.-.Analysis.PCR.Test.Encounters.csv.txt">HI - Analysis PCR Test Encounters.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-880">#880: [HI] Backfilling confirmed/probable cases through 9/9 and updating Positive field</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            880</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 1, 2020, 11:43 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/880" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Hawaii</p>
+<p><strong>Describe the problem</strong>
+On 9/9, HI began to release the number of probable cases (updated weekly). They also updated the annotation on their state page to be just confirmed cases.</p>
+<p>We need to:</p>
+<ul>
+<li>
+<p>[x] Copy the current values in <em>Positive</em> to <em>Positive Cases (PCR)</em> from 9/9 onward and capture accordingly in DE</p>
+</li>
+<li>
+<p>[x] Backfill <em>Probable</em> from &quot;total probable cases&quot; from secondary screenshots from 9/9 onward and capture accordingly in DE</p>
+</li>
+<li>
+<p>[x] Add the backfilled <em>Probable</em> + <em>Positive Cases (PCR)</em> to get the new <em>Positive</em> field from 9/9 onward and capture accordingly in DE</p>
+</li>
+</ul>
+<p><strong>Link to data source</strong>
+http://covid-tracking-project-data.s3-website.us-east-1.amazonaws.com/state_screenshots/HI/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702332650">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 1, 2020, 11:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/880#issuecomment-702332650" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/94951841-d8477080-0499-11eb-9ebd-7431ebd325e3.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-702863120">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 2, 2020, 10:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/880#issuecomment-702863120" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/94952221-7affef00-049a-11eb-873d-425c4db4e461.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-761">#761: [HI] Hospitalization Data for 8/13</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            761</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 13, 2020, 6:05 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/761" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  HI</p>
+<p><strong>Describe the problem</strong>
+Updates were provided after publishing the daily data</p>
+<p><strong>Link to data source</strong>
+Lt Governor Josh's Instagram Account
+<img src="https://user-images.githubusercontent.com/1749380/90201379-a6266600-dda8-11ea-8f09-aa721943b915.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-683225820">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 28, 2020, 7:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/761#issuecomment-683225820" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-688616230">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 7, 2020, 9:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/761#issuecomment-688616230" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-756">#756: [HI] Test Data 7/27-28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            756</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on August 12, 2020, 6:16 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/756" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Hawaii</p>
+<p><strong>Describe the problem</strong>
+Suggested corrections to CTP's numbers from Jul 27 and 28 for Negative Tests and Total Tests from HI user based on state data.</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>New Tests</th>
+<th>Cases</th>
+<th>Negative</th>
+<th>Pending</th>
+<th>Hospitalized</th>
+<th>Deaths</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tue Jul 28</td>
+<td><strong>564</strong></td>
+<td>1,711</td>
+<td><strong>114,676</strong></td>
+<td>N/A</td>
+<td>165</td>
+<td>26</td>
+<td><strong>116,387</strong></td>
+</tr>
+<tr>
+<td>Mon Jul 27</td>
+<td><strong>1,771</strong></td>
+<td>1,683</td>
+<td><strong>114,140</strong></td>
+<td>N/A</td>
+<td>163</td>
+<td>26</td>
+<td><strong>115,823</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Link to data source</strong>
+https://hawaiicovid19.com/
+https://experience.arcgis.com/experience/eb56a98b71324152a918e72d3ccdfc20/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-673471123">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 6:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/756#issuecomment-673471123" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE:</strong>
+<img src="../../assets/github/images/57415941/90138705-65e1cc00-dd45-11ea-95f5-fc747ba376fe.png" alt="Screen Shot 2020-08-13 at 9 10 35 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673471286">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 6:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/756#issuecomment-673471286" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/57415941/90138730-6ed29d80-dd45-11ea-8c54-a05a44150766.png" alt="Screen Shot 2020-08-13 at 9 11 42 AM"></p>
+<p>SAVED:
+<img src="../../assets/github/images/57415941/90138743-742fe800-dd45-11ea-9252-b54f313f3d6c.png" alt="Screen Shot 2020-08-13 at 9 15 48 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-686853046">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 3, 2020, 6:52 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/756#issuecomment-686853046" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691771697">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 13, 2020, 7:13 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/756#issuecomment-691771697" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-753">#753: [HI] Total PCR Tests (People) 5/13 - 5/22 </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            753</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on August 12, 2020, 7:52 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/753" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Hawaii</p>
+<p><strong>Describe the problem</strong>
+On 5/23, we began reporting total testing values in Total Tests (PCR), switching from Total PCR Tests (People). On 6/8, we resumed reporting in Total PCR Tests (People) with a different source.</p>
+<ol>
+<li>From 5/13 - 5/22, the Total PCR Tests (People) values should be moved to the Total Tests (PCR) column</li>
+<li>HI has press releases with which we can back fill: https://health.hawaii.gov/news/covid-19-updates/</li>
+</ol>
+<p><s>2. Using the Wayback Machine, we should be able to backfill Total PCR Tests (People) with this link: https://hawaiicovid19.com/</s></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-814449190">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:24 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/753#issuecomment-814449190" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We have backfilled the &quot;tests&quot; wise data for HI on 10/9/2020 which makes this issue moot See https://github.com/COVID19Tracking/issues/issues/892</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-737">#737: [HI]Back fill current ICU numbers from the lt. governor&#39;s Instagram page </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            737</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 5, 2020, 12:45 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/737" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Hawaii</p>
+<p><strong>Describe the problem</strong>
+This data point is only reported on Instagram. We should back-fill from there</p>
+<p><strong>Link to data source</strong>
+8/4 HOSP 138 ICU 15 VENT 10
+8/3 HOSP 75 ICU 15 VENT 10
+8/2 HOSP 75 ICU 15 VENT 10
+7/31 HOSP 65 ICU 14 VENT 10
+7/30 HOSP 61 ICU 11 VENT 9
+https://www.instagram.com/p/CDX-wtKjo1v/?igshid=1ux0dry15wg4y</p>
+<p><img src="https://user-images.githubusercontent.com/1749380/89457117-e0519100-d732-11ea-98b9-49e115b21d1e.png" alt="HI 7-30-20">
+<img src="https://user-images.githubusercontent.com/1749380/89457125-e182be00-d732-11ea-849f-98a0f9e922b0.png" alt="HI 7-31-20">
+<img src="https://user-images.githubusercontent.com/1749380/89457127-e182be00-d732-11ea-9b68-3ab01768366e.png" alt="HI 8-1-20">
+<img src="https://user-images.githubusercontent.com/1749380/89457128-e21b5480-d732-11ea-9f3a-64a125a4e579.png" alt="HI 8-2-20">
+<img src="https://user-images.githubusercontent.com/1749380/89457130-e21b5480-d732-11ea-9681-5a09acfbb867.png" alt="HI 8-4-20"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-669465304">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 5, 2020, 12:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/737#issuecomment-669465304" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/89458062-6ae6c000-d734-11ea-82e8-c2828f0d1cb0.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/89458336-ddf03680-d734-11ea-9a5b-887b013b023d.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669945995">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 6, 2020, 7:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/737#issuecomment-669945995" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The data was released on Instagram after our publish shift time, so backfilling 8/5 hospitalization numbers with:</p>
+<p><img src="../../assets/github/images/67408226/89540858-75e03580-d7b2-11ea-8360-bea55db58458.png" alt="image"></p>
+<p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/89540839-6eb92780-d7b2-11ea-9d11-2660e6fa1ce5.png" alt="image"></p>
+<p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/89540936-901a1380-d7b2-11ea-807b-1f069e93a4be.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670130400">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 6, 2020, 11:47 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/737#issuecomment-670130400" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Changed in WS2 as well</p>
+<p>BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/89569960-5230e580-d7da-11ea-818e-809bff5d4c1a.png" alt="image"></p>
+<p>AFTER:</p>
+<p><img src="../../assets/github/images/67408226/89570020-6d035a00-d7da-11ea-8a3b-dc3061c255ae.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671094251">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 9, 2020, 12:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/737#issuecomment-671094251" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am closing this <strong>@the-daniel-lin</strong></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-696">#696: [HI] Incorrect negatives value 7/28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            696</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 29, 2020, 3:06 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/696" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Hawaii</p>
+<p><strong>Describe the problem</strong>
+In the Negatives column, the entry for 7/28 was <code>114052-1620</code> which is the Total PCR Tests (People) value from 7/27 - an incorrect value also from 7/27 (from edit history digging)</p>
+<p>We'll have to go check the historical numbers from those few days to see if the other values are correct.</p>
+<p><strong>Link to data source</strong>
+From today's publication shift:
+<img src="https://user-images.githubusercontent.com/67408226/88858183-7b36f200-d1ac-11ea-8998-8784ce34a913.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-668607350">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 4, 2020, 6:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/696#issuecomment-668607350" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/57415941/89301471-b6677400-d637-11ea-8a51-9f52544d622b.png" alt="Screen Shot 2020-08-04 at 9 48 26 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-668607760">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 4, 2020, 6:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/696#issuecomment-668607760" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>AFTER (7/28 --&gt; (116387 - 1711))</strong>
+<img src="../../assets/github/images/57415941/89301513-bd8e8200-d637-11ea-8777-a7902b3cdeeb.png" alt="Screen Shot 2020-08-04 at 9 48 39 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-670">#670: [HI]Back-fill hospitalizations from official website news digest links</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            670</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 24, 2020, 12:03 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/670" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: HI</p>
+<p><strong>Describe the problem</strong>
+Official source has a history of hospitalizations that CTP did not know about</p>
+<p><strong>Link to data source</strong>
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-23-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-22-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-21-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-20-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-17-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-16-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-15-2020/
+https://health.hawaii.gov/news/corona-virus/hawaii-covid-19-daily-news-digest-july-14-2020/</p>
+<p>(as well as previous days)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663702065">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 24, 2020, 12:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/670#issuecomment-663702065" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated values from 7/14 through 7/23 (carrying over the 7/17 value until the 20th)</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Currently Hospitalized</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20200723</td>
+<td>39</td>
+</tr>
+<tr>
+<td>20200722</td>
+<td>47</td>
+</tr>
+<tr>
+<td>20200721</td>
+<td>46</td>
+</tr>
+<tr>
+<td>20200720</td>
+<td>33</td>
+</tr>
+<tr>
+<td>20200719</td>
+<td>39</td>
+</tr>
+<tr>
+<td>20200718</td>
+<td>39</td>
+</tr>
+<tr>
+<td>20200717</td>
+<td>39</td>
+</tr>
+<tr>
+<td>20200716</td>
+<td>40</td>
+</tr>
+<tr>
+<td>20200715</td>
+<td>31</td>
+</tr>
+<tr>
+<td>20200714</td>
+<td>23</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../../assets/github/images/1749380/88429125-194d4580-cdc4-11ea-9a6b-71dab782eaa0.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-571">#571: [HI] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            571</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on July 3, 2020, 7:28 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/571" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hawaii's positive cases appear to lump together probables and confirmed, but WS2 reports this value under 'positive cases (PCR)'. We should delete this value and only put it in 'Positive Cases (People, confirmed + probable)'</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-653806742">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 4, 2020, 1:13 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/571#issuecomment-653806742" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Same goes for PCR positive/negative test results. Since we use the same source data to calculate them</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-654889118">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 7, 2020, 7:08 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/571#issuecomment-654889118" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE</p>
+<p><img src="../../assets/github/images/57415941/86793765-c6d8fe80-c039-11ea-9447-a99252f7ec03.png" alt="Screen Shot 2020-07-07 at 10 05 09 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-654889781">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 7, 2020, 7:09 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/571#issuecomment-654889781" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER - Corrected historicals for cases by removing values in positive cases (PCR) and leaving the values in positive (confirmed and probable) only.</p>
+<p><img src="../../assets/github/images/57415941/86793806-d1939380-c039-11ea-8e34-a9a419e09568.png" alt="Screen Shot 2020-07-07 at 10 07 19 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-654907958">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 7, 2020, 7:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/571#issuecomment-654907958" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE -
+<img src="../../assets/github/images/57415941/86797434-a7dc6b80-c03d-11ea-83bb-4ea5f4340627.png" alt="Screen Shot 2020-07-07 at 10 34 42 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-654908661">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 7, 2020, 7:37 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/571#issuecomment-654908661" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER - removed positive tests (PCR) and negative tests (PCR) values <em><strong>because both of these values are calculated based on positive cases (PCR), as noted by Rebma</strong></em></p>
+<p><img src="../../assets/github/images/57415941/86797542-c8a4c100-c03d-11ea-8850-656c8ab2823a.png" alt="Screen Shot 2020-07-07 at 10 35 31 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-472">#472: [HI Historicals] Total tests need to be adjusted to refelct people tested </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            472</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 1, 2020, 1:39 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/472" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1591043321460800</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-645005664">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 16, 2020, 1:52 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/472#issuecomment-645005664" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650419309">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 26, 2020, 2:51 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/472#issuecomment-650419309" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-272">#272: [HI] Hawaii positive increase on 4/22 is a negative number</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            272</p>
+          <p>
+            <strong>loglow</strong> opened this issue on April 22, 2020, 11:54 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>At present, the data returned by:</p>
+<p><code>https://covidtracking.com/api/v1/states/daily.json</code></p>
+<p>Shows the following value for <code>state = HI</code> on <code>date = 20200422</code>:</p>
+<p><code>&quot;positiveIncrease&quot;:-2</code></p>
+<p>I have not checked for the presence of any other negative values, but this is the only one I've come across so far.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-618240173">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on April 23, 2020, 12:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-618240173" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I found another one.</p>
+<p>WA on 4/20 = -12</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-618292399">
+          <div class="frontmatter">
+            <div>
+              <strong>loglow</strong> commented on April 23, 2020, 2:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-618292399" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I got curious and wrote a tool to find errors like this:
+https://www.covidcharts.com/data_check.html</p>
+<p>Entirely client-side JS, so feel free to re-use any of the code.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-618704895">
+          <div class="frontmatter">
+            <div>
+              <strong>hrushka</strong> commented on April 23, 2020, 3:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-618704895" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <blockquote>
+<p>I got curious and wrote a tool to find errors like this:
+https://www.covidcharts.com/data_check.html</p>
+<p>Entirely client-side JS, so feel free to re-use any of the code.</p>
+</blockquote>
+<p>This is fantastic. Great work <strong>@loglow.</strong> I've been visually grepping through the same, but using the CSV datasource for https://c19.dev.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626059046">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 8, 2020, 4:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-626059046" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-630483259">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 18, 2020, 4:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-630483259" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-661154660">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on July 20, 2020, 9:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-661154660" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>&quot;There's a potential corruption of your Confirmed Positives historical data for several states. The data as reported should be cumulative amounts i.e. either increasing or constant - but in several places there have been new spikes added to past data and occasional dips, both producing negative Daily Positives after day-to-day subtraction. This is a recent development. I compared the current report with one ending on May 31 - and the discrepancies are (format: State, date new/old values or a multiday up-and-down sequence): ... 5) HI, 4/21-22, 584, 582....&quot; Instead of 584, 582, the values should be 584, 586.</p>
+<p>Screenshot from state site on 4/21:
+<img src="../../assets/github/images/67408226/87961620-d6f5d280-ca6a-11ea-9b5f-880a9fc2f2db.png" alt="image"></p>
+<p>Screenshot from state site on 4/22:
+<img src="../../assets/github/images/67408226/87961695-f3920a80-ca6a-11ea-8abb-3762d25b8929.png" alt="image"></p>
+<p>***Our data for HI uses numbers &quot;as of&quot; the previous day according to the site</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-661393845">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 20, 2020, 3:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/272#issuecomment-661393845" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Independently checked the screenshots. The 6pm HI screenshot for 4/22 says 592 cases, but the surrounding numbers indicate the 12:00 screenshot matches what data entry was doing so I'm using the 12:00 number, 586.</p>
+<p>Before:
+<img src="../../assets/github/images/404503/87993211-f830e000-cab7-11ea-8ad4-aef0fd9f2e07.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/87993231-01ba4800-cab8-11ea-8e5b-01bb6b6b4515.png" alt="image"></p>
+<p>Regarding WA on 4/20, there's no longer a decline in cases on that day. I think that was probably fixed as part of a previous backfill of Washington historical data.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-99">#99: HI: Pending tests clarification</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            99</p>
+          <p>
+            <strong>whodaguy</strong> opened this issue on March 31, 2020, 8:50 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  State Notes
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/99" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On the Hawaii Department of Health website sourced for covidtracking data, the category &quot;Pending&quot; does not refer to people in Hawaii who have been swabbed and are still awaiting test results. It means people who have tested positive but whose county of residence has not yet been confirmed.</p>
+<p>Just FYI.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-608421909">
+          <div class="frontmatter">
+            <div>
+              <strong>goldfarb</strong> commented on April 3, 2020, 6:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/99#issuecomment-608421909" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you, we have made a note of that for future updates &amp; are updating the past entries.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608458620">
+          <div class="frontmatter">
+            <div>
+              <strong>goldfarb</strong> commented on April 3, 2020, 7:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/99#issuecomment-608458620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Inaccurate pending data had been input for 18 - 21 March, 27 March - 02 April.
+<img src="../../assets/github/images/3722037/78370074-284d8500-7594-11ea-8a4a-bc81fc9bd74c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608468907">
+          <div class="frontmatter">
+            <div>
+              <strong>goldfarb</strong> commented on April 3, 2020, 7:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/99#issuecomment-608468907" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>https://health.hawaii.gov/coronavirusdisease2019/ shows that <strong>Pending</strong> is pending county assignment, not pending test results.</p>
+<p><img src="../../assets/github/images/3722037/78371526-17057800-7596-11ea-84a0-08308841f211.png" alt="image"></p>
+<p><img src="../../assets/github/images/3722037/78371544-1d93ef80-7596-11ea-8714-818ed680c3b8.png" alt="image"></p>
+<p>Removed the 'Pending' values</p>
+<p><em>previously</em>
+<img src="../../assets/github/images/3722037/78371708-52a04200-7596-11ea-989e-15eedb5012b2.png" alt="image"></p>
+<p><em>updated</em>
+<img src="../../assets/github/images/3722037/78373883-2639f500-7599-11ea-8606-c39fd7d0881d.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

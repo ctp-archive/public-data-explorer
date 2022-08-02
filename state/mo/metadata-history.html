@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Missouri Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Missouri</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Missouri</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-10T22:27:25.000-08:00">February 10, 2021, 10:27 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-18T19:51:34.000-08:00">January 18, 2021, 7:51 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-21T14:03:43.000-08:00">November 21, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-27T01:04:46.000-07:00">October 27, 2020, 1:04 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-11T17:10:24.000-07:00">October 11, 2020, 5:10 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-11T16:00:06.000-07:00">October 11, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-08T17:09:11.000-07:00">October 8, 2020, 5:09 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-08T13:04:01.000-07:00">October 8, 2020, 1:04 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-07T10:03:21.000-07:00">October 7, 2020, 10:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-29T09:04:04.000-07:00">September 29, 2020, 9:04 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-29T06:34:49.000-07:00">September 29, 2020, 6:34 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-05T15:03:04.000-07:00">September 5, 2020, 3:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-04T16:02:58.000-07:00">September 4, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-01T16:03:01.000-07:00">August 1, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-30T20:02:23.000-07:00">July 30, 2020, 8:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T18:02:45.000-07:00">July 28, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-27T08:02:42.000-07:00">July 27, 2020, 8:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-24T14:02:03.000-07:00">July 24, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-19T12:02:25.000-07:00">July 19, 2020, 12:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T16:02:09.000-07:00">May 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-23T14:17:55.000-07:00">May 23, 2020, 2:17 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-22T22:01:52.000-07:00">May 22, 2020, 10:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T22:00:05.000-07:00">March 25, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-22T11:00:07.000-07:00">March 22, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T22:00:10.000-07:00">March 20, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 21, 2020, Missouri’s <strong>Total PCR Tests (People)</strong> increased by less than <strong>Confirmed cases</strong>. As a result, <strong>Negative (People or Cases)</strong> saw a decline from the previous day since it is calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 10, 2020, Missouri’s Total PCR tests (specimens), Negative PCR tests (specimens), Total PCR tests (people), Total antibody tests (specimens), Total antibody tests (people), Negative antibody tests (specimens), Total antigen tests (specimens), and Negative antigen tests (specimens) dropped without explanation.</p>
+<p>On November 8, 2020, Missouri's <strong>Total PCR Tests (specimens)</strong> decreased from 2,672,288 to 2,654,691 with no explanation.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 28, 2020, Missouri removed the Positive and Negative antibody tests (people) metrics from their dashboards. Due to this we cannot continue reporting <strong>Positive antibody tests (people)</strong> and <strong>Negative antibody tests (people)</strong>, however the time series for these metrics are available in the historical data, and our data downloads.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-10T22:27:25.000-08:00">February 10, 2021, 10:27 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 21, 2020, Missouri’s <strong>Total PCR Tests (People)</strong> increased by less than <strong>Positive Cases (PCR)</strong>. As a result, <strong>Negative (People or Cases)</strong> saw a decline from the previous day since it is calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 10, 2020, Missouri’s Total PCR tests (specimens), Negative PCR tests (specimens), Total PCR tests (people), Total antibody tests (specimens), Total antibody tests (people), Negative antibody tests (specimens), Total antigen tests (specimens), and Negative antigen tests (specimens) dropped without explanation.</p>
+<p>On November 8, 2020, Missouri's <strong>Total PCR Tests (specimens)</strong> decreased from 2,672,288 to 2,654,691 with no explanation.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 28, 2020, Missouri removed the Positive and Negative antibody tests (people) metrics from their dashboards. Due to this we cannot continue reporting <strong>Positive antibody tests (people)</strong> and <strong>Negative antibody tests (people)</strong>, however the time series for these metrics are available in the historical data, and our data downloads.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-18T19:51:34.000-08:00">January 18, 2021, 7:51 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 21, 2020, Missouri’s <strong>Total PCR Tests (People)</strong> increased by less than <strong>Positive Cases (PCR)</strong>. As a result, <strong>Negative (People or Cases)</strong> saw a decline from the previous day since it is calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 10, 2020, Missouri’s Total PCR tests (specimens), Negative PCR tests (specimens), Total PCR tests (people), Total antibody tests (specimens), Total antibody tests (people), Negative antibody tests (specimens), Total antigen tests (specimens), and Negative antigen tests (specimens) dropped without explanation.</p>
+<p>On November 8, 2020, Missouri's <strong>Total PCR Tests (specimens)</strong> decreased from 2,672,288 to 2,654,691 with no explanation.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 21, 2020, Missouri’s <strong>Total PCR Tests (People)</strong> increased by less than <strong>Positive Cases (PCR)</strong>. As a result, <strong>Negative (People or Cases)</strong> saw a decline from the previous day since it is calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 10, 2020, Missouri’s Total PCR tests (specimens), Negative PCR tests (specimens), Total PCR tests (people), Total antibody tests (specimens), Total antibody tests (people), Negative antibody tests (specimens), Total antigen tests (specimens), and Negative antigen tests (specimens) dropped without explanation.</p>
+<p>On November 8, 2020, Missouri's <strong>Total PCR Tests (specimens)</strong> decreased from 2,672,288 to 2,654,691 with no explanation.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-21T14:03:43.000-08:00">November 21, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 10, 2020, Missouri’s Total PCR tests (specimens), Negative PCR tests (specimens), Total PCR tests (people), Total antibody tests (specimens), Total antibody tests (people), Negative antibody tests (specimens), Total antigen tests (specimens), and Negative antigen tests (specimens) dropped without explanation.</p>
+<p>On November 8, 2020, Missouri's <strong>Total PCR Tests (specimens)</strong> decreased from 2,672,288 to 2,654,691 with no explanation.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On November 8, 2020, Missouri's <strong>Total PCR Tests (specimens)</strong> decreased from 2,672,288 to 2,654,691 with no explanation.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/statewide-public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-27T01:04:46.000-07:00">October 27, 2020, 1:04 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>On October 14, 2020, Missouri testing numbers by people decreased. This resulted in a decrease in all total testing numbers (people) and negative cases. Testing numbers by specimen are unaffected.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare/</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-11T17:10:24.000-07:00">October 11, 2020, 5:10 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services6.arcgis.com/Bd4MACzvEukoZ9mR/arcgis/rest/services/hospital_by_date_production/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A%2C+covid_total+as+hosp&amp;orderByFields=entry_date+desc&amp;resultRecordCount=1</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>On October 11, 2020, <a href="https://www.kshb.com/news/coronavirus/missouri-covid-19-database-error-causes-incorrect-inflation-of-cases">Missouri announced that a database error had resulted in an “incorrect inflation” of cases in its October 10, 2020 report</a>. When The COVID Tracking Project is able to obtain correct official data for October 10 from Missouri, we will update our dataset to reflect the correction.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-11T16:00:06.000-07:00">October 11, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services6.arcgis.com/Bd4MACzvEukoZ9mR/arcgis/rest/services/hospital_by_date_production/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A%2C+covid_total+as+hosp&amp;orderByFields=entry_date+desc&amp;resultRecordCount=1</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-08T17:09:11.000-07:00">October 8, 2020, 5:09 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services6.arcgis.com/Bd4MACzvEukoZ9mR/arcgis/rest/services/hospital_by_date_production/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A%2C+covid_total+as+hosp&amp;orderByFields=entry_date+desc&amp;resultRecordCount=1</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.
+The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+<p>On October 8, 2020, Missouri added current hospitalizations to their COVID-19 dashboard, and we began to capture this metric. Historical data is also available and we are working on backfilling our data for days where this metric was unavailable.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-08T13:04:01.000-07:00">October 8, 2020, 1:04 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services6.arcgis.com/Bd4MACzvEukoZ9mR/arcgis/rest/services/hospital_by_date_production/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A%2C+covid_total+as+hosp&amp;orderByFields=entry_date+desc&amp;resultRecordCount=1</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+<p>As of October 7, 2020, Missouri's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.
+The number of unique people tested is available in our API as <code>totalTestsPeopleViral</code>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-07T10:03:21.000-07:00">October 7, 2020, 10:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services6.arcgis.com/Bd4MACzvEukoZ9mR/arcgis/rest/services/hospital_by_date_production/FeatureServer/0/query?where=1%3D1&amp;outFields=%2A%2C+covid_total+as+hosp&amp;orderByFields=entry_date+desc&amp;resultRecordCount=1</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-29T09:04:04.000-07:00">September 29, 2020, 9:04 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://showmestrong.mo.gov/data/public-health/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://showmestrong.mo.gov/public-healthcare-testing/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-29T06:34:49.000-07:00">September 29, 2020, 6:34 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="http://twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-05T15:03:04.000-07:00">September 5, 2020, 3:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>On September 5, 2020, the Missouri DHSS <a href="ht//twitter.com/HealthyLivingMo/status/1302314149620391937?s=20">added an additional 72 deaths</a> to their total count, &quot;most of which occurred June-August&quot;.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-04T16:02:58.000-07:00">September 4, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 22, 2020, Missouri reports PCR tests separately from antibody tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (people)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.</p>
+<p>On July 19, Missouri revised the death down from 1130 to 1129.</p>
+<p>As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+<p>On July 24, Missouri decreased the number of deaths by 1.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-01T16:03:01.000-07:00">August 1, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.</p>
+<p>On July 19, Missouri revised the death down from 1130 to 1129.</p>
+<p>As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+<p>On July 24, Missouri decreased the number of deaths by 1.</p>
+<p>On July 26, we switched from using the &quot;Lab Confirmed Cases&quot; number to the &quot;Individuals with Positive PCR Results&quot; number on Missouri's dashboard as we believe that to be the most accurate value for Confirmed Cases. This resulted in a reduction of the number of confirmed cases by 2,000.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-30T20:02:23.000-07:00">July 30, 2020, 8:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.</p>
+<p>On July 19, Missouri revised the death down from 1130 to 1129.</p>
+<p>As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+<p>On July 24, Missouri decreased the number of deaths by 1.</p>
+<p>On July 26, we switched from using the &quot;Lab Confirmed Cases&quot; number to the &quot;Individuals with Positive PCR Results&quot; number on Missouri's dashboard as we believe that to be the most accurate value for Confirmed Cases. This resulted in a reduction of the number of confirmed cases by 2,000.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+On July 19, Missouri revised the death down from 1130 to 1129.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.
+On July 24, Missouri decreased the number of deaths by 1.
+On July 26, we switched from using the &quot;Lab Confirmed Cases&quot; number to the &quot;Individuals with Positive PCR Results&quot; number on Missouri's dashboard as we believe that to be the most accurate value for Confirmed Cases. This resulted in a reduction of the number of confirmed cases by 2,000.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T18:02:45.000-07:00">July 28, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+On July 19, Missouri revised the death down from 1130 to 1129.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.
+On July 24, Missouri decreased the number of deaths by 1.
+On July 26, Missouri is suspected to lump antibody positives in total &quot;lab confirmed positive&quot; on the &quot;Overview&quot; tab of the spreadsheet. Switching to the &quot;Testing PCR&quot; tab for confirmed cases, which will reduce the number of confirmed cases by 2000 people</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+On July 19, Missouri revised the death down from 1130 to 1129.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.
+On July 24, MO decreased the number of deaths by 1.
+On July 26, MO is suspected to lump antibody positives in total &quot;lab confirmed positive&quot; on the &quot;Overview&quot; tab of the spreadsheet. Switching to the &quot;Testing PCR&quot; tab for confirmed cases, which will reduce the number of confirmed cases by 2000 people</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-27T08:02:42.000-07:00">July 27, 2020, 8:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+On July 19, Missouri revised the death down from 1130 to 1129.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.
+On July 24, MO decreased the number of deaths by 1.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-24T14:02:03.000-07:00">July 24, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+On July 19, Missouri revised the death down from 1130 to 1129.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-19T12:02:25.000-07:00">July 19, 2020, 12:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+As of May 22, Missouri is separating out the numbers of people tested with PCR and antibody tests; we report the number of people tested with PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T16:02:09.000-07:00">May 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+Missouri has a lag in reporting total patients tested; this figure does not include patients tested as of a particular day until the following day's data update
+As of May 22, Missouri is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+Missouri has a lag in reporting total patients tested; this figure does not include patients tested as of a particular day until the following day's data update
+As of 5/22, MO started separating out PCR and antibody tests. Total tests might be impacted</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-23T14:17:55.000-07:00">May 23, 2020, 2:17 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+Missouri has a lag in reporting total patients tested; this figure does not include patients tested as of a particular day until the following day's data update
+As of 5/22, MO started separating out PCR and Antibody tests</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-22T22:01:52.000-07:00">May 22, 2020, 10:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.
+Missouri has a lag in reporting total patients tested; this figure does not include patients tested as of a particular day until the following day's data update</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive. As of April 27, Missouri is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total - Positive</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://missouri-coronavirus-gis-hub-mophep.hub.arcgis.com/</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Missouri displays an aggregate positive case number and a county-level breakdown: we use the higher number on the premise it is more up to date. Negatives and Totals are only from public health sources. Negatives from <a href="https://www.kyoutv.com/home/2020/03/16/coronavirus-cases-numbers/">news reports</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T22:00:05.000-07:00">March 25, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Missouri displays an aggregate positive case number and a county-level breakdown: we use the higher number on the premise it is more up to date. Negatives and Totals are only from public health sources. Negatives from <a href="https://www.kyoutv.com/home/2020/03/16/coronavirus-cases-numbers/">news reports</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Missouri displays an aggregate positive case number and a county-level breakdown: we use the higher number on the premise it is more up to date. Negatives and Totals are only from public health sources. Negatives from <a href="https://www.kyoutv.com/home/2020/03/16/coronavirus-cases-numbers/">news reports</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-22T11:00:07.000-07:00">March 22, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We use the aggregate positive case number instead of the county-level breakdown because that breakdown isn't necessarily up-to-date per state guidance. Negatives and Totals are only from public health sources. Negatives from <a href="https://www.kyoutv.com/home/2020/03/16/coronavirus-cases-numbers/">news reports</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T22:00:10.000-07:00">March 20, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Positive cases are summed from the &quot;Cases by County&quot; table and include public and commercial labs. Negatives and Totals are only from public health sources.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No pending reported.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No pending reported.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Missouri reported negative number in a tweet. Missouri is providing no time and date, but based on these reports, we're using a last update time of 3/10 00:00, until the state is more explicit.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

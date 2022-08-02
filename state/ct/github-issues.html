@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Connecticut Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Connecticut</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Connecticut</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 23, 2021, 10:51 AM PST</td>
+          <td>1109</td>
+          <td>
+            <a href="#issue-1109">[CT] PCR Testing: report PCR testing (vs lumped PCR and antigen) and add positive/negative PCR test results</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 23, 2021, 10:51 AM PST</td>
+          <td>1109</td>
+          <td>
+            <a href="#issue-1109">[CT] PCR Testing: report PCR testing (vs lumped PCR and antigen) and add positive/negative PCR test results</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 22, 2021, 8:02 PM PST</td>
+          <td>1108</td>
+          <td>
+            <a href="#issue-1108">[CT] Remove values carried over after Connecticut stopped reporting Recovered on 10/22/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 22, 2021, 8:02 PM PST</td>
+          <td>1108</td>
+          <td>
+            <a href="#issue-1108">[CT] Remove values carried over after Connecticut stopped reporting Recovered on 10/22/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 3, 2021, 4:13 PM PST</td>
+          <td>1088</td>
+          <td>
+            <a href="#issue-1088">[CT] Daily values for Total Antigen Tests (and positive/negative breakdown)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 3, 2021, 4:13 PM PST</td>
+          <td>1088</td>
+          <td>
+            <a href="#issue-1088">[CT] Daily values for Total Antigen Tests (and positive/negative breakdown)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 29, 2021, 2:40 PM PST</td>
+          <td>1084</td>
+          <td>
+            <a href="#issue-1084">[CT] Amend negative value entered incorrectly on 1/28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 29, 2021, 2:40 PM PST</td>
+          <td>1084</td>
+          <td>
+            <a href="#issue-1084">[CT] Amend negative value entered incorrectly on 1/28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 8, 2021, 6:04 PM PST</td>
+          <td>1056</td>
+          <td>
+            <a href="#issue-1056">[CT] Backfill Total antigen tests from 11/12/2020-1/8/2021</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 8, 2021, 6:04 PM PST</td>
+          <td>1056</td>
+          <td>
+            <a href="#issue-1056">[CT] Backfill Total antigen tests from 11/12/2020-1/8/2021</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 25, 2020, 8:42 PM PST</td>
+          <td>981</td>
+          <td>
+            <a href="#issue-981">[CT] Patch 11/25 Total Antigen Tests(available in the api) update from Weekly Report</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 11, 2020, 8:58 AM PST</td>
+          <td>946</td>
+          <td>
+            <a href="#issue-946">[CT] Some total tests (PCR) values are duplicated in the peoplewise column they should be removed</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 10, 2020, 7:54 AM PST</td>
+          <td>942</td>
+          <td>
+            <a href="#issue-942">[CT] Update Total Tests (PCR) &amp; Negatives value for 11/6-11/9</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 6, 2020, 2:24 PM PST</td>
+          <td>935</td>
+          <td>
+            <a href="#issue-935">[CT] Daily total reported tests now lump pcr and antigen tests. We need to use a different source</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 5, 2020, 9:31 PM PST</td>
+          <td>932</td>
+          <td>
+            <a href="#issue-932">[CT] Backfilling first day reporting Antigen tests (11/5)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 4, 2020, 5:07 PM PDT</td>
+          <td>884</td>
+          <td>
+            <a href="#issue-884">[CT] Fill out data for missed update on 3/28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 30, 2020, 9:53 AM PDT</td>
+          <td>877</td>
+          <td>
+            <a href="#issue-877">[CT] Confirmed, Probable and Total Cases </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 13, 2020, 7:25 AM PDT</td>
+          <td>759</td>
+          <td>
+            <a href="#issue-759">[NC] CTP Reporting Specimens Results in Total PCR Tests (People) Instead of Total Tests (PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 7:20 PM PDT</td>
+          <td>721</td>
+          <td>
+            <a href="#issue-721">[CT]Back-fill data added in the last 7 days that reflects cases (&amp; tests?)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 7:54 AM PDT</td>
+          <td>617</td>
+          <td>
+            <a href="#issue-617">[CT] PCL Cases Historical</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 22, 2020, 6:18 AM PDT</td>
+          <td>509</td>
+          <td>
+            <a href="#issue-509">[CT Historicals] May 27th numbers </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 28, 2020, 8:33 AM PDT</td>
+          <td>463</td>
+          <td>
+            <a href="#issue-463">[SC Historicals] Cases when SC reporting seems to not match CTP reporting</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 22, 2020, 6:54 AM PDT</td>
+          <td>441</td>
+          <td>
+            <a href="#issue-441">CT negatives were calculated incorrectly on 5/21 (data entry error)</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1109">#1109: [CT] PCR Testing: report PCR testing (vs lumped PCR and antigen) and add positive/negative PCR test results</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1109</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on February 23, 2021, 10:51 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1109" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> From the beginning of time till now
+<strong>Overview:</strong> CT started reporting lumped testing value on its dashboard, it was a single number for both PCR and antigen testing. There is a state published dataset that has the break down by test type and result. We will use it to backfill PCR-only testing, and positive and negative PCR specimens.</p>
+<p>This is step 2 after #1088</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-784632641">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 23, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1109#issuecomment-784632641" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CT started lumping PCR and antigen tests on Nov 5th, 2020. This will correct the reported lumping by CTP</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-784640313">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 23, 2021, 4:40 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1109#issuecomment-784640313" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6032565/Multi-edit.tool-PRODUCTION.-.CT-reb-20210224_post.csv.txt">Multi-edit tool-PRODUCTION - CT-reb-20210224_post.csv.txt</a>
+<a href="../../assets/github/files/6032566/Multi-edit.tool-PRODUCTION.-.CT-KWS-20210224_post.csv.txt">Multi-edit tool-PRODUCTION - CT-KWS-20210224_post.csv.txt</a>
+<a href="../../assets/github/files/6032567/Multi-edit.tool-PRODUCTION.-.CT-KWS-20210224.csv.txt">Multi-edit tool-PRODUCTION - CT-KWS-20210224.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1109">#1109: [CT] PCR Testing: report PCR testing (vs lumped PCR and antigen) and add positive/negative PCR test results</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1109</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on February 23, 2021, 10:51 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1109" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> From the beginning of time till now
+<strong>Overview:</strong> CT started reporting lumped testing value on its dashboard, it was a single number for both PCR and antigen testing. There is a state published dataset that has the break down by test type and result. We will use it to backfill PCR-only testing, and positive and negative PCR specimens.</p>
+<p>This is step 2 after #1088</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-784632641">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 23, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1109#issuecomment-784632641" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CT started lumping PCR and antigen tests on Nov 5th, 2020. This will correct the reported lumping by CTP</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-784640313">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 23, 2021, 4:40 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1109#issuecomment-784640313" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6032565/Multi-edit.tool-PRODUCTION.-.CT-reb-20210224_post.csv.txt">Multi-edit tool-PRODUCTION - CT-reb-20210224_post.csv.txt</a>
+<a href="../../assets/github/files/6032566/Multi-edit.tool-PRODUCTION.-.CT-KWS-20210224_post.csv.txt">Multi-edit tool-PRODUCTION - CT-KWS-20210224_post.csv.txt</a>
+<a href="../../assets/github/files/6032567/Multi-edit.tool-PRODUCTION.-.CT-KWS-20210224.csv.txt">Multi-edit tool-PRODUCTION - CT-KWS-20210224.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1108">#1108: [CT] Remove values carried over after Connecticut stopped reporting Recovered on 10/22/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1108</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on February 22, 2021, 8:02 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1108" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Connecticut</p>
+<p>Issue: On October 22, 2020, Connecticut included the Recovered metric in their weekly report for the last time. We carried over the last available value, but the metric has not returned, so the value is out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from October 29, 2020, forward (since the metric was updated weekly before it was removed).</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-783862157">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on February 22, 2021, 8:06 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1108#issuecomment-783862157" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values Removed:
+<a href="../../assets/github/files/6026703/Changes.3.txt">Changes (3).txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-783920971">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on February 22, 2021, 9:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1108#issuecomment-783920971" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values</li>
+<li>[x]  update public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1108">#1108: [CT] Remove values carried over after Connecticut stopped reporting Recovered on 10/22/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1108</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on February 22, 2021, 8:02 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1108" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Connecticut</p>
+<p>Issue: On October 22, 2020, Connecticut included the Recovered metric in their weekly report for the last time. We carried over the last available value, but the metric has not returned, so the value is out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from October 29, 2020, forward (since the metric was updated weekly before it was removed).</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-783862157">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on February 22, 2021, 8:06 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1108#issuecomment-783862157" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values Removed:
+<a href="../../assets/github/files/6026703/Changes.3.txt">Changes (3).txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-783920971">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on February 22, 2021, 9:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1108#issuecomment-783920971" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values</li>
+<li>[x]  update public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1088">#1088: [CT] Daily values for Total Antigen Tests (and positive/negative breakdown)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1088</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on February 3, 2021, 4:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1088" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> November 15, 2020 to now
+<strong>Overview:</strong> CT stopped updating daily values for total antigen tests on the dashboard, but this data exists in the testing dataset. Backfill from daily data fetched from state testing dataset.</p>
+<p><a href="https://data.ct.gov/Health-and-Human-Services/COVID-19-Test-Results-by-Date-of-Specimen-Collecti/qfkt-uahj">Source dataset link</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-772926622">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 3, 2021, 4:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1088#issuecomment-772926622" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5922323/Multi-edit.tool-PRODUCTION.-.CT-reb-20210204.csv.txt">Multi-edit tool-PRODUCTION - CT-reb-20210204.csv.txt</a>
+<a href="../../assets/github/files/5922324/Multi-edit.tool-PRODUCTION.-.CT-reb-20210204_post.csv.txt">Multi-edit tool-PRODUCTION - CT-reb-20210204_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1088">#1088: [CT] Daily values for Total Antigen Tests (and positive/negative breakdown)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1088</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on February 3, 2021, 4:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1088" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> November 15, 2020 to now
+<strong>Overview:</strong> CT stopped updating daily values for total antigen tests on the dashboard, but this data exists in the testing dataset. Backfill from daily data fetched from state testing dataset.</p>
+<p><a href="https://data.ct.gov/Health-and-Human-Services/COVID-19-Test-Results-by-Date-of-Specimen-Collecti/qfkt-uahj">Source dataset link</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-772926622">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on February 3, 2021, 4:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1088#issuecomment-772926622" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5922323/Multi-edit.tool-PRODUCTION.-.CT-reb-20210204.csv.txt">Multi-edit tool-PRODUCTION - CT-reb-20210204.csv.txt</a>
+<a href="../../assets/github/files/5922324/Multi-edit.tool-PRODUCTION.-.CT-reb-20210204_post.csv.txt">Multi-edit tool-PRODUCTION - CT-reb-20210204_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1084">#1084: [CT] Amend negative value entered incorrectly on 1/28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1084</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on January 29, 2021, 2:40 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Connecticut</p>
+<p><strong>Describe the problem</strong>
+On 1/28 the wrong (calculated ) Negative value was entered. This correct the issue</p>
+<p><strong>Link to data source</strong>
+https://data.ct.gov/coronavirus</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778709508">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 13, 2021, 6:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084#issuecomment-778709508" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-784821387">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 23, 2021, 10:22 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084#issuecomment-784821387" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814442503">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084#issuecomment-814442503" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Negatives were updated on 1/29 from 5,635,145 to 5,424,845</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1084">#1084: [CT] Amend negative value entered incorrectly on 1/28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1084</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on January 29, 2021, 2:40 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Connecticut</p>
+<p><strong>Describe the problem</strong>
+On 1/28 the wrong (calculated ) Negative value was entered. This correct the issue</p>
+<p><strong>Link to data source</strong>
+https://data.ct.gov/coronavirus</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778709508">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 13, 2021, 6:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084#issuecomment-778709508" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-784821387">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on February 23, 2021, 10:22 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084#issuecomment-784821387" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814442503">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1084#issuecomment-814442503" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Negatives were updated on 1/29 from 5,635,145 to 5,424,845</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1056">#1056: [CT] Backfill Total antigen tests from 11/12/2020-1/8/2021</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1056</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 8, 2021, 6:04 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1056" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Connecticut</p>
+<p>Issue: Connecticut moved where it was posting the Weekly reports which includes the Total antigen tests metric. Backfilling from the weekly reports.</p>
+<p>Source: https://data.ct.gov/Health-and-Human-Services/COVID-19-DPH-Reports-Library/bqve-e8um</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757079896">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 8, 2021, 6:21 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1056#issuecomment-757079896" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5790039/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1056">#1056: [CT] Backfill Total antigen tests from 11/12/2020-1/8/2021</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1056</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 8, 2021, 6:04 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1056" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Connecticut</p>
+<p>Issue: Connecticut moved where it was posting the Weekly reports which includes the Total antigen tests metric. Backfilling from the weekly reports.</p>
+<p>Source: https://data.ct.gov/Health-and-Human-Services/COVID-19-DPH-Reports-Library/bqve-e8um</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757079896">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 8, 2021, 6:21 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1056#issuecomment-757079896" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5790039/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-981">#981: [CT] Patch 11/25 Total Antigen Tests(available in the api) update from Weekly Report</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            981</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 25, 2020, 8:42 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/981" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Connecticut</p>
+<p>Issue: CT published their Weekly Report pdf, and included Total antigen tests for the first time since 11/5.</p>
+<p>Source: https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary11252020.pdf</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-734070468">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 25, 2020, 8:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/981#issuecomment-734070468" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="401" alt="Screen Shot 2020-11-25 at 8 33 30 PM" src="../../assets/github/images/66583275/100309068-cbf20800-2f5e-11eb-9d6a-fb7e28f2d1e0.png"></p>
+<p>AFTER:
+<img width="528" alt="Screen Shot 2020-11-25 at 8 33 39 PM" src="../../assets/github/images/66583275/100309085-d90ef700-2f5e-11eb-9fbe-0285e6b83313.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-946">#946: [CT] Some total tests (PCR) values are duplicated in the peoplewise column they should be removed</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            946</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on November 11, 2020, 8:58 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/946" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Connecticut</p>
+<p><strong>Describe the problem</strong>
+Some data is duplicated in the wrong column</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.
+<img src="https://user-images.githubusercontent.com/1749380/98840783-3bbbab00-2415-11eb-8c54-dbacda3739f4.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-734073228">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 25, 2020, 8:54 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/946#issuecomment-734073228" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="410" alt="Screen Shot 2020-11-25 at 8 46 09 PM" src="../../assets/github/images/66583275/100309263-49b61380-2f5f-11eb-9d67-7c6cd825c89e.png"></p>
+<p>AFTER:
+<img width="421" alt="Screen Shot 2020-11-25 at 8 47 21 PM" src="../../assets/github/images/66583275/100309310-6fdbb380-2f5f-11eb-9757-f267e6a78fdf.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-942">#942: [CT] Update Total Tests (PCR) &amp; Negatives value for 11/6-11/9</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            942</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on November 10, 2020, 7:54 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/942" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Connecticut</p>
+<p><strong>Describe the problem</strong>
+Starting on 11/5, Connecticut changed its reporting to lump antigen tests with PCR in the main testing number. We are backfilling our Positive Tests (PCR) and Negative (People or cases) numbers for 11/5-11/9 to use these values.</p>
+<p><strong>Link to data source</strong>
+https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary11052020.pdf
+COVID-19 Tests Reported (molecular and antigen) 2455122</p>
+<p>https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary11062020.pdf
+COVID-19 Tests Reported (molecular and antigen) 2484685</p>
+<p>https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary11092020.pdf
+COVID-19 Tests Reported (molecular and antigen) 2574371</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-724799921">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on November 10, 2020, 8:06 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/942#issuecomment-724799921" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1749380/98699064-b963b600-2344-11eb-9299-c7d335610e22.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-733921094">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on November 25, 2020, 12:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/942#issuecomment-733921094" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-812540569">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 2, 2021, 6:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/942#issuecomment-812540569" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We've cleared their negatives, and backfilled their total tests in<a href="https://github.com/COVID19Tracking/issues/issues/1109"> #1109</a>, so I think this is done.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-935">#935: [CT] Daily total reported tests now lump pcr and antigen tests. We need to use a different source</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            935</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on November 6, 2020, 2:24 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/935" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The weekly report contains the breakdown, but it doesn't match the testing dataset exactly (the differences are <em>not huge</em>). We'll follow the data for a few days, to see whether anything else is changing and then update our sources</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-731651018">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on November 21, 2020, 3:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/935#issuecomment-731651018" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-736921726">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 1, 2020, 5:11 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/935#issuecomment-736921726" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-743684248">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 11, 2020, 6:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/935#issuecomment-743684248" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-932">#932: [CT] Backfilling first day reporting Antigen tests (11/5)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            932</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 5, 2020, 9:31 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/932" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Connecticut</p>
+<p>Issue: CT started reporting antigens tests 11/5. Backfilling today's value.</p>
+<p>Source: Daily Data Report from 11/5
+<a href="https://github.com/COVID19Tracking/issues/files/5499288/CTDPHCOVID19summary11052020.pdf">CTDPHCOVID19summary11052020.pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-722843950">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 5, 2020, 9:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/932#issuecomment-722843950" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <img width="481" alt="Screen Shot 2020-11-05 at 9 32 04 PM" src="../../assets/github/images/66583275/98330139-9769dc80-1fae-11eb-8fc8-04f9d93d4672.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-884">#884: [CT] Fill out data for missed update on 3/28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            884</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 4, 2020, 5:07 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/884" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Connecticut</p>
+<p><strong>Describe the problem</strong>
+CTP data entry missed an update on 3/28</p>
+<p><strong>Link to data source</strong>
+https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3282020.pdf?la=en
+<img src="https://user-images.githubusercontent.com/1749380/95030362-3b452d00-067d-11eb-9405-c6229d2d9372.png" alt="image"></p>
+<p>https://github.com/COVID19Tracking/covid-tracking-data/pull/25</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-710685083">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on October 16, 2020, 3:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/884#issuecomment-710685083" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated! Thank you <strong>@mickley</strong>!</p>
+<p><img src="../../assets/github/images/1749380/96320214-babcef80-0fdf-11eb-8ef0-c5ce6bdc1e9b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-877">#877: [CT] Confirmed, Probable and Total Cases </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            877</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 30, 2020, 9:53 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/877" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: CT</p>
+<p><strong>Describe the problem</strong>
+It seems that a previous backfill did not take weekend gaps into consideration #617</p>
+<p><strong>Link to data source</strong>
+Statewide XLS from CT's website as of 7/22</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702861626">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on October 2, 2020, 10:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/877#issuecomment-702861626" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We updated the following fileds:
+Positive cases PCR -- between 2020-06-01 - 2020-07-21
+Probable cases -- between 2020-06-01 - 2020-07-27 (on the 28th it was part of pubshift)
+Positives (lumped) -- A single values for for 2020-06-01: there was a small difference between the collected value during pub-shift and PDF and the number from the dataset provided by CT. We used the dataset value
+Negatives -- betwene 2020-06-01 - 2020-07-21 -- calculated value based on Total Tests PCR minus Positive cases PCR
+Total Tests PCR -- 2020-07-21 -- all the way down to the beginning of times (in practice, it shifted the series by 1 day, but all the values are the same)</p>
+<p><a href="../../assets/github/files/5319426/CT.-.Confirmed.%2B.Probable.GH-877.20200930.csv.txt">CT - Confirmed + Probable GH-877 20200930.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-759">#759: [NC] CTP Reporting Specimens Results in Total PCR Tests (People) Instead of Total Tests (PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            759</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on August 13, 2020, 7:25 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NC</p>
+<p><strong>Dates impacted:</strong> 5/13 - 8/12</p>
+<p><strong>Issue:</strong> Upon further outreach and review of the document linked in sources, we have updated our understanding of how NC reports total test results. NC's total tests include results from <strong>all tests</strong> administered for one person and have reported that the unit for total tests is specimens. Therefore, we should copy over all values from <strong>Total PCR Tests (People)</strong> to <strong>Total Tests (PCR)</strong> and report all values for total tests in <strong>Total Tests (PCR)</strong> from here on out.</p>
+<p>Sources: https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-673521082">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673521082" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE:</strong>
+<img src="../../assets/github/images/57415941/90148846-d0990480-dd51-11ea-8a07-42ec108af47f.png" alt="Screen Shot 2020-08-13 at 10 42 51 AM"></p>
+<p>All values:</p>
+<p>1823283
+2017498
+2001919
+1986548
+1969766
+1939812
+1904750
+1873668
+1854026
+1837410
+1813510
+1786412
+1757102
+1724924
+1691434
+1663540
+1635476
+1613385
+1579042
+1550297
+1523675
+1491820
+1458997
+1423888
+1394864
+1379143
+1343974
+1312757
+1284637
+1254846
+1220486
+1199575
+1176058
+1150612
+1121811
+1096682
+1071290
+1051846
+1036838
+1018296
+999293
+971120
+942238
+910033
+886305
+871905
+855131
+836725
+811278
+791285
+773828
+757345
+745775
+731341
+712313
+693678
+667422
+651421
+638479
+627130
+611690
+595697
+572677
+553650
+535711
+520113
+511226
+497350
+482147
+468302
+449263
+434921
+421908
+416289
+404157
+391231
+375192
+364156
+352331
+344690
+336656
+329582
+303224
+290645
+277603
+265008
+255755
+238586
+231547
+210457
+202244</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673522336">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673522336" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/57415941/90149236-4604d500-dd52-11ea-9f2b-fd2fa504f11c.png" alt="Screen Shot 2020-08-13 at 10 46 28 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673523512">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673523512" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>UPDATED in database:</p>
+<p><img src="../../assets/github/images/57415941/90149511-9419d880-dd52-11ea-961e-25f83fb8008e.png" alt="Screen Shot 2020-08-13 at 10 48 34 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673524666">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673524666" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>States Matrix before:</p>
+<p><img src="../../assets/github/images/57415941/90154257-e7daf080-dd57-11ea-9cc3-28ae4ede14c9.png" alt="Screen Shot 2020-08-13 at 11 27 15 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673545078">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 8:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673545078" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>States Matrix after:</p>
+<p><img src="../../assets/github/images/57415941/90154292-f1fcef00-dd57-11ea-8272-07c17edc6bad.png" alt="Screen Shot 2020-08-13 at 10 50 26 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-721">#721: [CT]Back-fill data added in the last 7 days that reflects cases (&amp; tests?)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            721</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 31, 2020, 7:20 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/721" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: CT</p>
+<p><strong>Describe the problem</strong>
+CT had two dumps of old test results from Enzo Labs, an out of state lab that just submitted their results to CT in two batches in the past 7 days.  These data date back to April, but because they were dumped into CT totals now</p>
+<p>Specifically this catch up data included 440 cases reported last Friday + 384 Wednesday = 824 cases that should be removed from our recent totals to better reflect recent trends.</p>
+<p><strong>Link to data source</strong>
+<img width="1415" alt="Screen Shot 2020-07-31 at 10 25 14 PM" src="https://user-images.githubusercontent.com/1749380/89092112-cacc1800-d37c-11ea-8b18-d585399e2919.png"></p>
+<img width="1437" alt="Screen Shot 2020-07-31 at 10 26 59 PM" src="https://user-images.githubusercontent.com/1749380/89092138-17175800-d37d-11ea-8ddf-f8448212b966.png">
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-671661874">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 10, 2020, 5:52 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/721#issuecomment-671661874" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> CT provides two time series for confirmed cases: positive cases by dashboard time and positive cases by specimen collection time. The former matches what we already have and includes the July 24 jump, the latter smooths that out but would result in mixing. I don't think there's much we can do until we have a &quot;state revised time series&quot; strategy in place.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674239674">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 14, 2020, 12:33 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/721#issuecomment-674239674" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Based on our meeting yesterday, I would say that this backfill would not meet the mixery-exception bar. (because it's not a new column where we're bootstrapping old history)</p>
+<p>So, I would like to close this &quot;won't fix&quot;. If CT puts pressure on us, that pressure should go towards adding a new column with approprirate &quot;by date&quot; assignment. I've started a slack conversation to get consensus.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674326415">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 14, 2020, 6:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/721#issuecomment-674326415" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>There was some more discussion about just giving CT a new column (similar to RI and CO) instead of this. More to come.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-683366073">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 29, 2020, 7:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/721#issuecomment-683366073" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814450798">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/721#issuecomment-814450798" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Does not meet the mixery-exception bar.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-617">#617: [CT] PCL Cases Historical</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            617</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 13, 2020, 7:54 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/617" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We started recording CT's confirmed cases on
+<img width="1452" alt="Screen Shot 2020-07-13 at 7 48 09 AM" src="https://user-images.githubusercontent.com/67423649/87318796-a8fa1680-c4dd-11ea-93b9-a204752baf02.png"></p>
+<p>However, CT's data set shows the state only separated confirmed and probable starting May 31st.<br>
+https://data.ct.gov/Health-and-Human-Services/COVID-19-Cases-Hospitalizations-and-Deaths-By-Coun/bfnu-rgqt</p>
+<p>Here's the XLS download.
+<a href="https://github.com/COVID19Tracking/issues/files/4913233/COVID-19_Cases__Hospitalizations__and_Deaths__By_County_.xlsx">COVID-19_Cases__Hospitalizations__and_Deaths__By_County_.xlsx</a></p>
+<p>Please confirm is the historicals between 4/29 and 5/31 are truly confirmed cases.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657727512">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 13, 2020, 11:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/617#issuecomment-657727512" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CT publishes many datasets.
+In their <a href="https://data.ct.gov/Health-and-Human-Services/COVID-19-Tests-Cases-Hospitalizations-and-Deaths-S/rf3k-f8fg/data">COVID-19 Tests, Cases, Hospitalizations, and Deaths (Statewide) </a> dataset, confirmed cases are reported starting 31-May.
+In the <a href="https://data.ct.gov/Health-and-Human-Services/COVID-19-Cases-by-Date-of-First-Positive-Specimen/xz44-6swc/data">COVID-19 Cases by Date of First Positive Specimen</a> dataset, we have positive PCR results dating back to March.</p>
+<p>The later is given as a daily new, here's a cumsum time series, CSV file as txt.
+<a href="../../assets/github/files/4914475/COVID-19_Cases_by_Date_of_First_Positive_Specimen_cumsum.txt">COVID-19_Cases_by_Date_of_First_Positive_Specimen_cumsum.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-662623625">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 22, 2020, 11:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/617#issuecomment-662623625" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We decided to use the CT data for confirmed cases and total tests by report date. This confirmed case data only goes back to 6/6 and looks different than the data we had previous to those dates. We decided to remove the previous data and instead backfill the official data into the Positive Cases (PCR) column. Negatives were also adjusted accordingly. Meanwhile we took the opportunity to extend the Total Tests (PCR) column back much farther with CT's official data.</p>
+<p>We considered but didn't use their confirmed cases by specimen collection, which goes back much farther but is incompatible with the values coming from future data entry.</p>
+<p>Analysis spreadsheet, including old and new values: https://docs.google.com/spreadsheets/d/17rcCfHaT76c07Ghd-QCeKqzUlBep8eNGclTS7npnQ-I/edit#gid=616640974</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-509">#509: [CT Historicals] May 27th numbers </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            509</p>
+          <p>
+            <strong>schmian</strong> opened this issue on June 22, 2020, 6:18 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/509" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>&quot;Connecticut May 27 positive tests are 41,303 The COVID Tracking Project historical and current, but the Connecticut snapshot lists 41,288. Based on the snapshot it appears that Connecticut subtracted 15 positive tests.&quot;</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24x8x">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647785943">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 22, 2020, 2:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/509#issuecomment-647785943" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CT actually subtracted a couple hundred positives and more total tests. The net change was -15. See CT's note is here: https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary5272020.pdf?la=en</p>
+<p>Before:
+<img src="../../assets/github/images/404503/85338057-a04e8b80-b4af-11ea-927d-96b6ccf729aa.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/85338137-bc522d00-b4af-11ea-9131-8011cca1cca5.png" alt="image"></p>
+<p>Added the following to CT's public note: <code>On May 27, CT reported they had &quot;removed 356 cases and 808 tests...which were identified as duplicates in the system.&quot; When combined with actual new cases, these removals resulted in a net reduction of 15 positives on 5/27.</code></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-463">#463: [SC Historicals] Cases when SC reporting seems to not match CTP reporting</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            463</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 28, 2020, 8:33 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>From Front https://app.frontapp.com/open/msg_dlyhb2p</p>
+<p><a href="https://github.com/COVID19Tracking/issues/files/4696620/South_Carolina_out.xlsx">South_Carolina_out.xlsx</a></p>
+<p>Here is the Excel file for South Carolina. The individual numbers are colored. Black is for when the numbers have been verified through the daily state reports. Blue is for when I could not find a copy of the daily report and relied on the numbers from The COVID Tracking Project. Orange is when I verified the numbers through a tertiary source. This is almost always the Twitter feed for the state's Department of Health. Red is for when I verified the number through the state's daily reports and those numbers did not correspond to the one presented in The COVID Tracking Project.</p>
+<p>The red numbers can be compared to the daily state screenshots. Sometimes the variance is minor. In South Carolina, The COVID Tracking Project had several instances where the numbers were repeated from date to date when the numbers did change in the daily screenshots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-643350617">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 12, 2020, 8:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-643350617" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647645935">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 9:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-647645935" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655029399">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 7, 2020, 11:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-655029399" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660290087">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 17, 2020, 12:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/463#issuecomment-660290087" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-441">#441: CT negatives were calculated incorrectly on 5/21 (data entry error)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            441</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 22, 2020, 6:54 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/441" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>calculation was =196447-32908 instead of =196447-39208 which caused number of tests to inflate</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24769">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632707001">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 7:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/441#issuecomment-632707001" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Negatives calculation transposed two digits <code>196447-32908 </code> instead of <code>196447-39208 </code> which caused phantom tests to be reported.</p>
+<p>I updated Worksheet2 and States Daily. It should be reflected on the site/API within an hour.</p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/82675607-104cc600-9c13-11ea-95fa-14a4c1d5cf7f.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/82675784-4db15380-9c13-11ea-8dd8-6a18289eecad.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

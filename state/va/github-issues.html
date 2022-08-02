@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Virginia Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Virginia</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Virginia</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 12, 2021, 12:02 PM PST</td>
+          <td>1062</td>
+          <td>
+            <a href="#issue-1062">[VA] Backfill antigen and antibody testing from state dataset</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 12, 2021, 12:02 PM PST</td>
+          <td>1062</td>
+          <td>
+            <a href="#issue-1062">[VA] Backfill antigen and antibody testing from state dataset</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 13, 2020, 11:34 AM PST</td>
+          <td>1013</td>
+          <td>
+            <a href="#issue-1013">[VA] Add antibody and antigen tests to tracking</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 2, 2020, 9:31 AM PST</td>
+          <td>990</td>
+          <td>
+            <a href="#issue-990">[VA] Backfill our entire cumulative hospitalizations timeseries to better align with Virginia&#39;s reporting</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 5, 2020, 4:05 PM PST</td>
+          <td>931</td>
+          <td>
+            <a href="#issue-931">[VA] bad cumulative icu and on-ventilator cumulative numbers at the beginning of April</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 5, 2020, 3:32 PM PST</td>
+          <td>930</td>
+          <td>
+            <a href="#issue-930">[VA] Remove one-time cumulative vent and icu numbers from reporting</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 22, 2020, 7:25 AM PDT</td>
+          <td>857</td>
+          <td>
+            <a href="#issue-857">[VA] Remove antibody totals and positive captured. Outreach to VA indicates that they might contain antigen</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 18, 2020, 8:03 AM PDT</td>
+          <td>847</td>
+          <td>
+            <a href="#issue-847">[VA] Probables Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 16, 2020, 11:45 AM PDT</td>
+          <td>840</td>
+          <td>
+            <a href="#issue-840">[VA] backfill Anitbody positives (we already capture totals from same source)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 25, 2020, 12:23 PM PDT</td>
+          <td>790</td>
+          <td>
+            <a href="#issue-790">[VA] Test Encounters backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 12, 2020, 6:27 PM PDT</td>
+          <td>757</td>
+          <td>
+            <a href="#issue-757">[VA]Switch VA&#39;s total test numbers from `Total Tests (PCR)` column to `Total Tests Encounters (PCR)` column</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 6:44 AM PDT</td>
+          <td>525</td>
+          <td>
+            <a href="#issue-525">[VA] Deaths - PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 3, 2020, 3:25 PM PDT</td>
+          <td>351</td>
+          <td>
+            <a href="#issue-351">[VA historical data] Using &quot;Unique people tested&quot; instead of &quot;Total people tested&quot; for negative calculations</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 24, 2020, 9:19 PM PDT</td>
+          <td>288</td>
+          <td>
+            <a href="#issue-288">[States Daily CSV] VA deathIncrease is negative for 2020-04-05</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 23, 2020, 8:53 AM PDT</td>
+          <td>266</td>
+          <td>
+            <a href="#issue-266">VA data for 4/21 and 4/22 needs update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 13, 2020, 6:31 AM PDT</td>
+          <td>190</td>
+          <td>
+            <a href="#issue-190">Historicals for VA (4/11 &amp; 4/12)</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1062">#1062: [VA] Backfill antigen and antibody testing from state dataset</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1062</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on January 12, 2021, 12:02 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> Backfilling data from as far back as Jan-26th, 2020
+<strong>Overview:</strong> Antigen and antibody totals and positive encounters, will be filled in the specimens fields.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-758910449">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 12, 2021, 12:11 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062#issuecomment-758910449" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The antigen testing goes back to Jan-26th, 2020. This is <em>very</em> early for antigen testing. We're filling the data now as it appears in the dataset, and will send a question to the state about the data.
+<a href="../../assets/github/files/5804536/Multi-edit.tool-PRODUCTION.-.VA-reb-20210112_post.csv.txt">Multi-edit tool-PRODUCTION - VA-reb-20210112_post.csv.txt</a>
+<a href="../../assets/github/files/5804537/Multi-edit.tool-PRODUCTION.-.VA-reb-20210112.csv.txt">Multi-edit tool-PRODUCTION - VA-reb-20210112.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768612169">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 27, 2021, 2:10 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062#issuecomment-768612169" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768613898">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 27, 2021, 2:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062#issuecomment-768613898" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was done</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1062">#1062: [VA] Backfill antigen and antibody testing from state dataset</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1062</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on January 12, 2021, 12:02 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> Backfilling data from as far back as Jan-26th, 2020
+<strong>Overview:</strong> Antigen and antibody totals and positive encounters, will be filled in the specimens fields.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-758910449">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 12, 2021, 12:11 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062#issuecomment-758910449" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The antigen testing goes back to Jan-26th, 2020. This is <em>very</em> early for antigen testing. We're filling the data now as it appears in the dataset, and will send a question to the state about the data.
+<a href="../../assets/github/files/5804536/Multi-edit.tool-PRODUCTION.-.VA-reb-20210112_post.csv.txt">Multi-edit tool-PRODUCTION - VA-reb-20210112_post.csv.txt</a>
+<a href="../../assets/github/files/5804537/Multi-edit.tool-PRODUCTION.-.VA-reb-20210112.csv.txt">Multi-edit tool-PRODUCTION - VA-reb-20210112.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768612169">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 27, 2021, 2:10 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062#issuecomment-768612169" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768613898">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 27, 2021, 2:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1062#issuecomment-768613898" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was done</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1013">#1013: [VA] Add antibody and antigen tests to tracking</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1013</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 13, 2020, 11:34 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1013" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: VA</p>
+<p><strong>Describe the problem</strong>
+VA added antibody testing encounters data and antigen test encounters that we're not capturing on 11/23.
+(We didn't capture the antigen because we were unsure about lumping with antibody)
+We can get historical data for it.
+https://www.vdh.virginia.gov/content/uploads/sites/182/2020/11/VDH-Antibody-Test-Reporting-Insights.pdf</p>
+<p><strong>Link to data source</strong>
+https://www.vdh.virginia.gov/coronavirus/coronavirus/covid-19-in-virginia-testing/
+https://data.virginia.gov/resource/3u5k-c2gr.json</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-751861867">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 28, 2020, 12:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1013#issuecomment-751861867" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-756396049">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 7, 2021, 1:27 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1013#issuecomment-756396049" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-799925318">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on March 15, 2021, 8:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1013#issuecomment-799925318" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Done in Issue <a href="https://github.com/COVID19Tracking/issues/issues/1062">1062</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-990">#990: [VA] Backfill our entire cumulative hospitalizations timeseries to better align with Virginia&#39;s reporting</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            990</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on December 2, 2020, 9:31 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/990" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> VA</p>
+<p><strong>Dates affected:</strong> 3/19-12/1</p>
+<p><strong>Describe the issue:</strong> On April 26, 2020, we began reporting Virginia's Ever hospitalized as calculated from {&quot;Combined number of confirmed positive COVID-19...&quot; + &quot;...discharged&quot;} from the official <a href="https://www.vhha.com/communications/virginia-hospital-covid-19-data-dashboard/">Virginia Hospital and Healthcare association public dashboard</a>. On December 2, 2020, we revised out time series of Virginia's Ever hospitalized to align with what the state reports on the state <a href="https://www.vdh.virginia.gov/coronavirus/covid-19-in-virginia/">dashboard</a>.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-737394476">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 2, 2020, 9:54 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/990#issuecomment-737394476" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5631143/Changes-_1_.xlsx">Changes-<em>1</em>.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-931">#931: [VA] bad cumulative icu and on-ventilator cumulative numbers at the beginning of April</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            931</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on November 5, 2020, 4:05 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/931" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/62236447/98309976-b6ea1080-1f80-11eb-8540-dc6c5a977ea2.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-722717238">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 5, 2020, 4:08 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/931#issuecomment-722717238" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Dup of https://github.com/COVID19Tracking/issues/issues/930</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-930">#930: [VA] Remove one-time cumulative vent and icu numbers from reporting</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            930</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on November 5, 2020, 3:32 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/930" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Virginia</p>
+<p><strong>Describe the problem</strong>
+This is a number that was retrieved once from reporting and carried for one week
+https://www.facebook.com/GovernorVA/videos/218402129225741/
+reporting an errant cumulative number for one week is skewing the national numbers.
+We should either remove the numbers, or carry them forward.</p>
+<p><strong>Link to data source</strong>
+<img src="https://user-images.githubusercontent.com/1749380/98308322-bc9e2100-1f95-11eb-9da1-cfe9fb4a1531.png" alt="image"></p>
+<p>Additionally, VA has a 4 day gap in cumulative hospitalizations: 2020-04-14 - 2020-04-11</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-722705344">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on November 5, 2020, 3:32 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/930#issuecomment-722705344" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="https://github.com/COVID19Tracking/issues/issues/929">Parent issue for cumulative hospitalizations</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-722724294">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 5, 2020, 4:26 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/930#issuecomment-722724294" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is updated: the values in cumulative ICU and cumulative on ventilator were deleted</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-723218290">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 6, 2020, 9:58 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/930#issuecomment-723218290" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Similarly, fix a 4-day gap in in cumulative hospitalized between 2020-04-11 and 2020-04-14</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-857">#857: [VA] Remove antibody totals and positive captured. Outreach to VA indicates that they might contain antigen</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            857</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 22, 2020, 7:25 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/857" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Virginia</p>
+<p><strong>Describe the problem</strong>
+Virginia provides total tests encounters and PCR test encounters. We relied on previous outreach and were using the difference between the two numbers as antibody positives &amp; totals, but based on recent outreach it appears that this number might also contain antigen tests, so we have to delete the previous capture.</p>
+<p><strong>Action Plan</strong>
+Remove time-series of positive and total antigen in VA</p>
+<p><strong>Related Issue</strong>
+https://github.com/COVID19Tracking/issues/issues/840</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-696915163">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 22, 2020, 11:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/857#issuecomment-696915163" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5263453/VA.Antibody.before.xlsx">VA Antibody before.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-847">#847: [VA] Probables Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            847</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 18, 2020, 8:03 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/847" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: VA</p>
+<p><strong>Describe the problem</strong>
+CTP started reporting probables generally around 7/28 for many states. VA has been reporting probables since it started separating out confirmed and probable case counts on 4/21. We can backfill probables using positive - confirmed until 4/21 and cross-referencing with screenshots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-694921259">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 8:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/847#issuecomment-694921259" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/57415941/93613238-9947f400-f99e-11ea-84ac-55ddfb5b2ccc.png" alt="Screen Shot 2020-09-18 at 11 00 49 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694921409">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 8:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/847#issuecomment-694921409" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/57415941/93613268-a369f280-f99e-11ea-9495-478aa6c52fd6.png" alt="Screen Shot 2020-09-18 at 11 01 03 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698506582">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 24, 2020, 11:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/847#issuecomment-698506582" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'd by DZL 9/24 13:16</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-840">#840: [VA] backfill Anitbody positives (we already capture totals from same source)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            840</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on September 16, 2020, 11:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/840" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We can backfill antibody positives from the same data source that's used for PCR total and positives and antibody totals</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-693627476">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 16, 2020, 12:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/840#issuecomment-693627476" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>States Daily before and after the update:
+Added data from our daily logs going back to 15-08-2020, and then backfilled from the state data source, as downloaded on 16-08-2020 (with data to the 15th) all the way back to 07-04-2020</p>
+<p><a href="../../assets/github/files/5234613/va_post_20200916.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">va_post_20200916[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a>
+<a href="../../assets/github/files/5234614/va_pre_20200916.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">va_pre_20200916[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-790">#790: [VA] Test Encounters backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            790</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on August 25, 2020, 12:23 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/790" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>VA has a full time series of <code>test encounters</code> but we started collecting it beginning of May.
+Need to backfill, need to decide how to backfill</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-684059594">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 31, 2020, 2:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/790#issuecomment-684059594" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated PCR test encounters and PCR positive tests:
+Backfilled test encounters ad positive tests from the &quot;Tests_by-LabReportDate&quot; dataset, as captured on 2020-07-20
+Between 20-7-2020 and today, positive PCR tests were filled from their respective daily sums as show on the dashboard and the &quot;Tests_by-LabReportDate&quot; dataset (changes daily)</p>
+<p><img src="../../assets/github/images/62236447/91771829-8361c300-eb98-11ea-89e3-030b4b5c7333.png" alt="Screenshot from 2020-08-31 14-38-07">
+<img src="../../assets/github/images/62236447/91771831-83fa5980-eb98-11ea-9ef2-b232c1e6ab9d.png" alt="Screenshot from 2020-08-31 14-42-32"></p>
+<p><a href="../../assets/github/files/5152780/va_pre_20200831.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">va_pre_20200831[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a>
+<a href="../../assets/github/files/5152778/va_post_20200831.DataStore.Coronavirus.numbers.by.state.-.Raw.StatesDaily.csv.txt">va_post_20200831[DataStore]Coronavirus numbers by state - [Raw]StatesDaily.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-757">#757: [VA]Switch VA&#39;s total test numbers from `Total Tests (PCR)` column to `Total Tests Encounters (PCR)` column</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            757</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 12, 2020, 6:27 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/757" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Virgina</p>
+<p><strong>Describe the problem</strong>
+Starting in early May, Virginia has been reporting their tests in units of test encounters. CTP has been capturing this data in the <code>Total Tests (PCR)</code> column. CTP now added a column to capture tests reported in test encounters units so we are moving the data to the correct column.</p>
+<p><strong>Link to data source</strong>
+https://www.vdh.virginia.gov/coronavirus/2020/05/07/how-is-vdh-calculating-the-number-of-people-tested/</p>
+<p><strong>Before</strong>
+<img src="https://user-images.githubusercontent.com/1749380/90084203-c25fcf80-dce2-11ea-8e64-79fd49f21e04.png" alt="image"></p>
+<p>1283409
+1267512
+1257605
+1240339
+1219165
+1205004
+1191304
+1176180
+1164515
+1151604
+1136568
+1123927
+1107360
+1091615
+1073463
+1056148
+1036010
+1025066
+1007314
+987188
+969145
+951174
+937148
+917501
+904423
+886748
+873787
+858312
+842124
+828017
+811187
+801205
+783516
+765889
+750631
+735207
+725327
+712350
+706588
+696520
+685657
+671560
+655958
+642371
+633705
+625663
+615290
+603870
+590404
+574013
+565835
+555607
+543186
+528914
+509930
+499599
+491884
+483024
+476573
+466597
+457623
+448172
+405025
+395972
+388480
+381220
+377484
+368857
+361519
+351354
+340197
+328889
+322568
+313283
+303430
+296321
+285273
+275074
+265279
+256913
+242292
+230683
+223433
+216890
+210965
+201183
+194677
+188874
+184118
+176635
+185551
+180084
+171239
+167758
+157957
+150952
+143220
+136558
+127938
+127938
+122778
+119065</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-525">#525: [VA] Deaths - PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            525</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on June 25, 2020, 6:44 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/525" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Need to amend historical total-deaths, historical confirmed-deaths and historical probable-deaths on 5/13 and prior.</p>
+<p>Confirmed-deaths missing or incorrect on 5/13 and prior (ex. on 5/2, we recorded 454 confirmed-deaths, but historical screenshot shows 572).</p>
+<p>Note historical screenshots for VA from COVID Tracking Project external-facing website.  https://covidtracking.com/data/state/virginia#historical Confirmed and probable began to be reported in the dashboard starting with the 4/21 12:19pm screen capture (not 6am one).  Here is the first one where we see confirmed and probable called out. https://covidtracking.com/screenshots/VA/VA-20200421-121931.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-653027056">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 2, 2020, 7:07 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/525#issuecomment-653027056" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I updated the values based on screenshots.</p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/86368929-ca404480-bc4b-11ea-929d-db7a20ca0223.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/86370347-9bc36900-bc4d-11ea-9016-0da6d8f7d9c3.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-351">#351: [VA historical data] Using &quot;Unique people tested&quot; instead of &quot;Total people tested&quot; for negative calculations</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            351</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on May 3, 2020, 3:25 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/351" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>As per conversation today at the publish shift, yesterday's negative numbers do not fit our definition of &quot;Negatives (people and cases)&quot; as the &quot;Total people tested&quot; was used (due to confusing language). The new procedure now uses &quot;Unique people tested&quot; instead.</p>
+<p>Previous number:
+VA [Negatives] : 95471 (=112450 - 16979)</p>
+<p>Should be:
+VA[Negatives] : 84365 (=101344 - 16979)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623534013">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 4, 2020, 8:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/351#issuecomment-623534013" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@quangnguyen1995</strong>
+I updated the data. Please double check. Thanks :)</p>
+<p><strong>Before</strong>
+<img src="../../assets/github/images/1749380/80983446-8d4a0400-8dfa-11ea-8a3a-6d579f6174d5.png" alt="Screenshot_2020-05-04 Coronavirus numbers by state (CovidTracking, DEV COPY)"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/1749380/80983444-8d4a0400-8dfa-11ea-9585-331d3efc6e4a.png" alt="Screenshot_2020-05-04 Coronavirus numbers by state (CovidTracking, DEV COPY)(1)"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-288">#288: [States Daily CSV] VA deathIncrease is negative for 2020-04-05</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            288</p>
+          <p>
+            <strong>acobolew</strong> opened this issue on April 24, 2020, 9:19 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/288" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Virginia positiveIncrease is negative for 2020-04-05:</p>
+<blockquote>
+<p>library(data.table)
+covidtracking.dt &lt;- fread('https://covidtracking.com/api/v1/states/daily.csv')
+covidtracking.dt[, date := as.Date(as.character(date), '%Y%m%d')]
+covidtracking.dt[order(date, decreasing=FALSE)][ , .(date, state, death, deathIncrease) ][deathIncrease &lt; 0]
+date state death deathIncrease
+1: 2020-04-05    VA    51            -1
+2: 2020-04-07    DC    22            -2
+3: 2020-04-22    AR    42            -1
+4: 2020-04-23    PA  1421          -201
+5: 2020-04-24    KS   111            -1
+6: 2020-04-24    TN   168            -2</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626274852">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 9, 2020, 10:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/288#issuecomment-626274852" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631252266">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 19, 2020, 10:51 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/288#issuecomment-631252266" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-266">#266: VA data for 4/21 and 4/22 needs update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            266</p>
+          <p>
+            <strong>nhinze</strong> opened this issue on April 23, 2020, 8:53 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/266" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>VA had some data reporting issues on 4/21 and 4/22. Data needs to be updated to the respective 6PM screenshots.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-618979527">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 24, 2020, 5:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/266#issuecomment-618979527" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for reporting this issue <strong>@nhinze</strong></p>
+<p>We will update the data based on the screenshots.
+https://covidtracking.com/screenshots/VA/VA-20200421-181818.png
+https://covidtracking.com/screenshots/VA/VA-20200422-181901.png</p>
+<p><strong>Before</strong>
+<img src="../../assets/github/images/1749380/80212394-66731d00-8605-11ea-9894-01f3e12ca611.png" alt="VA cases Before"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/1749380/80212422-725edf00-8605-11ea-9480-bf3fb5e4a270.png" alt="VA Cases After"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-619065557">
+          <div class="frontmatter">
+            <div>
+              <strong>nhinze</strong> commented on April 24, 2020, 8:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/266#issuecomment-619065557" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Note that the &quot;Negative&quot;, &quot;Total&quot;, &quot;Death&quot; and &quot;Hospitalization&quot; columns for those dates is also incorrect.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-619098651">
+          <div class="frontmatter">
+            <div>
+              <strong>goldfarb</strong> commented on April 24, 2020, 8:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/266#issuecomment-619098651" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you <strong>@nhinze</strong></p>
+<p>We have made the updates here, and it will be reflected on the site soon.</p>
+<p>Before
+<img src="../../assets/github/images/3722037/80232531-0db27d00-8623-11ea-80e8-4ab602a9ff21.png" alt="image"></p>
+<p>After</p>
+<p><img src="../../assets/github/images/3722037/80232468-f4a9cc00-8622-11ea-869f-f033409fc89e.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-620172807">
+          <div class="frontmatter">
+            <div>
+              <strong>astrowonk</strong> commented on April 27, 2020, 12:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/266#issuecomment-620172807" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The Virginia Dept of Health's <a href="https://www.vdh.virginia.gov/content/uploads/sites/182/2020/03/VDH-COVID-19-PublicUseDataset-Cases.csv">CSV</a> (recently switched to https and alas has some certificate validation issues on some clients) has:</p>
+<pre><code>2020-04-22 | 10266
+2020-04-23 | 10998
+2020-04-24 | 11594
+2020-04-25 | 12366
+</code></pre>
+<p>Why are the totals here different from the state?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-620252808">
+          <div class="frontmatter">
+            <div>
+              <strong>nhinze</strong> commented on April 27, 2020, 2:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/266#issuecomment-620252808" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Actually, the numbers are all off starting 4/23 now compared to the screenshots.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-190">#190: Historicals for VA (4/11 &amp; 4/12)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            190</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on April 13, 2020, 6:31 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/190" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Some issues with VA data for 4/12 and 4/11 so far as observed by the 4/13 morning data entry crew:</p>
+<ol>
+<li>
+<p>Guidelines for updating current hospitalizations have updated to include both pending and confirmed hospitalization cases (if the state reports it). However, the number from 4/12 seems to indicate that only hospitalization numbers from confirmed cases were reported. On 4/11, the number of hospitalizations was 1252, but, the next day it dropped to 751, which is closer to the number of current hospitalizations for cases only on the dashboard. Unfortunately this is only circumstantial evidence since no screenshots for the hospitalization dashboard were recorded.</p>
+</li>
+<li>
+<p>The number of current ICU and ventilation were also added together for 4/11 and 4/12. However, ICU numbers already include those on ventilation, which means those numbers should be separate. Specifically, the numbers should be:
+<strong>4/11</strong> Curr. ICU: 426 | Curr. Vent: 283
+<strong>4/12</strong> Curr. ICU: 440 | Curr. Vent: 294
+These numbers were inferred from the formula on the spreadsheet.</p>
+</li>
+</ol>
+<p>Additionally, is there any way we can add screenshots for this page (https://www.vhha.com/communications/virginia-hospital-covid-19-data-dashboard/)? We currently take hospitalization data from it.</p>
+<p>Let me know if there are any issues 👍</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623774999">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/190#issuecomment-623774999" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-624063794">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 5, 2020, 6:43 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/190#issuecomment-624063794" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@quangnguyen1995</strong></p>
+<ol>
+<li>We added the hospital dashboard as a secondary source now.</li>
+</ol>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

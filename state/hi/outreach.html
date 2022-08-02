@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Hawaii Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Hawaii</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Hawaii</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>June 21, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently doing some research on variations in state COVID-19 death definitions, and I had a quick question about the way Hawaii defines &quot;Total fatalities&quot; number on your dashboard as &quot;confirmed death from COVID-19 complications.&quot;</p>
+<p>I understand that Hawaii is requiring a positive PCR test to count individuals in this metric. I am curious about the &quot;from COVID-19 complications&quot; part of the definition—how does Hawaii determine whether an individual died from COVID-19 complications? Is anyone with a positive PCR test taken to have died of COVID-19 complications, or is Hawaii requiring other criteria on top of a PCR test (e.g. COVID-19 listed on death certificates)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Deaths are counted as confirmed COVID-related deaths if COVID is listed, or if an attending clinician confirms that it will be listed, as contributing to the individual’s death on their death certificate or their death summary from medical records. An individual with COVID listed as a contributing factor on their death certificate without a confirmatory PCR test would still be counted as a COVID-related death as they would meet the Council of State and Territorial Epidemiologists case definition criteria to be counted as a probable case. Although, as of today we have not identified any deaths that fall into that category in Hawaii.
+ 
+The usual source of confirmation can depend on where the decedent passed away. If the individual passed away at a hospital, we include it as a COVID-related death if COVID is mentioned as one of the immediate or contributing causes of death on the death summary. If the person died at home, then we confirm the death as COVID-related if COVID is listed on the death certificate as the immediate cause of death or is listed in Part II. Generally, for such cases the PCP signs the death certificate. In some situations, COVID tests are also performed postmortem to confirm or rule out COVID as a cause of death, for example, if the death occurs under suspicious conditions (passing away unattended at home, roadside, or hotel). In those cases, we wait for the autopsy results and for the death certificate to be signed from the Coroner’s office.
+ 
+A positive PCR test for COVID-19 in a person who died prompts us to request additional documentation, but a positive PCR test alone is not sufficient for us to classify a death as COVID-19 related. There also has to be some documentation that the death was considered related to COVID-19, as described above.</p>
+
+        </div>
+      
+    
+  
+    <h2>March 1, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We've noticed that the graph on the Hospitalization tab of Hawaii's dashboard is showing 1 COVID-19 hospitalization on February 27, 2021, a decrease of 29 from the prior day, while the &quot;Currently Hospitalized&quot; figure on the tab shows 31 current hospitalizations. Additionally, the ICU beds and Ventilators tab graphs both show 0 COVID-19 patients in the ICU or on a ventilator, while the &quot;ICU Beds used by COVID-19 Patients&quot; and &quot;Ventilators used for COVID-19 Patients&quot; each show 3 patients. Could you clarify the number of current COVID-19 hospitalizations, COVID-19 patients in ICU, and COIVD-19 patients on a ventilator for February 27, 2021?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>March 2, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>System error that they are fixing</p>
+
+        </div>
+      
+    
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We have been comparing our data to the CDC Cases and Deaths data. We found that the total number of cases matches perfectly to the confirmed cases on Hawaii’s dashboard. However in the CDC data your probable cases are not recorded.</p>
+<p>Do your probable cases get reported to the CDC in the same way as confirmed cases, or is there a different process for reporting probable cases? If it is the same process, do you have any insight into why this might be happening?</p>
+<p>We are also interested in the process of cases and deaths reporting to the federal government in general. We understand from the CDC website that there is a process of the CDC collecting and then confirming aggregate numbers from each jurisdiction, and that this aggregate reporting complements line level reporting.
+Can you tell us about the different mechanisms of reporting cases and deaths to the federal government (voluntary NNDS, aggregate counts process, and line level reporting from the state health department)? We are particularly interested in the aggregate count process as it appears to be the source of the state-level data published by the federal government regularly.</p>
+<p>(question with links and screenshot can be found in this doc: https://docs.google.com/document/d/19PFG6YUP1awDTq_f7-gEoxw8G6bzbZze9DGopFS4au0/edit)</p>
+
+    </div>
+    
+  
+    <h2>February 4, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On your data dashboard, Total fatalities (cumulative) are defined as “The total amount of patients who have a confirmed death from COVID-19 complications”. In this definition, do “confirmed” deaths include only deaths in cases confirmed through PCR testing? Would HI be able to specify this information in the definitions tab of your dashboard?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 4, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>According to HDOH, all covid confirmed deaths are confirmed through PCR testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>December 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The footnote in Hawaii’s “Race of COVID-19 Cases” dashboard was recently changed to remove the number of those where Native Hawaiian/Pacific Islander or Asian were unspecified. Are these categories expected to be added back later? In the meantime, have these been combined in the “no race information available” number?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 5, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The counts for persons with partial race information (i.e. major race but not specific race information) were recently collapsed into the broader category of “No Specific Race Information Available” based on feedback from our NHPI community partners.</p>
+<p>We had been using this measure to perform additional outreach and data abstraction, and then retroactively recategorized all cases for which we were able to identify the appropriate specific race information as available.</p>
+<p>Any future analysis/reporting that aggregates all Asians and all NHPI into those respective categories would include those cases, but we are not planning to report those categories at this time; preferring instead to consider these cases as “missing” race data (with respect to the level and detail of race information that we expect for our cases).</p>
+
+        </div>
+      
+    
+  
+    <h2>November 5, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We noticed that you added some new figures to one of your dashboards (https://hiema.maps.arcgis.com/apps/opsdashboard/index.html#/9a19e1adeceb46c58185cb0396faf36b) on 11/2 for hospitalizations. The dashboard records 16,096 “hospitalized (cumulative).”
+(see slack thread for original question: https://covid-tracking.slack.com/archives/CURFQNQJV/p1604615403388200 )
+Is there a difference in the meaning of these two terms? If not, can you clarify which one is the correct number of cumulative COVID-19 hospitalizations in Hawaii?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>During a transition to a newer data processing method a calculation was incorrectly summarizing the hospital numbers.  This issue has been corrected and the numbers are now reflective of the correct amounts.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>I come bearing two questions from our Data Quality folks as they work on getting HI's encounters data integrated:</p>
+<ul>
+<li>We are trying to work out why the sum of the &quot;New Positive Lab&quot; column is not equal to total cases on the dashboard—we may be missing something, and could use some help understanding the relationship between these metrics.</li>
+<li>On 10/7 we noticed a decline in total tests reported of ~1,500 tests. Do you know what happened there? We'd like to be able to account for it to our data users.</li>
+</ul>
+<p>One other thing that seems worth mentioning is that some states are reporting encounters (or specimens) with repeat positives included in the daily counts, and some are reporting encounters (or specimens) as you all are doing, excluding repeat positives. We're starting to try to better understand where this divergence is happening. But the encounters definitions you've listed are otherwise in line with what we're seeing from other states that report the metric.</p>
+<p>Many thanks—we're looking forward to getting your lab encounters loaded up and into our API.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Some variation between these numbers is caused by confirmed cases for which we do not have an ELR signal.
+ 
+Positive labs uses the ELR as it’s data source, and we feel in order to make a valid comparison to negative laboratory results, we should not include in our laboratory surveillance data cases identified by other sources. We are report these cases as confirmed cases, even if they are identified by other means.
+ 
+The decrease in total cases is explained in our documentation. To provide a further explanation, the decrease was due to the transition from specimens to encounters to align with your precise definition.</p>
+<p>We’ve always deduplicated multiple positive results so that an individual can only contribute one positive test.
+ 
+However, our initial deduplication process was counting a single specimen (i.e. an encounter) that was sent to another lab for confirmatory testing, as a new “result”, so the encounter was being double counted.
+ 
+In order to strictly follow your encounters definition, we needed to update our deduplication methods so that a single specimen collected on a single day that is tested multiple times by multiple labs would only get counted once.
+ 
+This resulted in a small reduction in total tests, as you have noted.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 6, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>HI reached out to us after some continuing convo about tests</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 7, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Dear COVID Tracking Project,
+ 
+We are under new leadership and have recently released some new updates to our website to promote greater transparency and should help your tracking efforts:</p>
+<ol>
+<li>CSV download for all historical raw lab data (lab count by result, county of diagnosis, and result date) publicly available <a href="https://public.tableau.com/views/EpiCurveApr4/CSVDownload.csv?:showVizHome=no">https://public.tableau.com/views/EpiCurveApr4/CSVDownload.csv?:showVizHome=no</a>
+(updated daily at 12:00 noon Hawaiian Time)</li>
+<li>Clearer documentation – label total tests as “encounters” in documentation, conforming to your suggested terminology
+ 
+We have always de-duplicated the labs and reported percent positivity using the exact method you described calling the denominator “encounters”, we just didn’t use that term.
+ 
+I found the following blog post on your site very useful in trying to explain to others what we have always been measuring and reporting in a more consistent and standardized way.
+<a href="https://covidtracking.com/blog/counting-covid-19-tests">https://covidtracking.com/blog/counting-covid-19-tests</a>
+ 
+I am updating our documentation to refer to “encounters” to help clarify this issue.
+ 
+Other entities in the Hawaii Dept of Health (non-epidemiologists) have been reporting out “unique persons” which as your site publishes even though you have suggested that this is the worst value to use for surveillance purposes. I’m not sure what the added value of reporting unique persons is exactly. It seems to be creating more confusion.
+ 
+For some reason, Johns Hopkins appears to be using “unique individuals” to calculate percent positivity for the State of Hawaii, even though we provide the cumulative number of encounters on our website and you and JHU claim to prefer using encounters when it is available.
+ 
+I have attempted to reach Johns Hopkins (Nuzzo and '<a href="mailto:hottman1@jhu.edu">hottman1@jhu.edu</a>') to clarify their methodology and data sources, since it is often reported by our media and cited by people as the standard, but JHU has not responded.
+ 
+It is possible this URL may change, but the source for our lab and epi curve data can always be found on our website:
+ 
+<a href="https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/#testing">https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/#testing</a>
+<a href="https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/#epicurve">https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/#epicurve</a></li>
+</ol>
+
+        </div>
+      
+    
+  
+    <h2>September 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>&quot;Race of COVID-19 Cases Compared to State Population&quot;:  https://experience.arcgis.com/experience/eb56a98b71324152a918e72d3ccdfc20/page/page_7/  The note says: “...cases with NH/PI unspecified race (n=369), and cases with Asian unspecified race (n=300);...&quot;  Are the 369 additional NH/PI in addition to the 562 Native Hawaiian and 1404 Pacific Islander cases included in the chart? Similarly, are the 300 Asian in addition to the 212 Asian people who’re listed in the case count?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Please see footnote.
+“*Excludes non-residents and missing (n=753), cases with no race information available (n=5,587), cases with NH/PI unspecified race (n=369), and cases with Asian unspecified race (n=300);”</p>
+
+        </div>
+      
+    
+  
+    <h2>August 30, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>HI reached out to us about Johns Hopkins</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>September 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>[Responding to our email explaining JHU stuff]</p>
+<p>Thank you for the detailed response.
+ 
+It actually caused some interesting confusion because our Lieutenant Governor had the Surgeon General on his Instagram Live and they were talking about Percent Positivity while using persons tested for the denominator (citing a 12% single day positivity) while our DOH dashboard was using testing encounters and 7-day averages showing 6% positivity.
+ 
+I hope more people will move to the testing encounters because as your definition points out, a person can have many testing “encounters” over time and each of those are valid surveillance snapshots from a longitudinal perspective.
+ 
+I will reach out to Johns Hopkins to understand why their site says they claim to prefer to use encounters (quoted below), yet seem to be opting to use persons for their Hawaii calculation.
+ 
+Thanks for your work to bring accuracy and integrity to the data. I apologize that our site isn’t more accessible to the APIs, those decisions are above my pay grade.</p>
+<p>By any chance, would you happen to have any contacts at Johns Hopkins to help me reconcile this discrepancy.
+ 
+I would like to cite JHU as the authority for why we are using the encounters methodology to calculate percent positive, but their estimate by the same methods is very different.
+ 
+I sent the below message to the International Vaccine Access Center, the only contact info I could find on the JHU website related to testing data.
+ 
+If you could pass this along to anyone you know over there, we would appreciate it.
+ 
+There is a lot of public confusion around this important metric, so I’m trying to bring some clarity to the issue.</p>
+
+        </div>
+      
+        <h4>August 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I’d like to follow up on an earlier thread about testing.
+ 
+Johns Hopkins shows Hawaii’s Percent Positivity for the past 7 days as 10.1% even though we’ve calculated it to be 6.0% using the methods described by JHU.
+<a href="https://coronavirus.jhu.edu/testing/tracker/overview">https://coronavirus.jhu.edu/testing/tracker/overview</a>
+I’m wondering if the data source is still “unique persons tested” as the denominator, which would bias the daily and weekly percent positivity since people can have serial negative tests over time which are no longer counted as new tests.
+ 
+I was confused why you had opted to count individuals instead of tests for a serial cross sectional surveillance metric (see highlighted section quoted below).
+ 
+JHU cites the COVID Tracking Project as their data source, but I can’t find out how they are getting to 10.1%.
+ 
+Can you help me understand this discrepancy?</p>
+
+        </div>
+      
+    
+  
+    <h2>August 12, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you not report hospitalization data on Instagram?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 12, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hospital numbers are constantly fluctuating, but we have begun adding them into the Daily News Digest reports which can be found here: https://health.hawaii.gov/news/category/corona-virus/
+This is updated Monday through Friday.</p>
+<p>A bulk of the data he reports is available in the daily news digests or on the DOH DOCD website. Unfortunately, their office doesn't have the capacity to do anything separately for reporting out data (again, most of which is available on other government sites).</p>
+
+        </div>
+      
+    
+  
+    <h2>July 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>HI reached out to us about unofficial hospitalizations source.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>You are pulling data from an independent site that does not have access to Hawaii's COVID-19 data.
+They just embed our (DOH) visualizations directly into their own page but don't appear to be maintaining them. 
+We updated the testing data graphic over a week ago and they haven't updated their embed code. 
+Their (and by extension your) testing data for the state is therefore incorrect. 
+Whatever data you were pulling from their site can be just as easily obtained from the official State DOH page, which you already have listed as the &quot;best current data source&quot;. Please verify your data and use official sources. The site you are pulling from is not affiliated with the Department of Health. Thank you for your help in making sure the best and most accurate data is available.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Thanks for writing to us about this. Let me address the issues you raised below
+Unofficial Source Use
+We are going to remove this unofficial source https://www.hawaiidata.org/covid19 from our list now.
+There are two data points that we were pulling from the unofficial source:</p>
+<ol>
+<li>Cumulative Hospitalization -  I think that we can use the Required Hospitalization in https://experience.arcgis.com/experience/eb56a98b71324152a918e72d3ccdfc20 instead or from https://health.hawaii.gov/coronavirusdisease2019/
+Please confirm what you recommend as the best official source of this data point.</li>
+<li>Recovered -  I think that we can use the Released from Isolation in https://experience.arcgis.com/experience/eb56a98b71324152a918e72d3ccdfc20 instead or from https://health.hawaii.gov/coronavirusdisease2019/
+Please confirm what you recommend as the best official source of this data point
+Test Numbers Discrepancy
+Thank you for reporting the discrepancy between the total number of tests and the number we report. We were not using the unofficial source for test data.
+We capture available test numbers from states internally as two separate numbers: people tested and tests.
+Whenever a state reports the number of people tested we report this number as the &quot;main&quot; total test number.
+In Hawaii, we get the number of  people tested from https://hawaiicovid19.com/ (&quot; A total of 90,595 individuals have been tested in the state.&quot;)
+We also capture the number of tests from the Lab Testing tab on https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/ and we record it.
+You can see this number in our API endpoint for Hawaii here under
+https://covidtracking.com/api/v1/states/hi/daily.json
+Note: We conduct ongoing research as to which states report in which unit, and our current counts indicate that 14 states report only in units of people tested, 24 report only in units of tests/specimens, 8 report both, and for 10 it's not clear (even after outreach).
+We are currently working to improve our communication on the website to make it more transparent exactly what is being reported in each state, in addition to the underlying data reported in the API.
+Next Steps</li>
+<li>We are going to update our capture process to remove the unofficial source</li>
+<li>We are going to update our public note on the Hawaii state data page on our website to clarify that we are reporting the number of individuals tested.</li>
+<li>As I mentioned above, we are working to improve communication and transparency around the unit of tests being reported on the website right now.
+Please let me know if this addresses your concerns, and thank you so much for contacting us and helping us improve our reporting.</li>
+</ol>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Thank you for clarifying the sources and methods, it makes a lot more sense now.
+It wasn't apparent that you were pulling from hawaiicovid19.com, which is an official DOH site (previously your site stated that data were being pulled from the unofficial source).
+Thank you for removing the unofficial source.
+Yes, those sources you cited are the best available for hospitalization and recovery.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>When will Hawaii begin reporting race and ethnicity for deaths?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>There are no plans to do so with regard to deaths at the moment.  Numbers too small.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

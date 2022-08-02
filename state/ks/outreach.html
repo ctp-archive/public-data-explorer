@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Kansas Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Kansas</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Kansas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We have two questions about the information Kansas shares with the CDC regarding COVID-19.</p>
+<ol>
+<li>In looking at the CDC’s Cases and Deaths dataset (United States COVID-19 Cases and Deaths by State over Time. link: https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36) we notice that Kansas has values reported for new probable deaths (‘pnew_death’) however no value is reported for probable deaths (‘probdeath’). For example, on 2/15, the value for ‘pnew_death’ was 6 while the field for ‘probdeath’ was blank.</li>
+</ol>
+<p>Can you confirm that Kansas is tracking probable deaths and reporting this information to the CDC? And, if so, can share with us the information you have regarding probable deaths over time?</p>
+<ol start="2">
+<li>More generally, can you tell us about the different mechanisms of reporting cases and deaths to the federal government (voluntary NNDS, aggregate counts process, and line level reporting from the state health department)? We are particularly interested in the aggregate count process as it appears to be the source of the state-level data published by the federal government regularly.</li>
+</ol>
+
+    </div>
+    
+  
+    <h2>August 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting &quot;people tested&quot; as referring to the total number of unique individuals tested. Is this correct? If so, do you have plans to release the total number of tests conducted?
+We have been capturing the total test results in &quot;people tested&quot; since 5/13. Do you have plans to release a full historical time-series for this metric? Furthermore, other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware, Kansas does not at this time. Do you plan to release a historical time series of these numbers in an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+  
+    <h2>August 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach people tested? If so, how? (i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)? When reporting testing results, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+  
+    <h2>August 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’re also interested in testing data in units of “testing encounters”, which can be defined as “the number of unique people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two tests, however, if the same person has two samples tested at a testing center visit, then that only counts as one testing encounter. Are you willing to or are you planning to release testing encounters? If so, will you be able to provide historical data consistently n an automation friendly form, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Kansas performing pool testing? If so, how is this testing reported? What types of tests is the state using?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Kansas conducting antigen testing? Are these testing results reported on the state site? How many tests has the state conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No</p>
+
+        </div>
+      
+    
+  
+    <h2>June 25, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Just to make sure I’m understanding the dashboard correctly, I wanted to confirm the following: If, for example, if I’m looking at the cluster information from Monday’s COVID-19 summary, the bullet point “Long-term Care: 48 clusters (22 closed) 880 cases, 146 deaths” would mean: There is a cumulative total of 880 cases across 48 clusters. Of those clusters, 22 are closed and 66 are active.  Is that correct?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 25, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, that’s correct. [REPORTER NOTE: So basically, the summaries read like this: “Type of facility: Cumulative # of clusters (# of closed clusters), total # of cases across all clusters, # of deaths across all clusters]</p>
+
+        </div>
+      
+    
+  
+    <h2>June 25, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is it possible to get the current number of active cases, and not just active clusters?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 25, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We do not have breakdowns available of the cases connected with active vs closed clusters.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How do you define LTC?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The long-term care facilities are defined under KDADS. Their definition of LTC: Assisted Living Facility, Boarding Care Home, Home Plus, Intermediate Care Facility for Individuals with Intellectual Disabilities, Nursing Facility, Nursing Facility for Mental Health, Residential Health Care Facility and LTC Hospital Unit</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have a definition for what types of facilities are considered long term care?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The long-term care facilities are defined under KDADS. [REPORTER NOTE: KDADS = Kansas Department for Aging and Disability Services]</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What constitutes a facility outbreak? Would a facility outbreak just be the same thing as a cluster? When does a facility outbreak/cluster end? Are the closed outbreak cases included in your LTC totals?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We use the term cluster instead of outbreak in our reporting. We have a COVID-19 Summary sheet accessible on our https://www.coronavirus.kdheks.gov/160/COVID-19-in-Kansas which lists the clusters and includes those considered closed. We list the cumulative cluster numbers and include the number considered close for each category breakdown. A cluster is considered closed 28 days following the last symptom onset.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Regarding a negative test result, are those negative results from both PCR and antibody tests?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our negative numbers include PCR, antibody and antigen.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 14, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Regarding your data about long-term care, do you have distinct resident and staff numbers? How do you define LTC? Do you have health care workers positives / deaths?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 14, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We do not have breakouts of long-term care staffing/residents. We list the cluster information, which a cluster is defined as two or more cases from one known exposure, on our website https://www.coronavirus.kdheks.gov/160/COVID-19-in-Kansas under COVID-19 Summary.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 14, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does KS' &quot;negative tests&quot; (also referred to as “negative results”) figure refer to specimens or people?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 14, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The negative results are people who have tested negative.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

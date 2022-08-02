@@ -1,0 +1,2760 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>North Carolina Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">North Carolina</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">North Carolina</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-03T16:53:54.000-08:00">March 3, 2021, 4:53 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-03T15:04:07.000-08:00">March 3, 2021, 3:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-03T14:57:35.000-08:00">March 3, 2021, 2:57 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-02T14:41:02.000-08:00">March 2, 2021, 2:41 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-28T15:04:05.000-08:00">February 28, 2021, 3:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-03T14:40:52.000-08:00">February 3, 2021, 2:40 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-18T16:29:44.000-08:00">January 18, 2021, 4:29 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-13T17:21:16.000-08:00">January 13, 2021, 5:21 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-01T16:18:52.000-08:00">January 1, 2021, 4:18 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-31T15:18:23.000-08:00">December 31, 2020, 3:18 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-24T15:12:33.000-08:00">December 24, 2020, 3:12 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-26T10:33:49.000-08:00">November 26, 2020, 10:33 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-13T14:03:21.000-08:00">November 13, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-01T09:30:31.000-08:00">November 1, 2020, 9:30 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-29T21:03:47.000-07:00">September 29, 2020, 9:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-27T13:50:28.000-07:00">September 27, 2020, 1:50 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T16:03:22.000-07:00">September 25, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-14T13:03:40.000-07:00">September 14, 2020, 1:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-12T10:02:56.000-07:00">August 12, 2020, 10:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-22T14:02:19.000-07:00">July 22, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-20T19:02:48.000-07:00">July 20, 2020, 7:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-15T18:02:24.000-07:00">July 15, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-30T14:37:59.000-07:00">March 30, 2020, 2:37 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T13:00:05.000-07:00">March 27, 2020, 1:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-26T16:00:06.000-07:00">March 26, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of March 6, 2021, North Carolina no longer updates their COVID-19 data on Sundays.</p>
+<p>On March 3, 2021, we cleared the history of Negative (people or cases) in North Carolina. This number mixed units, but we kept it because we relied on it for <code>totalTestResults.</code> Now, with <code>totalTestResults</code> drawn from <code>totalTestsViral</code>, we no longer need the negatives field to be filled.</p>
+<p>As of March 3, 2021, North Carolina's <code>totalTestResults</code> are drawn from <code>totalTestsViral</code> instead of calculated via positive+negative. This update resulted in a drop of 880,339 tests, mostly due to the removal of antigen tests from the number.</p>
+<p>On March 2nd, 2021, we backfilled North Carolina's <strong>Total PCR tests (specimens)</strong> from the state provided dataset. This added 2 months of data to the beginning of the series (March 17, 2020 to May 17, 2020). This update also separates the captured lumped PCR and antigen tests previously stored in <strong>Total PCR tests (specimens)</strong>, starting on September 22, 2020.</p>
+<p>On February 28, 2021, North Carolina <a href="https://covidtracking.com/screenshots/NC/NC-20210228-115701.png">noted</a> that its data dashboards would not update on that day in order to make changes to improve system performance.</p>
+<p>On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On March 3, 2021, we cleared the history of Negative (people or cases) in North Carolina. This number mixed units, but we kept it because we relied on it for <code>totalTestResults.</code> Now, with <code>totalTestResults</code> drawn from <code>totalTestsViral</code>, we no longer need the negatives field to be filled.</p>
+<p>As of March 3, 2021, North Carolina's <code>totalTestResults</code> are drawn from <code>totalTestsViral</code> instead of calculated via positive+negative. This update resulted in a drop of 880,339 tests, mostly due to the removal of antigen tests from the number.</p>
+<p>On March 2nd, 2021, we backfilled North Carolina's <strong>Total PCR tests (specimens)</strong> from the state provided dataset. This added 2 months of data to the beginning of the series (March 17, 2020 to May 17, 2020). This update also separates the captured lumped PCR and antigen tests previously stored in <strong>Total PCR tests (specimens)</strong>, starting on September 22, 2020.</p>
+<p>On February 28, 2021, North Carolina <a href="https://covidtracking.com/screenshots/NC/NC-20210228-115701.png">noted</a> that its data dashboards would not update on that day in order to make changes to improve system performance.</p>
+<p>On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-03T16:53:54.000-08:00">March 3, 2021, 4:53 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On March 3, 2021, we cleared the history of Negative (people or cases) in North Carolina. This number mixed units, but we kept it because we relied on it for totalTestResults. Now, with totalTestResults drawn from totalTestsViral, we no longer need the negatives field to be filled.</p>
+<p>As of March 3, 2021, North Carolina's <code>totalTestResults</code> are drawn from <code>totalTestsViral</code> instead of calculated via positive+negative. This update resulted in a drop of 880,339 tests, mostly due to the removal of antigen tests from the number.</p>
+<p>On March 2nd, 2021, we backfilled North Carolina's <strong>Total PCR tests (specimens)</strong> from the state provided dataset. This added 2 months of data to the beginning of the series (March 17, 2020 to May 17, 2020). This update also separates the captured lumped PCR and antigen tests previously stored in <strong>Total PCR tests (specimens)</strong>, starting on September 22, 2020.</p>
+<p>On February 28, 2021, North Carolina <a href="https://covidtracking.com/screenshots/NC/NC-20210228-115701.png">noted</a> that its data dashboards would not update on that day in order to make changes to improve system performance.</p>
+<p>On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-03T15:04:07.000-08:00">March 3, 2021, 3:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of March 3, 2021, North Carolina's <code>totalTestResults</code> are drawn from <code>totalTestsViral</code> instead of calculated via positive+negative. This update resulted in a drop of 880,339 tests, mostly due to the removal of antigen tests from the number.</p>
+<p>On March 2nd, 2021, we backfilled North Carolina's <strong>Total PCR tests (specimens)</strong> from the state provided dataset. This added 2 months of data to the beginning of the series (March 17, 2020 to May 17, 2020). This update also separates the captured lumped PCR and antigen tests previously stored in <strong>Total PCR tests (specimens)</strong>, starting on September 22, 2020.</p>
+<p>On February 28, 2021, North Carolina <a href="https://covidtracking.com/screenshots/NC/NC-20210228-115701.png">noted</a> that its data dashboards would not update on that day in order to make changes to improve system performance.</p>
+<p>On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-03T14:57:35.000-08:00">March 3, 2021, 2:57 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On March 2nd, 2021, we backfilled North Carolina's <strong>Total PCR tests (specimens)</strong> from the state provided dataset. This added 2 months of data to the beginning of the series (March 17, 2020 to May 17, 2020). This update also separates the captured lumped PCR and antigen tests previously stored in <strong>Total PCR tests (specimens)</strong>, starting on September 22, 2020</p>
+<p>On February 28, 2021, North Carolina <a href="https://covidtracking.com/screenshots/NC/NC-20210228-115701.png">noted</a> that its data dashboards would not update on that day in order to make changes to improve system performance.</p>
+<p>On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-02T14:41:02.000-08:00">March 2, 2021, 2:41 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On February 28, 2021, North Carolina <a href="https://covidtracking.com/screenshots/NC/NC-20210228-115701.png">noted</a> that its data dashboards would not update on that day in order to make changes to improve system performance.</p>
+<p>On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-28T15:04:05.000-08:00">February 28, 2021, 3:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>NC: On February 3, 2021, the North Carolina Department of Health and Human Services <a href="https://twitter.com/ncdhhs/status/1357052211252068354">reported</a> that the day's case counts were much larger than usual because of the inclusion of a backlog of nearly 8,000 cases identified at FastMed clinics during December 2020 and January 2021.</p>
+<p>On January 18, 2021, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-03T14:40:52.000-08:00">February 3, 2021, 2:40 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On Jaunary 18, 2021 North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that there will be no daily update due to the holiday, and that their data will next be updated on Tuesday, January 19, 2021.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-18T16:29:44.000-08:00">January 18, 2021, 4:29 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On January 13, 2021, North Carolina reported that technical issues occurring on January 12, 2021 prevented processing of case and testing data into their COVID reporting system. As a result, case and testing data reported on January 13, 2021 are lower than they would have been had all the data been processed, and case and testing data on January 14, 2021 will be increased, since it will include the previous day's data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-13T17:21:16.000-08:00">January 13, 2021, 5:21 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their COVID-19 dashboard that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-01T16:18:52.000-08:00">January 1, 2021, 4:18 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 dashboard</a> that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday. On January 1, 2021, they noted that there would be no update to their data on January 1, 2021 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-01T00:09:17.000-08:00">January 1, 2021, 12:09 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 30, 2020, North Carolina announced on its <a href="https://covid19.ncdhhs.gov/dashboard">dashboard</a> that due to holiday-related disruptions and technical issues, data reported on December 30, 2020 was artificially higher than usual and includes 36 hours of data, while data reported on December 31, 2020 was artificially lower than usual and includes only 12 hours of data.</p>
+<p>On December 24, 2020, North Carolina announced that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-31T15:18:23.000-08:00">December 31, 2020, 3:18 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 24, 2020, North Carolina announced that their data would not be updated on December 24, 2020, or December 25, 2020 due to the holiday.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-24T15:12:33.000-08:00">December 24, 2020, 3:12 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 26, 2020, North Carolina announced on their <a href="https://covid19.ncdhhs.gov/dashboard">COVID-19 Data Dashboard</a> that there would be no update to their data on November 26, 2020 due to the thanksgiving holiday. However, on November 27, 2020, they will provide data retroactively for November 26, 2020 and we will backfill our historical data accordingly.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-26T10:33:49.000-08:00">November 26, 2020, 10:33 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 13, 2020, the state of North Carolina <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NC/NC-20201113-113612.png">announced</a> that they are re-defining hospitalization data based on new guidance, whereby hospitalizations are counted by the entire length of stay and not just by length of isolation. This change will likely affect our Now hospitalized metric for the state</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-13T14:03:21.000-08:00">November 13, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_Cases_County/NCDHHS_Dashboard_Cases2?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-01T09:30:31.000-08:00">November 1, 2020, 9:30 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>The metric reported in our API as <code>totalTestsAntigen</code> only includes tests reported after September, 22, 2020. If previous values become available from North Carolina we will backfill the complete time series.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-29T21:03:47.000-07:00">September 29, 2020, 9:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>On September 26, 2020, North Carolina started reporting deaths among individuals who had tested positive via antigen. We record this figure in our <strong>Deaths (probable)</strong> field.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-27T13:50:28.000-07:00">September 27, 2020, 1:50 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>On September 25, 2020, North Carolina started reporting probable cases which caused the <strong>Total Cases</strong> to increase by 4,563.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T16:03:22.000-07:00">September 25, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">announced</a> a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-14T13:03:40.000-07:00">September 14, 2020, 1:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina announced a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On July 22, 2020, North Carolina started reporting the number of patients <strong>currently in the ICU</strong>.</p>
+<p>On August 12, 2020, North Carolina announced a major correction in its <strong>Total PCR tests (specimens)</strong>, resulting in a decrease of more than 220,000 reported tests.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+<p>On July 21, NC announced: &quot;North Carolina has launched new, more detailed hospitalization data to provide more insights into North Carolina’s hospital capacity. NCDHHS continuously works to improve its data systems and has recently begun transitioning to a more automated system for collecting this information. In transitioning to this system, there will be a small shift in hospitalization numbers - the change over the past 30 days is displayed below. This is due to changes in the system including hospital information feeding in over night being backdated in the new system.&quot; Beginning July 22 this change means that there is Current ICU information available. We will work to backfill its time series of NC hospital data as well.</p>
+<p>On August 12, NCDHHS announced a major correction in its cumulative test counts, resulting in a decrease of over 220,000 tests ever completed. A LabCorp official stated: &quot;From late April until last week, Pixel by LabCorp at-home test collection kits that originated out-of-state but were processed in North Carolina were inadvertently included in the manual data submission to the state. We quickly corrected the issue and provided the updated manual reports to NCDHHS. LabCorp’s daily electronically reported data was accurate and unaffected by the error, and this issue does not affect other states or any results reported to patients or their providers.&quot; See the NCDHHS website for more information.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-12T10:02:56.000-07:00">August 12, 2020, 10:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+<p>On July 21, NC announced: &quot;North Carolina has launched new, more detailed hospitalization data to provide more insights into North Carolina’s hospital capacity. NCDHHS continuously works to improve its data systems and has recently begun transitioning to a more automated system for collecting this information. In transitioning to this system, there will be a small shift in hospitalization numbers - the change over the past 30 days is displayed below. This is due to changes in the system including hospital information feeding in over night being backdated in the new system.&quot; Beginning July 22 this change means that there is Current ICU information available. We will work to backfill its time series of NC hospital data as well.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/views/NCDHHS_COVID-19_Dashboard_HospitalizationsE/Hospitalizations?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=no&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=no&amp;:language=en&amp;publish=yes&amp;:loadOrderID=0</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).
+On July 21, NC announced: &quot;North Carolina has launched new, more detailed hospitalization data to provide more insights into North Carolina’s hospital capacity. NCDHHS continuously works to improve its data systems and has recently begun transitioning to a more automated system for collecting this information. In transitioning to this system, there will be a small shift in hospitalization numbers - the change over the past 30 days is displayed below. This is due to changes in the system including hospital information feeding in over night being backdated in the new system.&quot; Beginning July 22 this change means that there is Current ICU information available. We will work to backfill its time series of NC hospital data as well.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://covid19.ncdhhs.gov/dashboard/hospitalizations</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).
+On 7/21, NC announced: &quot;North Carolina has launched new, more detailed hospitalization data to provide more insights into North Carolina’s hospital capacity. NCDHHS continuously works to improve its data systems and has recently begun transitioning to a more automated system for collecting this information. In transitioning to this system, there will be a small shift in hospitalization numbers - the change over the past 30 days is displayed below. This is due to changes in the system including hospital information feeding in over night being backdated in the new system.&quot; Beginning 7/22 this change means that there is Current ICU information available. The COVID Tracking Project will work to backfill its time series of NC hospital data as well.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-22T14:02:19.000-07:00">July 22, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://covid19.ncdhhs.gov/dashboard/hospitalizations</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-20T19:02:48.000-07:00">July 20, 2020, 7:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://files.nc.gov/covid/documents/dashboard/Weekly-COVID19-Patients-Presumed-to-be-Recovered.pdf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-15T18:02:24.000-07:00">July 15, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-30T14:37:59.000-07:00">March 30, 2020, 2:37 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives = Total tests* - total positives (where total tests include all data from public labs and partial data from hospital and commercial labs).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-nc</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives are calculated from total positives (public and commercial labs) and total tests (which only includes public labs and partial data from hospital and commercial labs). Hospitalization from <a href="https://www.starnewsonline.com/news/20200325/wilmington-coronavirus-new-hanover-county-covid-19-cases-rise-to-14">media reports</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T13:00:05.000-07:00">March 27, 2020, 1:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives are calculated from total positives (public and commercial labs) and total tests (which only includes public labs and partial data from hospital and commercial labs). Hospitalization from <a href="https://www.starnewsonline.com/news/20200325/wilmington-coronavirus-new-hanover-county-covid-19-cases-rise-to-14">media reports</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-26T16:00:06.000-07:00">March 26, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives are calculated from total positives (public and commercial labs) and total tests (which only includes public labs and partial data from hospital and commercial labs), therefore they should be treated as a lower bound for actual negatives.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negatives are calculated from total positives (public and commercial labs) and total tests (which only includes public labs and partial data from hospital and commercial labs), therefore they should be treated as a lower bound for actual negatives.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-20T11:00:10.000-07:00">March 20, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/covid-19-case-count-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Providing positives from state. Negative count from <a href="https://www.newsobserver.com/news/local/article241192746.html">3/14 news article</a> including both state and private testing.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Providing positives from state. Negative count from <a href="https://www.newsobserver.com/news/local/article241192746.html">3/14 news article</a> including both state and private testing.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Providing positives from state. Negative test count from <a href="https://www.newsobserver.com/news/local/article241192746.html">3/14 news article</a> including both state and private testing.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Providing positives and a &quot;total test&quot; count from the North Carolina Public Health Laboratory.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Providing positives and a &quot;total test&quot; count from the North Carolina Public Health Laboratory. It's tucked in text beneath the table and map. <a href="https://www.newsobserver.com/news/local/article241192746.html">News Observer report with increased numbers</a></p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Providing positives and a &quot;total test&quot; count from the North Carolina Public Health Laboratory. It's tucked in text beneath the table and map.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positives are being reported by state; we have independent reporting that on 3/10 there had been 37 negatives. &quot;Updated regularly as information becomes available.&quot; Code entries with today's date with a time of 00:00.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.ncdhhs.gov/divisions/public-health/coronavirus-disease-2019-covid-19-response-north-carolina</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

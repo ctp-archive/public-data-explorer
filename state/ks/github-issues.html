@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Kansas Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Kansas</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Kansas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 12, 2021, 8:34 PM PST</td>
+          <td>1101</td>
+          <td>
+            <a href="#issue-1101">[KS] Add antigen tests for 2/12</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 12, 2021, 8:34 PM PST</td>
+          <td>1101</td>
+          <td>
+            <a href="#issue-1101">[KS] Add antigen tests for 2/12</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 10, 2020, 8:23 AM PDT</td>
+          <td>600</td>
+          <td>
+            <a href="#issue-600">[KS] PCL Cases Historicals ***Awaiting Outreach Results***</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 6, 2020, 12:55 PM PDT</td>
+          <td>581</td>
+          <td>
+            <a href="#issue-581">[KS]Data entry errors in Positive Cases PCR column - we actually don&#39;t have a source for it. so the full time series should be deleted.</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 24, 2020, 5:38 AM PDT</td>
+          <td>516</td>
+          <td>
+            <a href="#issue-516">[KS] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 24, 2020, 9:24 PM PDT</td>
+          <td>292</td>
+          <td>
+            <a href="#issue-292">[States Daily CSV] KS deathIncrease is negative for 2020-04-24</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1101">#1101: [KS] Add antigen tests for 2/12</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1101</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on February 12, 2021, 8:34 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1101" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: KS</p>
+<p><strong>Describe the problem</strong>
+KS added antigen tests to its dashboard on 2/12. Backfill today's value.</p>
+<p><strong>Link to data source</strong>
+https://www.coronavirus.kdheks.gov/160/COVID-19-in-Kansas
+Screenshot from today: https://covidtracking.com/screenshots/KS/KS-tertiary-20210212-173644.png
+(Day before did not have: https://covidtracking.com/screenshots/KS/KS-tertiary-20210211-173018.png)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778562151">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 12, 2021, 8:37 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1101#issuecomment-778562151" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5975160/Changes.6.txt">Changes (6).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1101">#1101: [KS] Add antigen tests for 2/12</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1101</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on February 12, 2021, 8:34 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1101" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: KS</p>
+<p><strong>Describe the problem</strong>
+KS added antigen tests to its dashboard on 2/12. Backfill today's value.</p>
+<p><strong>Link to data source</strong>
+https://www.coronavirus.kdheks.gov/160/COVID-19-in-Kansas
+Screenshot from today: https://covidtracking.com/screenshots/KS/KS-tertiary-20210212-173644.png
+(Day before did not have: https://covidtracking.com/screenshots/KS/KS-tertiary-20210211-173018.png)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778562151">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 12, 2021, 8:37 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1101#issuecomment-778562151" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5975160/Changes.6.txt">Changes (6).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-600">#600: [KS] PCL Cases Historicals ***Awaiting Outreach Results***</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            600</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on July 10, 2020, 8:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/600" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Need to finalize decision on whether we can or cannot use KS's historical case data for our Positive Cases (PCR) historicals. If yes, please backfill all days.  We have not yet recorded any.</p>
+<p>WS2:
+<img width="1225" alt="Screen Shot 2020-07-10 at 8 00 27 AM" src="https://user-images.githubusercontent.com/67423649/87170432-304d4d00-c286-11ea-8886-2baff2a9aff3.png"></p>
+<p>States Daily:
+<img width="1060" alt="Screen Shot 2020-07-10 at 8 00 11 AM" src="https://user-images.githubusercontent.com/67423649/87170445-34796a80-c286-11ea-9401-ff1b540c0b88.png"></p>
+<p>KS Dashboard Comments:  (Note that KS explicitly states they lump confirmed and probable in their case count.)
+<img width="1121" alt="Screen Shot 2020-07-10 at 7 58 52 AM" src="https://user-images.githubusercontent.com/67423649/87170508-46f3a400-c286-11ea-93ee-f45f5317a28b.png"></p>
+<img width="1215" alt="Screen Shot 2020-07-10 at 7 58 42 AM" src="https://user-images.githubusercontent.com/67423649/87170505-4529e080-c286-11ea-9632-c03991c1f0fe.png">
+<p>KS Dashboard showing historical numbers:
+<img width="1137" alt="Screen Shot 2020-07-10 at 7 59 25 AM" src="https://user-images.githubusercontent.com/67423649/87170666-7d312380-c286-11ea-992e-bb2a21a9159e.png"></p>
+<p>PRESS RELEASES:  <em>Strange.  They just add the current day’s to the front and re-PDF the whole thing.  This action leads me to think their historicals are not updated to be only confirmed… if they just keep adding today’s press release to prior days, but I am stretching - yes.</em>
+https://www.coronavirus.kdheks.gov/DocumentCenter/View/1125/Historical---July-8?bidId=</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-664426082">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on July 27, 2020, 7:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/600#issuecomment-664426082" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The historical hover-over graph is most-likely a lumped figure, so we can't use it for backfill. We are waiting for confirmation from outreach.</p>
+<p>The '<a href="https://www.coronavirus.kdheks.gov/DocumentCenter/View/1125/Historical---July-24?bidId=">COVID-19 Summary</a>' under 'Daily Case Summary &amp; Historical Data' on the state page reports the number of positive tests, but these seem to be 'specimens,' rather than people. This is also inconclusive.</p>
+<p>This problem is further complicated when considering that the 'Negative Tests' number is a lumped value (https://covid-tracking.slack.com/archives/C0124MP2E5C/p1592283152088300)</p>
+<p>There is a separate number on the <a href="https://www.coronavirus.kdheks.gov/160/COVID-19-in-Kansas">state page</a> through the 'Testing Rates' button. In the 'Positive PCR Tests by Performing Lab' table, under 'Number of Cases,' we suspect that this number indicates lab-confirmed cases. We are waiting for confirmation from outreach on this and are working to take screenshots in order to have a record for potential back-filling.</p>
+<p>***Note: On 7/27, this number and the 'Positive test' number in the historical PDF were the same.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-665092531">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 28, 2020, 8:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/600#issuecomment-665092531" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We decided not to use the number from this graph as &quot;Confirmed Cases&quot;:
+<img src="../../assets/github/images/15933271/88683210-8d883180-d0c1-11ea-8aa3-5a16f5c77d11.png" alt="Screen Shot 2020-07-28 at 11 00 22 AM"></p>
+<p>Reasons:</p>
+<ul>
+<li>This number equals a number they call “positive tests” on their summary PDFs</li>
+<li>KS lumps antibody and antigen in its negatives, and neg+pos for these figures = totals, so we know at least the totals are lumped. KS calls the positives “PCR tests” but they could be sneaking in antigens under the header of “PCR” like FL and AK do</li>
+<li>These confirmed/probable numbers will be impossible for days before we started screenshotting this page</li>
+<li>There is another potential source of confirmed figures from summing a  timeseries, but the timeseries (1) doesn’t confirm that it’s confirmed cases, and (2) is by date diagnosed rather than date reported, so would be on a different timeline from our lumped figures making inferring probables impossible from it</li>
+</ul>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-581">#581: [KS]Data entry errors in Positive Cases PCR column - we actually don&#39;t have a source for it. so the full time series should be deleted.</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            581</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 6, 2020, 12:55 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/581" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: KS</p>
+<p><strong>Describe the problem</strong>
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1593895521467900?thread_ts=1593893959.453600&amp;cid=CUQ4MMTPD
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1594066085184900?thread_ts=1594064128.159200&amp;cid=CUQ4MMTPD</p>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-654444297">
+          <div class="frontmatter">
+            <div>
+              <strong>amandafrench</strong> commented on July 6, 2020, 1:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/581#issuecomment-654444297" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>That takes care of one item on my To Do list, which was listed as &quot;KS PCR ARGH&quot; and I was going to have to go back and figure out what that meant</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-654622145">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on July 6, 2020, 11:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/581#issuecomment-654622145" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img width="626" alt="BEFORE" src="../../assets/github/images/31285549/86723608-e8f06380-bfdc-11ea-9fd1-f31c393bbdef.png"></p>
+<p><strong>AFTER</strong>
+<img width="545" alt="AFTER" src="../../assets/github/images/31285549/86723621-ec83ea80-bfdc-11ea-9bb9-674eadcf368d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-516">#516: [KS] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            516</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on June 24, 2020, 5:38 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/516" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for KS. However, KS's death values are unclear about what they represent, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649578081">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 25, 2020, 7:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/516#issuecomment-649578081" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated WS2 tooltips and left a private note
+<img src="../../assets/github/images/15933271/85737991-bc2f7880-b6cd-11ea-8569-3ee670c117c1.png" alt="Screen Shot 2020-06-25 at 10 21 52 AM">
+<img src="../../assets/github/images/15933271/85738248-dff2be80-b6cd-11ea-800d-7b366be1f504.png" alt="Screen Shot 2020-06-25 at 10 23 05 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649597001">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 25, 2020, 7:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/516#issuecomment-649597001" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Deleting KS values on States Daily in the confirmed field
+Before:
+<img src="../../assets/github/images/15933271/85742360-2c8bc900-b6d1-11ea-8d8e-e01ebcb6229e.png" alt="Before1">
+<img src="../../assets/github/images/15933271/85742454-41685c80-b6d1-11ea-999d-04c89da241a4.png" alt="Before2"></p>
+<p>After:
+<img src="../../assets/github/images/15933271/85742550-547b2c80-b6d1-11ea-9c49-1167ea9a705f.png" alt="After1">
+<img src="../../assets/github/images/15933271/85742545-53e29600-b6d1-11ea-87e6-a9092a377c19.png" alt="After2"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650194108">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on June 26, 2020, 6:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/516#issuecomment-650194108" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'ed by JJA 6/26 9:57:00 a.m. ET</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-292">#292: [States Daily CSV] KS deathIncrease is negative for 2020-04-24</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            292</p>
+          <p>
+            <strong>acobolew</strong> opened this issue on April 24, 2020, 9:24 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/292" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>[States Daily CSV] KS deathIncrease is negative for 2020-04-24</p>
+<blockquote>
+<p>library(data.table)
+covidtracking.dt &lt;- fread('https://covidtracking.com/api/v1/states/daily.csv')
+covidtracking.dt[, date := as.Date(as.character(date), '%Y%m%d')]
+covidtracking.dt[order(date, decreasing=FALSE)][ , .(date, state, death, deathIncrease) ][deathIncrease &lt; 0]
+date state death deathIncrease
+1: 2020-04-05    VA    51            -1
+2: 2020-04-07    DC    22            -2
+3: 2020-04-22    AR    42            -1
+4: 2020-04-23    PA  1421          -201
+<strong><em>5: 2020-04-24    KS   111            -1</em></strong>
+6: 2020-04-24    TN   168            -2</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-619621753">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 26, 2020, 1:40 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/292#issuecomment-619621753" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@acobolew</strong>
+Thanks for letting us know</p>
+<p>This was the data reported by Kansas. Here are the screenshots documenting their reports</p>
+<p>https://covidtracking.com/screenshots/KS/KS-20200423-181112.png</p>
+<p>https://covidtracking.com/screenshots/KS/KS-20200424-180928.png</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

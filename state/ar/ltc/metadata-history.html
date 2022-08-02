@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Arkansas: Long-term metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="../index.html">Arkansas</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Long-term care</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="../index.html">Arkansas</a>
+      : Long-term care metadata history
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="../index.html">Data</a>
+        </li>
+        <li>
+          <a href="../metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="../outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="../data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="../annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="../github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="../tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="../ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="../ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="../ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="../ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="../crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-19T09:31:06.000-07:00">March 19, 2021, 9:31 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-26T14:53:37.000-08:00">February 26, 2021, 2:53 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-12T09:05:13.000-08:00">February 12, 2021, 9:05 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-12T07:50:39.000-08:00">February 12, 2021, 7:50 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-15T12:46:28.000-08:00">January 15, 2021, 12:46 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-04T09:35:04.000-08:00">December 4, 2020, 9:35 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-20T12:48:02.000-08:00">November 20, 2020, 12:48 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-30T08:33:01.000-07:00">October 30, 2020, 8:33 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-02T10:10:31.000-07:00">October 2, 2020, 10:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T10:33:44.000-07:00">September 25, 2020, 10:33 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-17T22:10:08.000-07:00">September 17, 2020, 10:10 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+    <h2 id="2021-04-08T10:21:56.000-07:00">April 8, 2021, 10:21 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for at the facility-level. Facilities are categorized as Nursing Home by Arkansas, but not all facilities listed are Nursing Homes, some are Assisted Living Facilities.  
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case were provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31, 2020, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020.
+ 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health.
+ 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health.
+ 
+December 3, 2020: No update from Arkansas Department of Health. Data carried over from November 26, 2020.
+
+February 25, 2021: Arkansas cumulative resident deaths dropped from 2027 to 1970 due to a data cleanup involving a significant error on deaths at Cottage Lane Health and Rehab. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      Arkansas provides cumulative resident and staff cases and deaths at the facility level, but only for facilities with active COVID-19 outbreaks. Facilities with closed outbreaks that have previously had COVID-19 outbreaks do not appear on Arkansas’ reports.
+    </div>
+  
+    <h2 id="2021-03-19T09:31:06.000-07:00">March 19, 2021, 9:31 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for at the facility-level. Facilities are categorized as Nursing Home by Arkansas, but not all facilities listed are Nursing Homes, some are Assisted Living Facilities.  
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case were provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31, 2020, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020.
+ 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health.
+ 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health.
+ 
+December 3, 2020: No update from Arkansas Department of Health. Data carried over from November 26, 2020.
+
+February 25, 2021: Arkansas cumulative resident deaths dropped from 2027 to 1970 due to a data cleanup involving a significant error on deaths at Cottage Lane Health and Rehab. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      Arkansas provides cumulative resident and staff cases and deaths at the facility level, but only for facilities with active COVID-10 outbreaks. Facilities with closed outbreaks that have previously had COVID-19 outbreaks do not appear on Arkansas’ reports.
+    </div>
+  
+    <h2 id="2021-02-26T14:53:37.000-08:00">February 26, 2021, 2:53 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for at the facility-level. Facilities are categorized as Nursing Home by Arkansas, but not all facilities listed are Nursing Homes, some are Assisted Living Facilities.  
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case were provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31, 2020, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020.
+ 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health.
+ 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health.
+ 
+December 3, 2020: No update from Arkansas Department of Health. Data carried over from November 26, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      Arkansas provides cumulative resident and staff cases and deaths at the facility level, but only for facilities with active COVID-10 outbreaks. Facilities with closed outbreaks that have previously had COVID-19 outbreaks do not appear on Arkansas’ reports.
+    </div>
+  
+    <h2 id="2021-02-12T09:05:13.000-08:00">February 12, 2021, 9:05 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case are provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31st, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31st, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020.
+ 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health.
+ 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health.
+ 
+December 3, 2020: No update from Arkansas Department of Health. Data carried over from November 26, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      Arkansas provides cumulative resident and staff cases and deaths at the facility level, but only for facilities with active COVID-10 outbreaks. Facilities with closed outbreaks that have previously had COVID-19 outbreaks do not appear on Arkansas’ reports.
+    </div>
+  
+    <h2 id="2021-02-12T07:50:39.000-08:00">February 12, 2021, 7:50 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case are provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31st, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31st, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020.
+ 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health.
+ 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health.
+ 
+December 3, 2020: No update from Arkansas Department of Health. Data carried over from November 26, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2021-01-15T12:46:28.000-08:00">January 15, 2021, 12:46 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case are provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31st, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31st, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health. 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health. 
+December 3, 2020: No update from Arkansas Department of Health. Data carried over from November 26, 2020.
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-12-04T09:35:04.000-08:00">December 4, 2020, 9:35 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facilities with a case are provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31st, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31st, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health. 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-20T12:48:02.000-08:00">November 20, 2020, 12:48 PM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facillities with a case are provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31st, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31st, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health. 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-11-02T10:33:27.000-08:00">November 2, 2020, 10:33 AM PST</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides facility-level data for current outbreaks for staff cases, resident cases, staff deaths, resident deaths. Deaths are reported weekly on Fridays. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. Cases for residents and staff are reported separately.   
+
+Cumulative totals for staff cases, resident cases, staff deaths, resident deaths and total facillities with a case are provided to CTP by the Arkansas Department of Health via email. This cumulative data is usually available at the bottom of the spreadsheet on the state dashboard&#39;s Friday long-term care reports, except for total facilities with a case.
+
+From July 1, 2020 - August 31st, Arkansas provided cumulative and outbreak data directly to CTP via an emailed spreadsheet. On August 31st, Arkansas began publishing a facility-level spreadsheet for facilities with current outbreaks, including staff cases, resident cases, staff deaths and resident deaths.  
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health. 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-30T08:33:01.000-07:00">October 30, 2020, 8:33 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides staff cases, resident cases and resident deaths but no facility-level information. Since July 1, 2020, Arkansas has been reporting cumulative and outbreak data directly to CTP via an emailed spreadsheet. Cases for residents and staff are reported separately. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. The spreadsheet contains facility-level data and associated staff and resident cases and deaths, which is not available on the state dashboard. 
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health. 
+October 1, 2020: Cumulative resident positives, resident deaths, staff positives, staff deaths and number of facilities with a case were reported to CTP by the Arkansas Department of Health. 
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-10-02T10:10:31.000-07:00">October 2, 2020, 10:10 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides staff cases, resident cases and resident deaths but no facility-level information. Since July 1, 2020, Arkansas has been reporting cumulative and outbreak data directly to CTP via an emailed spreadsheet. Cases for residents and staff are reported separately. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. The spreadsheet contains facility-level data and associated staff and resident cases and deaths, which is not available on the state dashboard. 
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+September 24, 2020: Cumulative resident and staff deaths are from September 21, 2020 and were sent via email from the Arkansas Department of Health. 
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-09-25T10:33:44.000-07:00">September 25, 2020, 10:33 AM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides staff cases, resident cases and resident deaths but no facility-level information. Since July 1, 2020, Arkansas has been reporting cumulative and outbreak data directly to CTP via an emailed spreadsheet. Cases for residents and staff are reported separately. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. The spreadsheet contains facility-level data and associated staff and resident cases and deaths, which is not available on the state dashboard. 
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+September 17, 2020: Arkansas did not include cumulative cases or deaths for staff or residents on the state reports this week. Data for Outbreak Cases and Deaths are from September 11, 2020. 
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+    <h2 id="2020-09-17T22:10:08.000-07:00">September 17, 2020, 10:10 PM PDT</h2>
+    <h3>Notes</h3>
+    <div>
+      Arkansas reports long-term care data for Nursing Homes and Assisted Living Facilities. 
+
+On the Arkansas COVID-19 dashboard, the state provides staff cases, resident cases and resident deaths but no facility-level information. Since July 1, 2020, Arkansas has been reporting cumulative and outbreak data directly to CTP via an emailed spreadsheet. Cases for residents and staff are reported separately. Outbreak reporting includes facilities that have had active cases in the last 28 days. Once a facility no longer has active cases for 28 days they are taken off the report. The spreadsheet contains facility-level data and associated staff and resident cases and deaths, which is not available on the state dashboard. 
+
+Staff cases and facility numbers are carried over from June 4 to June 8, June 11 to June 15, and June 18 to June 22.
+
+August 21, 2020: Arkansas began reporting deaths associated with nursing homes and assisted living facilities every Friday via an emailed spreadsheet. The state also started reporting active staff and resident cases in the past 28 days at facilities with current outbreaks.
+August 27, 2020: Cumulative death total is from Friday, August 21, 2020. Arkansas Health Department provided CTP with total number of cumulative facilities (224) with cases.
+
+    </div>
+    <h3>Alerts</h3>
+    <div>
+      
+    </div>
+  
+
+    </main>
+  </body>
+</html>

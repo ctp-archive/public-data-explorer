@@ -1,0 +1,2823 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Mississippi Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Mississippi</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Mississippi</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 10, 2021, 9:22 PM PST</td>
+          <td>1095</td>
+          <td>
+            <a href="#issue-1095">[MS] Clear Positive Antibody Tests timeseries</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 10, 2021, 9:22 PM PST</td>
+          <td>1095</td>
+          <td>
+            <a href="#issue-1095">[MS] Clear Positive Antibody Tests timeseries</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 8, 2021, 1:51 PM PST</td>
+          <td>1055</td>
+          <td>
+            <a href="#issue-1055">[MS] Patch 01/07 late update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 8, 2021, 1:51 PM PST</td>
+          <td>1055</td>
+          <td>
+            <a href="#issue-1055">[MS] Patch 01/07 late update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 10, 2020, 10:09 AM PST</td>
+          <td>944</td>
+          <td>
+            <a href="#issue-944">[MS] Patch 11/8 Cur. hosp, cur. icu, and cur. vent</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 27, 2020, 6:04 PM PDT</td>
+          <td>870</td>
+          <td>
+            <a href="#issue-870">[MS] Missing value for Total Tests (PCR) on 5/17</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 18, 2020, 7:06 AM PDT</td>
+          <td>846</td>
+          <td>
+            <a href="#issue-846">[MS] Probables Backfill and Confirmed Cases Corrections</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 11, 2020, 2:17 PM PDT</td>
+          <td>825</td>
+          <td>
+            <a href="#issue-825">[MS] Backfill Cur. Hosp, Cur. icu from 8/24-9/10. Delete cur. vent from 8/30 - 9/10</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 7:40 AM PDT</td>
+          <td>712</td>
+          <td>
+            <a href="#issue-712">[MS] Historical PCL Cases </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 17, 2020, 3:58 PM PDT</td>
+          <td>643</td>
+          <td>
+            <a href="#issue-643">[MS] Negatives dropped on 7/8</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 8, 2020, 1:21 PM PDT</td>
+          <td>586</td>
+          <td>
+            <a href="#issue-586">[MS] data entry mistake from 7/8</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 1, 2020, 1:04 PM PDT</td>
+          <td>563</td>
+          <td>
+            <a href="#issue-563">[MS] 6/30 total test numbers were used instead of PCR tests only</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 8:24 AM PDT</td>
+          <td>535</td>
+          <td>
+            <a href="#issue-535">[MS] Total Tests (PCR) and Negative Cases were entered incorrectly on 6/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 31, 2020, 11:14 AM PDT</td>
+          <td>469</td>
+          <td>
+            <a href="#issue-469">[MS Historicals]antibody tests were added to total for one day </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 3, 2020, 2:32 PM PDT</td>
+          <td>350</td>
+          <td>
+            <a href="#issue-350">[MS - Mississippi] Update &quot;current hospitalized&quot; for 5/2 datapoint </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 21, 2020, 2:23 AM PDT</td>
+          <td>244</td>
+          <td>
+            <a href="#issue-244">MS has an B grade with wild swings</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 3, 2020, 2:29 AM PDT</td>
+          <td>130</td>
+          <td>
+            <a href="#issue-130">MS: Governor reporting much higher test numbers</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1095">#1095: [MS] Clear Positive Antibody Tests timeseries</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1095</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 10, 2021, 9:22 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1095" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MS</p>
+<p><strong>Dates affected:</strong> 05/21/20 - 02/10/21</p>
+<p><strong>Describe the issue:</strong> From May 21, 2020 through May 26, 2020, we briefly captured Mississippi's Positive antibody tests (specimens) through state press conferences. After May 26, 2020, Mississippi no longer reported new data for this metric and we carried it over. On February 11, 2021, we cleared Mississippi's Positive antibody tests (specimens) timeseries to ensure that our data is as accurate and consistent as possible.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-777209887">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 10, 2021, 9:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1095#issuecomment-777209887" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 265
+MS 2021-02-09
+positiveTestsAntibody: None (was 95)
+MS 2021-02-08
+positiveTestsAntibody: None (was 95)
+MS 2021-02-07
+positiveTestsAntibody: None (was 95)
+MS 2021-02-06
+positiveTestsAntibody: None (was 95)
+MS 2021-02-05
+positiveTestsAntibody: None (was 95)
+MS 2021-02-04
+positiveTestsAntibody: None (was 95)
+MS 2021-02-03
+positiveTestsAntibody: None (was 95)
+MS 2021-02-02
+positiveTestsAntibody: None (was 95)
+MS 2021-02-01
+positiveTestsAntibody: None (was 95)
+MS 2021-01-31
+positiveTestsAntibody: None (was 95)
+MS 2021-01-30
+positiveTestsAntibody: None (was 95)
+MS 2021-01-29
+positiveTestsAntibody: None (was 95)
+MS 2021-01-28
+positiveTestsAntibody: None (was 95)
+MS 2021-01-27
+positiveTestsAntibody: None (was 95)
+MS 2021-01-26
+positiveTestsAntibody: None (was 95)
+MS 2021-01-25
+positiveTestsAntibody: None (was 95)
+MS 2021-01-24
+positiveTestsAntibody: None (was 95)
+MS 2021-01-23
+positiveTestsAntibody: None (was 95)
+MS 2021-01-22
+positiveTestsAntibody: None (was 95)
+MS 2021-01-21
+positiveTestsAntibody: None (was 95)
+MS 2021-01-20
+positiveTestsAntibody: None (was 95)
+MS 2021-01-19
+positiveTestsAntibody: None (was 95)
+MS 2021-01-18
+positiveTestsAntibody: None (was 95)
+MS 2021-01-17
+positiveTestsAntibody: None (was 95)
+MS 2021-01-16
+positiveTestsAntibody: None (was 95)
+MS 2021-01-15
+positiveTestsAntibody: None (was 95)
+MS 2021-01-14
+positiveTestsAntibody: None (was 95)
+MS 2021-01-13
+positiveTestsAntibody: None (was 95)
+MS 2021-01-12
+positiveTestsAntibody: None (was 95)
+MS 2021-01-11
+positiveTestsAntibody: None (was 95)
+MS 2021-01-10
+positiveTestsAntibody: None (was 95)
+MS 2021-01-09
+positiveTestsAntibody: None (was 95)
+MS 2021-01-08
+positiveTestsAntibody: None (was 95)
+MS 2021-01-07
+positiveTestsAntibody: None (was 95)
+MS 2021-01-06
+positiveTestsAntibody: None (was 95)
+MS 2021-01-05
+positiveTestsAntibody: None (was 95)
+MS 2021-01-04
+positiveTestsAntibody: None (was 95)
+MS 2021-01-03
+positiveTestsAntibody: None (was 95)
+MS 2021-01-02
+positiveTestsAntibody: None (was 95)
+MS 2021-01-01
+positiveTestsAntibody: None (was 95)
+MS 2020-12-31
+positiveTestsAntibody: None (was 95)
+MS 2020-12-30
+positiveTestsAntibody: None (was 95)
+MS 2020-12-29
+positiveTestsAntibody: None (was 95)
+MS 2020-12-28
+positiveTestsAntibody: None (was 95)
+MS 2020-12-27
+positiveTestsAntibody: None (was 95)
+MS 2020-12-26
+positiveTestsAntibody: None (was 95)
+MS 2020-12-25
+positiveTestsAntibody: None (was 95)
+MS 2020-12-24
+positiveTestsAntibody: None (was 95)
+MS 2020-12-23
+positiveTestsAntibody: None (was 95)
+MS 2020-12-22
+positiveTestsAntibody: None (was 95)
+MS 2020-12-21
+positiveTestsAntibody: None (was 95)
+MS 2020-12-20
+positiveTestsAntibody: None (was 95)
+MS 2020-12-19
+positiveTestsAntibody: None (was 95)
+MS 2020-12-18
+positiveTestsAntibody: None (was 95)
+MS 2020-12-17
+positiveTestsAntibody: None (was 95)
+MS 2020-12-16
+positiveTestsAntibody: None (was 95)
+MS 2020-12-15
+positiveTestsAntibody: None (was 95)
+MS 2020-12-14
+positiveTestsAntibody: None (was 95)
+MS 2020-12-13
+positiveTestsAntibody: None (was 95)
+MS 2020-12-12
+positiveTestsAntibody: None (was 95)
+MS 2020-12-11
+positiveTestsAntibody: None (was 95)
+MS 2020-12-10
+positiveTestsAntibody: None (was 95)
+MS 2020-12-09
+positiveTestsAntibody: None (was 95)
+MS 2020-12-08
+positiveTestsAntibody: None (was 95)
+MS 2020-12-07
+positiveTestsAntibody: None (was 95)
+MS 2020-12-06
+positiveTestsAntibody: None (was 95)
+MS 2020-12-05
+positiveTestsAntibody: None (was 95)
+MS 2020-12-04
+positiveTestsAntibody: None (was 95)
+MS 2020-12-03
+positiveTestsAntibody: None (was 95)
+MS 2020-12-02
+positiveTestsAntibody: None (was 95)
+MS 2020-12-01
+positiveTestsAntibody: None (was 95)
+MS 2020-11-30
+positiveTestsAntibody: None (was 95)
+MS 2020-11-29
+positiveTestsAntibody: None (was 95)
+MS 2020-11-28
+positiveTestsAntibody: None (was 95)
+MS 2020-11-27
+positiveTestsAntibody: None (was 95)
+MS 2020-11-26
+positiveTestsAntibody: None (was 95)
+MS 2020-11-25
+positiveTestsAntibody: None (was 95)
+MS 2020-11-24
+positiveTestsAntibody: None (was 95)
+MS 2020-11-23
+positiveTestsAntibody: None (was 95)
+MS 2020-11-22
+positiveTestsAntibody: None (was 95)
+MS 2020-11-21
+positiveTestsAntibody: None (was 95)
+MS 2020-11-20
+positiveTestsAntibody: None (was 95)
+MS 2020-11-19
+positiveTestsAntibody: None (was 95)
+MS 2020-11-18
+positiveTestsAntibody: None (was 95)
+MS 2020-11-17
+positiveTestsAntibody: None (was 95)
+MS 2020-11-16
+positiveTestsAntibody: None (was 95)
+MS 2020-11-15
+positiveTestsAntibody: None (was 95)
+MS 2020-11-14
+positiveTestsAntibody: None (was 95)
+MS 2020-11-13
+positiveTestsAntibody: None (was 95)
+MS 2020-11-12
+positiveTestsAntibody: None (was 95)
+MS 2020-11-11
+positiveTestsAntibody: None (was 95)
+MS 2020-11-10
+positiveTestsAntibody: None (was 95)
+MS 2020-11-09
+positiveTestsAntibody: None (was 95)
+MS 2020-11-08
+positiveTestsAntibody: None (was 95)
+MS 2020-11-07
+positiveTestsAntibody: None (was 95)
+MS 2020-11-06
+positiveTestsAntibody: None (was 95)
+MS 2020-11-05
+positiveTestsAntibody: None (was 95)
+MS 2020-11-04
+positiveTestsAntibody: None (was 95)
+MS 2020-11-03
+positiveTestsAntibody: None (was 95)
+MS 2020-11-02
+positiveTestsAntibody: None (was 95)
+MS 2020-11-01
+positiveTestsAntibody: None (was 95)
+MS 2020-10-31
+positiveTestsAntibody: None (was 95)
+MS 2020-10-30
+positiveTestsAntibody: None (was 95)
+MS 2020-10-29
+positiveTestsAntibody: None (was 95)
+MS 2020-10-28
+positiveTestsAntibody: None (was 95)
+MS 2020-10-27
+positiveTestsAntibody: None (was 95)
+MS 2020-10-26
+positiveTestsAntibody: None (was 95)
+MS 2020-10-25
+positiveTestsAntibody: None (was 95)
+MS 2020-10-24
+positiveTestsAntibody: None (was 95)
+MS 2020-10-23
+positiveTestsAntibody: None (was 95)
+MS 2020-10-22
+positiveTestsAntibody: None (was 95)
+MS 2020-10-21
+positiveTestsAntibody: None (was 95)
+MS 2020-10-20
+positiveTestsAntibody: None (was 95)
+MS 2020-10-19
+positiveTestsAntibody: None (was 95)
+MS 2020-10-18
+positiveTestsAntibody: None (was 95)
+MS 2020-10-17
+positiveTestsAntibody: None (was 95)
+MS 2020-10-16
+positiveTestsAntibody: None (was 95)
+MS 2020-10-15
+positiveTestsAntibody: None (was 95)
+MS 2020-10-14
+positiveTestsAntibody: None (was 95)
+MS 2020-10-13
+positiveTestsAntibody: None (was 95)
+MS 2020-10-12
+positiveTestsAntibody: None (was 95)
+MS 2020-10-11
+positiveTestsAntibody: None (was 95)
+MS 2020-10-10
+positiveTestsAntibody: None (was 95)
+MS 2020-10-09
+positiveTestsAntibody: None (was 95)
+MS 2020-10-08
+positiveTestsAntibody: None (was 95)
+MS 2020-10-07
+positiveTestsAntibody: None (was 95)
+MS 2020-10-06
+positiveTestsAntibody: None (was 95)
+MS 2020-10-05
+positiveTestsAntibody: None (was 95)
+MS 2020-10-04
+positiveTestsAntibody: None (was 95)
+MS 2020-10-03
+positiveTestsAntibody: None (was 95)
+MS 2020-10-02
+positiveTestsAntibody: None (was 95)
+MS 2020-10-01
+positiveTestsAntibody: None (was 95)
+MS 2020-09-30
+positiveTestsAntibody: None (was 95)
+MS 2020-09-29
+positiveTestsAntibody: None (was 95)
+MS 2020-09-28
+positiveTestsAntibody: None (was 95)
+MS 2020-09-27
+positiveTestsAntibody: None (was 95)
+MS 2020-09-26
+positiveTestsAntibody: None (was 95)
+MS 2020-09-25
+positiveTestsAntibody: None (was 95)
+MS 2020-09-24
+positiveTestsAntibody: None (was 95)
+MS 2020-09-23
+positiveTestsAntibody: None (was 95)
+MS 2020-09-22
+positiveTestsAntibody: None (was 95)
+MS 2020-09-21
+positiveTestsAntibody: None (was 95)
+MS 2020-09-20
+positiveTestsAntibody: None (was 95)
+MS 2020-09-19
+positiveTestsAntibody: None (was 95)
+MS 2020-09-18
+positiveTestsAntibody: None (was 95)
+MS 2020-09-17
+positiveTestsAntibody: None (was 95)
+MS 2020-09-16
+positiveTestsAntibody: None (was 95)
+MS 2020-09-15
+positiveTestsAntibody: None (was 95)
+MS 2020-09-14
+positiveTestsAntibody: None (was 95)
+MS 2020-09-13
+positiveTestsAntibody: None (was 95)
+MS 2020-09-12
+positiveTestsAntibody: None (was 95)
+MS 2020-09-11
+positiveTestsAntibody: None (was 95)
+MS 2020-09-10
+positiveTestsAntibody: None (was 95)
+MS 2020-09-09
+positiveTestsAntibody: None (was 95)
+MS 2020-09-08
+positiveTestsAntibody: None (was 95)
+MS 2020-09-07
+positiveTestsAntibody: None (was 95)
+MS 2020-09-06
+positiveTestsAntibody: None (was 95)
+MS 2020-09-05
+positiveTestsAntibody: None (was 95)
+MS 2020-09-04
+positiveTestsAntibody: None (was 95)
+MS 2020-09-03
+positiveTestsAntibody: None (was 95)
+MS 2020-09-02
+positiveTestsAntibody: None (was 95)
+MS 2020-09-01
+positiveTestsAntibody: None (was 95)
+MS 2020-08-31
+positiveTestsAntibody: None (was 95)
+MS 2020-08-30
+positiveTestsAntibody: None (was 95)
+MS 2020-08-29
+positiveTestsAntibody: None (was 95)
+MS 2020-08-28
+positiveTestsAntibody: None (was 95)
+MS 2020-08-27
+positiveTestsAntibody: None (was 95)
+MS 2020-08-26
+positiveTestsAntibody: None (was 95)
+MS 2020-08-25
+positiveTestsAntibody: None (was 95)
+MS 2020-08-24
+positiveTestsAntibody: None (was 95)
+MS 2020-08-23
+positiveTestsAntibody: None (was 95)
+MS 2020-08-22
+positiveTestsAntibody: None (was 95)
+MS 2020-08-21
+positiveTestsAntibody: None (was 95)
+MS 2020-08-20
+positiveTestsAntibody: None (was 95)
+MS 2020-08-19
+positiveTestsAntibody: None (was 95)
+MS 2020-08-18
+positiveTestsAntibody: None (was 95)
+MS 2020-08-17
+positiveTestsAntibody: None (was 95)
+MS 2020-08-16
+positiveTestsAntibody: None (was 95)
+MS 2020-08-15
+positiveTestsAntibody: None (was 95)
+MS 2020-08-14
+positiveTestsAntibody: None (was 95)
+MS 2020-08-13
+positiveTestsAntibody: None (was 95)
+MS 2020-08-12
+positiveTestsAntibody: None (was 95)
+MS 2020-08-11
+positiveTestsAntibody: None (was 95)
+MS 2020-08-10
+positiveTestsAntibody: None (was 95)
+MS 2020-08-09
+positiveTestsAntibody: None (was 95)
+MS 2020-08-08
+positiveTestsAntibody: None (was 95)
+MS 2020-08-07
+positiveTestsAntibody: None (was 95)
+MS 2020-08-06
+positiveTestsAntibody: None (was 95)
+MS 2020-08-05
+positiveTestsAntibody: None (was 95)
+MS 2020-08-04
+positiveTestsAntibody: None (was 95)
+MS 2020-08-03
+positiveTestsAntibody: None (was 95)
+MS 2020-08-02
+positiveTestsAntibody: None (was 95)
+MS 2020-08-01
+positiveTestsAntibody: None (was 95)
+MS 2020-07-31
+positiveTestsAntibody: None (was 95)
+MS 2020-07-30
+positiveTestsAntibody: None (was 95)
+MS 2020-07-29
+positiveTestsAntibody: None (was 95)
+MS 2020-07-28
+positiveTestsAntibody: None (was 95)
+MS 2020-07-27
+positiveTestsAntibody: None (was 95)
+MS 2020-07-26
+positiveTestsAntibody: None (was 95)
+MS 2020-07-25
+positiveTestsAntibody: None (was 95)
+MS 2020-07-24
+positiveTestsAntibody: None (was 95)
+MS 2020-07-23
+positiveTestsAntibody: None (was 95)
+MS 2020-07-22
+positiveTestsAntibody: None (was 95)
+MS 2020-07-21
+positiveTestsAntibody: None (was 95)
+MS 2020-07-20
+positiveTestsAntibody: None (was 95)
+MS 2020-07-19
+positiveTestsAntibody: None (was 95)
+MS 2020-07-18
+positiveTestsAntibody: None (was 95)
+MS 2020-07-17
+positiveTestsAntibody: None (was 95)
+MS 2020-07-16
+positiveTestsAntibody: None (was 95)
+MS 2020-07-15
+positiveTestsAntibody: None (was 95)
+MS 2020-07-14
+positiveTestsAntibody: None (was 95)
+MS 2020-07-13
+positiveTestsAntibody: None (was 95)
+MS 2020-07-12
+positiveTestsAntibody: None (was 95)
+MS 2020-07-11
+positiveTestsAntibody: None (was 95)
+MS 2020-07-10
+positiveTestsAntibody: None (was 95)
+MS 2020-07-09
+positiveTestsAntibody: None (was 95)
+MS 2020-07-08
+positiveTestsAntibody: None (was 95)
+MS 2020-07-07
+positiveTestsAntibody: None (was 95)
+MS 2020-07-06
+positiveTestsAntibody: None (was 95)
+MS 2020-07-05
+positiveTestsAntibody: None (was 95)
+MS 2020-07-04
+positiveTestsAntibody: None (was 95)
+MS 2020-07-03
+positiveTestsAntibody: None (was 95)
+MS 2020-07-02
+positiveTestsAntibody: None (was 95)
+MS 2020-07-01
+positiveTestsAntibody: None (was 95)
+MS 2020-06-30
+positiveTestsAntibody: None (was 95)
+MS 2020-06-29
+positiveTestsAntibody: None (was 95)
+MS 2020-06-28
+positiveTestsAntibody: None (was 95)
+MS 2020-06-27
+positiveTestsAntibody: None (was 95)
+MS 2020-06-26
+positiveTestsAntibody: None (was 95)
+MS 2020-06-25
+positiveTestsAntibody: None (was 95)
+MS 2020-06-24
+positiveTestsAntibody: None (was 95)
+MS 2020-06-23
+positiveTestsAntibody: None (was 95)
+MS 2020-06-22
+positiveTestsAntibody: None (was 95)
+MS 2020-06-21
+positiveTestsAntibody: None (was 95)
+MS 2020-06-20
+positiveTestsAntibody: None (was 95)
+MS 2020-06-19
+positiveTestsAntibody: None (was 95)
+MS 2020-06-18
+positiveTestsAntibody: None (was 95)
+MS 2020-06-17
+positiveTestsAntibody: None (was 95)
+MS 2020-06-16
+positiveTestsAntibody: None (was 95)
+MS 2020-06-15
+positiveTestsAntibody: None (was 95)
+MS 2020-06-14
+positiveTestsAntibody: None (was 95)
+MS 2020-06-13
+positiveTestsAntibody: None (was 95)
+MS 2020-06-12
+positiveTestsAntibody: None (was 95)
+MS 2020-06-11
+positiveTestsAntibody: None (was 95)
+MS 2020-06-10
+positiveTestsAntibody: None (was 95)
+MS 2020-06-09
+positiveTestsAntibody: None (was 95)
+MS 2020-06-08
+positiveTestsAntibody: None (was 95)
+MS 2020-06-07
+positiveTestsAntibody: None (was 95)
+MS 2020-06-06
+positiveTestsAntibody: None (was 95)
+MS 2020-06-05
+positiveTestsAntibody: None (was 95)
+MS 2020-06-04
+positiveTestsAntibody: None (was 95)
+MS 2020-06-03
+positiveTestsAntibody: None (was 95)
+MS 2020-06-02
+positiveTestsAntibody: None (was 95)
+MS 2020-06-01
+positiveTestsAntibody: None (was 95)
+MS 2020-05-31
+positiveTestsAntibody: None (was 95)
+MS 2020-05-30
+positiveTestsAntibody: None (was 95)
+MS 2020-05-29
+positiveTestsAntibody: None (was 95)
+MS 2020-05-28
+positiveTestsAntibody: None (was 95)
+MS 2020-05-27
+positiveTestsAntibody: None (was 95)
+MS 2020-05-26
+positiveTestsAntibody: None (was 95)
+MS 2020-05-25
+positiveTestsAntibody: None (was 80)
+MS 2020-05-24
+positiveTestsAntibody: None (was 80)
+MS 2020-05-23
+positiveTestsAntibody: None (was 80)
+MS 2020-05-22
+positiveTestsAntibody: None (was 80)
+MS 2020-05-21
+positiveTestsAntibody: None (was 80)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1095">#1095: [MS] Clear Positive Antibody Tests timeseries</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1095</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 10, 2021, 9:22 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1095" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MS</p>
+<p><strong>Dates affected:</strong> 05/21/20 - 02/10/21</p>
+<p><strong>Describe the issue:</strong> From May 21, 2020 through May 26, 2020, we briefly captured Mississippi's Positive antibody tests (specimens) through state press conferences. After May 26, 2020, Mississippi no longer reported new data for this metric and we carried it over. On February 11, 2021, we cleared Mississippi's Positive antibody tests (specimens) timeseries to ensure that our data is as accurate and consistent as possible.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-777209887">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 10, 2021, 9:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1095#issuecomment-777209887" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 265
+MS 2021-02-09
+positiveTestsAntibody: None (was 95)
+MS 2021-02-08
+positiveTestsAntibody: None (was 95)
+MS 2021-02-07
+positiveTestsAntibody: None (was 95)
+MS 2021-02-06
+positiveTestsAntibody: None (was 95)
+MS 2021-02-05
+positiveTestsAntibody: None (was 95)
+MS 2021-02-04
+positiveTestsAntibody: None (was 95)
+MS 2021-02-03
+positiveTestsAntibody: None (was 95)
+MS 2021-02-02
+positiveTestsAntibody: None (was 95)
+MS 2021-02-01
+positiveTestsAntibody: None (was 95)
+MS 2021-01-31
+positiveTestsAntibody: None (was 95)
+MS 2021-01-30
+positiveTestsAntibody: None (was 95)
+MS 2021-01-29
+positiveTestsAntibody: None (was 95)
+MS 2021-01-28
+positiveTestsAntibody: None (was 95)
+MS 2021-01-27
+positiveTestsAntibody: None (was 95)
+MS 2021-01-26
+positiveTestsAntibody: None (was 95)
+MS 2021-01-25
+positiveTestsAntibody: None (was 95)
+MS 2021-01-24
+positiveTestsAntibody: None (was 95)
+MS 2021-01-23
+positiveTestsAntibody: None (was 95)
+MS 2021-01-22
+positiveTestsAntibody: None (was 95)
+MS 2021-01-21
+positiveTestsAntibody: None (was 95)
+MS 2021-01-20
+positiveTestsAntibody: None (was 95)
+MS 2021-01-19
+positiveTestsAntibody: None (was 95)
+MS 2021-01-18
+positiveTestsAntibody: None (was 95)
+MS 2021-01-17
+positiveTestsAntibody: None (was 95)
+MS 2021-01-16
+positiveTestsAntibody: None (was 95)
+MS 2021-01-15
+positiveTestsAntibody: None (was 95)
+MS 2021-01-14
+positiveTestsAntibody: None (was 95)
+MS 2021-01-13
+positiveTestsAntibody: None (was 95)
+MS 2021-01-12
+positiveTestsAntibody: None (was 95)
+MS 2021-01-11
+positiveTestsAntibody: None (was 95)
+MS 2021-01-10
+positiveTestsAntibody: None (was 95)
+MS 2021-01-09
+positiveTestsAntibody: None (was 95)
+MS 2021-01-08
+positiveTestsAntibody: None (was 95)
+MS 2021-01-07
+positiveTestsAntibody: None (was 95)
+MS 2021-01-06
+positiveTestsAntibody: None (was 95)
+MS 2021-01-05
+positiveTestsAntibody: None (was 95)
+MS 2021-01-04
+positiveTestsAntibody: None (was 95)
+MS 2021-01-03
+positiveTestsAntibody: None (was 95)
+MS 2021-01-02
+positiveTestsAntibody: None (was 95)
+MS 2021-01-01
+positiveTestsAntibody: None (was 95)
+MS 2020-12-31
+positiveTestsAntibody: None (was 95)
+MS 2020-12-30
+positiveTestsAntibody: None (was 95)
+MS 2020-12-29
+positiveTestsAntibody: None (was 95)
+MS 2020-12-28
+positiveTestsAntibody: None (was 95)
+MS 2020-12-27
+positiveTestsAntibody: None (was 95)
+MS 2020-12-26
+positiveTestsAntibody: None (was 95)
+MS 2020-12-25
+positiveTestsAntibody: None (was 95)
+MS 2020-12-24
+positiveTestsAntibody: None (was 95)
+MS 2020-12-23
+positiveTestsAntibody: None (was 95)
+MS 2020-12-22
+positiveTestsAntibody: None (was 95)
+MS 2020-12-21
+positiveTestsAntibody: None (was 95)
+MS 2020-12-20
+positiveTestsAntibody: None (was 95)
+MS 2020-12-19
+positiveTestsAntibody: None (was 95)
+MS 2020-12-18
+positiveTestsAntibody: None (was 95)
+MS 2020-12-17
+positiveTestsAntibody: None (was 95)
+MS 2020-12-16
+positiveTestsAntibody: None (was 95)
+MS 2020-12-15
+positiveTestsAntibody: None (was 95)
+MS 2020-12-14
+positiveTestsAntibody: None (was 95)
+MS 2020-12-13
+positiveTestsAntibody: None (was 95)
+MS 2020-12-12
+positiveTestsAntibody: None (was 95)
+MS 2020-12-11
+positiveTestsAntibody: None (was 95)
+MS 2020-12-10
+positiveTestsAntibody: None (was 95)
+MS 2020-12-09
+positiveTestsAntibody: None (was 95)
+MS 2020-12-08
+positiveTestsAntibody: None (was 95)
+MS 2020-12-07
+positiveTestsAntibody: None (was 95)
+MS 2020-12-06
+positiveTestsAntibody: None (was 95)
+MS 2020-12-05
+positiveTestsAntibody: None (was 95)
+MS 2020-12-04
+positiveTestsAntibody: None (was 95)
+MS 2020-12-03
+positiveTestsAntibody: None (was 95)
+MS 2020-12-02
+positiveTestsAntibody: None (was 95)
+MS 2020-12-01
+positiveTestsAntibody: None (was 95)
+MS 2020-11-30
+positiveTestsAntibody: None (was 95)
+MS 2020-11-29
+positiveTestsAntibody: None (was 95)
+MS 2020-11-28
+positiveTestsAntibody: None (was 95)
+MS 2020-11-27
+positiveTestsAntibody: None (was 95)
+MS 2020-11-26
+positiveTestsAntibody: None (was 95)
+MS 2020-11-25
+positiveTestsAntibody: None (was 95)
+MS 2020-11-24
+positiveTestsAntibody: None (was 95)
+MS 2020-11-23
+positiveTestsAntibody: None (was 95)
+MS 2020-11-22
+positiveTestsAntibody: None (was 95)
+MS 2020-11-21
+positiveTestsAntibody: None (was 95)
+MS 2020-11-20
+positiveTestsAntibody: None (was 95)
+MS 2020-11-19
+positiveTestsAntibody: None (was 95)
+MS 2020-11-18
+positiveTestsAntibody: None (was 95)
+MS 2020-11-17
+positiveTestsAntibody: None (was 95)
+MS 2020-11-16
+positiveTestsAntibody: None (was 95)
+MS 2020-11-15
+positiveTestsAntibody: None (was 95)
+MS 2020-11-14
+positiveTestsAntibody: None (was 95)
+MS 2020-11-13
+positiveTestsAntibody: None (was 95)
+MS 2020-11-12
+positiveTestsAntibody: None (was 95)
+MS 2020-11-11
+positiveTestsAntibody: None (was 95)
+MS 2020-11-10
+positiveTestsAntibody: None (was 95)
+MS 2020-11-09
+positiveTestsAntibody: None (was 95)
+MS 2020-11-08
+positiveTestsAntibody: None (was 95)
+MS 2020-11-07
+positiveTestsAntibody: None (was 95)
+MS 2020-11-06
+positiveTestsAntibody: None (was 95)
+MS 2020-11-05
+positiveTestsAntibody: None (was 95)
+MS 2020-11-04
+positiveTestsAntibody: None (was 95)
+MS 2020-11-03
+positiveTestsAntibody: None (was 95)
+MS 2020-11-02
+positiveTestsAntibody: None (was 95)
+MS 2020-11-01
+positiveTestsAntibody: None (was 95)
+MS 2020-10-31
+positiveTestsAntibody: None (was 95)
+MS 2020-10-30
+positiveTestsAntibody: None (was 95)
+MS 2020-10-29
+positiveTestsAntibody: None (was 95)
+MS 2020-10-28
+positiveTestsAntibody: None (was 95)
+MS 2020-10-27
+positiveTestsAntibody: None (was 95)
+MS 2020-10-26
+positiveTestsAntibody: None (was 95)
+MS 2020-10-25
+positiveTestsAntibody: None (was 95)
+MS 2020-10-24
+positiveTestsAntibody: None (was 95)
+MS 2020-10-23
+positiveTestsAntibody: None (was 95)
+MS 2020-10-22
+positiveTestsAntibody: None (was 95)
+MS 2020-10-21
+positiveTestsAntibody: None (was 95)
+MS 2020-10-20
+positiveTestsAntibody: None (was 95)
+MS 2020-10-19
+positiveTestsAntibody: None (was 95)
+MS 2020-10-18
+positiveTestsAntibody: None (was 95)
+MS 2020-10-17
+positiveTestsAntibody: None (was 95)
+MS 2020-10-16
+positiveTestsAntibody: None (was 95)
+MS 2020-10-15
+positiveTestsAntibody: None (was 95)
+MS 2020-10-14
+positiveTestsAntibody: None (was 95)
+MS 2020-10-13
+positiveTestsAntibody: None (was 95)
+MS 2020-10-12
+positiveTestsAntibody: None (was 95)
+MS 2020-10-11
+positiveTestsAntibody: None (was 95)
+MS 2020-10-10
+positiveTestsAntibody: None (was 95)
+MS 2020-10-09
+positiveTestsAntibody: None (was 95)
+MS 2020-10-08
+positiveTestsAntibody: None (was 95)
+MS 2020-10-07
+positiveTestsAntibody: None (was 95)
+MS 2020-10-06
+positiveTestsAntibody: None (was 95)
+MS 2020-10-05
+positiveTestsAntibody: None (was 95)
+MS 2020-10-04
+positiveTestsAntibody: None (was 95)
+MS 2020-10-03
+positiveTestsAntibody: None (was 95)
+MS 2020-10-02
+positiveTestsAntibody: None (was 95)
+MS 2020-10-01
+positiveTestsAntibody: None (was 95)
+MS 2020-09-30
+positiveTestsAntibody: None (was 95)
+MS 2020-09-29
+positiveTestsAntibody: None (was 95)
+MS 2020-09-28
+positiveTestsAntibody: None (was 95)
+MS 2020-09-27
+positiveTestsAntibody: None (was 95)
+MS 2020-09-26
+positiveTestsAntibody: None (was 95)
+MS 2020-09-25
+positiveTestsAntibody: None (was 95)
+MS 2020-09-24
+positiveTestsAntibody: None (was 95)
+MS 2020-09-23
+positiveTestsAntibody: None (was 95)
+MS 2020-09-22
+positiveTestsAntibody: None (was 95)
+MS 2020-09-21
+positiveTestsAntibody: None (was 95)
+MS 2020-09-20
+positiveTestsAntibody: None (was 95)
+MS 2020-09-19
+positiveTestsAntibody: None (was 95)
+MS 2020-09-18
+positiveTestsAntibody: None (was 95)
+MS 2020-09-17
+positiveTestsAntibody: None (was 95)
+MS 2020-09-16
+positiveTestsAntibody: None (was 95)
+MS 2020-09-15
+positiveTestsAntibody: None (was 95)
+MS 2020-09-14
+positiveTestsAntibody: None (was 95)
+MS 2020-09-13
+positiveTestsAntibody: None (was 95)
+MS 2020-09-12
+positiveTestsAntibody: None (was 95)
+MS 2020-09-11
+positiveTestsAntibody: None (was 95)
+MS 2020-09-10
+positiveTestsAntibody: None (was 95)
+MS 2020-09-09
+positiveTestsAntibody: None (was 95)
+MS 2020-09-08
+positiveTestsAntibody: None (was 95)
+MS 2020-09-07
+positiveTestsAntibody: None (was 95)
+MS 2020-09-06
+positiveTestsAntibody: None (was 95)
+MS 2020-09-05
+positiveTestsAntibody: None (was 95)
+MS 2020-09-04
+positiveTestsAntibody: None (was 95)
+MS 2020-09-03
+positiveTestsAntibody: None (was 95)
+MS 2020-09-02
+positiveTestsAntibody: None (was 95)
+MS 2020-09-01
+positiveTestsAntibody: None (was 95)
+MS 2020-08-31
+positiveTestsAntibody: None (was 95)
+MS 2020-08-30
+positiveTestsAntibody: None (was 95)
+MS 2020-08-29
+positiveTestsAntibody: None (was 95)
+MS 2020-08-28
+positiveTestsAntibody: None (was 95)
+MS 2020-08-27
+positiveTestsAntibody: None (was 95)
+MS 2020-08-26
+positiveTestsAntibody: None (was 95)
+MS 2020-08-25
+positiveTestsAntibody: None (was 95)
+MS 2020-08-24
+positiveTestsAntibody: None (was 95)
+MS 2020-08-23
+positiveTestsAntibody: None (was 95)
+MS 2020-08-22
+positiveTestsAntibody: None (was 95)
+MS 2020-08-21
+positiveTestsAntibody: None (was 95)
+MS 2020-08-20
+positiveTestsAntibody: None (was 95)
+MS 2020-08-19
+positiveTestsAntibody: None (was 95)
+MS 2020-08-18
+positiveTestsAntibody: None (was 95)
+MS 2020-08-17
+positiveTestsAntibody: None (was 95)
+MS 2020-08-16
+positiveTestsAntibody: None (was 95)
+MS 2020-08-15
+positiveTestsAntibody: None (was 95)
+MS 2020-08-14
+positiveTestsAntibody: None (was 95)
+MS 2020-08-13
+positiveTestsAntibody: None (was 95)
+MS 2020-08-12
+positiveTestsAntibody: None (was 95)
+MS 2020-08-11
+positiveTestsAntibody: None (was 95)
+MS 2020-08-10
+positiveTestsAntibody: None (was 95)
+MS 2020-08-09
+positiveTestsAntibody: None (was 95)
+MS 2020-08-08
+positiveTestsAntibody: None (was 95)
+MS 2020-08-07
+positiveTestsAntibody: None (was 95)
+MS 2020-08-06
+positiveTestsAntibody: None (was 95)
+MS 2020-08-05
+positiveTestsAntibody: None (was 95)
+MS 2020-08-04
+positiveTestsAntibody: None (was 95)
+MS 2020-08-03
+positiveTestsAntibody: None (was 95)
+MS 2020-08-02
+positiveTestsAntibody: None (was 95)
+MS 2020-08-01
+positiveTestsAntibody: None (was 95)
+MS 2020-07-31
+positiveTestsAntibody: None (was 95)
+MS 2020-07-30
+positiveTestsAntibody: None (was 95)
+MS 2020-07-29
+positiveTestsAntibody: None (was 95)
+MS 2020-07-28
+positiveTestsAntibody: None (was 95)
+MS 2020-07-27
+positiveTestsAntibody: None (was 95)
+MS 2020-07-26
+positiveTestsAntibody: None (was 95)
+MS 2020-07-25
+positiveTestsAntibody: None (was 95)
+MS 2020-07-24
+positiveTestsAntibody: None (was 95)
+MS 2020-07-23
+positiveTestsAntibody: None (was 95)
+MS 2020-07-22
+positiveTestsAntibody: None (was 95)
+MS 2020-07-21
+positiveTestsAntibody: None (was 95)
+MS 2020-07-20
+positiveTestsAntibody: None (was 95)
+MS 2020-07-19
+positiveTestsAntibody: None (was 95)
+MS 2020-07-18
+positiveTestsAntibody: None (was 95)
+MS 2020-07-17
+positiveTestsAntibody: None (was 95)
+MS 2020-07-16
+positiveTestsAntibody: None (was 95)
+MS 2020-07-15
+positiveTestsAntibody: None (was 95)
+MS 2020-07-14
+positiveTestsAntibody: None (was 95)
+MS 2020-07-13
+positiveTestsAntibody: None (was 95)
+MS 2020-07-12
+positiveTestsAntibody: None (was 95)
+MS 2020-07-11
+positiveTestsAntibody: None (was 95)
+MS 2020-07-10
+positiveTestsAntibody: None (was 95)
+MS 2020-07-09
+positiveTestsAntibody: None (was 95)
+MS 2020-07-08
+positiveTestsAntibody: None (was 95)
+MS 2020-07-07
+positiveTestsAntibody: None (was 95)
+MS 2020-07-06
+positiveTestsAntibody: None (was 95)
+MS 2020-07-05
+positiveTestsAntibody: None (was 95)
+MS 2020-07-04
+positiveTestsAntibody: None (was 95)
+MS 2020-07-03
+positiveTestsAntibody: None (was 95)
+MS 2020-07-02
+positiveTestsAntibody: None (was 95)
+MS 2020-07-01
+positiveTestsAntibody: None (was 95)
+MS 2020-06-30
+positiveTestsAntibody: None (was 95)
+MS 2020-06-29
+positiveTestsAntibody: None (was 95)
+MS 2020-06-28
+positiveTestsAntibody: None (was 95)
+MS 2020-06-27
+positiveTestsAntibody: None (was 95)
+MS 2020-06-26
+positiveTestsAntibody: None (was 95)
+MS 2020-06-25
+positiveTestsAntibody: None (was 95)
+MS 2020-06-24
+positiveTestsAntibody: None (was 95)
+MS 2020-06-23
+positiveTestsAntibody: None (was 95)
+MS 2020-06-22
+positiveTestsAntibody: None (was 95)
+MS 2020-06-21
+positiveTestsAntibody: None (was 95)
+MS 2020-06-20
+positiveTestsAntibody: None (was 95)
+MS 2020-06-19
+positiveTestsAntibody: None (was 95)
+MS 2020-06-18
+positiveTestsAntibody: None (was 95)
+MS 2020-06-17
+positiveTestsAntibody: None (was 95)
+MS 2020-06-16
+positiveTestsAntibody: None (was 95)
+MS 2020-06-15
+positiveTestsAntibody: None (was 95)
+MS 2020-06-14
+positiveTestsAntibody: None (was 95)
+MS 2020-06-13
+positiveTestsAntibody: None (was 95)
+MS 2020-06-12
+positiveTestsAntibody: None (was 95)
+MS 2020-06-11
+positiveTestsAntibody: None (was 95)
+MS 2020-06-10
+positiveTestsAntibody: None (was 95)
+MS 2020-06-09
+positiveTestsAntibody: None (was 95)
+MS 2020-06-08
+positiveTestsAntibody: None (was 95)
+MS 2020-06-07
+positiveTestsAntibody: None (was 95)
+MS 2020-06-06
+positiveTestsAntibody: None (was 95)
+MS 2020-06-05
+positiveTestsAntibody: None (was 95)
+MS 2020-06-04
+positiveTestsAntibody: None (was 95)
+MS 2020-06-03
+positiveTestsAntibody: None (was 95)
+MS 2020-06-02
+positiveTestsAntibody: None (was 95)
+MS 2020-06-01
+positiveTestsAntibody: None (was 95)
+MS 2020-05-31
+positiveTestsAntibody: None (was 95)
+MS 2020-05-30
+positiveTestsAntibody: None (was 95)
+MS 2020-05-29
+positiveTestsAntibody: None (was 95)
+MS 2020-05-28
+positiveTestsAntibody: None (was 95)
+MS 2020-05-27
+positiveTestsAntibody: None (was 95)
+MS 2020-05-26
+positiveTestsAntibody: None (was 95)
+MS 2020-05-25
+positiveTestsAntibody: None (was 80)
+MS 2020-05-24
+positiveTestsAntibody: None (was 80)
+MS 2020-05-23
+positiveTestsAntibody: None (was 80)
+MS 2020-05-22
+positiveTestsAntibody: None (was 80)
+MS 2020-05-21
+positiveTestsAntibody: None (was 80)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1055">#1055: [MS] Patch 01/07 late update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1055</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 8, 2021, 1:51 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1055" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MS</p>
+<p><strong>Dates affected:</strong> 01/07</p>
+<p><strong>Describe the issue:</strong> On January 7, 2021, the Mississippi website was down for a portion of the day due to technical problems, and we could not access their data by the time of our daily update.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757022197">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 8, 2021, 2:05 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1055#issuecomment-757022197" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+MS 2021-01-07
+positive: 231490 (was 228235)
+death: 5061 (was 5013)
+deathConfirmed: 3938 (was 3920)
+deathProbable: 1123 (was 1093)
+probableCases: 77146 (was 75329)
+positiveCasesViral: 154334 (was 152906)
+lastUpdateTime: 2021-01-06 05:00:00+00:00 (was 2021-01-05 05:00:00+00:00)
+dateChecked: 2021-01-08 22:00:00+00:00 (was 2021-01-08 00:28:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1055">#1055: [MS] Patch 01/07 late update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1055</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 8, 2021, 1:51 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1055" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MS</p>
+<p><strong>Dates affected:</strong> 01/07</p>
+<p><strong>Describe the issue:</strong> On January 7, 2021, the Mississippi website was down for a portion of the day due to technical problems, and we could not access their data by the time of our daily update.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757022197">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 8, 2021, 2:05 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1055#issuecomment-757022197" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+MS 2021-01-07
+positive: 231490 (was 228235)
+death: 5061 (was 5013)
+deathConfirmed: 3938 (was 3920)
+deathProbable: 1123 (was 1093)
+probableCases: 77146 (was 75329)
+positiveCasesViral: 154334 (was 152906)
+lastUpdateTime: 2021-01-06 05:00:00+00:00 (was 2021-01-05 05:00:00+00:00)
+dateChecked: 2021-01-08 22:00:00+00:00 (was 2021-01-08 00:28:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-944">#944: [MS] Patch 11/8 Cur. hosp, cur. icu, and cur. vent</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            944</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 10, 2020, 10:09 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/944" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MS</p>
+<p><strong>Dates affected:</strong> 11/8</p>
+<p><strong>Describe the issue:</strong> On 11/8, MS current hospitalization values updated after we checked the state. We need to backfill cur. hosp, cur. icu, and cur. vent using the hover over graph on<a href="https://msdh.ms.gov/msdhsite/_static/14,21994,420,873.html"> their page</a> (note: MS reports hospitalizations on a one day lag.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-724875877">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 10, 2020, 10:12 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/944#issuecomment-724875877" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="715" alt="Screen Shot 2020-11-10 at 1 11 57 PM" src="../../assets/github/images/68712382/98713974-50853980-2356-11eb-8934-158cdd314f0e.png"></p>
+<p>AFTER:
+<img width="712" alt="Screen Shot 2020-11-10 at 1 12 49 PM" src="../../assets/github/images/68712382/98714067-701c6200-2356-11eb-9f7b-f7758be4c98b.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-870">#870: [MS] Missing value for Total Tests (PCR) on 5/17</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            870</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 27, 2020, 6:04 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/870" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Mississippi</p>
+<p>Problem: We were missing the <strong>Total Tests (PCR)</strong> value for 5/17. Using the screenshot from 5/17 backfilled the value.</p>
+<p>Screenshot: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MS/MS-20200517-184033.png</p>
+<p>BEFORE:
+<img width="246" alt="Screen Shot 2020-09-27 at 6 02 30 PM" src="https://user-images.githubusercontent.com/66583275/94380740-b5a90680-00eb-11eb-884c-b87b1444070e.png"></p>
+<p>AFTER:
+<img width="236" alt="Screen Shot 2020-09-27 at 6 02 53 PM" src="https://user-images.githubusercontent.com/66583275/94380757-bf326e80-00eb-11eb-98eb-26509e88d920.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-846">#846: [MS] Probables Backfill and Confirmed Cases Corrections</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            846</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 18, 2020, 7:06 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MS</p>
+<p><strong>Describe the problem</strong>
+As explained by this previous github issue [https://github.com/COVID19Tracking/issues/issues/712] we reported positive (PCR) cases from 4/30-6/01, though it wasn't clear whether the reported cases value represented confirmed cases exclusively. We will delete values in the positive PCR confirmed column prior to 6/1, after which both CTP and MS started separating confirmed and probable cases on their main state page according to screenshots. [https://covidtracking.com/screenshots/MS/MS-20200602-123808.png] We will also backfill probables using the formula positives - positive PCR confirmed from 6/02 - 7/28 (which is when CTP first started reporting probables) and cross-referencing with screenshots.</p>
+<p>We will also correct the value on 6/19 for positive cases PCR, which was 20641 when it should've been 20500 because we needed to carry over this value from 6/17 - MS stopped separating confirmed and probables between 6/17-6/21. We will also correct the value on 6/3 for positive cases PCR, which was 16211 according to screenshots [https://covidtracking.com/screenshots/MS/MS-20200603-124214.png] but reported as 15910. We will also correct the value on 6/14 for positive cases PCR, which was reported as 19216 when it should've been 19383 [https://covidtracking.com/screenshots/MS/MS-20200614-124313.png].</p>
+<p><strong>Link to data source</strong></p>
+<ul>
+<li>https://covidtracking.com/screenshots/MS/MS-20200602-123808.png</li>
+<li>https://msdh.ms.gov/msdhsite/_static/14,0,420.html</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-694892292">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694892292" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CORRECTING VALUE ON 6/19 - BEFORE:</p>
+<p><img src="../../assets/github/images/57415941/93607457-57677f80-f997-11ea-8ef3-e890acb1a795.png" alt="Screen Shot 2020-09-18 at 10 11 28 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694892629">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:12 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694892629" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CORRECTING VALUE ON 6/19 - AFTER:
+<img src="../../assets/github/images/57415941/93607527-6fd79a00-f997-11ea-92e2-38bf547892c8.png" alt="Screen Shot 2020-09-18 at 10 12 09 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694893911">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694893911" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CORRECTING CONFIRMED VALUES 4/30-6/1 - BEFORE:</p>
+<p><img src="../../assets/github/images/57415941/93607758-be853400-f997-11ea-9ba6-a88e17d52727.png" alt="Screen Shot 2020-09-18 at 10 14 05 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694894303">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:15 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694894303" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>CORRECTING CONFIRMED VALUES 4/30-6/1 - AFTER:
+<img src="../../assets/github/images/57415941/93607827-d78de500-f997-11ea-8c87-1a59eca613d9.png" alt="Screen Shot 2020-09-18 at 10 14 57 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694897884">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694897884" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MISTAKE CORRECTION 6/3 POSITIVE CASES PCR - BEFORE:</p>
+<p><img src="../../assets/github/images/57415941/93608557-bf6a9580-f998-11ea-8de8-0abdf825f61f.png" alt="Screen Shot 2020-09-18 at 10 20 39 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694898026">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694898026" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MISTAKE CORRECTION 6/3 POSITIVE CASES PCR - AFTER:</p>
+<p><img src="../../assets/github/images/57415941/93608588-c85b6700-f998-11ea-8945-27c025cfeead.png" alt="Screen Shot 2020-09-18 at 10 20 53 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694905877">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694905877" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>PROBABES (BEFORE):
+<img src="../../assets/github/images/57415941/93610073-98ad5e80-f99a-11ea-937d-bdde79312baf.png" alt="Screen Shot 2020-09-18 at 10 34 01 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-694906046">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 18, 2020, 7:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-694906046" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>PROBABLES (AFTER):
+<img src="../../assets/github/images/57415941/93610090-a367f380-f99a-11ea-853c-51b5f1b96cfe.png" alt="Screen Shot 2020-09-18 at 10 34 18 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698702078">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on September 24, 2020, 8:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-698702078" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MISTAKE CORRECTION 6/14 POSITIVE CASES PCR  AND PROBABLES- BEFORE:<img width="1101" alt="Screen Shot 2020-09-24 at 10 34 31 PM Before" src="../../assets/github/images/71461067/94223852-8cebfb80-feb6-11ea-8407-39a9233c8636.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698702400">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on September 24, 2020, 8:40 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-698702400" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MISTAKE CORRECTION 6/14 POSITIVE CASES PCR AND PROBABLES- AFTER:
+<img width="1109" alt="Screen Shot 2020-09-24 at 10 35 04 PM After" src="../../assets/github/images/71461067/94223982-ece2a200-feb6-11ea-97c2-795680b802ba.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-702273076">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on October 1, 2020, 10:06 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-702273076" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and after values</p>
+<p><a href="../../assets/github/files/5313686/Probable.Timeseries.Backfill.MS.xlsx">Probable Timeseries Backfill MS.xlsx</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-710312492">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 16, 2020, 10:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-710312492" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-716755895">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 26, 2020, 11:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/846#issuecomment-716755895" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-825">#825: [MS] Backfill Cur. Hosp, Cur. icu from 8/24-9/10. Delete cur. vent from 8/30 - 9/10</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            825</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on September 11, 2020, 2:17 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/825" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State</strong>: MS
+<strong>Dates impacted</strong>: 8/24 - 9/10
+<strong>Issue described</strong>: On 8/24 MS switched current hospitalization and icu sources and stoped reporting cur. vent. They resumed reporting this on 9/15. We need to backfill current hospitalizations, cur. icu, and cur. vent for 8/24 - 9/14 from the <a href="https://msdh.ms.gov/msdhsite/_static/14,21994,420,873.html">&quot;Hospitalizations and ICU Use (Statewide)&quot;</a> graph
+<strong>Sources:</strong> https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1600201831431600
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1599857074458900, https://msdh.ms.gov/msdhsite/_static/14,21994,420,873.html</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-701651291">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 30, 2020, 2:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/825#issuecomment-701651291" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-706613604">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 10, 2020, 2:24 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/825#issuecomment-706613604" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814444444">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/825#issuecomment-814444444" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1749380/113779343-9377ed00-96fb-11eb-8a86-7fb8b73d6605.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-712">#712: [MS] Historical PCL Cases </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            712</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on July 31, 2020, 7:40 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/712" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State: MS</strong></p>
+<p><strong>Dates impacted:</strong> 4/30-6/01</p>
+<p>Issue: On 6/02, MS started separating out confirmed and probable cases. From 4/30-6/01, we were reporting the same value in positive cases (PCR) and positive cases (people, probable and confirmed). No outreach was done prior to 6/02 to confirm that &quot;total cases&quot;, which was the value that we used for both columns, was lab-confirmed only. This is why I propose deleting all values in the positive cases (PCR) column prior to 6/02 and only use the confirmed values for the positive cases (PCR) column that appeared on the state website on 6/02.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-674409921">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 15, 2020, 8:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/712#issuecomment-674409921" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-680158475">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 25, 2020, 10:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/712#issuecomment-680158475" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-643">#643: [MS] Negatives dropped on 7/8</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            643</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on July 17, 2020, 3:58 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/643" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MS</p>
+<p><strong>Describe the problem</strong>
+MS did not provide updated total testing numbers between 7/6 and 7/8. Because we subtract total tests from confirmed cases to yield negatives, negatives needed to be carried over to avoid going down. This happened on 7/7, but on 7/8 the negatives number was recalculated, resulting in an apparent decline in total tests on the web site. There was no public note to explain the decrease and it wasn't mentioned in the DE conversation for MS that day, so I assume it was unintentional.</p>
+<p>(This was reported to us <a href="https://app.frontapp.com/open/msg_gkttahd">via email</a>.)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660372205">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 17, 2020, 3:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/643#issuecomment-660372205" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/404503/87836856-94ac7580-c85f-11ea-86fc-73f9ded6b08e.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/87836867-9e35dd80-c85f-11ea-854e-06bc1fc545b9.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-586">#586: [MS] data entry mistake from 7/8</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            586</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 8, 2020, 1:21 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/586" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MS</p>
+<p><strong>Describe the problem</strong>
+In the &quot;Total Tests (PCR)&quot; column, it seems that the last checker recorded the total tests number that lumps PCR and antibody tests instead of recording just the total PCR tests number. I'm changing it to just total PCR tests, so the number is lower.
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1594239073454000?thread_ts=1594238963.452000&amp;cid=CUQ4MMTPD</p>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-655763413">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 8, 2020, 2:19 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/586#issuecomment-655763413" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/25627274/86971203-beb6b700-c13e-11ea-8cd0-43093475a89b.png" alt="image">
+After:
+<img src="../../assets/github/images/25627274/86971406-1d7c3080-c13f-11ea-80f5-82c7bf682b37.png" alt="image">
+Since total tests did not change from 7/6 to 7/7, carrying over negatives from 7/6</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-563">#563: [MS] 6/30 total test numbers were used instead of PCR tests only</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            563</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 1, 2020, 1:04 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/563" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MS</p>
+<p><strong>Describe the problem</strong>
+6/30 total test numbers were used instead of PCR tests only</p>
+<p><strong>Link to data source</strong>
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MS/MS-20200630-184210.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-652622960">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 1, 2020, 1:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/563#issuecomment-652622960" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you! Our records displayed an incorrect value (299511) for MS' PCR testing totals on 6/30. This has been updated to reflect the correct number (287546) for 6/30 PCR totals by means of a screenshot of MS' website.
+<img width="845" alt="MS 6:30 Before" src="../../assets/github/images/66738237/86286905-4f2c4f00-bbb5-11ea-850a-f204f39bddfd.png">
+<img width="791" alt="MS 6:30 After" src="../../assets/github/images/66738237/86286921-55223000-bbb5-11ea-8010-a42d06a3c6fe.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-535">#535: [MS] Total Tests (PCR) and Negative Cases were entered incorrectly on 6/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            535</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on June 25, 2020, 8:24 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/535" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MS</p>
+<p><strong>Describe the problem</strong>
+Data entry mistake lumping antibody tests into total tests (PCR) number. Mistake was propagated to negative calculations as well
+Before screenshot
+<img src="https://user-images.githubusercontent.com/25627274/85748841-58f61400-b6d6-11ea-8ab5-7d54fe4af503.png" alt="image"></p>
+<p><strong>Link to data source</strong>
+Screenshot 6/23: https://covidtracking.com/screenshots/MS/MS-20200623-184044.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649620984">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on June 25, 2020, 8:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/535#issuecomment-649620984" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Correcting: Since total tests did not change from 6/22, going to re-update negatives to be the same as 6/22. Updating Total Tests (PCR) to be the same as well.
+After screenshot
+<img src="../../assets/github/images/25627274/85749203-a5415400-b6d6-11ea-86ae-2993fed631ab.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-656738591">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 10, 2020, 8:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/535#issuecomment-656738591" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-469">#469: [MS Historicals]antibody tests were added to total for one day </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            469</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 31, 2020, 11:14 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/469" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>In the Mississippi date you accidentally counted the antibody tests for the 5/29. So it was high number. Then for 5/30 it was corrected, but it made the new test numbers be a negative number. And perhaps on 5/27 as well when it says there were 313 tests but 273 positive cases.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24d5d">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-644290166">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 15, 2020, 11:15 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/469#issuecomment-644290166" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649747796">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 25, 2020, 11:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/469#issuecomment-649747796" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-350">#350: [MS - Mississippi] Update &quot;current hospitalized&quot; for 5/2 datapoint </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            350</p>
+          <p>
+            <strong>camille-le</strong> opened this issue on May 3, 2020, 2:32 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/350" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hello, requesting an update for &quot;Currently Hospitalized&quot; for Mississippi for 5/2.</p>
+<p>CURRENTLY:</p>
+<ul>
+<li>For 5/2, we recorded 424+28 = 452 for Currently Hospitalized.</li>
+</ul>
+<p>REQUESTED CHANGE:</p>
+<ul>
+<li>Based on the time series below, this should be changed from 452 to 632 (424+208) for 5/2.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/31285549/80926081-afd01480-8d49-11ea-9b70-3e29646b8fce.png" alt="currHosp_05-02">
+<a href="https://msdh.ms.gov/msdhsite/_static/14,21994,420,873.html">Source</a></p>
+<p>Please note, MS's data is reported from the previous day. So for 5/2, this would reflect data from 5/1. This is why the chart shows the data for 5/1.</p>
+<p><a href="https://msdh.ms.gov/msdhsite/_static/14,0,420.html">From the MS page</a>:
+<em>This map and the following table show total cases in Mississippi as of 6 p.m. May 2, 2020, and include all reported cases since March 11, 2020.</em></p>
+<p>Thank you!
+Camille</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623186885">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 3, 2020, 2:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/350#issuecomment-623186885" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi Camille!
+I am updating this right now.</p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/80926440-4eb63a00-8d65-11ea-976d-3b6764622824.png" alt="Screenshot_2020-05-03 Coronavirus numbers by state (CovidTracking, DEV COPY)(2)"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/80926438-4e1da380-8d65-11ea-916c-135e31b3eb3e.png" alt="Screenshot_2020-05-03 Coronavirus numbers by state (CovidTracking, DEV COPY)(3)"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-244">#244: MS has an B grade with wild swings</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            244</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 21, 2020, 2:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  State grades
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/244" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>MS seems pretty clearly to be reporting on a weekly basis with giant spikes on Mondays. That would seem to mean that they are reporting neither positive nor negative cases reliably.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-617288285">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 21, 2020, 10:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/244#issuecomment-617288285" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for this information <strong>@</strong>Jmuccigr</p>
+<p>We will take your input into consideration when compiling the states grades.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-130">#130: MS: Governor reporting much higher test numbers</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            130</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 3, 2020, 2:29 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/130" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The governor of Mississippi was on Twitter today bragging on their testing stats. He says:</p>
+<blockquote>
+<p>Mississippi has done 16,662 total tests. We have 1,177 cases. Our population is a little less than three million.</p>
+</blockquote>
+<p>That positive count agrees with the database, but his test count is three times higher.</p>
+<p>Looking at it, I'm also not sure where the project's test numbers are coming from. The webpage for the MS health dept reports only <em>their</em> tests and has a positive rate of 10% or so. (I don't see any info on private tests on their pages.) It also says they've done 5,257 tests. Together therefore they account for about half of cases, but nearly 90% of tests in the project. That seems off.</p>
+<p>If their pos rate persists in private testing, it would suggest roughly 5,000 private tests have been done, for a total test count of around 10k. That's a lot lower than the governor's claim of 16k, but maybe private companies are testing a different population. His claim seems closer than the project's 5,900 count.</p>
+<p>In any case, something's inconsistent here.</p>
+<p>Source: https://twitter.com/tatereeves/status/1245843019745673217</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-609052325">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 4, 2020, 9:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/130#issuecomment-609052325" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>Jmuccigr Thank you for this information.</p>
+<p>The governor is indeed reporting 16,662 tests, however tests do not equal <strong>number of individuals tested.</strong> which is what we are tracking.</p>
+<p>For testing data (positives and negatives) in MS, our project is using the numbers provided by the state on https://msdh.ms.gov/msdhsite/_static/14,0,420.html. You are absolutely correct that they are only reporting tests from MPHL.</p>
+<p>Please urge MS to provide the number of individuals tested, and positive from private sources so we can expand our reporting data.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-609055816">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 4, 2020, 9:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/130#issuecomment-609055816" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for the reply. Yes, I get the distinction, but you'll see that further on in the thread the governor compares that number to the &quot;residents tested&quot; in South Korea, so he is implying that that figure is people tested, not simply tests. Unless he's just trying to be deceptive.</p>
+<p>Would a 3:1 ratio of tests to persons tested not be a bit high?</p>
+<p>To the second point, since the website gives only the public tests, where is the rest of the count coming from? Again, the public positive rate would suggest a lot more private tests than are listed.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790132">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/130#issuecomment-623790132" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990058">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/130#issuecomment-628990058" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

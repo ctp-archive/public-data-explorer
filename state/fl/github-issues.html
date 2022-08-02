@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Florida Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Florida</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Florida</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>December 12, 2020, 2:17 PM PST</td>
+          <td>1010</td>
+          <td>
+            <a href="#issue-1010">[FL] Update 12/11 late updated test values </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 10, 2020, 9:38 AM PST</td>
+          <td>1003</td>
+          <td>
+            <a href="#issue-1003">[FL] Clear confirmed deaths from 8/11 onward</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 22, 2020, 7:42 PM PST</td>
+          <td>966</td>
+          <td>
+            <a href="#issue-966">[FL] 11/21/20 PDF updated after pub shift, need to update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 26, 2020, 6:37 PM PDT</td>
+          <td>914</td>
+          <td>
+            <a href="#issue-914">[FL] Backfill total test encounters and cases from open hub data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 13, 2020, 11:54 AM PDT</td>
+          <td>896</td>
+          <td>
+            <a href="#issue-896">[FL] Moving Antigen positives to Probable cases column</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 29, 2020, 3:59 PM PDT</td>
+          <td>873</td>
+          <td>
+            <a href="#issue-873">[FL] Backfilling Positive Cases (PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 22, 2020, 11:43 AM PDT</td>
+          <td>858</td>
+          <td>
+            <a href="#issue-858">FL positivity rate is skewed upwards by more than 100% error</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 11, 2020, 8:02 AM PDT</td>
+          <td>749</td>
+          <td>
+            <a href="#issue-749">[FL] Incorrect Testing Value, 5/17;  Total Tests PCR (People) before 5/13; missing Total Tests (PCR) before 5/17</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 6:30 AM PDT</td>
+          <td>699</td>
+          <td>
+            <a href="#issue-699">[FL] Antibody test reporting in people</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 6:26 AM PDT</td>
+          <td>698</td>
+          <td>
+            <a href="#issue-698">[FL] Antibody specimen count backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 14, 2020, 7:51 AM PDT</td>
+          <td>624</td>
+          <td>
+            <a href="#issue-624">[FL] PCL Cases Historical</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 10, 2020, 12:54 PM PDT</td>
+          <td>602</td>
+          <td>
+            <a href="#issue-602">[FL] remove one-off hospitalization data point from reporting as of 5/14</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 29, 2020, 8:27 AM PDT</td>
+          <td>558</td>
+          <td>
+            <a href="#issue-558">[FL] Hospitalization Data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 26, 2020, 6:25 AM PDT</td>
+          <td>542</td>
+          <td>
+            <a href="#issue-542">[FL] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 12, 2020, 12:53 PM PDT</td>
+          <td>413</td>
+          <td>
+            <a href="#issue-413">5/12 FL -- inconsistencies between death count and screenshots</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 5, 2020, 11:08 AM PDT</td>
+          <td>366</td>
+          <td>
+            <a href="#issue-366">FL Data Inconsistent With State Data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 17, 2020, 8:51 AM PDT</td>
+          <td>207</td>
+          <td>
+            <a href="#issue-207">FL April 16 2020</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1010">#1010: [FL] Update 12/11 late updated test values </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1010</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on December 12, 2020, 2:17 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1010" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> FL</p>
+<p><strong>Dates affected:</strong> 12/11</p>
+<p><strong>Describe the issue:</strong> On December 11, 2020, Florida did not update their state report by the time of our daily update so we could not update Total PCR tests (specimens), Positive PCR tests (specimens), Negative PCR tests (specimens), Positive PCR tests (people), or Probable cases.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-743913286">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 12, 2020, 2:20 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1010#issuecomment-743913286" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5683830/FL.12.11.test.backfill.changes.xlsx">FL 12:11 test backfill changes.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1003">#1003: [FL] Clear confirmed deaths from 8/11 onward</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1003</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 10, 2020, 9:38 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1003" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On 8/11, FL added antigen tests to its data definition for deaths, which were previously PCR only.
+Since FL does not call these deaths &quot;confirmed,&quot; we are clearing confirmed deaths from 8/12 onward (since we are on a one day lag in terms of when the data is as of).
+<a href="https://github.com/COVID19Tracking/issues/files/5674651/Data_Definitions.08112020.pdf">Data_Definitions 08112020.pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-742757769">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 10, 2020, 11:52 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1003#issuecomment-742757769" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5675287/Changes.6.txt">Changes (6).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-966">#966: [FL] 11/21/20 PDF updated after pub shift, need to update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            966</p>
+          <p>
+            <strong>whobody</strong> opened this issue on November 22, 2020, 7:42 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/966" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]</p>
+<p>FL</p>
+<p><strong>Describe the problem</strong></p>
+<p>Pub shift did not catch the FL pdf. Need to backfill:</p>
+<p>Total Tests (PCR)
+Positive Tests (PCR)
+Negative Tests (PCR)
+Positive Cases (PCR)
+Probable Cases</p>
+<p><strong>Link to data source</strong></p>
+<p>http://ww11.doh.state.fl.us/comm/_partners/covid19_report_archive/cases-monitoring-and-pui-information/state-report/state_reports_latest.pdf</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-914">#914: [FL] Backfill total test encounters and cases from open hub data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            914</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 26, 2020, 6:37 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/914" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Florida</p>
+<p><strong>Describe the problem</strong>
+Florida has provided a total number of tests and cases going back to 1/28 on their open data hub. This backfills the data in order to provide a total tests metric that reflects repeat testing.</p>
+<p><strong>Link to data source</strong>
+https://open-fdoh.hub.arcgis.com/datasets/a91ca3832bd448a2a1b1bedad199ba2b/geoservice?page=25</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-717544866">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on October 27, 2020, 2:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/914#issuecomment-717544866" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>From the public note: On October 27, Florida started providing a full timeseries of total test encounters excluding tests from individuals after they test positive. This timeseries only reflects Florida residents, so <strong>we have also revised our existing cases figures and unique individuals tested figure to reflect only residents. These changes resulted in a 1.28% decrease in Florida's cases and a 0.38% decrease in Florida's unique people tested.</strong></p>
+<p>This change affects:</p>
+<ul>
+<li>Positive Cases (People, confirmed + probable)</li>
+<li>Positive Cases (PCR)</li>
+<li>Probable Cases</li>
+<li>Total Test Encounters (PCR)</li>
+<li>Total PCR Tests (People)</li>
+</ul>
+<p>Attaching the analysis spreadsheet as well as the sheets we used as intermediate steps for the data.</p>
+<p>Analysis sheet:
+<a href="../../assets/github/files/5448136/FL.-.Analysis.20201026.csv.txt">FL - Analysis 20201026.csv.txt</a></p>
+<p>Time series downloaded from florida covid data hub (&quot;Florida COVID19 State Testing Totals&quot;), linked in <strong>@muamichali</strong>'s description above). This is referred to as &quot;FL download 10-26-2020&quot; in the analysis sheet:
+<a href="../../assets/github/files/5448135/FL.-.FL.download.10-26-2020.csv.txt">FL - FL download 10-26-2020.csv.txt</a></p>
+<p>Time series built from florida's daily PDF summaries, over time, this is referred to as &quot;PDF 10-26&quot; in the analysis sheet:
+<a href="../../assets/github/files/5448137/FL.-.PDF.10-26.csv.txt">FL - PDF 10-26.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-896">#896: [FL] Moving Antigen positives to Probable cases column</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            896</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 13, 2020, 11:54 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  API
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/896" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Florida</p>
+<p><strong>Describe the problem</strong>
+From outreach, Florida flips Antigen positive cases to PCR positive cases in their daily state report upon confirmatory PCR testing. We're moving the Antigen positive column values to the Probable Cases column and capturing accordingly.</p>
+<p><strong>Link to data source</strong>
+http://ww11.doh.state.fl.us/comm/_partners/covid19_report_archive/cases-monitoring-and-pui-information/state-report/state_reports_latest.pdf</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-707943125">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 13, 2020, 11:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/896#issuecomment-707943125" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/95903394-f25f3980-0d4a-11eb-9a7c-8910a6d3cb49.png" alt="image">
+<img src="../../assets/github/images/67408226/95903426-fe4afb80-0d4a-11eb-8647-736dd662077d.png" alt="image">
+<img src="../../assets/github/images/67408226/95903463-0e62db00-0d4b-11eb-8341-f7d4c9d964c9.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-707943962">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 13, 2020, 11:57 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/896#issuecomment-707943962" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/95903571-318d8a80-0d4b-11eb-8597-d0b243829b28.png" alt="image">
+<img src="../../assets/github/images/67408226/95903607-3baf8900-0d4b-11eb-9ab3-2665144e7ad4.png" alt="image">
+<img src="../../assets/github/images/67408226/95903627-45d18780-0d4b-11eb-81d5-cc2d83751cf9.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-873">#873: [FL] Backfilling Positive Cases (PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            873</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 29, 2020, 3:59 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/873" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Florida</p>
+<p><strong>Describe the problem</strong>
+On 8/14, FL began to separate the Total Cases on their daily state report by antigen and PCR tests. We began to capture the antigen tests in the respective cell, but we never captured the PCR Positives metric.</p>
+<p>Backfilling Positive Cases (PCR) through 8/14 with a resident+non-resident calculation for PCR Positives.</p>
+<p><strong>Link to data source</strong>
+http://ww11.doh.state.fl.us/comm/_partners/covid19_report_archive/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-701533548">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 30, 2020, 10:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/873#issuecomment-701533548" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/94719147-a0a8bf00-0307-11eb-8718-dfb0e24adecf.png" alt="image">
+<img src="../../assets/github/images/67408226/94719191-b28a6200-0307-11eb-87f7-3d2987d39639.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-701653511">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 30, 2020, 2:22 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/873#issuecomment-701653511" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/94740795-0d33b600-0328-11eb-99ee-501fa933b140.png" alt="image">
+<img src="../../assets/github/images/67408226/94740824-191f7800-0328-11eb-8298-f4c95570eaf7.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-858">#858: FL positivity rate is skewed upwards by more than 100% error</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            858</p>
+          <p>
+            <strong>stevenjwolfman</strong> opened this issue on September 22, 2020, 11:43 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/858" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: FL</p>
+<p><strong>Describe the problem</strong>
+The number of FL tests performed is based on the cumulative people tested yesterday compared to the cumulative people tested today. This is clearly a mistake because since more and more people have been tested and are therefore from ineligible to be counted as a negative test again, it creates a downward bias in the number of tests even if the same number of people are being tested.
+Reductio ad absurdum, once everyone has been tested once, the number of new positives would be greater than the number of new people who were tested because no new people were tester. This is a very big mistake.</p>
+<p><strong>Link to data source</strong>
+<img src="https://user-images.githubusercontent.com/5032120/93923807-dfc08a00-fce1-11ea-9b43-b2483f61ffa6.png" alt="image">
+https://fdoh.maps.arcgis.com/apps/opsdashboard/index.html#/8d0de33f260d444c852a615dc7837c86</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-705718198">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 8, 2020, 10:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/858#issuecomment-705718198" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-711373163">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 18, 2020, 11:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/858#issuecomment-711373163" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-749">#749: [FL] Incorrect Testing Value, 5/17;  Total Tests PCR (People) before 5/13; missing Total Tests (PCR) before 5/17</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            749</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on August 11, 2020, 8:02 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/749" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> FL</p>
+<p>ISSUE ONE - resolved
+<strong>Date impacted:</strong> 5/17
+<strong>Issue:</strong> We incorrectly reported Total Tests (PCR) on 5/17 as 653081 when it should be 746124.
+<strong>Source:</strong> http://ww11.doh.state.fl.us/comm/_partners/covid19_report_archive/state_reports_20200517.pdf</p>
+<p>ISSUE TWO
+<strong>Date impacted:</strong> Before 5/13
+<strong>Issue:</strong> missing Total Tests PCR (People) before 5/13
+<strong>Source:</strong> http://ww11.doh.state.fl.us/comm/_partners/covid19_report_archive/state_reports_20200517.pdf</p>
+<p>ISSUE THREE
+<strong>Date impacted:</strong> 5/17
+<strong>Issue:</strong>  missing Total Tests (PCR) before 5/17
+<strong>Source:</strong> http://ww11.doh.state.fl.us/comm/_partners/covid19_report_archive/state_reports_20200517.pdf</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-672000331">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 11, 2020, 8:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/749#issuecomment-672000331" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/57415941/89913951-4cfcdd80-dbc2-11ea-97e3-cc19a22d0e8b.png" alt="Screen Shot 2020-08-11 at 11 03 25 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-672000612">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 11, 2020, 8:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/749#issuecomment-672000612" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/57415941/89913892-3c4c6780-dbc2-11ea-87fd-165ad9c64281.png" alt="Screen Shot 2020-08-11 at 11 02 57 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-672317652">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 11, 2020, 3:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/749#issuecomment-672317652" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Double-checked. Everything looks good.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-685200529">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 1, 2020, 5:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/749#issuecomment-685200529" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691364414">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 11, 2020, 5:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/749#issuecomment-691364414" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-699">#699: [FL] Antibody test reporting in people</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            699</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 30, 2020, 6:30 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/699" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Florida</p>
+<p><strong>Describe the problem</strong>
+It was found that our antibody test numbers from FL refer to people, not specimens. The numbers will need to be copied from the tests columns in States Daily to people columns.</p>
+<p><strong>Link to data source</strong>
+https://floridahealthcovid19.gov/?track_covid19</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666369046">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 30, 2020, 6:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/699#issuecomment-666369046" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Our need to transfer to people antibody reporting was verified.</p>
+<p>Action items:</p>
+<p><strong>1/4: WS2 private note left</strong>
+Before:
+<img width="324" alt="Screen Shot 2020-07-30 at 9 27 39 AM" src="../../assets/github/images/66738237/88929042-90ad2a00-d247-11ea-892d-563a529f8c10.png">
+After:
+<img width="326" alt="Screen Shot 2020-07-30 at 9 32 59 AM" src="../../assets/github/images/66738237/88929099-aa4e7180-d247-11ea-8654-b1cf9f1b033e.png"></p>
+<p><strong>2/4: WS2 source notes changed</strong>
+Before:
+<img width="1062" alt="Screen Shot 2020-07-30 at 9 27 18 AM" src="../../assets/github/images/66738237/88929142-b9cdba80-d247-11ea-9861-45602f8a299b.png">
+After:
+<img src="../../assets/github/images/66738237/88929153-bc301480-d247-11ea-9653-cb72ee542d10.png" alt="Screen Shot 2020-07-30 at 9 27 28 AM"></p>
+<p><strong>3/4: Data in States Daily copied to correct columns</strong>
+Before:
+<img src="../../assets/github/images/66738237/88929358-06b19100-d248-11ea-93bd-8b15b44f1157.png" alt="Screen Shot 2020-07-30 at 9 35 04 AM">
+After:
+<img src="../../assets/github/images/66738237/88929366-0913eb00-d248-11ea-9180-ff2997db103f.png" alt="Screen Shot 2020-07-30 at 9 35 29 AM"></p>
+<p><strong>4/4: WS2 pre-filled</strong></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-698">#698: [FL] Antibody specimen count backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            698</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 30, 2020, 6:26 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/698" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Florida</p>
+<p><strong>Describe the problem</strong>
+It was determined that CTP's existing antibody test capture refers to people, not specimens. Existing data was copied into the correct columns.</p>
+<p>Specimens now need to backfilled using the Serology Report provided by FL.</p>
+<p><strong>Link to data source</strong>
+https://floridahealthcovid19.gov/?track_covid19</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-683094379">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 28, 2020, 12:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/698#issuecomment-683094379" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is the best, because it was already done in the past</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-624">#624: [FL] PCL Cases Historical</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            624</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 14, 2020, 7:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/624" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Florida
+<strong>Describe the problem</strong>
+Our 'Positive Cases (PCR)' column records back to 4/29. A downloadable csv (accessible through the dashboard) provides individual case data that includes date and time back to 3/2. If we chart out the data, we can aggregate cumulative confirmed PCR cases for back-filling prior to 4/29.</p>
+<p><strong>Link to data source</strong>
+https://open-fdoh.hub.arcgis.com/datasets/florida-covid19-case-line-data?orderBy=Case1&amp;selectedAttribute=Case1</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665740872">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 29, 2020, 8:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/624#issuecomment-665740872" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673610808">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 13, 2020, 10:34 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/624#issuecomment-673610808" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-678806643">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 23, 2020, 11:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/624#issuecomment-678806643" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-602">#602: [FL] remove one-off hospitalization data point from reporting as of 5/14</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            602</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 10, 2020, 12:54 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/602" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: FL</p>
+<p><strong>Describe the problem</strong>
+One-off data point from reporting was carried over for 7 days and does not reflect the trend of the time.</p>
+<p><strong>Link to data source</strong>
+https://www.facebook.com/GovRonDeSantis/videos/239526690673386/ 4:09</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-656864205">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 10, 2020, 12:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/602#issuecomment-656864205" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong></p>
+<p><img src="../../assets/github/images/1749380/87193161-19c6e600-c2c6-11ea-849f-97eff77a0705.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/87193255-5266bf80-c2c6-11ea-9966-42e64637f9f2.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-656875642">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 10, 2020, 1:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/602#issuecomment-656875642" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This looks good <strong>@muamichali</strong></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-558">#558: [FL] Hospitalization Data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            558</p>
+          <p>
+            <strong>preddy17</strong> opened this issue on June 29, 2020, 8:27 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/558" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>FL doesn't report daily numbers for hospitalizations. Can we please remove or amend it in the API?</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657320057">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on July 12, 2020, 7:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/558#issuecomment-657320057" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>As of July 10, Florida is reporting current hospitalizations as those with a &quot;<a href="https://bi.ahca.myflorida.com/t/ABICC/views/Public/COVIDHospitalizationsCounty?%3AshowAppBanner=false&amp;%3Adisplay_count=n&amp;%3AshowVizHome=n&amp;%3Aorigin=viz_share_link&amp;%3AisGuestRedirectFromVizportal=y&amp;%3Aembed=y">primary diagnosis of COVID-19</a>.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-542">#542: [FL] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            542</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on June 26, 2020, 6:25 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/542" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for FL. However, FL’s death values are unclear about what they represent, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-650177677">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 26, 2020, 6:25 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/542#issuecomment-650177677" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Added tooltip as well as process note.</p>
+<img width="886" alt="Screen Shot 2020-06-26 at 6 25 13 AM" src="../../assets/github/images/67423649/85861895-db81e080-b775-11ea-9343-e8ea52c89b04.png">
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651156100">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 29, 2020, 7:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/542#issuecomment-651156100" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>On 6/27, Restored confirmed deaths since the data dictionary reflects that FL deaths are confirmed.</p>
+<p>Tooltips and process notes in WS2 were updated.</p>
+<p>REFERENCE:
+Screenshot of current dashboard here.  Full text of fine print in bottom right says this: &quot;The Deaths by Day chart shows the total number of Florida residents with confirmed COVID-19 that died on each calendar day (12:00 AM - 11:59 PM). Death data often has significant delays in reporting, so data within the past two weeks will be updated frequently.&quot;</p>
+<img width="1390" alt="Screen Shot 2020-06-29 at 7 05 05 AM" src="../../assets/github/images/67423649/86017942-85ad7280-b9d9-11ea-9209-befe8f766686.png">
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651157416">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 29, 2020, 7:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/542#issuecomment-651157416" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated &quot;State Website Deaths&quot; and &quot;Reasoning&quot; in PCL to correspond to note added in &quot;Misc Notes.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651174488">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 29, 2020, 7:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/542#issuecomment-651174488" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Restoring deaths (confirmed) value for 6/26 and closing the issue
+<img src="../../assets/github/images/15933271/86021317-f6af5300-b9f6-11ea-89af-98f30bef72c5.png" alt="Screen Shot 2020-06-29 at 10 53 49 AM">
+<img src="../../assets/github/images/15933271/86021316-f57e2600-b9f6-11ea-80bc-70b01e4eabfa.png" alt="Screen Shot 2020-06-29 at 10 54 40 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-413">#413: 5/12 FL -- inconsistencies between death count and screenshots</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            413</p>
+          <p>
+            <strong>mayaeb</strong> opened this issue on May 12, 2020, 12:53 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/413" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>(Pulled from the support desk)</p>
+<p>Hello,</p>
+<p>I am a reporter in Gainesville, Florida with The Independent Florida Alligator, a student newspaper.</p>
+<p>I was looking at data for Florida, and I noticed inconsistencies with the death count numbers published on the site and the screenshots recorded. Looking and comparing the latest, I see that the last number recorded on the Florida tracking page is significantly different from the current number posted on the Florida Department of Health dashboard. The COVID Tracking count is greater than the dashboard count.</p>
+<p>Is this count including data that is not shown in the dashboard? Did I miss something?</p>
+<p>Any clarification or information would be greatly appreciated. Thank you,</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_23uz5">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-627581616">
+          <div class="frontmatter">
+            <div>
+              <strong>mayaeb</strong> commented on May 12, 2020, 1:40 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/413#issuecomment-627581616" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We report using the raw data provided by FDOH but we include both Florida residents and non-residents. On March 26, the dashboard stopped including non-residents in its visible counts, but they're still tracked behind the scenes.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-366">#366: FL Data Inconsistent With State Data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            366</p>
+          <p>
+            <strong>rgurnitz</strong> opened this issue on May 5, 2020, 11:08 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/366" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>From the Governor's Conference of today:</p>
+<h2>**_May 4th represented the best testing for Florida since   the start of the pandemic.</h2>
+<p>Florida received 23,884 test results, which   yielded only 589 new Florida cases
+and the lowest statewide positivity rate –   2.61% - on record for new cases._**</p>
+<p>For May 4th, you show about 7,000 less in terms of test results.  Can you comment on the gap?</p>
+<p>Thank you.</p>
+<p>Bob</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626740442">
+          <div class="frontmatter">
+            <div>
+              <strong>erfgottlieb</strong> commented on May 11, 2020, 7:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/366#issuecomment-626740442" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@rgurnitz.</strong> We take our testing data from the FL department of health dashboard:
+https://experience.arcgis.com/experience/96dd742462124fa0b38ddedb9b25e429/
+Lots of states say the lag on total tests reported can be &gt; 72hrs. So, the total test number might not have been updated on the dashboard by our publish time on 5/4. Our Positive and Negative test numbers for 5/4 our consistent with archived screenshots from that day: https://covid-data-archive.s3.us-east-2.amazonaws.com/state_screenshots/FL/FL-secondary-20200504-180746.png</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-207">#207: FL April 16 2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            207</p>
+          <p>
+            <strong>fishjumping</strong> opened this issue on April 17, 2020, 8:51 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/207" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The last two screenshots (assuming they were taken) are not showing and none of the screenshots agree with the number of hospitalizations   saw 3458 and the page is showing 3460</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-618094842">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 22, 2020, 4:42 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/207#issuecomment-618094842" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@fishjumping</strong></p>
+<p>There are only two screenshots available for that day due to a technical issue.</p>
+<p>We report FL hospitalizations using the raw data provided by FDOH. On 3/26 their dashboard stopped including non-residents in its visible counts, but they still track them behind the scenes.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-619257256">
+          <div class="frontmatter">
+            <div>
+              <strong>fishjumping</strong> commented on April 24, 2020, 3:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/207#issuecomment-619257256" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>thanks</p>
+<p>On Wed, Apr 22, 2020 at 7:42 PM Michal M <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<blockquote>
+<p>Hi <strong>@fishjumping</strong> <a href="https://github.com/fishjumping">https://github.com/fishjumping</a></p>
+<p>There are only two screenshots available for that day due to a technical
+issue.</p>
+<p>We report FL hospitalizations using the raw data provided by FDOH. On 3/26
+their dashboard stopped including non-residents in its visible counts, but
+they still track them behind the scenes.</p>
+<p>—
+You are receiving this because you were mentioned.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/207#issuecomment-618094842">https://github.com/COVID19Tracking/issues/issues/207#issuecomment-618094842</a>,
+or unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/APHIL37TDKJDIEGPMKCN2TDRN56G3ANCNFSM4MK3GUJA">https://github.com/notifications/unsubscribe-auth/APHIL37TDKJDIEGPMKCN2TDRN56G3ANCNFSM4MK3GUJA</a>
+.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

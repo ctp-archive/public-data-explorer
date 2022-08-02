@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>North Dakota Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">North Dakota</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">North Dakota</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 20, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We're seeing that North Dakota's counts of antibody tests (positive, negative, and total) have not been updated since December 14, 2020. Why haven't these counts been updated? When should we expect to see them update again?</p>
+
+    </div>
+    
+  
+    <h2>January 4, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND followed up to see how quickly we could backfill their data. A follow-up call was scheduled with them and we shared a backfill was already planned and antigen tests will be on our site soon.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 4, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I hope you all had a wonderful holiday. 
+I apologize for the frequent emails requesting changes to how you report our data. Our governor in ND is giving his State of the State address tomorrow, and has asked me to find out if you will have backfilled the antigen testing data by tomorrow? He likes to reference external sources in his presentations of data to compare to other states, and currently the rolling averages from sites like JHU are displaying 37,000 tests performed on 12/30 based on CTP data. (while he liked that that gives us the lowest positivity in the country on JHU’s website, he and everyone else prefers true data)
+Would you be able to provide me an update for how long you project that backfill may take?</p>
+
+        </div>
+      
+    
+  
+    <h2>December 31, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND reached out about their data changes</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 31, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I was reviewing your website today in light of our recent changes and I just wanted to provide another update on our data.
+Yesterday we began reporting testing numbers for antigen tests as well. The dataset we provide now includes backfilled data for antigen tests as well.
+Please see the definitions of the testing variables below.
+I see you have a note indicating “On December 30, 2020, we carried over the existing value for Negative PCR Tests (people) while we evaluate the source for that metric.” We use the total tests in individuals to help identify how many people have been tested since the start of the pandemic, so we have chosen not to break this element out into PCR vs Antigen. We currently only provide new individuals tested by either PCR or Antigen. Is there a reason this may be useful in which you would recommend splitting it apart? My concern is that separating out the first time people are tested by either PCR or Antigen rather than combining this figure will count people multiple times if they have ever been tested by both methods.
+I also see that you have indicated a”s of December 30, 2020, North Dakota’s total test metrics now include both antigen and PCR test results.” While these are combined in our dashboard for easy visualization by the public, we do still offer separated PCR and Antigen testing as indicated in the public dataset. In your historical dataset for yesterday, you used the combined total of PCR and Antigen tests for totalTestEncountersViral.
+Please let me know if your team needs any assistance in clarifying our new data elements, or if there is anything we can do to assist you in interpreting the changes. I understand that it will take a bit of time to backfill the new data, particularly over the holiday season</p>
+
+        </div>
+      
+    
+  
+    <h2>December 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND reached out to us about our daily update time.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I really appreciate the hard work that you guys are putting in, to provide valuable data for the public. I would like to know at what time of the day is the all-states-history data source usually updated in the website and until what date of data does that source file have?</p>
+
+        </div>
+      
+    
+  
+    <h2>December 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND contacted us about test positivity</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hi all,
+I just wanted to check if it would be possible for CTP to update the data for North Dakota’s probable cases to backfill into the actual dates in which these cases occurred. The data necessary to do so is available on our website and in the <a href="https://www.health.nd.gov/sites/www/files/documents/Files/MSS/coronavirus/charts-data/CovidTracking.csv">link we previously provided you for obtaining our data</a>.
+As a result of your method of only using differences between cumulative days, you reported 1,922 probable cases in ND yesterday, while that figure should have actually been 58.I’m also interested if you are aware of issues with other organizations using your data to present positivity based on incorrect fields in your data. For example, I discovered today that John’s Hopkins is using your count of Cases (confirmed plus probable) as their numerator in positivity calculations, while they use Total PCR tests (test encounters) as their denominator. JHU’s website documentation indicates that they intend to only include molecular positives and tests, so this indicates a misunderstanding of the data they are receiving from you. CCed are State Health Officer Dirk Wilke and State Epidemiologist Tracy Miller. The information on your website is used widely by residents of our state, so we would appreciate a timely response in correcting your errors.</p>
+
+        </div>
+      
+    
+  
+    <h2>December 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND reached out to us about addition of antigen tests to their downloadable CSV file.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I wanted to let you know that the csv upload that we have been providing has been modified to include antigen testing. It is still available at the <a href="https://www.health.nd.gov/sites/www/files/documents/Files/MSS/coronavirus/charts-data/CovidTracking.csv">same location</a>. Please let me know if you have any questions regarding the changes.</p>
+
+        </div>
+      
+    
+  
+    <h2>November 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Your dashboard defines &quot;Deaths Due to COVID-19&quot; as individuals &quot;who died from COVID-19 as stated on the official death record.&quot; What specific part of the death certificate does COVID have to be listed on in order for the death to be listed in that category of &quot;Deaths Due to COVID-19&quot;?</p>
+<p>(to follow up with if they answer with vague reference to part I): Do you require that COVID be listed in a specific position in part I, e.g. that it is the underlying cause or the direct cause of death?</p>
+<p>(one more question if after those two questions they answer generic &quot;Part I&quot; or even &quot;Part I and Part II&quot;): Why is the proportion of individuals with &quot;Deaths Where COVID-19 is Not the Primary Cause&quot; so high compared to &quot;Deaths Due to COVID-19&quot;?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 30, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Before we classify as Death due to covid or death where covid is not the primary casuse, we need the death certificate to be submitted. As noted on the table: “_The number of deaths where an official death record has not been filed. Per state law, this can take up to 10 days from the date of death.”_Our vital records team manages the classification according to these categories, and I am unfortunately not aware of their schedule or any slowdowns on their end—they may have had delays due to the holidays.The categorization depends on the immediate cause of death and other underlying causes, which does correspond to part 1 of the CDC’s death certificate form.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND provides extensive cases and PCR testing data file to download: Is it possible to provide a similar file (or expand the existing one) for serology testing as well? There used to be a table on the page, but it's no longer there, and a full time series in CSV format would be great....</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The table on the page is still there. At this time, we will not be adding a csv for serology testing, but may in the future.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We noticed that the number of patients currently hospitalized with COVID on ND's dashboard is about 50% lower than the number reported by HHS.  HHS reports any patient with a suspected or confirmed case of COVID (n=202, date 10/2).  In the 10/3 update, the ND dashboard showed 100 COVID active hospitalizations. Does your hospitalized total include suspected cases? If so, do you have any information that could help us understand the discrepancy between the two sources?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Your team has already noted that the ND dashboard has been changed to include both those “Hospitalized with COVID” and those “hospitalized due to COVID.” That said, your team’s note does appear to have interpreted the data presented incorrectly. We consider Confirmed Cases DUE to COVID (meaning a woman hospitalized for her pregnancy that happens to have COVID as well wouldn’t count) to be the authoritative figure for hospitalizations. This differs from the HHS figures which are self-reported, aggregated numbers reported by each hospital. The HHS figures may also include people who are not residents of North Dakota, people who do not have a confirmed case of COVID, or who are hospitalized for unrelated causes. Figures more comparable to HHS are reported as “Hospitalizations with COVID” on our dashboard. We do not consider the HHS figures to be an accurate picture of the impact of covid-19 disease due to their self-reported nature and the long list of caveats to the data, as well as significant misunderstanding by hospitals in what and how to report to HHS. We do, however, consider these figures useful in assessing bed availability. It may be noted that there is an impossibility in reporting Cumulative data in the “Hospitalized with covid” category, as this data is only ever reported in aggregate numbers, and does not have allow for any verification process for data quality on our end or through HHS whatsoever.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 11, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We reached out to ND to let them know that their total test results now reflect total test encounters.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 11, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Thanks again for the update! Our team will be thrilled about our data matching.
+Please let me know if there is anything you would like to see from us in the future to improve our data reporting to CovidTracking. I will be in touch when we determine our path forward regarding reporting hospitalizations/ICU and other statistics that you have requested.
+I hope you all have a wonderful weekend.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND contacted us to let us know that encounters were up on their dashboard.</p>
+<p>The definition said: &quot;Susceptible individuals are anyone who has not previously tested positive, and includes each encounter in which an individual is tested before their first positive.&quot;</p>
+<p>We wrote:</p>
+<p>It looks like the dashboard definition for the total “susceptible test encounters” covers only negatives. This probably is a mistake— it’s housed under the totals section and the value matches the total, rather than negative, susceptible test encounters in the CSV. Looks like they just meant to say “before and including their first positive” instead of just “before their first positive”. But would it be possible to ask Ben just to double check?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;Just wanted to let you know that the wording change has been published. Hopefully that clears up the misinterpretation. Would love to see the note about the typo edited as soon as your team is able to verify the change.&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you publicly provide test encounters?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Summary of meeting: &quot;They are, of course, looking forward to us moving ahead with the plan to add testing encounters. They're going to add it to their dashboard. We told them that we'd QA the backfill data they sent and get back to them with a realistic schedule for doing all the steps.&quot;</p>
+
+        </div>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;<a href="https://www.health.nd.gov/sites/www/files/documents/Files/MSS/coronavirus/charts-data/CovidTracking.csv">https://www.health.nd.gov/sites/www/files/documents/Files/MSS/coronavirus/charts-data/CovidTracking.csv</a> We will be updating that CSV daily by approximately 11am Central Time&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are you going to update the whole test encounters timeseries or just the most recent day each day?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We will be updating the entire dataset to be most accurate on any given day. Generally from day to day there should only be minor adjustments.</p>
+<p>Reasons for changes beyond the current day would be:</p>
+<ul>
+<li>A Case has been transferred to another state's morbidity after investigation determined they are not in the state.</li>
+<li>For tests, an individual was determined to be a resident of another state</li>
+<li>A death has been reported late, we report the actual date of death</li>
+<li>A recovery has been reported late, we report the actual date of death</li>
+</ul>
+<p>If this will not work, we can consider alternatives for locking in data each day. However, we believe that when a timeseries is presented it is best to include the actual dates events occur to the best of our ability—not the day it happens to be reported.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 4, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>ND reached out to us about reporting in test encounters</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 4, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <blockquote>
+<p>We’d love to start reporting the Total Test Encounters figure that you referenced, as well as providing some of the backdated time series data that you mentioned were missing.Would you like this information provided in a spreadsheet, or what is the best means to provide the data to you to fill in the missing information? 
+We are currently working to add the Test Encounters to our website, and hope to have that publicly available very soon.Please let me know if there is anything that would be helpful as we transition to adding this figure and ensuring that our data is reported appropriately.</p>
+</blockquote>
+
+        </div>
+      
+    
+  
+    <h2>August 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are you performing pooled testing? How is this testing reported? What types of tests are you using for pooled tests?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 27, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are not performing pool testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does ND have any information on how it defines probables? Does 'deaths' include deaths of both lab confirmed cases and probables?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 27, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Death information is separated out on our website as well (scroll down to deaths). To be listed as probable, a case must meet clinical criteria and epidemiologic evidence with no confirmatory lab testing performed for COVID-19. Or meet vital records criteria with no confirmatory lab testing performed for COVID-19.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Which metrics that you report were impacted, or could be impacted by recent HHS procedure changes? How does this affect the reporting relationship between hospitals and DOH? Are there changes in regulations on which hospitals are now required or not required to report to state DOH?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 27, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We have no regulation changes. Hospitals continue to submit their data to the state and we obtained the certification to submit the federal data elements as requested.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform deduplication to reach your “total tests processed” and/or “unique individuals tested” figures? If so, how? (i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)? When reporting testing figures, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+<p>We are particularly interested in making sure we understand the “total processed tests” figure, which the dashboard says refers to “unique and serial tested individuals combined.” Does this mean that an individual who is tested once is included once in this count, while an individual who is tested multiple times is included once for each test? Or does this refer to the total number of specimens collected from individuals who are tested? A clearer definition for this count  and description of how deduplication is occurring will help us determine whether we can classify your figure as “total specimens tested” or “total testing encounters.”</p>
+<p>We define specimens as the number of samples tested (with no deduplication), and we define testing encounters term as “the number of unique people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two testing encounters, however, if the same person has two samples tested at a testing center visit, then that only counts as one testing encounter.
+If your “total processed tests” figure does not fit our definition for “total testing encounters”: are you willing to or are you planning to release this figure? If so, will you be able to provide historical data for it consistently under a machine readable format?</p>
+<p>We have been capturing total number of tests since 5/26, and we have been capturing total unique people tested since 5/13. Since 8/19, we have been capturing the new “total processed tests” figure as the total number of tests; if this figure fits our “total testing encounters” definition, we will change how we capture it accordingly. Do you have plans to release a full historical time-series for these metrics? Furthermore, other states provide their COVID-19 testing and outcomes in machine readable format, but as far as we are aware, North Dakota does not at this time. Do you plan to release a historical time series of these numbers in an automation friendly format, like an ArcGIS or CKAN API or a direct download of CSV or JSON?</p>
+
+    </div>
+    
+  
+    <h2>June 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Could you clarify whether the figures for deaths account for both staff and residents (combined) or whether it's residents alone?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We have had no staff deaths in LTC. The spreadsheet I sent referenced positive cases only and not deaths. We are not identifying deaths in specific LTC facilities. If you go to our online dashboard, you will see a heading titled “In City &amp; County – Long Term Care Cases and Deaths.” It will list out the overall deaths to date in LTC for ND (again we had no staff deaths). Today that accumulative total is 56. <a href="https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-case">https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-case</a></p>
+
+        </div>
+      
+    
+  
+    <h2>May 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Given last week's article (https://www.grandforksherald.com/newsmd/coronavirus/6499519-Blacks-Asians-more-likely-to-test-positive-for-COVID-19-in-North-Dakota) it's clear that ND has information about race and ethnicity is being collected. When will ND begin reporting it?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>May 29, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Declined to put a date on any plans to publish additional race data, but shared the latest race data pull (5/20) via excel spreadsheet. I've asked them to continue to provide the data that way on a weekly basis until it is published on the dashboard.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

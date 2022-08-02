@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wyoming Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wyoming</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wyoming</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>April 12, 2020, 8:59 AM PDT</h2>
+    <div>
+      <p>This is not an across-the-board methodological change. For cases, like Wyoming, where the state reports confirmed and suspected ~cases~ of COVID-19, we will report only the &quot;confirmed&quot; in our case count. This is just about current hospitalizations.</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 10:42 AM PDT</h2>
+    <div>
+      <p>Another 7 states — HI, ME, MT, NM, SD, UT, WY — are not reporting race / ethnicity for deaths.</p>
+<p>TX is reporting but &gt;70% of cases and deaths are listed as unknown.</p>
+<p>Some data <em>is</em> better than none, but it's still not enough.</p>
+<p>See the rest of the data: https://t.co/Ek3yOTKBgq</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>Today, ID is back, but we’re missing hospitalization updates from states including AL, AR, CT, IA, LA, MI, MO, MS, NH, OR, RI, SC, and WY. Some due to the new HHS directive, others because it’s the weekend.</p>
+<p>We will keep reporting on the availability of this data.</p>
+
+    </div>
+  
+    <h2>October 8, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. States reported 1 million tests, 55k cases, and 975 deaths. 34k people are currently hospitalized with COVID-19. WI, ND, UT and WY reported record high case counts today. https://t.co/W4cOO1iVZp</p>
+
+    </div>
+  
+    <h2>October 29, 2020, 12:49 PM PDT</h2>
+    <div>
+      <p>In some states with worsening outbreaks, the virus has already arrived in nursing homes and other long-term care facilities: Ohio, Wisconsin, and Wyoming have posted record high numbers of COVID-19 cases in these facilities this week.</p>
+
+    </div>
+  
+    <h2>November 1, 2020, 5:15 PM PST</h2>
+    <div>
+      <p>Following the trend in the Dakotas, Wisconsin, Montana, and Wyoming have also seen big spikes in their case per capita numbers. https://t.co/u9QgLClrjg</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:17 AM PST</h2>
+    <div>
+      <p>3 facilities in Wyoming made up 50% of the state’s new long-term care cases over the past 3 weeks. The state’s health department says hospitalizations are at record levels and several hospitals are at capacity for ICU beds. https://t.co/JDJjNdALeR</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 6:07 PM PST</h2>
+    <div>
+      <p>As part of our continuing project to create a cleaner, more comparable dataset across states, we switched to a new time series for the state of Wyoming. It resulted in an increase of 222k tests since the beginning of the pandemic. Read more: https://t.co/9xPNckVjIM</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 6:07 PM PST</h2>
+    <div>
+      <p>All of the previous data remains on the state of Wyoming's page and in our API, but we changed our default presentation. This post lays out why we've made these changes over the last couple of months. https://t.co/P58A4xRhyp</p>
+
+    </div>
+  
+    <h2>November 26, 2020, 4:01 PM PST</h2>
+    <div>
+      <p>The following jurisdictions did not report today: AS, CT, FL, KS, KY, LA, MA, MI, MN, MP, NC, NH, OH, RI, SC, SD, UT, VI, VT, WY. 10 more reported partial data. Some will report two days of data tomorrow.</p>
+
+    </div>
+  
+    <h2>December 1, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>A handful of states reported data for more than one day today, a result of data disruptions caused by the Thanksgiving holiday. On the other hand, CO, NJ, TX, WA, and WY only published partial updates today.</p>
+
+    </div>
+  
+    <h2>February 10, 2021, 3:54 PM PST</h2>
+    <div>
+      <p>In WY, total PCR tests decreased by ~100k after changes in reporting from commercial laboratories revealed duplicate test counts. We are backfilling our Total PCR tests (specimens) to reflect this new information.</p>
+
+    </div>
+  
+    <h2>February 15, 2021, 3:55 PM PST</h2>
+    <div>
+      <p>An important caveat: Today's data is missing updates from AK, ID, MP, WA, and WY. Partial updates were provided from several other states. There may be a slight holiday effect reflected in data later this week.</p>
+
+    </div>
+  
+    <h2>February 27, 2021, 4:12 PM PST</h2>
+    <div>
+      <p>A reminder that some states do not report COVID-19 data on the weekends, and today's figures are missing updates from: AK, CT, KS, LA, MP, NM, RI, and WY. https://t.co/5XpgjRdDH0</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

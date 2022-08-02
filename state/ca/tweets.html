@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>California Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">California</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">California</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 8, 2020, 10:09 PM PDT</h2>
+    <div>
+      <p>New  update with state data up to midnight eastern: tally shows over 4000 tests.</p>
+<p>https://t.co/Zc39AZVRge</p>
+<p>WA and CA have conducted the most tests and have the most cases. Big gaps in our testing capacity knowledge: MA, TX, GA, PA.</p>
+
+    </div>
+  
+    <h2>March 11, 2020, 1:22 PM PDT</h2>
+    <div>
+      <p>We await updates from Massachusetts and California, which will also have large numbers. Colorado's numbers are also climbing, standing at 28 cases as of their last update.</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 12:51 AM PDT</h2>
+    <div>
+      <p>As we close up the shop for the night, we've been able to track just under 8000 people tested for #COVID19. That's not a lot, and just a few thousand tests got reported today.</p>
+<p>We're missing fresh total test numbers from some big states: CA, NY, and MA.</p>
+<p>https://t.co/iERV2wLMmu https://t.co/dsb0GejjeI</p>
+
+    </div>
+  
+    <h2>March 12, 2020, 1:27 PM PDT</h2>
+    <div>
+      <p>Two exceptions: California and New York. We know our numbers are low there by hundreds, maybe (maybe!) thousands. But it seems highly unlikely to change the <em>overall</em> picture here.</p>
+
+    </div>
+  
+    <h2>March 13, 2020, 1:54 PM PDT</h2>
+    <div>
+      <p>These numbers are a lower bound for a few reasons:</p>
+<ol>
+<li>We are still waiting on accurate negative test counts from CA, MA, GA, and TX, among other states.</li>
+<li>Commercial labs only report positive results to the states.</li>
+</ol>
+
+    </div>
+  
+    <h2>March 13, 2020, 11:33 PM PDT</h2>
+    <div>
+      <p>Closing up the shop for the night. We're showing 19,066 tests. 2,182 positives. Here are the four states with the largest known outbreaks: WA, NY, CA, MA. https://t.co/LrCchHRS3V</p>
+
+    </div>
+  
+    <h2>March 14, 2020, 1:50 PM PDT</h2>
+    <div>
+      <p>@joshtpm Washington and New York are driving the numbers. We're falling further behind on CA testing numbers. Now that MA is out in the open, the other big question mark is TX.</p>
+
+    </div>
+  
+    <h2>March 16, 2020, 12:19 AM PDT</h2>
+    <div>
+      <p>Big end of night update. @GavinNewsom put out a new number for California testing (8300 total), which really boosted things.</p>
+<p>We're seeing 38,631 people tested, up more than 10k since our 4pm ET update.</p>
+<p>CA and WA combined have now done ~48% of testing in our data. https://t.co/LSjuCN2vQg</p>
+
+    </div>
+  
+    <h2>March 16, 2020, 2:07 PM PDT</h2>
+    <div>
+      <p>Let us give one example of a difficult call. Yesterday, California announced 8316 tests had been administered, cumulatively. There is a big difference between 8316 tests and 8316 people tested (which would imply ~16k tests, by rough rule of thumb).</p>
+
+    </div>
+  
+    <h2>March 16, 2020, 2:07 PM PDT</h2>
+    <div>
+      <p>In previous updates, CA had reported &quot;people tested.&quot; In context, though, the state might have meant &quot;tests.&quot;</p>
+<p>We gave CA the benefit of the doubt and counted the higher number, then reached out for clarification (which we haven't gotten). And we tell you about the uncertainty. https://t.co/eNvjT67hte</p>
+
+    </div>
+  
+    <h2>March 18, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>The score contains 4 simple components:</p>
+<ol>
+<li>+1 for reporting positives reliably (only NV fails)</li>
+<li>+1 for reporting negatives sometimes (e.g. NY, CA)</li>
+<li>+1 for reporting negatives reliably</li>
+<li>+1 for reporting all commercial tests</li>
+</ol>
+<p>(All labs have to report all positives.)</p>
+
+    </div>
+  
+    <h2>March 22, 2020, 2:33 PM PDT</h2>
+    <div>
+      <p>(One last data note: we are not reporting California’s pending number because it has been published irregularly. But it is quite large—12,700–and worth considering when looking at the data.)</p>
+
+    </div>
+  
+    <h2>March 22, 2020, 7:11 PM PDT</h2>
+    <div>
+      <p>@Whitwyatt The pending data from California has come and gone. It makes it really difficult to track the states tests consistently. The number of tests bounces around in ways that really confuse people. A broader change is coming to our pending reporting.</p>
+
+    </div>
+  
+    <h2>March 23, 2020, 7:17 AM PDT</h2>
+    <div>
+      <p>@nbashaw The California data is all over the place. They do have a lot of pending tests (~12k) —not included in our total—but it’s filtering through to completed tests really slowly. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 23, 2020, 3:38 PM PDT</h2>
+    <div>
+      <ol start="3">
+<li>One thing we’re tracking closely: California’s testing regime ramped up decently well, but the growth has really slowed down over the last few days. They’re also reporting a large (12k+) number of pending tests. We’re not sure what’s going on there.</li>
+</ol>
+
+    </div>
+  
+    <h2>March 23, 2020, 3:38 PM PDT</h2>
+    <div>
+      <p>Compare the number of completed tests reported by New Mexico, a state with a population 19 times smaller than California’s.</p>
+<p>These numbers should not even be close, and yet they are. https://t.co/tzB9fZM6FP</p>
+
+    </div>
+  
+    <h2>March 23, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Another CA note. The state had been reporting irregularly, so we were relying on high-quality media outlets like @latimes, who have an excellent tracker.</p>
+<p>https://t.co/eL9bfy7uUa</p>
+<p>Now that the state is reporting more regularly, we will be relying again on the state data.</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 2:20 PM PDT</h2>
+    <div>
+      <p>Over the past two days, it is worth noting that two large states have begun reporting more complete testing data. NJ yesterday and OH today both moved the numbers.</p>
+<p>CA remains a major question mark. We hope to see movement there later today.</p>
+<p>WA is not yet reporting outcomes.</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>California has finally provided an update. It's unclear if the total test count includes pending, but that's a large number of tests—second only to New York—and presumably includes commercial test providers.</p>
+<p>https://t.co/GRXIpoPyGh</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>Snap analysis of this: it is a relief that California has tested ~40,000 more people than we knew until an hour ago.</p>
+<p>That said, it's a huge state and we don't know how many of those tests are still pending (based on CA's previous reporting, it could be <em>a lot</em>).</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 6:13 PM PDT</h2>
+    <div>
+      <p>As expected, California has a large number of pending tests. But we did not expect the backlog to be this large. A lot more pending tests than completed ones.</p>
+<p>More details: https://t.co/PZrmH4bl5Y https://t.co/4Vb4Erz4Ls</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 6:15 PM PDT</h2>
+    <div>
+      <p>California’s testing situation remains the most puzzling of any state, which adds uncertainty in assessing the severity of the state’s overall outbreak.</p>
+
+    </div>
+  
+    <h2>March 26, 2020, 1:14 PM PDT</h2>
+    <div>
+      <p>Encouraging to see the California Department of Corrections releasing this kind of testing data: https://t.co/UdOPqhF2d5 (via @HattieRowan)</p>
+
+    </div>
+  
+    <h2>March 26, 2020, 10:24 PM PDT</h2>
+    <div>
+      <p>@Lord_Loredo @James_Gross Yeah, California has been a bear for two reasons: 1) Their reporting has been very irregular (until recently). 2) They have reported on both sides of our daily 4pm commit. 3) They have dropped huge pending numbers the last 2 days (only one of which got captured in our daily #s)</p>
+
+    </div>
+  
+    <h2>March 26, 2020, 10:56 PM PDT</h2>
+    <div>
+      <p>@creatiwit @Lord_Loredo @James_Gross It's really the case. We've been tweeting about the weird situation in California for a while. We <em>think</em> it's that private testing companies are clogged up (3-4-5+ day wait times), but it could be logistics hurdles for state labs or something else entirely.</p>
+
+    </div>
+  
+    <h2>March 27, 2020, 1:56 PM PDT</h2>
+    <div>
+      <p>If you're waiting for the daily update, we're trying to get clarity on California's numbers right now. Standby.</p>
+
+    </div>
+  
+    <h2>March 27, 2020, 2:39 PM PDT</h2>
+    <div>
+      <p>In the end, we couldn't wait any longer. To preview what we did: we counted California's new positives and deaths, but we did not use the new total tests number that @GavinNewsom gave in his press conference because we can't parse pendings and negatives from that total.</p>
+
+    </div>
+  
+    <h2>March 27, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>As noted earlier, we had to do some work with California's numbers, as the comprehensive set had not come in by the time we published our daily update. Make sure you check out our best-available solution (which is still not ideal).</p>
+
+    </div>
+  
+    <h2>March 28, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>The California Situation continues. Just to do the math: if the positive/negative ratio stays the same (a big assumption), there could be more than 10k additional positives in California, which would give the state the second-most confirmed cases in the nation. https://t.co/cj34EYeW4O</p>
+
+    </div>
+  
+    <h2>March 28, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>At this point, the private testing companies owe the state and nation an explanation for what's going on in California. Or some whistleblower should fill everyone in.</p>
+
+    </div>
+  
+    <h2>March 28, 2020, 7:14 PM PDT</h2>
+    <div>
+      <p>@Corinacakes @sherijung In California, the problem may be a little different. But we’re still exploring that. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 28, 2020, 7:16 PM PDT</h2>
+    <div>
+      <p>@bio_report Right. But look at the numbers now. You’d think CA was sitting pretty. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 2:20 PM PDT</h2>
+    <div>
+      <p>If you're waiting on the update, we are once-again trying to puzzle out a solution for California. Be with you shortly.</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>While we finalize, let me explain the problem. Our numbers lock at ~4pm ET each day. California's updates tend to fall right around this time, except when they don't, which has been happening. Right now, if we stick with only state numbers, we'd be looking at 4643 cases... https://t.co/dW5GrjgkIM</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>While we finalize, let me explain the problem. Our numbers lock at ~4pm ET each day. California's updates tend to fall right around this time, except when they don't, which has been happening. Right now, if we stick with only state numbers, we'd be looking at 4643 cases... https://t.co/dW5GrjgkIM</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>These are the problems that are hard because there is no ideal solution. If we go with this data, we're more up-to-date on cases, but out of sync with the negatives and pending, at least until California officially updates again. If we don't, the numbers are misleadingly stale.</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 3:07 PM PDT</h2>
+    <div>
+      <p>Even if California's full updated report were in today's data, the testing plateau would continue, though less pronounced than it looks here. https://t.co/zjTLTM0REM</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 3:33 PM PDT</h2>
+    <div>
+      <p>And of course, just like yesterday, California is a huge question mark.</p>
+<p>https://t.co/1CNusyFZ85 https://t.co/2zHU94OloV</p>
+
+    </div>
+  
+    <h2>March 29, 2020, 8:17 PM PDT</h2>
+    <div>
+      <p>@mandilovell @chrisgulli I think the big question is how much of the backlog is captured in California and how much California only represents, say, 15% of it.</p>
+
+    </div>
+  
+    <h2>March 30, 2020, 2:17 PM PDT</h2>
+    <div>
+      <p>Cumulative hospitalizations up to 22,303, still largely driven by New York. California is now second in hospitalizations, Louisiana third.</p>
+
+    </div>
+  
+    <h2>March 30, 2020, 4:02 PM PDT</h2>
+    <div>
+      <p>Returning to the California situation: the state has averaged just 2,050 completed tests over the last 7 days. This is troubling for the largest state, by far, in America. https://t.co/hKiWb0NqZV</p>
+
+    </div>
+  
+    <h2>March 31, 2020, 4:25 PM PDT</h2>
+    <div>
+      <p>If you've been following this account, you know we've been tracking The California Situation. The state is completing barely 2k tests a day but has a 57k test backlog. What's going on? https://t.co/xUeVSeCIlk</p>
+
+    </div>
+  
+    <h2>March 31, 2020, 4:25 PM PDT</h2>
+    <div>
+      <p>We finally have some answers on what's been going on in California. The short version: as demand exploded in the week after March 9, the key private lab simply could not keep up.</p>
+<p>https://t.co/EbClrCf6Q3</p>
+<p>https://t.co/G14xh9GID9</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 1:49 PM PDT</h2>
+    <div>
+      <p>We are happy to report that California just released new data dashboards. We're currently figuring out how to incorporate and then the update will be out. https://t.co/UkNRVvJnjd</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 2:06 PM PDT</h2>
+    <div>
+      <p>Here's the dilemma: California has been very slow in reporting thus far. We've used other data sources for positive cases. Now that CA seems as if it is pulling its data together in a format more like other states, we'd like to use the official source.</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 2:30 PM PDT</h2>
+    <div>
+      <p>OK, our final decision—after tortuous discussion—is to commit to this new California data for cases and deaths, relying on @GavinNewsom press conferences for other outcome data. We've left negative and pending tests intact, until the state provides an update.</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 2:30 PM PDT</h2>
+    <div>
+      <p>If you're a user of the data, this will affect your time series. But this brings California data more in line with the way we track the rest of the nation and we hope we don't have to deal with this issue again.</p>
+
+    </div>
+  
+    <h2>April 1, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>You will notice California has a major adjustment. We are switching back to state data from other, more frequently updated sources. This should be a one-time adjustment.</p>
+<p>More discussion here:
+https://t.co/74cFcDD6xl</p>
+<p>And context on California here:
+https://t.co/EbClrCf6Q3</p>
+
+    </div>
+  
+    <h2>April 4, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>The biggest thing in this update is that California added 75k+ negative test results and only 1300 new positives. This must be a reporting restatement.</p>
+<p>It's a HUGE change in the testing metrics for the state, and it is very good news, if the numbers can be believed.</p>
+
+    </div>
+  
+    <h2>April 4, 2020, 3:05 PM PDT</h2>
+    <div>
+      <p>Because of this large California restatement, we would not expect to see 200k tests a day tomorrow.</p>
+
+    </div>
+  
+    <h2>April 4, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>This is how big this California change is: https://t.co/Op1c7GTzSK</p>
+
+    </div>
+  
+    <h2>April 4, 2020, 3:10 PM PDT</h2>
+    <div>
+      <p>@erwillia It's a REALLY unusual change. No other state has had anything similar. Given that, it's important to caveat that the change must be looked at <em>a little</em> skeptically until we hear more about what happened. I live in CA and I am v v v happy at this news. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 4, 2020, 8:07 PM PDT</h2>
+    <div>
+      <p>@jholston @alexismadrigal That makes sense to me. What didn’t make sense was California reporting 2k completed tests per day for more than a week, you know?</p>
+
+    </div>
+  
+    <h2>April 5, 2020, 2:14 PM PDT</h2>
+    <div>
+      <p>You'll note that this is the second-highest number of tests completed in a day. Yesterday saw a huge spike, as California cleared its testing and reporting backlogs.</p>
+<p>~140k tests per day is probably closer to the country's real testing capacity at the moment.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 2:09 PM PDT</h2>
+    <div>
+      <p>@jstmichele No evidence of that. The California positive rate is not so far off from other large states. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>Some unexpected numbers came from Indiana today. Despite only having ~5000 confirmed cases, the state said today it has 924 COVID patients in the ICU and 500 on ventilators. That's not too far from California's ICU count and closing in on Pennsylvania and Louisiana's vent usage.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>@esandeen @supermills @alexismadrigal Not necessarily subsided but flattened in WA, CA, and —perhaps—NY. The waves are overlapping, though. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Illinois put out important new data today: confirmed and suspected current COVID-19 hospitalizations, ICU admissions, and ventilator usage. They are big numbers, comparable to California (which reports slightly differently). https://t.co/Bfn6cDv3qL</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Illinois put out important new data today: confirmed and suspected current COVID-19 hospitalizations, ICU admissions, and ventilator usage. They are big numbers, comparable to California (which reports slightly differently). https://t.co/Bfn6cDv3qL</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>One thing to note about hospitalization data: New Jersey, Illinois, and California are all including  different sets of people in their numbers. We are reporting the <em>lower</em> numbers where they are available (as in CA, which breaks out confirmed and suspected COVID-19 cases).</p>
+
+    </div>
+  
+    <h2>April 8, 2020, 1:57 PM PDT</h2>
+    <div>
+      <p>Heading into our daily update, we wanted to take a look back at where we are with testing. CA did the first early testing. Then WA started pumping out tests. But NY now dominates. (Graphics by: @samirrayani and @tophtucker) https://t.co/dPzCmzYjI4</p>
+
+    </div>
+  
+    <h2>April 12, 2020, 8:59 AM PDT</h2>
+    <div>
+      <p>There's a little more complexity: some states that report current hospitalizations lump together laboratory-confirmed positive and suspected cases, and others (like California, seen below) break them out.
+https://t.co/tWNwtKQwWK https://t.co/bvSz7xJIST</p>
+
+    </div>
+  
+    <h2>April 22, 2020, 2:23 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. We’ve now tracked ~4.5 million tests, up 311k from yesterday.</p>
+<p>Major caveat: today, California reported 163k tests, clearing some backlog.</p>
+<p>Note: we can only track tests that a state reports.</p>
+<p>For details, see: https://t.co/PZrmH4bl5Y</p>
+
+    </div>
+  
+    <h2>April 22, 2020, 2:23 PM PDT</h2>
+    <div>
+      <p>That is to say, it might look like the plateau is over, but if you back out California, we're probably about where we were before, except the April average is now 155k instead of 145k. https://t.co/kFoBPQ8QVk</p>
+
+    </div>
+  
+    <h2>April 22, 2020, 2:28 PM PDT</h2>
+    <div>
+      <p>Based on previous situations where California reported like this, the reporting jump likely had to do with matching <em>tests completed</em> to individual patients in the state. We're not sure why they are batch processing like this, but it's the second time it has happened.</p>
+
+    </div>
+  
+    <h2>April 23, 2020, 2:17 PM PDT</h2>
+    <div>
+      <p>Looking at the numbers, this is not like yesterday, where one state (California) drove a huge increase.</p>
+<p>This number seems much more solid, driven by a number of states reporting large numbers of tests completed.</p>
+
+    </div>
+  
+    <h2>April 23, 2020, 8:50 PM PDT</h2>
+    <div>
+      <p>California has announced a frustrating decision. After 6 weeks of counting people tested, they have begun reporting total tests completed, with no attempt to resolve them to an individual patient.</p>
+<p>https://t.co/aC11ZDIjHx https://t.co/6CZECmZcyo</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:12 PM PDT</h2>
+    <div>
+      <p>Many states reported a huge number of tests, including a known backlog clearing from MA (30k+). NY reported almost 50k tests; TX over 20k.</p>
+<p>AL, CA, FL, GA, IL, MA, NY, TN, TX all reported over 10k tests.</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:14 PM PDT</h2>
+    <div>
+      <p>Still, 300k tests is a huge number. We know some of the increase is due to reporting changes, as in California. But it does seem like there has been a substantial change over the last several days in the testing capacity of the United States.</p>
+
+    </div>
+  
+    <h2>April 25, 2020, 2:37 PM PDT</h2>
+    <div>
+      <p>@VoiceofVerite The states have <em>generally</em> been reporting people tested, not specimens tested. Michigan has long been an exception, but California joined them this week. It's tough. The units are now mixed and very hard to disentangle. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 2:14 PM PDT</h2>
+    <div>
+      <p>@kevinfurr @PeterZeihan It's pretty fluke-y because of a huge California drop of negative tests they had in a reporting backlog. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 10:54 PM PDT</h2>
+    <div>
+      <p>@GracieLuAnn24 @kevinfurr @PeterZeihan @alexismadrigal Definitely not. California's reporting has been as inconsistent as it is possible to be. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 27, 2020, 10:58 PM PDT</h2>
+    <div>
+      <p>@GracieLuAnn24 @kevinfurr @PeterZeihan @alexismadrigal The whole reason that California switched from people tested to tests performed is that they were having trouble figuring out how to assign tests to patients. So I really doubt we'll ever see those numbers. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 1, 2020, 2:31 PM PDT</h2>
+    <div>
+      <p>The increase in testing was broadly distributed among the states. These states all reported over 10k tests today.</p>
+<p>CA: 29,648
+FL: 20,294
+GA: 19,323
+IL: 14,821
+MA: 13,989
+MN: 10,238
+NY: 26,802
+TN: 17,583
+TX: 36,985
+VA: 14,139</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>9 states reported over 50 deaths:</p>
+<p>California: 98
+Florida: 74
+Illinois: 102
+Indiana: 54
+Massachusetts: 130
+Michigan: 154
+New Jersey: 204
+New York: 299
+Pennsylvania: 64</p>
+
+    </div>
+  
+    <h2>May 4, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>One reason to expect that the death number will rise tomorrow would be to look at some key states—NJ, CA, MI, MA—all seem to show the same kind of reporting dip. https://t.co/m5TT3QWQfY</p>
+
+    </div>
+  
+    <h2>May 11, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>New Jersey appears to have taken the road that California did recently, moving away from reporting &quot;people tested&quot; and to &quot;tests completed.&quot; But we're still trying to get confirmation on this.</p>
+<p>As you can see, today is a bit of an outlier. https://t.co/2E9fh6WSuI</p>
+
+    </div>
+  
+    <h2>May 17, 2020, 2:58 PM PDT</h2>
+    <div>
+      <p>Some of the big day appears to be a test dump from California, which reported 56k tests today. But Michigan, New York, and Georgia also reported more than 30k tests.  13 states reported more than 10k.</p>
+<p>Overall, the U.S. hasn't been under 300k daily tests since last Sunday.</p>
+
+    </div>
+  
+    <h2>May 30, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>In addition to the states we've mentioned recently, Alabama, Arizona, California, and Wisconsin are worth keeping eyes on.</p>
+<p>California and Arizona had new highs for cases today. Alabama and Wisconsin set highs yesterday. https://t.co/M2JTnIfchI</p>
+
+    </div>
+  
+    <h2>May 31, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>California's case numbers continue to grow.</p>
+<p>Arkansas showing increasing cases as well as increasing hospitalizations. https://t.co/OOQ3kcsxns</p>
+
+    </div>
+  
+    <h2>June 1, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>The number of new cases was low—about 16k—after a series of higher days. The 7-day average fell under 21k.</p>
+<p>NY was under 1,000 new cases for the first time in 11 weeks!</p>
+<p>California and Texas, which had new highs yesterday, were much lower today. https://t.co/E1yZfBBEym</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>1/2 A list of states/territories in which African American COVID deaths substantially exceed the community's share of the population:</p>
+<p>Alabama
+Arkansas
+California
+Colorado
+Connecticut
+D.C.
+Florida
+Georgia
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Maryland
+Michigan
+Mississippi</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>States reported fewer than 21k new cases today. The 7-day average fell a bit. After last week's higher numbers, we've seen some lower numbers, especially in the big states like CA and TX. https://t.co/zFXlGJiVJJ</p>
+
+    </div>
+  
+    <h2>June 7, 2020, 3:37 PM PDT</h2>
+    <div>
+      <p>There are several other states we're keeping an eye on. California, Minnesota, North Carolina, and Texas. https://t.co/FZWIFuMWLT</p>
+
+    </div>
+  
+    <h2>June 10, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Let's take a look at California, Florida, and Texas. CA has a lot of cases, but it also has a lot of people and tests. Florida, though it had a larger outbreak earlier, looks much the same. (We only had a FL hospitalization number for a few days.) https://t.co/xVmyOdMLf8</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We saw 3 states report more than 2,000 cases today: California, Florida, and Texas. https://t.co/EqiqthVEp0</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Here are 5 states we looked at closely today.</p>
+<p>Cases and hospitalizations are tracking closely in TX, AZ, and the Carolinas, but not in California. California's positive rate also has not gone up. https://t.co/xqOUjRWpbo</p>
+
+    </div>
+  
+    <h2>June 20, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Three more states of interest: California, Oklahoma, and Georgia.</p>
+<p>(GA had reporting problems during that May 24 week, which is why the numbers look strange.) https://t.co/6HFs7D09GI</p>
+
+    </div>
+  
+    <h2>June 22, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>Let's take a closer look at TX and CA.</p>
+<p>These states have similar case numbers, but very different positions.</p>
+<p>In CA, the positive rate has remained low and hospitalizations steady.</p>
+<p>In TX, the positive rate and hospitalizations are rising alongside cases. https://t.co/I9LlNIRqAh</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>6 states set new record highs today, including 3 of the 4 largest (California, Florida, Texas).</p>
+<p>13 states set new highs in the last 5 days. You can see that most of them are in the South (red) or West (orange). https://t.co/mha5IeUs6j</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 4:05 PM PDT</h2>
+    <div>
+      <p>California had seen rising case counts, but its other numbers looked solid—% positive was low, hospitalizations were not growing—but this week, the state appears to be turning. https://t.co/QNTloVs9cZ</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:50 PM PDT</h2>
+    <div>
+      <p>While we’re in the Monday lull in data reporting, let’s look at a couple of concerning states outside AZ-CA-FL-TX outbreaks.</p>
+<p>Missouri’s percent positive rate has gone from 4.3% the week of June 14 to 6.5% this week, with hospitalizations rising. https://t.co/ahvI7Gdn7W</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>Arizona, California, Florida, and Texas are still at the center of the current surge of new cases. Hospitalization for AZ, CA, and TX all climbing. We expect Florida's data has a similar shape. https://t.co/8G9RRQta6j</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>California, Texas, and Florida all reported over 6000 new cases today. https://t.co/9N1UNR4rCR</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 6:32 PM PDT</h2>
+    <div>
+      <p>And, in fact, as @kissane notes, they are now live: https://t.co/azW4aka1AF</p>
+<p>California's per capita numbers, for example: https://t.co/nm12f1X8DF</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>We're waiting on California to update before we officially release the numbers. The rest of the state updates are now in the API, though.</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:30 PM PDT</h2>
+    <div>
+      <p>OK, finally we have California in hand. Tweets forthcoming in a new daily update thread. Thank you for your patience.</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:43 PM PDT</h2>
+    <div>
+      <p>Several big states reported record numbers today: Arizona, California, Georgia, North Carolina, Texas. https://t.co/ZKTM496d2T</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 5:08 PM PDT</h2>
+    <div>
+      <p>The number of currently hospitalized COVID patients in Texas surpassed California today. https://t.co/O4Kqm7zD7V</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 5:40 PM PDT</h2>
+    <div>
+      <p>We have an update to today's chart of daily deaths with California's (late arriving) number included. The 7-day average was almost unchanged at 520. https://t.co/Ltqn33Sz60</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>Before we get to the daily numbers, here's our weekly look at the numbers.</p>
+<p>One topline: While Arizona, California, Florida, and Texas are dominating the headlines, many other areas also have serious problems.</p>
+<p>https://t.co/2eZOamhZla https://t.co/Qu70PjuDNO</p>
+
+    </div>
+  
+    <h2>July 7, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>California, Florida, and Texas combined accounted for 45% of all new cases today. https://t.co/Oi172TYX0q</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 3:29 PM PDT</h2>
+    <div>
+      <p>Waiting on California's complete data before we publish today's numbers. Thanks for your patience.</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 5:04 PM PDT</h2>
+    <div>
+      <p>California set a new record for cases, but some of it was backlog from LA County. COVID-19 hospitalizations are at an all-time high, too. https://t.co/9joV9UASP0</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:47 PM PDT</h2>
+    <div>
+      <p>This rise in deaths is concentrated in states with large outbreaks. Texas, California, and Florida all reported their single highest day of deaths for the entire pandemic today.</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 4:00 PM PDT</h2>
+    <div>
+      <p>California reported a record number of deaths today. We don’t know if that’s a one-off bad day or if the state will regularly begin reporting much higher numbers of deaths. https://t.co/RLWi1RuJ9n</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>The upward trend holds for death data. Though the data is less smooth, between June 10 and July 10, the seven-day average of deaths reported by Arizona, California, Florida, South Carolina, and Texas has almost doubled. https://t.co/POzXF5GJG7</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 2:54 PM PDT</h2>
+    <div>
+      <p>The weekend lag effect is pronounced in death reporting. For example, last week, CA reported 6 deaths on Monday, then 111 on Tues. AZ reported 1 death Mon, then 117 on Tues.</p>
+<p>Today, AZ reported 8 deaths. CA, 23.</p>
+<p>All these data are the outputs of complicated, human processes. https://t.co/WkN4aqCiGT</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>Six states saw a rise of over 100 (FL, CA, TX, AZ, GA, TN) in their number of currently hospitalized COVID-19 patients. All six set new record highs for their states. https://t.co/1qvm9AEdMh</p>
+
+    </div>
+  
+    <h2>July 20, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>Populous states can generate large case counts, but if you look at the new cases per million today, 9 smaller states are showing more cases per million than California or Texas: AL, AR, ID, KS, KY, LA, MS, NV, and SC. https://t.co/1pYW6cWRaS</p>
+
+    </div>
+  
+    <h2>July 22, 2020, 3:40 PM PDT</h2>
+    <div>
+      <p>California, Missouri, Oklahoma, and North Dakota all set new records for cases today. https://t.co/sendGsELSU</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>Here’s what’s going on. As states switch from the long-established CDC system to the new HHS one, some hospitals appear to be having trouble reporting their numbers. That led both Texas and California to place advisories on their dashboards. https://t.co/fbq1Su5Nz2</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>With the incomplete data, both CA and TX reported significant drops in their number of hospitalizations. Based on existing trends, we believe this drop to be primarily an artifact of the reporting. We reverted both states to yesterday’s numbers as better indicators of reality.</p>
+
+    </div>
+  
+    <h2>July 24, 2020, 3:55 PM PDT</h2>
+    <div>
+      <p>The huge testing number appears to be due—in part—to California, Georgia, and other states releasing backlogged results. CA and GA both reported at least 20k more results today than they did yesterday, for instance. CA alone reported 137k test results today. https://t.co/HJEVlde5Vi</p>
+
+    </div>
+  
+    <h2>July 24, 2020, 4:33 PM PDT</h2>
+    <div>
+      <p>Yesterday’s problems with COVID-19 hospitalization data continue today in CA and TX. Both states still warn that their hospitalization data is incomplete due to the changeover to HHS systems. We’ve carried over their hosp. data from Wednesday, before the warnings went up.</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Another day of uneven current COVID-19 hospitalizations data. California and Texas are still not getting complete data from hospitals due to the HHS changeover. We’ve frozen their figures for now.</p>
+
+    </div>
+  
+    <h2>July 26, 2020, 2:57 PM PDT</h2>
+    <div>
+      <p>Hospitalizations fell a bit again. CA and TX (and maybe other states) are still not getting complete data due to the HHS changeover. We’ve frozen the CA and TX figures for now — and will reevaluate tomorrow. We’re hoping the CDC-HHS changeover issues get cleared up this week.</p>
+
+    </div>
+  
+    <h2>July 27, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>Once again, the state data on current COVID-19 hospitalizations is unstable. CA, SC, and TX have all posted notices stating their hosp. data is incomplete because of the HHS changeover. We’ve maintained the freeze on their hospitalization data again. More on that tomorrow.</p>
+
+    </div>
+  
+    <h2>July 29, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>The hotspot states remain hotspots, even as their cases plateau a little or even decline. However, we’re now seeing more deaths reported in these states. Today, 773 deaths were reported by Arizona, California, Florida, and Texas alone. https://t.co/wv3NWzsJxk</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>California is now #3 in the United States for total COVID-19 deaths, behind New York and New Jersey. We hope that declining case counts in CA will be reflected in falling deaths within the next 2-3 weeks. https://t.co/iGGokUAjGB</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>But there is good news to report as well. The 7-day new-case average is declining in all four of our major hotspot states: AZ, CA, FL, and TX. https://t.co/6c3MJLCLLl</p>
+
+    </div>
+  
+    <h2>August 5, 2020, 3:39 PM PDT</h2>
+    <div>
+      <p>There are widespread problems right now in the top-level data. In different ways, California and Florida have had trouble reporting complete data because of storms and IT problems. Because they are populous states with large outbreaks, that influences the national numbers.</p>
+
+    </div>
+  
+    <h2>August 5, 2020, 3:42 PM PDT</h2>
+    <div>
+      <p>California’s electronic reporting system has broken down, according to public health and media reports. For example, this is the note Santa Clara County posted.</p>
+<p>https://t.co/cIe7I7LQqT https://t.co/VUvxeiwzrq</p>
+
+    </div>
+  
+    <h2>August 7, 2020, 3:45 PM PDT</h2>
+    <div>
+      <p>Georgia has consistently reported thousands of new cases each day—and has the fourth-largest number of hospitalized COVID-19 patients today, trailing only much larger states (CA, FL, TX). https://t.co/xtINB3o8bx</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:11 PM PDT</h2>
+    <div>
+      <p>We’ve mentioned data and testing reporting problems in CA and FL this week, and should also flag that WA is having IT trouble that has prevented the state from reporting negative results since 8/1 and is lowering hosp. numbers. https://t.co/nKEg5t7i1g https://t.co/g45EJgWSBQ</p>
+
+    </div>
+  
+    <h2>August 8, 2020, 3:31 PM PDT</h2>
+    <div>
+      <p>It’s difficult to understand what’s happening with COVID-19 data right now, but we’re hoping to see better data soon as CA reporting problems are fixed, FL testing gets back up to speed, and hospital data improves nationally.</p>
+
+    </div>
+  
+    <h2>August 10, 2020, 4:21 PM PDT</h2>
+    <div>
+      <p>We continue to see persistent issues with electronic reporting systems in California. The state says it has resolved the issues, and that backlogged numbers will be reported over the coming days.</p>
+
+    </div>
+  
+    <h2>August 10, 2020, 4:24 PM PDT</h2>
+    <div>
+      <p>CA is not the only state struggling with reporting issues: Washington, for instance, has not reported negative test numbers since August 1st. https://t.co/fOgkXtKwRD</p>
+
+    </div>
+  
+    <h2>August 11, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>California’s electronic lab reporting problem has been solved, according to the state website. As such, some portion of the 12,500 new cases reported today are backlogs from prior days. We expect this to continue for the next day or two.</p>
+
+    </div>
+  
+    <h2>August 12, 2020, 4:40 PM PDT</h2>
+    <div>
+      <p>California reported more than 6k backlogged cases. The state has now committed to assigning those cases to the correct date. We'll adjust our values as soon as the state makes the correct date figures available. This will shift many positive cases reported today to earlier dates.</p>
+
+    </div>
+  
+    <h2>August 13, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>Testing numbers have begun to rise again in California. Texas seems to have begun solving their test issues, reporting over 124k tests today alone. Florida testing remains far from peak numbers in July. https://t.co/0GIsmgooup</p>
+
+    </div>
+  
+    <h2>September 18, 2020, 12:43 PM PDT</h2>
+    <div>
+      <p>Update for our data users - we continued to implement changes to our original totalTestResults API field, resulting in a ~600k cumulative test increase since March.</p>
+<p>We updated test totals for 14 states: AK, AL, AR, AS, CA, DC, GA, ID, KY, MN, NH, SD, VA, and WA.</p>
+
+    </div>
+  
+    <h2>October 23, 2020, 4:10 PM PDT</h2>
+    <div>
+      <p>An important caveat to today's record high numbers. AL reported ~4k cases due to a backlog of antigen tests. CA reported 6k cases, 2k of which were backlogs.</p>
+
+    </div>
+  
+    <h2>October 27, 2020, 4:00 PM PDT</h2>
+    <div>
+      <p>Only 3 states have seen hospitalizations fall since October 1 (CA, GA, HI). https://t.co/ziNiGmZLVk</p>
+
+    </div>
+  
+    <h2>October 31, 2020, 3:19 PM PDT</h2>
+    <div>
+      <p>In the month of October, only Georgia and Hawaii saw decreases in hospitalization. California held steady. There were increases in hospitalizations in every other state and DC. https://t.co/tIwKEeNBeJ</p>
+
+    </div>
+  
+    <h2>November 8, 2020, 5:39 PM PST</h2>
+    <div>
+      <p>This is the largest number of cases ever reported on a Sunday—more than 25k more than last week—despite California not reporting by the time we published this data.</p>
+
+    </div>
+  
+    <h2>November 18, 2020, 5:33 PM PST</h2>
+    <div>
+      <p>26 states have over 1k people currently hospitalized with COVID-19. Hospitalizations in CA, TX, and IL account for almost a quarter of all COVID-19 current hospitalizations. https://t.co/E7aUzNBlmt</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:44 PM PST</h2>
+    <div>
+      <p>40 states reported over 1,000 cases today. And four didn't report. New Jersey, California, Mississippi, Idaho, and Oregon reported record numbers of cases. https://t.co/q23xwQ3BW7</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:45 PM PST</h2>
+    <div>
+      <p>California just set a new single-day case high for any state at 15,442.</p>
+<p>Only Illinois and Florida have ever reported more than 15k: IL on Nov 13 and FL on July 12. https://t.co/SwoJxSJlKp</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:52 PM PST</h2>
+    <div>
+      <p>California has never experienced the per-capita case load of the other big states. https://t.co/rPvA7Fqo55</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 4:34 PM PST</h2>
+    <div>
+      <p>CA (18k) and TX (15k) both reported the highest single-day case count to date. https://t.co/8zIIjicvgh</p>
+
+    </div>
+  
+    <h2>November 29, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Looking at regional hospitalizations, we see three regions moving up fast, as the Midwest possibly slows. In California, the number of hospitalized patients has doubled from 4k November 12 to more than 8k today. https://t.co/bAfBvGFb4u</p>
+
+    </div>
+  
+    <h2>December 2, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>CA reported over 20k COVID-19 cases today. This is the highest daily case count for a state to date. https://t.co/W1gaCVlVqY</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 3:40 PM PST</h2>
+    <div>
+      <p>Hospitalizations in the 4 most populous states—CA, FL, NY, and TX—are rising quickly. California in particular has seen a steep hospitalization increase over the past few weeks. https://t.co/ul9K4nQUGz</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 5:01 PM PST</h2>
+    <div>
+      <p>CA reported a new new single-day case record at 30,851. This is the second highest case count since 12/6. https://t.co/rQtkwG5xYE</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 3:42 PM PST</h2>
+    <div>
+      <p>The trends in currently hospitalized data suggest that outbreak conditions in Midwest states are improving: 9 of 12 states saw falling hosp. this week compared to last. But nationally these improvements were offset by large hosp. increases in CA, GA, PA, and many Eastern states. https://t.co/mAt5VMQRnW</p>
+
+    </div>
+  
+    <h2>December 10, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>Seven states reported more than 10k cases today: CA, FL, IL, NY, PA, OH, and TX. https://t.co/L93HHx9vjH</p>
+
+    </div>
+  
+    <h2>December 12, 2020, 4:20 PM PST</h2>
+    <div>
+      <p>California, the most populous state in the country, set a new case record for any state. More people are hospitalized in CA than in any state at any time since New York in April. https://t.co/ULdfBExPUJ</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 4:30 PM PST</h2>
+    <div>
+      <p>CA reported a staggering 53,711 cases today. The highest single-day case count and 50% higher than any single-day case count from any state. https://t.co/bA8CG5hITI</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 3:10 PM PST</h2>
+    <div>
+      <p>Our weekly update is published. The case data this week is mixed: hope in the Midwest is balanced by strong surges elsewhere, especially California. States reported a record high of new COVID-19 deaths for the second week in a row. https://t.co/VcVmZtu42Y https://t.co/HvAAPec8fI</p>
+
+    </div>
+  
+    <h2>December 17, 2020, 3:16 PM PST</h2>
+    <div>
+      <p>California alone reported more than 250,000 new cases this week. COVID-19 hospitalizations have more than doubled since Thanksgiving in 6 California counties, including Los Angeles, the most populous county in the country. https://t.co/wwuwgCnbHr</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 5:35 PM PST</h2>
+    <div>
+      <p>Per capita cases are growing at an alarming rate in AZ again. There are 1,049 new COVID-19 cases per million people in the state. In CA, the 7-day average for new cases per million people is quickly approaching 1,000. https://t.co/AqKmJOvMj6</p>
+
+    </div>
+  
+    <h2>December 19, 2020, 5:21 PM PST</h2>
+    <div>
+      <p>California reported over 40k cases today. When we look at per-capita cases, the state is trending up with a 7-day average of more than 1,000 new cases per million people. https://t.co/tcu3t51qy1</p>
+
+    </div>
+  
+    <h2>December 21, 2020, 4:49 PM PST</h2>
+    <div>
+      <p>The outbreak in CA continues to worsen as the state reports 18,359 people are hospitalized with COVID-19. Earlier today, Los Angeles county officials reported 30 ICU beds were available in the county. https://t.co/I5fuN8TQ12</p>
+
+    </div>
+  
+    <h2>December 22, 2020, 5:27 PM PST</h2>
+    <div>
+      <p>California is now reporting so many cases that it has kept the country on a case plateau, even as the Midwest declines bring the rest of the country's cases down. https://t.co/kdVjE4aT6O</p>
+
+    </div>
+  
+    <h2>December 24, 2020, 3:36 PM PST</h2>
+    <div>
+      <p>Cases are rising sharply in California and several states in the South. Nearly 300k new cases have been reported in California in the past week; 56% of all cases in California during the pandemic have been among Latinx people. https://t.co/STqpXr0Pnh</p>
+
+    </div>
+  
+    <h2>December 25, 2020, 4:15 PM PST</h2>
+    <div>
+      <p>20 states provided no update: AK, CA, CT, DC, ID, KS, KY, LA, MA, MI, MN, MP, NC, ND, NH, OH, RI, SC, SD, UT, VT.</p>
+<p>7 other states made partial updates.</p>
+
+    </div>
+  
+    <h2>January 1, 2021, 4:55 PM PST</h2>
+    <div>
+      <p>California reported 585 deaths today. Before today, New York and Pennsylvania were the only states to have reported more than 500 deaths in a day.</p>
+<p>CA, the most populous state, now also has more people hospitalized than NY did at the spring peak. https://t.co/u7FOXtlWCP</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>California, Florida, and Texas alone reported 80 thousand cases today. https://t.co/NuCJYqmCC8</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>California alone is now reporting 380 deaths per day on average, including 583 just today. https://t.co/bbkyj450lH</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>NJ reported nearly 20K probable COVID-19 cases and CA reported over 50K cases. Both states greatly influenced the large uptick in today's total cases.</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 5:03 PM PST</h2>
+    <div>
+      <p>Hospitalizations in CA and AZ are increasing at an alarming rate. AZ has far surpassed their summer surge. https://t.co/vpqxOx3HDU</p>
+
+    </div>
+  
+    <h2>January 9, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>California’s data continues to show the dire state of the pandemic there. With 695 deaths reported today, the state is averaging more than 410 deaths and nearly 40k new cases a day. One in 105 people in CA have tested positive for COVID-19 in 2021. https://t.co/GgczPu822H</p>
+
+    </div>
+  
+    <h2>January 11, 2021, 4:50 PM PST</h2>
+    <div>
+      <p>Hospitalizations in CA continue to skyrocket. There are 22,633 people currently hospitalized with COVID-19 in the state. https://t.co/by01jLixf9</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Our eyes are on 5 states this week: AL, AZ, CA, GA, and FL―where surges in cases, hospitalizations, and deaths are steadily growing. Alarmingly, AZ currently has the worst per-capita new case numbers in the world.</p>
+
+    </div>
+  
+    <h2>January 17, 2021, 3:57 PM PST</h2>
+    <div>
+      <p>We have seen nationwide decreases in all the 7-day averages of all four metrics. Many states are reporting a decrease in the number of new cases per million people, though CA, VA and SC reported more than 1,000 new cases per million today. https://t.co/L1zimRM1EC</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 12:42 PM PST</h2>
+    <div>
+      <p>This week, CA surpassed 3 million COVID-19 cases, which means 1 in 13 Californians has tested positive since the start of the pandemic. https://t.co/KzWw6enCAp</p>
+
+    </div>
+  
+    <h2>January 26, 2021, 4:43 PM PST</h2>
+    <div>
+      <p>After many dark weeks, the situation in California is improving. Today's reported case count is the lowest since December 1st. Hospitalizations have fallen to levels last seen before Christmas.</p>
+<p>However: Reported deaths are a lagging indicator, but remain at record levels. https://t.co/ZKQdZWHdxE</p>
+
+    </div>
+  
+    <h2>January 30, 2021, 4:46 PM PST</h2>
+    <div>
+      <p>The number of people currently hospitalized with COVID-19 in the US is now below 100k for the first time since December 1. Almost all US states are seeing hospitalizations decline or flatten, and CA, FL, and TX all posted big drops today. https://t.co/ZbV4kUoiWh</p>
+
+    </div>
+  
+    <h2>February 25, 2021, 4:07 PM PST</h2>
+    <div>
+      <p>CA reported 806 deaths which were not previously reported, most of which are from between Dec 3, 2020 and Feb 3, 2021. These additional deaths are included in the total number on https://t.co/PZrmH3TKeq and in the API, but not in the daily update above.</p>
+<p>https://t.co/TGZt3zOB7N</p>
+
+    </div>
+  
+    <h2>March 1, 2021, 4:28 PM PST</h2>
+    <div>
+      <p>The 7-day average for COVID-19 cases in CA is down 89% since the peak on Jan 13. https://t.co/RChgv0v7LX</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

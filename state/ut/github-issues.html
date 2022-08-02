@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Utah Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Utah</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Utah</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 12, 2021, 8:01 PM PST</td>
+          <td>1100</td>
+          <td>
+            <a href="#issue-1100">[UT] clear confirmed cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 12, 2021, 8:01 PM PST</td>
+          <td>1100</td>
+          <td>
+            <a href="#issue-1100">[UT] clear confirmed cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 8, 2020, 6:29 AM PDT</td>
+          <td>889</td>
+          <td>
+            <a href="#issue-889">[UT] Timestamp not entered on 10/6</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 17, 2020, 9:14 AM PDT</td>
+          <td>842</td>
+          <td>
+            <a href="#issue-842">[UT]Back-fill PCR test numbers from the dashboard </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 17, 2020, 7:23 AM PDT</td>
+          <td>841</td>
+          <td>
+            <a href="#issue-841">[UT]Back-fill antigen test numbers from the dashboard for 6/10-</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 28, 2020, 7:39 AM PDT</td>
+          <td>686</td>
+          <td>
+            <a href="#issue-686">[UT] PCL Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 7:03 AM PDT</td>
+          <td>526</td>
+          <td>
+            <a href="#issue-526">[UT] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 28, 2020, 7:26 AM PDT</td>
+          <td>461</td>
+          <td>
+            <a href="#issue-461">UT Current Hosp. data incorrect for 5/22 and 5/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 24, 2020, 10:42 AM PDT</td>
+          <td>450</td>
+          <td>
+            <a href="#issue-450">[UT Historical] Repair data for May 19, 22, 23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 20, 2020, 8:37 AM PDT</td>
+          <td>25</td>
+          <td>
+            <a href="#issue-25">UT Data Issue</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1100">#1100: [UT] clear confirmed cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1100</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on February 12, 2021, 8:01 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1100" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: UT</p>
+<p><strong>Describe the problem</strong>
+We are currently using Utah's positive individuals tested via PCR as Confirmed cases.
+However, Utah does not present this figure as confirmed cases and instead calls its main case number, which includes both PCR and antigen tests, &quot;lab-confirmed cases.&quot;</p>
+<p>We decided to clear Confirmed cases field of the positive individuals tested via PCR number for two reasons:</p>
+<ul>
+<li>it goes against UT's own labeling of its confirmed cases so it is confusing.</li>
+<li>we are not sure this testing count is as comprehensive as a cases number: For example it could be only ELR.</li>
+</ul>
+<p>However, we are <em>not</em> going to duplicate UT's main case number into confirmed cases to replace this number because the definition they use for &quot;confirmed&quot; is not in accordance with CSTE definitions. This follows our recent precedent in other states making similar decisions like IN.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus-dashboard.utah.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778561472">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 12, 2021, 8:29 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1100#issuecomment-778561472" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5975153/Changes.5.txt">Changes (5).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1100">#1100: [UT] clear confirmed cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1100</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on February 12, 2021, 8:01 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1100" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: UT</p>
+<p><strong>Describe the problem</strong>
+We are currently using Utah's positive individuals tested via PCR as Confirmed cases.
+However, Utah does not present this figure as confirmed cases and instead calls its main case number, which includes both PCR and antigen tests, &quot;lab-confirmed cases.&quot;</p>
+<p>We decided to clear Confirmed cases field of the positive individuals tested via PCR number for two reasons:</p>
+<ul>
+<li>it goes against UT's own labeling of its confirmed cases so it is confusing.</li>
+<li>we are not sure this testing count is as comprehensive as a cases number: For example it could be only ELR.</li>
+</ul>
+<p>However, we are <em>not</em> going to duplicate UT's main case number into confirmed cases to replace this number because the definition they use for &quot;confirmed&quot; is not in accordance with CSTE definitions. This follows our recent precedent in other states making similar decisions like IN.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus-dashboard.utah.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778561472">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on February 12, 2021, 8:29 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1100#issuecomment-778561472" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5975153/Changes.5.txt">Changes (5).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-889">#889: [UT] Timestamp not entered on 10/6</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            889</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 8, 2020, 6:29 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/889" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> UT</p>
+<p><strong>Dates affected:</strong> 10/6</p>
+<p><strong>Describe the issue:</strong> On 10/6 the timestamp was not updated with the rest of the data. We should patch it from screen caps.</p>
+<p><strong>Links:</strong> https://covid-tracking.slack.com/archives/C01B0EGJ3J9/p1602101685233000</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-705572931">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 8, 2020, 6:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/889#issuecomment-705572931" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1437" alt="Screen Shot 2020-10-08 at 9 34 26 AM" src="../../assets/github/images/68712382/95465706-767b8080-0949-11eb-80c9-ff63f75b2bf2.png"></p>
+<p>AFTER:
+<img width="1438" alt="Screen Shot 2020-10-08 at 9 35 18 AM" src="../../assets/github/images/68712382/95465805-957a1280-0949-11eb-862d-8119fe812349.png"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-705578074">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 8, 2020, 6:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/889#issuecomment-705578074" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Unfortunately our screenshot does not capture the exact update time we normally use, but it does capture the update date, so I have updated the date to 10/6 00:00.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-842">#842: [UT]Back-fill PCR test numbers from the dashboard </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            842</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 17, 2020, 9:14 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/842" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Utah</p>
+<p><strong>Describe the problem</strong>
+Utah provides a time series of positive and negative PCR tests &amp; people on their dashboard that can be manually captured and summed to get cumulative values.</p>
+<p>The current number of total tests on the dashboard lumps PCR and antigen</p>
+<p><strong>Link to data source</strong>
+https://coronavirus-dashboard.utah.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702867007">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 2, 2020, 10:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/842#issuecomment-702867007" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-707271236">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 12, 2020, 11:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/842#issuecomment-707271236" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-718279361">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on October 28, 2020, 5:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/842#issuecomment-718279361" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>backfilled from file downloaded from Utah's website on 10/27, 10/28</p>
+<p><a href="../../assets/github/files/5455412/UT.-.Analysis.PCR.Tests.20201028.pdf">UT - Analysis PCR Tests 20201028.pdf</a>
+<a href="../../assets/github/files/5455413/UT.-.Overview_Total.Tests.by.Date_2020-10-27.csv.txt">UT - Overview_Total Tests by Date_2020-10-27.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-723266598">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on November 6, 2020, 11:46 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/842#issuecomment-723266598" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated the <code>totalTestsPeopleViral</code> series from the download files to reflect only people tested for PCR testing, and not as reported on the dashboard, which includes all people tested in both PCR and antigen testing</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-841">#841: [UT]Back-fill antigen test numbers from the dashboard for 6/10-</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            841</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 17, 2020, 7:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/841" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Utah</p>
+<p><strong>Describe the problem</strong>
+Utah started reporting antigen testing. We are going to backfill the data using graphs on their page going back to 6/10 which is when the first antigen test is reported.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus-dashboard.utah.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-694279472">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 17, 2020, 7:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/841#issuecomment-694279472" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values manually entered from the graph and double checked are in this sheet:
+https://docs.google.com/spreadsheets/d/1YSEjyxPCl3WPC9S91_p_ErIZ7jwBfWkGCpVKGi3WS5g/edit#gid=633684822</p>
+<p>Time series was shifted by one day to account for when CTP captures the data</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-686">#686: [UT] PCL Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            686</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 28, 2020, 7:39 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/686" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Utah</p>
+<p><strong>Describe the problem</strong>
+UT is said to report in lab-confirmed only. This has always been the case, but it is not reflected on States Daily before 4/28, inclusive. We need to copy over values from positive cases (people, confirmed+probable) to positive cases (PCR).</p>
+<p><strong>Link to data source</strong>
+https://coronavirus-dashboard.utah.gov/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665080977">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 28, 2020, 7:40 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/686#issuecomment-665080977" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>On WS2, 3/15-4/28 positive data was copied into Confirmed Cases (PCR)</p>
+<p>Before:
+<img width="782" alt="Screen Shot 2020-07-28 at 10 40 00 AM" src="../../assets/github/images/66738237/88680667-c07cf600-d0be-11ea-84da-f3c82f13548e.png"></p>
+<p>After:
+<img width="1081" alt="Screen Shot 2020-07-28 at 10 40 16 AM" src="../../assets/github/images/66738237/88680658-bce96f00-d0be-11ea-940d-60aa9b0b066b.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-526">#526: [UT] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            526</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on June 25, 2020, 7:03 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/526" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for UT. However, UT's death values represent lumped probable and confirmed figures, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+<p>On 5/19, there was a discrepancy between the two values - &quot;Deaths&quot; was reported as 88 while &quot;Deaths (confirmed)&quot; was 80. State screenshots show that &quot;Deaths&quot; <em>should</em> be 88, not 80 for that date.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649847816">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 3:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/526#issuecomment-649847816" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Confirmed the values matched &quot;Deaths&quot; (except the 5/19 mistake mentioned above), then removed &quot;Deaths (confirmed) for UT between today and 5/12.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649899514">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 6:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/526#issuecomment-649899514" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated UT's source note for Deaths (confirmed) to Not Provided and explained in UT private notes</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650180236">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on June 26, 2020, 6:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/526#issuecomment-650180236" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DZL is DCing this - 9:37 6/26</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-461">#461: UT Current Hosp. data incorrect for 5/22 and 5/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            461</p>
+          <p>
+            <strong>schmian</strong> opened this issue on May 28, 2020, 7:26 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/461" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The Current Hospitalized data for 5/22 and 5/23 includes both &quot;Number of patients currently hospitalized for confirmed COVID-19&quot; and &quot;Patients currently hospitalized as COVID-19 persons under investigation&quot; when it should only include &quot;Number of patients currently hospitalized for confirmed COVID-19&quot;</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24bwx">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-643318974">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 12, 2020, 7:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/461#issuecomment-643318974" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-647612989">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 8:56 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/461#issuecomment-647612989" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-450">#450: [UT Historical] Repair data for May 19, 22, 23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            450</p>
+          <p>
+            <strong>jedludlow</strong> opened this issue on May 24, 2020, 10:42 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/450" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The state of Utah had an outage on May 19 which caused that day's data to be a duplicate of May 18.</p>
+<p>Hospitalization data for May 22 and 23 was incorrect with respect to totals on the state's site as retrieved around 11:30 am on May 23 and May 24, respectively.</p>
+<p>This pull request documents the required repairs. I realize that directly incorporating the pull request into <code>covid-tracking-data</code> may not be the best repair strategy, but it served as a convenient way to convey the required changes and allowed me to continue plotting without strange aberrations.</p>
+<p>https://github.com/COVID19Tracking/covid-tracking-data/pull/73</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-637907429">
+          <div class="frontmatter">
+            <div>
+              <strong>jedludlow</strong> commented on June 2, 2020, 6:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/450#issuecomment-637907429" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>For simplicity, here are the minimal required repairs spelled out for the days in question ignoring the deprecated data fields.</p>
+<h3>2020-05-19</h3>
+<p>There was an outage on the state's data website for this day, causing it to be a duplicate of May 18. The correct data was posted later in the evening and can be obtained from a <a href="https://www.ksl.com/article/46754950/utah-reports-highest-single-day-covid-19-death-total-of-8-with-134-new-cases">KSL News story</a> from that day:</p>
+<ul>
+<li><code>positive</code>: 7518</li>
+<li><code>negative</code>: 16793</li>
+<li><code>hospitalizedCumulative</code>: 619</li>
+<li><code>death</code>: 88</li>
+</ul>
+<h3>2020-05-22</h3>
+<p>Cumulative hospitalization data for May 22 is incorrect. The <a href="https://covidtracking.com/screenshots/UT/UT-20200522-185327.png">historical screenshot</a> shows that this should read 660 instead of 1036.</p>
+<h3>2020-05-23</h3>
+<p>Cumulative hospitalization data for May 23 is incorrect. The <a href="https://covidtracking.com/screenshots/UT/UT-20200523-184524.png">historical screenshot</a> shows that this should read 676 instead of 1053.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-640286723">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on June 7, 2020, 3:04 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/450#issuecomment-640286723" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi Jed, thank you for your input and for sharing the KSL News Story. We've reviewed the historical screenshots from 5/18, 5/19, 5/22 and 5/23 for Utah. The cumulative hospitalization data will be updated in our next publish. We are still reviewing the remaining changes you've mentioned for 5/19.</p>
+<p><strong>BEFORE:</strong>
+<img src="../../assets/github/images/31285549/83981114-e6acc380-a8cf-11ea-835d-bbd6bb3d845f.png" alt="2020-06-07_UT_BEFORE"></p>
+<p><strong>AFTER:</strong>
+<img src="../../assets/github/images/31285549/83981116-eca2a480-a8cf-11ea-91b3-e38d6ab0f687.png" alt="2020-06-07_UT_AFTER"></p>
+<p>Thank you,
+Camille</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-640288800">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on June 7, 2020, 3:24 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/450#issuecomment-640288800" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>For the remaining changes for 5/19, data will be updated in our next publish for positive cases, negative cases, hospitalized (currently), hospitalized (cumulative), recovered and deaths.</p>
+<p><strong>BEFORE:</strong>
+<img src="../../assets/github/images/31285549/83981446-b0247800-a8d2-11ea-8961-0a08684a5c8a.png" alt="UT_05-19_BEFORE"></p>
+<p><strong>AFTER:</strong>
+<img src="../../assets/github/images/31285549/83981447-b4509580-a8d2-11ea-8e00-a75d5aba6ea8.png" alt="UT_05_19_AFTER"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-25">#25: UT Data Issue</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            25</p>
+          <p>
+            <strong>careeningspace</strong> opened this issue on March 20, 2020, 8:37 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/25" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>UT Checks:
+<img src="https://user-images.githubusercontent.com/43073915/77179415-d63e3700-6a9e-11ea-82a9-af2ff0d98662.png" alt="image"></p>
+<p>UT Corrected:
+<img src="https://user-images.githubusercontent.com/43073915/77179618-16051e80-6a9f-11ea-9cad-a312eb88ac36.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

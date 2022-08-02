@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Maine Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Maine</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Maine</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-04T15:57:30.000-08:00">March 4, 2021, 3:57 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-26T10:56:46.000-08:00">December 26, 2020, 10:56 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-10T10:17:55.000-08:00">December 10, 2020, 10:17 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-27T14:03:39.000-08:00">November 27, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-26T14:03:36.000-08:00">November 26, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-13T10:05:08.000-08:00">November 13, 2020, 10:05 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-11T11:32:56.000-08:00">November 11, 2020, 11:32 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-01T09:30:31.000-08:00">November 1, 2020, 9:30 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-04T14:03:07.000-07:00">September 4, 2020, 2:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-08T16:02:23.000-07:00">July 8, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-24T11:02:11.000-07:00">June 24, 2020, 11:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-22T16:01:43.000-07:00">June 22, 2020, 4:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-02T07:01:47.000-07:00">May 2, 2020, 7:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-01T09:00:04.000-07:00">April 1, 2020, 9:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-31T09:00:03.000-07:00">March 31, 2020, 9:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of March 4, 2021, Maine's <code>totalTestResults</code> are drawn directly from <code>totalTestsViral</code> instead of calculated by adding positive+negative, causing a drop of 225 in the daily increase in tests and 41,208 in the total tests, mostly due to the removal of non-resident tests.</p>
+<p>On March 4, 2021, we backfilled Maine's <strong>Total Tests (Specimens)</strong>, <strong>Positive Tests (PCR)</strong>, <strong>Total Antigen Tests</strong> and <strong>Positive Antigen Tests</strong> metrics from the &quot;Daily lab results&quot; tab on Maine's dashboard.  The new values reflect testing on Maine residents only.</p>
+<p>On December 25, 2020, Maine announced on their <a href="https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml">COVID-19 page</a> that some of their data would not be updated between December 25, 2020 and December 27, 2020 due to the holiday. As a result, we were unable to update Maine’s testing and current hospitalization data on December 25, 2020, and unable to update any data on December 26, 2020.</p>
+<p>On December 9, 2020, Maine’s <strong>Total Antigen Tests (specimens)</strong> decreased by 248 on their COVID-19 page, which we believe was an error. The sum of <strong>Positive Antigen Tests,</strong> <strong>Negative Antigen Tests,</strong> and indeterminate antigen tests is 38,632 and Maine reported 36,632. In order to ensure that our data is as accurate as possible, we did not update Maine’s Total Antigen Tests (specimens) on December 9, 2020. (Antigen data is available in our CSVs and API.)</p>
+<p>On November 30, 2020, Maine’s Total antigen tests (specimens) and Negative antigen tests (specimens) increased by roughly 11,000, and their Positive antigen tests (specimens) increased by about 400 without explanation.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-04T15:57:30.000-08:00">March 4, 2021, 3:57 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 25, 2020, Maine announced on their <a href="https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml">COVID-19 page</a> that some of their data would not be updated between December 25, 2020 and December 27, 2020 due to the holiday. As a result, we were unable to update Maine’s testing and current hospitalization data on December 25, 2020, and unable to update any data on December 26, 2020.</p>
+<p>On December 9, 2020, Maine’s <strong>Total Antigen Tests (specimens)</strong> decreased by 248 on their COVID-19 page, which we believe was an error. The sum of <strong>Positive Antigen Tests,</strong> <strong>Negative Antigen Tests,</strong> and indeterminate antigen tests is 38,632 and Maine reported 36,632. In order to ensure that our data is as accurate as possible, we did not update Maine’s Total Antigen Tests (specimens) on December 9, 2020. (Antigen data is available in our CSVs and API.)</p>
+<p>On November 30, 2020, Maine’s Total antigen tests (specimens) and Negative antigen tests (specimens) increased by roughly 11,000, and their Positive antigen tests (specimens) increased by about 400 without explanation.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-26T10:56:46.000-08:00">December 26, 2020, 10:56 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 25, 2020, Maine announced on their <a href="https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml">COVID-19 page</a> that some of their data would not be updated between December 25, 2020 and December 27, 2020 due to the holiday. As a result, we were unable to update Maine’s testing and current hospitalization data on December 25, 2020.</p>
+<p>On December 9, 2020, Maine’s <strong>Total Antigen Tests (specimens)</strong> decreased by 248 on their COVID-19 page, which we believe was an error. The sum of <strong>Positive Antigen Tests,</strong> <strong>Negative Antigen Tests,</strong> and indeterminate antigen tests is 38,632 and Maine reported 36,632. In order to ensure that our data is as accurate as possible, we did not update Maine’s Total Antigen Tests (specimens) on December 9, 2020. (Antigen data is available in our CSVs and API.)</p>
+<p>On November 30, 2020, Maine’s Total antigen tests (specimens) and Negative antigen tests (specimens) increased by roughly 11,000, and their Positive antigen tests (specimens) increased by about 400 without explanation.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-25T10:03:34.000-08:00">December 25, 2020, 10:03 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 9, 2020, Maine’s <strong>Total Antigen Tests (specimens)</strong> decreased by 248 on their COVID-19 page, which we believe was an error. The sum of <strong>Positive Antigen Tests,</strong> <strong>Negative Antigen Tests,</strong> and indeterminate antigen tests is 38,632 and Maine reported 36,632. In order to ensure that our data is as accurate as possible, we did not update Maine’s Total Antigen Tests (specimens) on December 9, 2020. (Antigen data is available in our CSVs and API.)</p>
+<p>On November 30, 2020, Maine’s Total antigen tests (specimens) and Negative antigen tests (specimens) increased by roughly 11,000, and their Positive antigen tests (specimens) increased by about 400 without explanation.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T21:06:50.000-08:00">December 18, 2020, 9:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 9, 2020, Maine’s <strong>Total Antigen Tests (specimens)</strong> decreased by 248 on their COVID-19 page, which we believe was an error. The sum of <strong>Positive Antigen Tests,</strong> <strong>Negative Antigen Tests,</strong> and indeterminate antigen tests is 38,632 and Maine reported 36,632. In order to ensure that our data is as accurate as possible, we did not update Maine’s Total Antigen Tests (specimens) on December 9, 2020.</p>
+<p>On November 30, 2020, Maine’s Total antigen tests (specimens) and Negative antigen tests (specimens) increased by roughly 11,000, and their Positive antigen tests (specimens) increased by about 400 without explanation.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-10T10:17:55.000-08:00">December 10, 2020, 10:17 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 30, 2020, Maine’s Total antigen tests (specimens) and Negative antigen tests (specimens) increased by roughly 11,000, and their Positive antigen tests (specimens) increased by about 400 without explanation.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020, and unable to update all data points except for Currently hospitalized, Currently in ICU, and Currently on ventilator on November 27, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-27T14:03:39.000-08:00">November 27, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 26, 2020, Maine announced on their COVID-19 page that there would only be partial updates to their data from November 26, 2020 to November 29, 2020 due to the Thanksgiving holiday. As a result, we were unable to update testing data, and current hospitalization data on November 26, 2020.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-26T14:03:36.000-08:00">November 26, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 11, 2020, Maine did not update testing and hospitalization data: only <strong>Cases,</strong> <strong>Deaths,</strong> and <strong>Recovered</strong> were updated.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-13T10:05:08.000-08:00">November 13, 2020, 10:05 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-11T14:49:19.000-08:00">November 11, 2020, 2:49 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-11T11:32:56.000-08:00">November 11, 2020, 11:32 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://analytics.maine.gov/t/CDCExternal/views/covid-19-maine-cdc-dashboard-nav-buttons/1_Casetrendsbycounty?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fanalytics.maine.gov%2F&amp;:embed_code_version=3&amp;:tabs=no&amp;:toolbar=yes&amp;:showAppBanner=false&amp;:display_spinner=no&amp;:loadOrderID=1</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 2, 2020, Maine started reporting antigen and molecular tests separately on the state's dashboard.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-01T09:30:31.000-08:00">November 1, 2020, 9:30 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine combines PCR and antigen tests in the total tests figure reported on the state's dashboard.</p>
+<p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-04T14:03:07.000-07:00">September 4, 2020, 2:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 20, 2020, Maine reports PCR tests and antibody tests separately.</p>
+<p>On June 23, 2020, Maine began reporting the dates of <strong>cases</strong>, <strong>deaths</strong>, <strong>recoveries</strong>, and <strong>hospitalizations</strong> on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for <strong>Deaths (probable)</strong> and <strong>Deaths (confirmed)</strong>.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.</p>
+<p>As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted.</p>
+<p>On June 23, Maine began reporting the dates of cases, deaths, recoveries, and hospitalizations on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for confirmed and probable deaths.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted.
+On June 23, Maine began reporting the dates of cases, deaths, recoveries, and hospitalizations on the day they occurred instead of the day the event was reported. Maine also began providing separate figures for confirmed and probable deaths.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted. On 6/23, Maine began reporting the dates of cases, deaths, recoveries, and hospitalizations on the day they occurred instead of the day the event was reported. On 6/23, Maine began providing separate figures for confirmed and probable deaths.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-08T16:02:23.000-07:00">July 8, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted. On June 23 Maine began reporting the dates of cases, deaths, recoveries, and hospitalizations on the day they occurred instead of the day the event was reported.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-24T11:02:11.000-07:00">June 24, 2020, 11:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-22T16:01:43.000-07:00">June 22, 2020, 4:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.
+As of May 20, Maine is separating out PCR tests and antibody tests; we report the number of PCR tests. Total testing numbers might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 13, Maine is reporting total specimens tested; this number is updated once a week on Wednesdays. Because some people may be tested more than once, this number is probably higher than the number of people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Maine does not report total tests. Negative tests are updated weekly on Wednesdays, reflecting Maine CDC’s weekly publishing schedule for negative results. As of April 27, Maine is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-02T07:01:47.000-07:00">May 2, 2020, 7:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>State does not report totals or negatives, last report was: 3/30
+Using the time at the top row of their table. As of April 27, Maine is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>State does not report totals or negatives, last report was: 3/30
+Using the time at the top row of their table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>State does not report totals or negatives, last report was: 3/30
+Use the time at the top row of the table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-01T09:00:04.000-07:00">April 1, 2020, 9:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>State does not report totals or negatives, last report was:
+Use the time at the top row of the table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-31T09:00:03.000-07:00">March 31, 2020, 9:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the time at the top row of the table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the time at the top row of the table. Recovered added to Positive to count accurately towards total.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the time at the top row of the table. Recovered added to Positive to count accurately towards total.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the time at the top row of the table. Recovered added to Positive to count accurately towards total.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the time at the top row of the table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the time at the top row of the table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Use the timestamp at the top row of the table.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

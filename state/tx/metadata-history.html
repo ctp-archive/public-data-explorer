@@ -1,0 +1,3412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Texas Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Texas</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Texas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-21T15:38:50.000-08:00">February 21, 2021, 3:38 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-20T15:04:12.000-08:00">February 20, 2021, 3:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-18T14:39:02.000-08:00">February 18, 2021, 2:39 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-17T12:56:58.000-08:00">February 17, 2021, 12:56 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-16T16:51:32.000-08:00">February 16, 2021, 4:51 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-27T23:26:40.000-08:00">January 27, 2021, 11:26 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-29T15:15:58.000-08:00">December 29, 2020, 3:15 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-27T16:16:06.000-08:00">December 27, 2020, 4:16 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-15T10:22:46.000-08:00">December 15, 2020, 10:22 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-14T17:31:11.000-08:00">December 14, 2020, 5:31 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-12T15:03:41.000-08:00">December 12, 2020, 3:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-16T13:02:36.000-08:00">November 16, 2020, 1:02 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-15T21:31:16.000-08:00">November 15, 2020, 9:31 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-15T17:22:14.000-08:00">November 15, 2020, 5:22 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-13T10:05:08.000-08:00">November 13, 2020, 10:05 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-21T12:03:17.000-07:00">September 21, 2020, 12:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-15T06:34:04.000-07:00">September 15, 2020, 6:34 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-17T09:03:32.000-07:00">August 17, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-02T11:02:51.000-07:00">August 2, 2020, 11:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-30T14:02:08.000-07:00">July 30, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T15:02:19.000-07:00">July 29, 2020, 3:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T14:02:46.000-07:00">July 29, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T12:02:25.000-07:00">July 29, 2020, 12:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T10:02:24.000-07:00">July 29, 2020, 10:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T09:06:54.000-07:00">July 29, 2020, 9:06 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T19:02:38.000-07:00">July 28, 2020, 7:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T14:02:25.000-07:00">July 28, 2020, 2:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-27T15:53:18.000-07:00">July 27, 2020, 3:53 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-26T11:02:36.000-07:00">July 26, 2020, 11:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-23T13:02:48.000-07:00">July 23, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-22T12:02:47.000-07:00">July 22, 2020, 12:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-30T16:02:17.000-07:00">June 30, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-17T15:01:33.000-07:00">June 17, 2020, 3:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-23T14:17:55.000-07:00">May 23, 2020, 2:17 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-17T10:01:09.000-07:00">May 17, 2020, 10:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-21T14:01:30.000-07:00">April 21, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T22:00:05.000-07:00">March 25, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-23T11:00:07.000-07:00">March 23, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on Twitter.</p>
+<p>On March 6, 2021 through March 7, 2021, Texas announced that due to a technical issue, fewer lab results would be reported. We urge caution when interpreting their testing data for this day.</p>
+<p>On March 7, 2021, Texas’ Positive antigen tests (specimens) decreased by 532 without explanation.</p>
+<p>On February 21, 2021, Texas’s Positive PCR tests (specimens) decreased by over 10,000 without explanation. Throughout the week, Texas has experienced multiple weather-related issues which have impacted their data reporting. We urge caution when interpreting data from this period.</p>
+<p>On February 20, 2021, Texas’s Total PCR tests (specimens) decreased by roughly 85,000 without explanation. Throughout the week, Texas has experienced multiple weather-related issues which have impacted their data reporting. We urge caution when interpreting data from this period.</p>
+<p>During the week of February 17, 2021, Texas experienced several weather-related issues and power outages which affected their data reporting. They <a href="https://twitter.com/TexasDSHS/status/1362111931578945538?s=20">noted</a> via the official Texas Department of State Health Services Twitter that new cases will be “artificially low” until the reporting resumes normally. On February 15, 2021 through February 18, 2021, they could not update their testing data due to outages. As a result, we were unable to update their testing data on these dates. We urge caution when interpreting data from this period.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12, 2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on Twitter.</p>
+<p>On February 21, 2021, Texas’s Positive PCR tests (specimens) decreased by over 10,000 without explanation. Throughout the week, Texas has experienced multiple weather-related issues which have impacted their data reporting. We urge caution when interpreting data from this period.</p>
+<p>On February 20, 2021, Texas’s Total PCR tests (specimens) decreased by roughly 85,000 without explanation. Throughout the week, Texas has experienced multiple weather-related issues which have impacted their data reporting. We urge caution when interpreting data from this period.</p>
+<p>During the week of February 17, 2021, Texas experienced several weather-related issues and power outages which affected their data reporting. They <a href="https://twitter.com/TexasDSHS/status/1362111931578945538?s=20">noted</a> via the official Texas Department of State Health Services Twitter that new cases will be “artificially low” until the reporting resumes normally. On February 15, 2021 through February 18, 2021, they could not update their testing data due to outages. As a result, we were unable to update their testing data on these dates. We urge caution when interpreting data from this period.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12, 2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-21T15:38:50.000-08:00">February 21, 2021, 3:38 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>On February 20, 2021, Texas’ Total PCR tests (specimens) decreased by roughly 85,000 without explanation. Throughout the week, Texas has experienced multiple weather related issues which have impacted their data reporting. We urge caution when interpreting data from this period.</p>
+<p>On the week of February 17, 2021, Texas experienced several weather related issues and power outages which affected their data reporting. They <a href="https://twitter.com/TexasDSHS/status/1362111931578945538?s=20">noted</a> via the official Texas Department of State Health Services Twitter that new cases will be “artificially low” until the reporting resumes normally. On February 15, 2021 through February 18, 2021, they could not update their testing data due to outages. As a result, we were unable to update their testing data on these dates. We urge caution when interpreting data from this period.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12, 2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-20T15:04:12.000-08:00">February 20, 2021, 3:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>On the week of February 17, 2021, Texas experienced several weather related issues and power outages which affected their data reporting. They <a href="https://twitter.com/TexasDSHS/status/1362111931578945538?s=20">noted</a> via the official Texas Department of State Health Services Twitter that new cases will be “artificially low” until the reporting resumes normally. On February 15, 2021 through February 18, 2021, they could not update their testing data due to outages. As a result, we were unable to update their testing data on these dates. We urge caution when interpreting data from this period.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12, 2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-18T14:39:02.000-08:00">February 18, 2021, 2:39 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>On the week of February 17, 2021, Texas experienced several weather related issues and power outages which affected their data reporting. They <a href="https://twitter.com/TexasDSHS/status/1362111931578945538?s=20">noted</a> via the official Texas Department of State Health Services Twitter that new cases will be “artificially low” until the reporting resumes normally. On February 15, 2021 through February 17, 2021, they could not update their testing data due to outages. As a result, we were unable to update their testing data on these dates. We urge caution when interpreting data from this period.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12, 2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-17T12:56:58.000-08:00">February 17, 2021, 12:56 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>On February 15, 2021, and February 16, 2021 Texas did not update any Testing metrics (presumably due to the winter storm they are experiencing). We will backfill the updated data if it becomes available.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12, 2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-16T16:51:32.000-08:00">February 16, 2021, 4:51 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-27T23:26:40.000-08:00">January 27, 2021, 11:26 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 29, 2020, Texas noted that “New cases reported today (12/29) may include several days of cases for some counties as some local health departments did not report over the holiday weekend.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-29T15:15:58.000-08:00">December 29, 2020, 3:15 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_Test[…]&amp;outFields=%2A&amp;orderByFields=Date+desc&amp;resultRecordCount=1</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-27T16:16:06.000-08:00">December 27, 2020, 4:16 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Confirmed cases</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1, 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and adjusted  <strong>Cases (confirmed plus probable)</strong> based on the data provided by Texas. This causes the daily rise in Texas probable cases on November 1, 2020, to appear as 71,734. This large increase includes the data dump of 67,475 <strong>Probable cases</strong>, most of which are not from the most recent 24 hour period. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>As of December 15, 2020, Texas’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Total PCR tests (specimens)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Total PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and ajusted  <em>Cases (confirmed plus probable)</em>* based on the data provided by Texas. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>Starting November 1, 2020,  Texas provided a historical time series of <strong>Probable cases.</strong> This causes the daily rise in Texas probable cases on the 1st to appear as 71,734. This large increase includes the data dump of 67,475 probable cases, most of which are not from the most recent 24 hour period.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-15T10:22:46.000-08:00">December 15, 2020, 10:22 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 14 2020, we backfilled the full time series of <strong>Positive PCR tests (specimens)</strong>, <strong>Positive PCR tests (specimens)</strong> from data available on <a href="https://services5.arcgis.com/ACaLB9ifngzawspq/ArcGIS/rest/services/TX_DSHS_COVID19_TestData_Service/FeatureServer/6">Texas ArcGis Layer</a>.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and ajusted  <em>Cases (confirmed plus probable)</em>* based on the data provided by Texas. We also backfilled <strong>Positive antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-14T17:31:11.000-08:00">December 14, 2020, 5:31 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On December 11, 2020, Texas added probable cases to their dashboard, and provided a timeseries of <strong>Probable cases</strong> going back to November 1 2020. On December 12,2020, we backfilled the <strong>Probable cases</strong> and ajusted  <em>Cases (confirmed plus probable)</em>* based on the data provided by Texas. We also backfilled <strong>Positive antibody tests (specimens)</strong>,  Neagtive antibody tests (specimens), <strong>Total antigen tests (specimens)</strong> and <strong>Total antibody tests (specimens)</strong> from the data provided by Texas at the same time.</p>
+<p>On November 16, 2020, Texas announced that due to technical difficulties testing data would not be updated. In addition, the “DSHS will be unable to separate laboratory data for Nov. 15 and Nov. 16 for the following indicators: total tests reported…“. As a result, testing data for November 17, 2020 will include tests reported on November 15, 2020 and November 16, 2020.</p>
+<p>On November 15, 2020, Texas did not update any testing metrics.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-12T15:03:41.000-08:00">December 12, 2020, 3:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 16, 2020, Texas announced that due to technical difficulties testing data would not be updated. In addition, the “DSHS will be unable to separate laboratory data for Nov. 15 and Nov. 16 for the following indicators: total tests reported…“. As a result, testing data for November 17, 2020 will include tests reported on November 15, 2020 and November 16, 2020.</p>
+<p>On November 15, 2020, Texas did not update any testing metrics.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-16T13:02:36.000-08:00">November 16, 2020, 1:02 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 15, 2020, Texas did not update any testing metrics.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-15T21:31:16.000-08:00">November 15, 2020, 9:31 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 15, 2020, Texas did not update by our publication time.</p>
+<p>On November 11, 2020, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-15T17:22:14.000-08:00">November 15, 2020, 5:22 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On November 11, Texas reported that their update to <strong>Deaths (confirmed and probable)</strong> would be delayed due to technical difficulties.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-13T10:05:08.000-08:00">November 13, 2020, 10:05 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas app</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.
+eared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>The Texas Department of State Health Services regularly includes older cases identified by labs in their cumulative confirmed case counts. As a result, new cases reported may not necessarily have occurred in the past 24 hour period. When these increases are significant, we will specifically mention them in our daily update on twitter.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-21T12:03:17.000-07:00">September 21, 2020, 12:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>On September 14, 2020, Texas &quot;revised its method for reporting Total Tests,&quot; resulting in an approximately 300,000 unit decrease in <strong>Total PCR tests (specimens)</strong> and approximately 17,000 unit decrease in <strong>Total antibody tests (specimens)</strong>. We are currently investigating how this change affects our understanding of Texas' testing units.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-15T06:34:04.000-07:00">September 15, 2020, 6:34 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 23, 2020, Texas reports PCR tests separately from antibody tests.</p>
+<p>On June 16, 2020, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, 2020, we began reporting <strong>Currently in ICU</strong> for Texas. We are currently reviewing historical data to maintain an accurate time-series.</p>
+<p>On July 25, 2020, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8,112, not 6,020.</p>
+<p>On July 27, 2020, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly &quot;new&quot; deaths on July 27. This will create a one-day artificial apparent daily increase in deaths.</p>
+<p>Starting July 23, 2020, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23–July 28 if the complete data becomes available.</p>
+<p>On July 30, 2020, Texas noted that &quot;Cumulative fatalities have been corrected for July 27–29. As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, 2020, Texas noted that &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, 2020, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues.</p>
+<p>Negative test results reported in our API and CSVs are calculated by subtracting <strong>Positive PCR tests (people)</strong> from <strong>Total PCR tests (specimens)</strong> in the absence of better data.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.</p>
+<p>As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted. On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.</p>
+<p>On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.</p>
+<p>On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision</p>
+<p>Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+<p>On July 30, Texas posted that &quot;Cumulative fatalities have been corrected for July 27, 28 and 29.  As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, Texas posted that, &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+<p>As of August 16, several commercial laboratories submitted previously backlogged test results to the Texas Department of State Health Services. As a result, new confirmed cases may not have occurred in the past 24 hours. The Texas Department of State Health Services is working to resolve these issues</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-17T09:03:32.000-07:00">August 17, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.</p>
+<p>As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted. On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.</p>
+<p>On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.</p>
+<p>On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision</p>
+<p>Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+<p>On July 30, Texas posted that &quot;Cumulative fatalities have been corrected for July 27, 28 and 29.  As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+<p>On August 2, Texas posted that, &quot;New data will not be posted on this dashboard on Sunday, August 2 due to a scheduled upgrade to the system that processes electronic lab reports. Data for Sunday will be posted with Monday’s data update.&quot;</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-02T11:02:51.000-07:00">August 2, 2020, 11:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.</p>
+<p>As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted. On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.</p>
+<p>On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.</p>
+<p>On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision</p>
+<p>Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+<p>On July 30, Texas posted that &quot;Cumulative fatalities have been corrected for July 27, 28 and 29.  As DSHS shifted to using death certificate data to count fatalities this week, an automation error caused approximately 225 fatalities to be included that did not have COVID-19 listed as a direct cause of death.&quot;</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-30T14:02:08.000-07:00">July 30, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.</p>
+<p>As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted. On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.</p>
+<p>On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.</p>
+<p>On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision</p>
+<p>Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T15:02:19.000-07:00">July 29, 2020, 3:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.</p>
+<p>As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.</p>
+<p>On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+<p>On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.</p>
+<p>On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.</p>
+<p>On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision</p>
+<p>Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T14:02:46.000-07:00">July 29, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated. As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted. On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot; On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series. On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020. On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T12:02:25.000-07:00">July 29, 2020, 12:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.
+On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.
+On July 27, Texas reported 675 new deaths, but only 44 were new for that day. The others occurred previously in the pandemic and were discovered through death certificate reviews. On July 29, we updated our historical numbers using state-provided historical data to associate the deaths discovered by death certificate review with the correct days.
+Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T10:02:24.000-07:00">July 29, 2020, 10:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.dshs.texas.gov/coronavirus/TexasCOVID-19HospitalizationsOverTimebyTSA.xlsx</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.
+On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.
+On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision
+Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T09:06:54.000-07:00">July 29, 2020, 9:06 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/additionaldata/</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.
+On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.
+On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision
+Starting July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T19:02:38.000-07:00">July 28, 2020, 7:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+On June 16, Texas notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for Texas. We are currently looking through historical data to maintain an accurate time-series.
+On July 25, Texas reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for Texas appeared smaller than it was. The actual number of new cases in Texas that day was 8112, not 6020.
+On July 27, Texas added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27th. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision
+Since July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for July 23 - July 28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for TX. We are currently looking through historical data to maintain an accurate time-series.
+On July 25, TX reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for TX appeared smaller than it was. The actual number of new cases in TX that day was 8112, not 6020.
+On July 27, TX added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27th. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision
+Since July 23, Texas has reported that its current hospitalization and ICU numbers are incomplete due to its transition to the HHS reporting system. We carried over hospitalization figures until July 28. We will backfill the complete numbers for 7/23-7/28 when reporting is back at 100%.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T14:02:25.000-07:00">July 28, 2020, 2:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for TX. We are currently looking through historical data to maintain an accurate time-series.
+On July 23, Texas reported that there will be incomplete current hospitalization numbers due to its transition to the HHS reporting system. We are carrying over yesterday's data point to maintain a consistent time-series and will backfill with the updated numbers once available. On July 25, TX reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for TX appeared smaller than it was. The actual number of new cases in TX that day was 8112, not 6020.
+On July 27, TX added 675 additional deaths through death certificate reviews. However only 44 deaths were truly new deaths on July 27th. This will inflate the daily increase in deaths until the timeseries has been backfilled based on this revision</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-27T15:53:18.000-07:00">July 27, 2020, 3:53 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for TX. We are currently looking through historical data to maintain an accurate time-series.
+On July 23, Texas reported that there will be incomplete current hospitalization numbers due to its transition to the HHS reporting system. We are carrying over yesterday's data point to maintain a consistent time-series and will backfill with the updated numbers once available. On July 25, TX reported that 2092 probable cases had been removed from the statewide case totals by the Corpus Christi-Nueces County Public Health District. That removal meant that the number of total cases for TX appeared smaller than it was. The actual number of new cases in TX that day was 8112, not 6020.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-26T11:02:36.000-07:00">July 26, 2020, 11:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for TX. We are currently looking through historical data to maintain an accurate time-series.
+On July 23, Texas reported that there will be incomplete current hospitalization numbers due to its transition to the HHS reporting system. We are carrying over yesterday's data point to maintain a consistent time-series and will backfill with the updated numbers once available.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-23T13:02:48.000-07:00">July 23, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;
+On July 22, we began reporting ICU hospitalizations for TX. We are currently looking through historical data to maintain an accurate time-series.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-22T12:02:47.000-07:00">July 22, 2020, 12:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/0d8bdf9be927459d9cb11b9eaef6101f</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-30T16:02:17.000-07:00">June 30, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.
+TX notes that &quot;The reported cases for June 16 include 2,622 new cases and 1,476 cases that were previously diagnosed among Texas Department of Criminal Justice inmates but that had not been reported by local health departments (887 from Anderson County and 589 from Brazoria County).&quot;</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-17T15:01:33.000-07:00">June 17, 2020, 3:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated.
+As of May 23, Texas is separating out PCR and antibody tests; we report the number of PCR tests. Total tests might be impacted.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated
+As of May 23rd, Texas is separating out PCR and antibody tests. Total tests might be impacted</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-23T14:17:55.000-07:00">May 23, 2020, 2:17 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of May 16, Texas is reporting mostly specimens tested, except for the small number of tests performed by public labs, which are de-duplicated</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-17T10:01:09.000-07:00">May 17, 2020, 10:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-04-21T14:01:30.000-07:00">April 21, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We are assuming Texas is reporting only completed testing, pending further guidance, which we are seeking from the state.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://txdshs.maps.arcgis.com/apps/opsdashboard/index.html#/ed483ecd702b4298ab01e8b9cafc8b83</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We are assuming Texas is reporting only completed testing, pending further guidance, which we are seeking from the state.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T22:00:05.000-07:00">March 25, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>We are assuming Texas is reporting only completed testing, pending further guidance, which we are seeking from the state.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-23T11:00:07.000-07:00">March 23, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/news/updates.shtm#coronavirus</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positive counts. Use time = 13:00, as per the site's guidance..</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positive counts. Use time = 13:00, as per the site's guidance..</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positive counts. Use time = 13:00, as per the site's guidance..</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-16T20:29:49.000-07:00">March 16, 2020, 8:29 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positive counts. Scroll down for the data. Use time = 13:00, as per the site's guidance..</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-15T14:06:11.000-07:00">March 15, 2020, 2:06 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positive counts. Scroll down for the data. If no time given, use time = 13:00, as per the site's guidance..</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Only positives are being reported, scroll down for the data. No update time given; they say DSHS will update the state case count each day by 10 a.m. Central Time. Use current date, 00:00 for consistency.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://dshs.texas.gov/coronavirus/</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

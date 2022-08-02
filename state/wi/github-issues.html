@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wisconsin Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wisconsin</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wisconsin</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>January 9, 2021, 9:18 PM PST</td>
+          <td>1059</td>
+          <td>
+            <a href="#issue-1059">[WI] Patching late update to Recoveries 1/9/2021</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 9, 2021, 9:18 PM PST</td>
+          <td>1059</td>
+          <td>
+            <a href="#issue-1059">[WI] Patching late update to Recoveries 1/9/2021</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 2, 2021, 8:22 PM PST</td>
+          <td>1041</td>
+          <td>
+            <a href="#issue-1041">[WI] Patch 1/2/2021 Pending, Currently hospitalized, and Currently in ICU</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 21, 2020, 2:48 PM PST</td>
+          <td>1024</td>
+          <td>
+            <a href="#issue-1024">[WI] Patch 12/20 Pending, Currently hospitalized, and Currently in ICU </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 29, 2020, 6:34 PM PST</td>
+          <td>986</td>
+          <td>
+            <a href="#issue-986">[WI] Patch 11/29 Pending, Currently hospitalized, and Currently in ICU</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 25, 2020, 6:38 PM PST</td>
+          <td>978</td>
+          <td>
+            <a href="#issue-978">[WI] Patch 11/1-11/2 Pending, Currently hospitalized, and Currently in ICU</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 22, 2020, 8:05 PM PST</td>
+          <td>968</td>
+          <td>
+            <a href="#issue-968">[WI] Hosp data for 11/21 is missing from screenshots. </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 22, 2020, 8:03 PM PST</td>
+          <td>967</td>
+          <td>
+            <a href="#issue-967">[WI] need to backfill hosp data from 11/22, 11/20, 11/19</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 2, 2020, 6:40 AM PST</td>
+          <td>921</td>
+          <td>
+            <a href="#issue-921">[WI] Patch 10/31 Probable Cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 29, 2020, 1:55 PM PDT</td>
+          <td>917</td>
+          <td>
+            <a href="#issue-917">[WI] Backfill Total Tests PCR for 3/3-10/19</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 20, 2020, 10:56 PM PDT</td>
+          <td>906</td>
+          <td>
+            <a href="#issue-906">[WI] Updating Current Hospital metrics and pending 10/17-10/29</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 29, 2020, 7:59 PM PDT</td>
+          <td>876</td>
+          <td>
+            <a href="#issue-876">[WI] Missed hospitalization update 9/28</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 24, 2020, 12:59 PM PDT</td>
+          <td>865</td>
+          <td>
+            <a href="#issue-865">[WI] We were lumping their currently hospitalized w/ pending </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 19, 2020, 4:15 PM PDT</td>
+          <td>852</td>
+          <td>
+            <a href="#issue-852">[WI] Backfill Probable cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 7, 2020, 2:14 PM PDT</td>
+          <td>817</td>
+          <td>
+            <a href="#issue-817">[WI] Missed 9/6 hospitalization update</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 29, 2020, 6:46 AM PDT</td>
+          <td>557</td>
+          <td>
+            <a href="#issue-557">[WI] PCL Historicals and WS2 </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 6:26 PM PDT</td>
+          <td>541</td>
+          <td>
+            <a href="#issue-541">[WI Historicals] Time Series of Probable Cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 24, 2020, 8:19 PM PDT</td>
+          <td>521</td>
+          <td>
+            <a href="#issue-521">[WI Historicals] Remove patients with pending test from current hospitalizations</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 5, 2020, 10:44 AM PDT</td>
+          <td>365</td>
+          <td>
+            <a href="#issue-365">WI hospitalization data is inconsistent</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 22, 2020, 10:54 PM PDT</td>
+          <td>262</td>
+          <td>
+            <a href="#issue-262">Data Verification - Zilber School of Public Health, Milwaukee, WI</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 31, 2020, 3:47 AM PDT</td>
+          <td>88</td>
+          <td>
+            <a href="#issue-88">WI: Changed counting method - update notes</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1059">#1059: [WI] Patching late update to Recoveries 1/9/2021</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1059</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 9, 2021, 9:18 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1059" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wisconsin</p>
+<p>Issue: Wisconsin was showing an incorrect number on their dashboard during our publish shift and noted it on their official twitter account. They updated the dashboard, and twitter, later on 1/9/2021. Patching from updated dashboard.</p>
+<p>Source: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-20210110-002635.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757418827">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 9, 2021, 9:20 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1059#issuecomment-757418827" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated values:
+<a href="../../assets/github/files/5792274/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1059">#1059: [WI] Patching late update to Recoveries 1/9/2021</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1059</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 9, 2021, 9:18 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1059" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wisconsin</p>
+<p>Issue: Wisconsin was showing an incorrect number on their dashboard during our publish shift and noted it on their official twitter account. They updated the dashboard, and twitter, later on 1/9/2021. Patching from updated dashboard.</p>
+<p>Source: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-20210110-002635.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757418827">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 9, 2021, 9:20 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1059#issuecomment-757418827" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated values:
+<a href="../../assets/github/files/5792274/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1041">#1041: [WI] Patch 1/2/2021 Pending, Currently hospitalized, and Currently in ICU</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1041</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 2, 2021, 8:22 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Publish Time
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1041" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wisconsin</p>
+<p>Describe this issue: On 1/2 Wisconsin updated Pending, Currently hospitalized, and Currently in ICU after our publish shift.</p>
+<p>Source: (will link official screenshot once available)
+<img width="1080" alt="Screen Shot 2021-01-02 at 8 17 49 PM" src="https://user-images.githubusercontent.com/66583275/103471694-1de53500-4d38-11eb-915b-7b97df22797a.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-753565964">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 2, 2021, 8:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1041#issuecomment-753565964" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="522" alt="Screen Shot 2021-01-02 at 8 19 45 PM" src="../../assets/github/images/66583275/103471716-38b7a980-4d38-11eb-873e-7b3210c3da95.png"></p>
+<p>AFTER:
+<img width="523" alt="Screen Shot 2021-01-02 at 8 20 14 PM" src="../../assets/github/images/66583275/103471722-3fdeb780-4d38-11eb-8eb6-44221db3065a.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1024">#1024: [WI] Patch 12/20 Pending, Currently hospitalized, and Currently in ICU </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1024</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on December 21, 2020, 2:48 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1024" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wisconsin</p>
+<p>Describe this issue: On 12/20 Wisconsin updated Pending, Currently hospitalized, and Currently in ICU after our publish shift.</p>
+<p>Source: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-secondary-20201221-121600.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-749241577">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on December 21, 2020, 2:53 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1024#issuecomment-749241577" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="486" alt="Screen Shot 2020-12-21 at 2 46 05 PM" src="../../assets/github/images/66583275/102829322-b4f6d800-439b-11eb-8e63-a6e8fcc0a8a0.png"></p>
+<p>AFTER:
+<img width="462" alt="Screen Shot 2020-12-21 at 2 46 37 PM" src="../../assets/github/images/66583275/102829335-ba542280-439b-11eb-9b85-e869a9165978.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-986">#986: [WI] Patch 11/29 Pending, Currently hospitalized, and Currently in ICU</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            986</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 29, 2020, 6:34 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/986" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: WI</p>
+<p>Describe this issue: On 11/29 Wisconsin updated Pending, Currently hospitalized, and Currently in ICU after our publish shift.</p>
+<p>Source: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-secondary-20201130-000622.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-735521393">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 29, 2020, 7:18 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/986#issuecomment-735521393" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="507" alt="Screen Shot 2020-11-29 at 7 15 31 PM" src="../../assets/github/images/66583275/100565063-7e83dc80-3277-11eb-9699-e9e03f4c8eaa.png"></p>
+<p>AFTER:
+<img width="489" alt="Screen Shot 2020-11-29 at 7 16 59 PM" src="../../assets/github/images/66583275/100565071-85aaea80-3277-11eb-8712-c64a495a791d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-978">#978: [WI] Patch 11/1-11/2 Pending, Currently hospitalized, and Currently in ICU</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            978</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 25, 2020, 6:38 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/978" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: WI</p>
+<p>Dates affected: 11/1, 11/2</p>
+<p>Describe this issue: On 11/2 we published the wrong Pending, Currently hospitalized, and Currently in ICU values for Wisconsin.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-734040040">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 25, 2020, 6:41 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/978#issuecomment-734040040" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="358" alt="Screen Shot 2020-11-25 at 9 38 41 PM" src="../../assets/github/images/68712382/100301648-981ae080-2f66-11eb-85fa-16ce44fba831.png"></p>
+<p>AFTER:
+<img width="353" alt="Screen Shot 2020-11-25 at 9 41 20 PM" src="../../assets/github/images/68712382/100301795-f5af2d00-2f66-11eb-89c3-99ad4f0fc921.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-968">#968: [WI] Hosp data for 11/21 is missing from screenshots. </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            968</p>
+          <p>
+            <strong>whobody</strong> opened this issue on November 22, 2020, 8:05 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/968" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]</p>
+<p>WI</p>
+<p><strong>Describe the problem</strong></p>
+<p>There is no record (in screenshots) of WI updating hosp data on 11/21. It's possible they never did.</p>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-740364258">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 7, 2020, 8:16 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/968#issuecomment-740364258" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-747858196">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 17, 2020, 8:21 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/968#issuecomment-747858196" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-967">#967: [WI] need to backfill hosp data from 11/22, 11/20, 11/19</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            967</p>
+          <p>
+            <strong>whobody</strong> opened this issue on November 22, 2020, 8:03 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/967" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [State name, or &quot;US&quot; if this is an issue with country-wide data]
+WI</p>
+<p><strong>Describe the problem</strong>
+Pub shift did not capture the correct updates for 11/22, 11/20, or 11/19</p>
+<p><strong>Link to data source</strong></p>
+<p>https://www.dhs.wisconsin.gov/covid-19/hosp-data.htm#capabilities
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-secondary-20201120-115912.png -11/19
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-secondary-20201121-115531.png - 11/20</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-921">#921: [WI] Patch 10/31 Probable Cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            921</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 2, 2020, 6:40 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/921" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WI</p>
+<p><strong>Dates affected:</strong> 10/31</p>
+<p><strong>Describe the issue:</strong> On 10/31 there was a typo in WI negatives. It was entered as 1250, but should have been 12500. We should patch this mistake. Total and confirmed cases are unaffected.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-720514006">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 2, 2020, 6:43 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/921#issuecomment-720514006" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="607" alt="Screen Shot 2020-11-02 at 9 42 32 AM" src="../../assets/github/images/68712382/97880915-bc7cf780-1cef-11eb-995f-809e08b74f62.png"></p>
+<p>AFTER:
+<img width="598" alt="Screen Shot 2020-11-02 at 9 42 56 AM" src="../../assets/github/images/68712382/97880961-ca327d00-1cef-11eb-9679-772f27ccbfc0.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-917">#917: [WI] Backfill Total Tests PCR for 3/3-10/19</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            917</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 29, 2020, 1:55 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/917" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wisconsin</p>
+<p><strong>Describe the problem</strong>
+Wisconsin provides a time series of the tests it performed from 3/3 onwards on its website. This is backfilling the time series.</p>
+<p><strong>Link to data source</strong>
+https://bi.wisconsin.gov/t/DHS/views/PercentPositivebyTestPersonandaComparisonandTestCapacity/TestCapacityDashboard.csv</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-719062988">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on October 29, 2020, 3:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/917#issuecomment-719062988" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We backfilled, attached analysis sheet and sheet containing wisconsin's data. (from the above data source link)</p>
+<p><a href="../../assets/github/files/5461631/WI.-.Analysis.PCR.Test.Encounters.20201029.csv.txt">WI - Analysis PCR Test Encounters 20201029.csv.txt</a>
+<a href="../../assets/github/files/5461632/WI.-.Wisconsin.Data.10-19.csv.txt">WI - Wisconsin Data 10-19.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-906">#906: [WI] Updating Current Hospital metrics and pending 10/17-10/29</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            906</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on October 20, 2020, 10:56 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/906" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wisconsin</p>
+<p>Problem: On 10/17 the caching issues on the Hospital page caused the values from 10/16 to be entered. The values from 10/17 were then entered on 10/18, and values for 10/18 on 10/19.</p>
+<p>Solution: Backfill the day's proper value from 10-17-10/19 for Pending, Current Hospitalization, and Current ICU.</p>
+<p>Sources:
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-tertiary-20201017-184144.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-secondary-20201019-004831.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-secondary-20201019-184707.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-713324589">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on October 20, 2020, 11:00 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/906#issuecomment-713324589" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="399" alt="Screen Shot 2020-10-20 at 10 55 41 PM" src="../../assets/github/images/66583275/96678979-9d618b80-1327-11eb-897d-76020c49e9f4.png"></p>
+<p>AFTER:
+<img width="471" alt="Screen Shot 2020-10-20 at 10 58 31 PM" src="../../assets/github/images/66583275/96679227-13fe8900-1328-11eb-92e7-fb432ac18987.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-876">#876: [WI] Missed hospitalization update 9/28</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            876</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 29, 2020, 7:59 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/876" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Wisconsin</p>
+<p>Problem: Current hospitalization values were not updated before our publish time.</p>
+<p>Screenshot: https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WI/WI-tertiary-20200929-003731.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-701129218">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 29, 2020, 8:04 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/876#issuecomment-701129218" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<img width="513" alt="Screen Shot 2020-09-29 at 7 56 43 PM" src="../../assets/github/images/66583275/94638402-bcbc4a00-028e-11eb-8028-b92386d1b1cd.png">
+<p>AFTER</p>
+<img width="546" alt="Screen Shot 2020-09-29 at 7 57 22 PM" src="../../assets/github/images/66583275/94638420-c9d93900-028e-11eb-86f4-5d290aaea503.png">
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-865">#865: [WI] We were lumping their currently hospitalized w/ pending </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            865</p>
+          <p>
+            <strong>whobody</strong> opened this issue on September 24, 2020, 12:59 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/865" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:
+WI</p>
+<p><strong>Describe the problem</strong>
+We were lumping their pending into currently hospitalized from roughly 4/2 - 6/9.</p>
+<p>We also have some incorrect values throughout our time series, that became obvious when we received a time series directly from <a href="https://www.wha.org/COVID19Update">Wisconsin Hospital Assoc website</a>.</p>
+<p><strong>Link to data source</strong>
+https://www.wha.org/COVID19Update
+<a href="https://github.com/COVID19Tracking/issues/files/5278879/Patients_._Total_per_Day_data-2.2.xlsx">Patients_|_Total_per_Day_data-2 2.xlsx</a></p>
+<p>This has been backfilled by Rebma.</p>
+<p>Someone, please tell me all the ways I messed this GH issue up.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698561595">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 24, 2020, 1:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/865#issuecomment-698561595" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>WIs hospitalization data had holes between 2020-07-29 - 2020-07-22, we filled it from our previously captured values (looks like 2 sharp drops, probably due to partial data after new HHS guidelines re hospitalizations).</p>
+<p><img src="../../assets/github/images/62236447/94194474-977ea480-fe66-11ea-8044-bf2d7eeea581.png" alt="Screenshot from 2020-09-24 13-01-44">
+<img src="../../assets/github/images/62236447/94194476-98173b00-fe66-11ea-8145-d0cfc4d7ba4c.png" alt="Screenshot from 2020-09-24 13-04-41">
+<img src="../../assets/github/images/62236447/94194479-98afd180-fe66-11ea-8f46-1161153a7166.png" alt="Screenshot from 2020-09-24 13-04-52"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-852">#852: [WI] Backfill Probable cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            852</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 19, 2020, 4:15 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/852" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State or US: Wisconsin</p>
+<p>Describe the problem
+CTP started reporting probables on 7/28 for many states. WI has been reporting probables since it started separating out confirmed and probable case counts on 3/12. We can backfill probables using positive - confirmed until 3/12 and cross-referencing with spreadsheet provided by WI State of Probable cases linked in <a href="https://github.com/COVID19Tracking/issues/issues/541">Issue #541</a>.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-695366401">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 19, 2020, 4:21 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/852#issuecomment-695366401" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="307" alt="Screen Shot 2020-09-19 at 4 17 49 PM" src="../../assets/github/images/66583275/93690964-b6aaba00-fa93-11ea-93a4-16c90e0998ff.png"></p>
+<p>AFTER
+<img width="332" alt="Screen Shot 2020-09-19 at 4 19 51 PM" src="../../assets/github/images/66583275/93690985-f7a2ce80-fa93-11ea-970d-2bb576e11768.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-817">#817: [WI] Missed 9/6 hospitalization update</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            817</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on September 7, 2020, 2:14 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  good_first_issue
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/817" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wisconsin</p>
+<p><strong>Describe the problem</strong>
+On 9/6, data obtained from the Hospital Capabilities page was not updated.</p>
+<p>https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1599511709068500</p>
+<p><strong>Link to data source</strong>
+https://www.dhs.wisconsin.gov/covid-19/hosp-data.htm</p>
+<img width="372" alt="Screen Shot 2020-09-07 at 5 13 28 PM" src="https://user-images.githubusercontent.com/66738237/92416854-73fcef80-f12d-11ea-8394-8120112eb73c.png">
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-557">#557: [WI] PCL Historicals and WS2 </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            557</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on June 29, 2020, 6:46 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/557" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We currently report deaths (confirmed) and deaths as the same value, but we should be differentiating between deaths (confirmed) and deaths (probable) to obtain the total value for deaths.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-651822635">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 30, 2020, 7:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/557#issuecomment-651822635" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>IMPORTANT. Make a public note before we release: &quot;WI started breaking out its probable deaths in early June. We caught these figures on 6/29, on which there were 7 cumulative probable deaths, and only have data for them past that date. We are in the process of securing a historical time series.&quot;
+Then we should reach out to WI to get that data
+I am flagging WI as an &quot;Other&quot; problem with deaths (we should keep it as that) and making a note we should do this before release.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-541">#541: [WI Historicals] Time Series of Probable Cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            541</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 25, 2020, 6:26 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/541" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Wisconsin</p>
+<p><strong>Describe the problem</strong>
+On 6/25 Wisconsin released about 2800 probable cases without a time series, so they were all attributed to today.</p>
+<p><strong>Link to data source</strong>
+<a href="https://github.com/COVID19Tracking/issues/files/4834592/WEDSS.Probable.COVID-19.Cases.6.25.2020.xlsx">WEDSS Probable COVID-19 Cases 6.25.2020.xlsx</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649919601">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 7:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/541#issuecomment-649919601" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> and I updated our historical numbers based on the state spreadsheet. It should be visible on the web site within an hour. Analysis spreadsheet: https://docs.google.com/spreadsheets/d/1CddFkiCKCY6zs5NsrILox6obhfqudAxHDzxC61vSxds/edit#gid=455785625</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-521">#521: [WI Historicals] Remove patients with pending test from current hospitalizations</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            521</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 24, 2020, 8:19 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/521" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <blockquote>
+<p>Question I had on the hospitalizations for WI.   They seem to jump and platau higher, then drop.  I'm fully aware that there are pikes and troughs with the virus, however, the hospitalized during that period don't match some of the screenshots that I have of WI from that time.  Wondering where the hospitalization data came from for the the May through 1st week of June as it seems unusually high compared to other data.  For example, here's a screenshot for 5/16 from the Wisconsin DHS site, that shows total COVID patients as 380, yet you have listed hundreds more.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_251e9">Front conversations</a></p>
+</blockquote>
+<p>In WI, until about two weeks ago, we were adding the number of Patients w/ COVID Test Pending to the number of Total Covid patients. We were informed that since the hospital tests everyone, we should not be doing that and we stopped doing it, but we need to correct the historical data we captured.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-656463253">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 9, 2020, 8:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/521#issuecomment-656463253" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660784679">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 19, 2020, 8:42 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/521#issuecomment-660784679" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-365">#365: WI hospitalization data is inconsistent</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            365</p>
+          <p>
+            <strong>witj</strong> opened this issue on May 5, 2020, 10:44 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/365" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/64861442/81097662-d15a0900-8ecd-11ea-8817-5b5dab69494d.png" alt="image"></p>
+<p>On April 28 the number of current hospitalizations went up by 207 from 336 to 544, but the cumulative hospitalizations only went up 41.  See attached image.</p>
+<p>Something doesn't add up.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-625849781">
+          <div class="frontmatter">
+            <div>
+              <strong>erfgottlieb</strong> commented on May 8, 2020, 7:43 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/365#issuecomment-625849781" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for this <strong>@witj</strong>
+As of 4/27, WI started reporting people tested. Our Currently Hospitalized number reflects total COVID patients plus inpatients w. COVID tests pending. The Cumulative Hospitalized number is taken from https://www.dhs.wisconsin.gov/outbreaks/index.htm and only reflects confirmed hospitalized COVID patients.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-262">#262: Data Verification - Zilber School of Public Health, Milwaukee, WI</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            262</p>
+          <p>
+            <strong>lblair2977</strong> opened this issue on April 22, 2020, 10:54 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/262" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hello,</p>
+<p>I am a public health graduate student at Zilber School of Public Health, and I have some questions specifically on the Wisconsin data.</p>
+<ol>
+<li>On 3/30, the data lists -585 tests. How can there be a negative test value?</li>
+<li>For the field &quot;New Tests&quot; are these figures reflective of that day (i.e. for 4/22, were 1,886 tests conducted or does that represent the date the test was processed/test results returned?)</li>
+<li>What happens to the pending test values? Do those get retroactively adjusted into that date's positive/negative results column as the results come in?</li>
+<li>Do we know what types of tests the state of WI is giving (i.e standard vs rapid test that has been hypothesized to have a higher false negative rate)?</li>
+</ol>
+<p>I appreciate your time!
+Best,
+Lisa Blair</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-625648647">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 7, 2020, 11:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/262#issuecomment-625648647" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-629983093">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 17, 2020, 11:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/262#issuecomment-629983093" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-88">#88: WI: Changed counting method - update notes</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            88</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on March 31, 2020, 3:47 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  State Notes
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/88" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Wisconsin updated its methodology: https://twitter.com/DHSWI/status/1244705100221698048:</p>
+<p><code>Updated numbers for you. And the number of people with negative test results for #COVID19_WI now reflects Wisconsin residents only and excludes duplicate lab results...</code></p>
+<p>Perhaps worth a note?</p>
+<p>(Thanks for the great project.)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-623790209">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/88#issuecomment-623790209" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628989981">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/88#issuecomment-628989981" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

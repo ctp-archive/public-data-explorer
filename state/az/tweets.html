@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Arizona Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Arizona</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Arizona</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 18, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>@IanOGradyAZ @Paul_A_Healy They provide all numbers for public labs, but not negatives from commercial tests. It's like, close but no cigar. -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>May 7, 2020, 2:02 PM PDT</h2>
+    <div>
+      <p>While the increase was broad—10 states reported more than 10k tests—a few states reported unusually high numbers, suggesting they reported several days worth of negative tests today.</p>
+<p>AZ, e.g., normally reports 3-4k tests. They reported 19k tests and fewer positives than normal.</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 12:48 PM PDT</h2>
+    <div>
+      <p>Arizona is the first U.S. state to begin reporting serology tests. We've been anticipating this, so on the backend we're prepared to record these numbers.</p>
+<p>We will publish the data as soon as we can work out the particular kinks of how to do so.</p>
+<p>https://t.co/34KNJncZvl https://t.co/VRHsQfpjSn</p>
+
+    </div>
+  
+    <h2>May 27, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Arizona, North Carolina, Minnesota, and Wisconsin are all seeing hospitalizations rising to new levels.</p>
+<p>Not all states report this data, and we wish that they did. https://t.co/ql49O8FtuK</p>
+
+    </div>
+  
+    <h2>May 30, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>In addition to the states we've mentioned recently, Alabama, Arizona, California, and Wisconsin are worth keeping eyes on.</p>
+<p>California and Arizona had new highs for cases today. Alabama and Wisconsin set highs yesterday. https://t.co/M2JTnIfchI</p>
+
+    </div>
+  
+    <h2>June 4, 2020, 3:01 PM PDT</h2>
+    <div>
+      <p>This is what a &quot;patchwork pandemic&quot; (as @edyong209 called it) looks like.</p>
+<p>The regions vary, as do the states. While New York is seeing its best days since the very beginning, Arizona is seeing its worst. https://t.co/KJf0Mn9S18</p>
+
+    </div>
+  
+    <h2>June 5, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Arizona cases and hospitalizations continue to move upward. The positive test rate is also increasing.</p>
+<p>The same is true in South Carolina, North Carolina, Arkansas, and Kentucky. https://t.co/7PcHgg1gvW</p>
+
+    </div>
+  
+    <h2>June 7, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Only 20k new cases were reported today. 24 states reported more than 300 new cases today.</p>
+<p>New York and New Jersey tested more than 102k people combined, and only got ~1k positives.</p>
+<p>On the other end of the spectrum, Arizona tested ~10k people and confirmed 1,438 new cases. https://t.co/q7b8gj50V2</p>
+
+    </div>
+  
+    <h2>June 9, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>Arizona put out a somewhat encouraging set of numbers. Unclear if this is the beginning of a real downward trend or just some bumps on an upward trajectory. https://t.co/1Dcwe1qEra</p>
+
+    </div>
+  
+    <h2>June 10, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>Arizona and South Carolina appear to have the most dire situations right now.</p>
+<p>Most places in the northeast now have test positivity rates down under 3%. https://t.co/PBMxJBMubN</p>
+
+    </div>
+  
+    <h2>June 11, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We also just a number of new cases for Texas—1,826—in line with the state's recent growing numbers.</p>
+<p>Arizona remains a trouble spot.</p>
+<p>Alabama, which is experiencing an increase in cases, recently began reporting hospitalization. https://t.co/GtgfKkinE8</p>
+
+    </div>
+  
+    <h2>June 12, 2020, 3:05 PM PDT</h2>
+    <div>
+      <p>States reported over 23k new cases today. That's within the range we've seen over the last month.</p>
+<p>Here are the states that reported over 400 new cases. Arkansas, Arizona, and North Carolina reported new one-day highs. https://t.co/UeFFtjzdwB</p>
+
+    </div>
+  
+    <h2>June 12, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Here are four states—Texas, Arizona, North Carolina, and Arkansas—that had worrisome numbers today.</p>
+<p>(Arizona's data dashboard crashed today, so we don't have a full set of their numbers. But we were able to capture these two metrics.) https://t.co/NDEfzp9cjn</p>
+
+    </div>
+  
+    <h2>June 13, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>We are seeing new hospitalization highs in Texas, Arizona, and North Carolina. We're showing Louisiana here as well for context, since it had an early COVID-19 outbreak. https://t.co/BvbW8DYEyt</p>
+
+    </div>
+  
+    <h2>June 14, 2020, 2:55 PM PDT</h2>
+    <div>
+      <p>Four states we've been watching closely—Texas, Arizona, North Carolina, and South Carolina—have not seen a leveling off yet in this new round of outbreaks. https://t.co/P0Ht5xsI7P</p>
+
+    </div>
+  
+    <h2>June 16, 2020, 3:16 PM PDT</h2>
+    <div>
+      <p>Arizona reported 45% more cases today than on any previous single day. https://t.co/7kS4rM01l6</p>
+
+    </div>
+  
+    <h2>June 16, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Here are the five states with the greatest change in the number of people currently hospitalized.</p>
+<p>A rising Arizona is about to cross a falling New York. https://t.co/ny80q6Ei5M</p>
+
+    </div>
+  
+    <h2>June 17, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>The northeast has bottomed out, while the south and west are growing.</p>
+<p>For the last two days, the state of Arizona alone has reported more new cases than the whole northeast. This was unimaginable even a few weeks ago. https://t.co/zkqM3oExGh</p>
+
+    </div>
+  
+    <h2>June 17, 2020, 3:21 PM PDT</h2>
+    <div>
+      <p>Hospitalizations reflect the same trends. Arizona now has more people hospitalized than NY.</p>
+<p>(Note: Florida might be on the right-hand list, but it does not provide this metric.) https://t.co/6iAzGanQ6J</p>
+
+    </div>
+  
+    <h2>June 18, 2020, 3:20 PM PDT</h2>
+    <div>
+      <p>Here are 5 states we looked at closely today.</p>
+<p>Cases and hospitalizations are tracking closely in TX, AZ, and the Carolinas, but not in California. California's positive rate also has not gone up. https://t.co/xqOUjRWpbo</p>
+
+    </div>
+  
+    <h2>June 20, 2020, 3:34 PM PDT</h2>
+    <div>
+      <p>Since last Sunday, 20% of the reported tests in Arizona have come back positive.</p>
+<p>Right next door in New Mexico, only 2.5% of tests are coming back positive. https://t.co/CnAuYgvpUD</p>
+
+    </div>
+  
+    <h2>June 23, 2020, 3:22 PM PDT</h2>
+    <div>
+      <p>This map speaks for itself.</p>
+<p>On a per-capita basis, the biggest increase occurred in Arizona. https://t.co/TNGDevgN3j</p>
+
+    </div>
+  
+    <h2>June 23, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>Arizona reported a record number of cases and current hospitalizations today.</p>
+<p>The signal is not entirely clear yet—and the absolute numbers are small—but deaths in the state have been generally rising since May 27. https://t.co/zfhgPcHW97</p>
+
+    </div>
+  
+    <h2>June 24, 2020, 4:02 PM PDT</h2>
+    <div>
+      <p>Here's the continuing best news: deaths have not turned upward.</p>
+<p>And the death numbers today and yesterday have been too high as they reflect Delaware (yesterday) and Arizona (today) rectifying undercounting of COVID-19 deaths from previous days. https://t.co/lvzuaLEs18</p>
+
+    </div>
+  
+    <h2>June 26, 2020, 3:32 PM PDT</h2>
+    <div>
+      <p>This chart looks at per-capita testing rates and the percent positive. Arizona is all by itself, but South Carolina and Florida are moving rightward. https://t.co/H1Yl7VxzIA</p>
+
+    </div>
+  
+    <h2>June 27, 2020, 3:00 PM PDT</h2>
+    <div>
+      <p>Here's a look at the weekly situation since April in Arizona, the state with the most intense outbreak right now. https://t.co/t1gIKzDHbZ</p>
+
+    </div>
+  
+    <h2>June 28, 2020, 4:33 PM PDT</h2>
+    <div>
+      <p>Our apologies. The first Arizona chart we posted had a problem. The average deaths have risen, but not by as much as the chart showed. We've deleted the previous chart. This one is correct.</p>
+<p>We regret the error. https://t.co/zeAoYcHrsO</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:33 PM PDT</h2>
+    <div>
+      <p>States reported ~36k new cases today. States typically report the fewest cases on Mondays (red in the chart) because of a weekend lag effect.</p>
+<p>For example, Arizona reported 600 cases today after four straight days over 3000 cases. https://t.co/PUMWCzmlnI</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:50 PM PDT</h2>
+    <div>
+      <p>While we’re in the Monday lull in data reporting, let’s look at a couple of concerning states outside AZ-CA-FL-TX outbreaks.</p>
+<p>Missouri’s percent positive rate has gone from 4.3% the week of June 14 to 6.5% this week, with hospitalizations rising. https://t.co/ahvI7Gdn7W</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:30 PM PDT</h2>
+    <div>
+      <p>Arizona, California, Florida, and Texas are still at the center of the current surge of new cases. Hospitalization for AZ, CA, and TX all climbing. We expect Florida's data has a similar shape. https://t.co/8G9RRQta6j</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 3:42 PM PDT</h2>
+    <div>
+      <p>Arizona’s update catches some reporting backlog — a common Tuesday data effect across many states. The 7-day average is often more useful to watch.</p>
+<p>What's clear: The state’s surge has swamped local testing capacity. This week, almost a quarter of tests have come back positive. https://t.co/cdft4OzS4E</p>
+
+    </div>
+  
+    <h2>June 30, 2020, 4:06 PM PDT</h2>
+    <div>
+      <p>A second optimistic point: New Mexico looks to be in  good shape, despite the huge outbreaks in neighboring states Arizona and Texas. https://t.co/lZDFiyxIyN</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:43 PM PDT</h2>
+    <div>
+      <p>Several big states reported record numbers today: Arizona, California, Georgia, North Carolina, Texas. https://t.co/ZKTM496d2T</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 4:53 PM PDT</h2>
+    <div>
+      <p>In Arizona, cases and hospitalizations continue to spike. Over a quarter of all coronavirus tests now come back positive. Death data has been jumpy from day to day but the rolling average is rising, and the state reported a record number of deaths today. https://t.co/tUYR10XMu7</p>
+
+    </div>
+  
+    <h2>July 1, 2020, 5:05 PM PDT</h2>
+    <div>
+      <p>In Arizona, cases and hospitalizations continue to spike. Over a quarter of all coronavirus tests now come back positive. Death data has been jumpy from day to day but the rolling average is rising, and the state reported a record number of deaths today. https://t.co/P41qAXnwf3</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>Before we get to the daily numbers, here's our weekly look at the numbers.</p>
+<p>One topline: While Arizona, California, Florida, and Texas are dominating the headlines, many other areas also have serious problems.</p>
+<p>https://t.co/2eZOamhZla https://t.co/Qu70PjuDNO</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:02 PM PDT</h2>
+    <div>
+      <p>That said, the dynamics of COVID-19 deaths in this second surge remain complicated.</p>
+<p>Deaths are not falling everywhere. In Arizona, for example, daily average deaths have tripled since June. https://t.co/8VQEnFCUKR</p>
+
+    </div>
+  
+    <h2>July 2, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>It should be obvious now, but the large numbers of new cases in these states are not just due to testing. Florida and Georgia have positivity rates well beyond 10%.</p>
+<p>Only Arizona has a higher positivity rate than Florida right now. https://t.co/ovxcUPtGpp</p>
+
+    </div>
+  
+    <h2>July 4, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>Arizona, Florida, and South Carolina remain the three states with the most troubling data. https://t.co/X7SgEXu0vq</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:44 PM PDT</h2>
+    <div>
+      <p>There’s been a lot of discussions about deaths continuing to trend down as cases have surged. This chart provides a partial answer to what’s been happening. The falling numbers in the NE were offsetting rising deaths in AZ, TX, FL. https://t.co/hmZkhZXTPS</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:48 PM PDT</h2>
+    <div>
+      <p>This is the same pattern we saw for cases and hospitalizations over the last couple months. Compare Arizona, New Jersey, New York, and Texas. https://t.co/Uz6d2aQ9LU</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:49 PM PDT</h2>
+    <div>
+      <p>Sadly, cases are rising in many states beyond Florida, Texas, and Arizona. 23 states have seen their highest day of cases in the past 2 weeks. https://t.co/C5SC2UYLjg</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:58 PM PDT</h2>
+    <div>
+      <p>Although new cases continue to grow, testing providers are being overwhelmed. Turnaround times are lengthening; the supply chain is stressed. In a place like Arizona, this may mean that we won’t see rapid increases in cases because testing cannot scale with the outbreak. https://t.co/lTMW1VLGWe</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:18 PM PDT</h2>
+    <div>
+      <p>Standby for quick update to the Arizona data: extra digit slipped in to their total test number.</p>
+
+    </div>
+  
+    <h2>July 9, 2020, 3:58 PM PDT</h2>
+    <div>
+      <p>Arizona is the poster child for this problem. Even as the outbreak continues there and hospitalizations and deaths rise, the 7-day average for tests has fallen in July. https://t.co/kYRQ2WgObb</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:09 PM PDT</h2>
+    <div>
+      <p>The upward trend holds for death data. Though the data is less smooth, between June 10 and July 10, the seven-day average of deaths reported by Arizona, California, Florida, South Carolina, and Texas has almost doubled. https://t.co/POzXF5GJG7</p>
+
+    </div>
+  
+    <h2>July 10, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>At the peak in New York on April 15, that state hit 595 cases per million.</p>
+<p>Arizona (580) <em>and</em> Louisiana (568) approached that number today. https://t.co/MxvPqIC43k</p>
+
+    </div>
+  
+    <h2>July 11, 2020, 3:24 PM PDT</h2>
+    <div>
+      <p>While most attention has been focused on the big outbreaks across the southeast and in Arizona, there are several states outside the region that look to be on the verge of seeing much higher levels of transmission. https://t.co/sOI8fbPtoV</p>
+
+    </div>
+  
+    <h2>July 12, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>Florida didn't just break the record for reported cases. It also shattered the mark for cases per million population. New York, at peak, hit 595. Today, Florida reported 712 cases per million. Arkansas also entered the 500+ tier, where we've only seen FL, AZ, and LA. https://t.co/KeQmHMA9as</p>
+
+    </div>
+  
+    <h2>July 13, 2020, 2:54 PM PDT</h2>
+    <div>
+      <p>The weekend lag effect is pronounced in death reporting. For example, last week, CA reported 6 deaths on Monday, then 111 on Tues. AZ reported 1 death Mon, then 117 on Tues.</p>
+<p>Today, AZ reported 8 deaths. CA, 23.</p>
+<p>All these data are the outputs of complicated, human processes. https://t.co/WkN4aqCiGT</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:13 PM PDT</h2>
+    <div>
+      <p>Six states saw a rise of over 100 (FL, CA, TX, AZ, GA, TN) in their number of currently hospitalized COVID-19 patients. All six set new record highs for their states. https://t.co/1qvm9AEdMh</p>
+
+    </div>
+  
+    <h2>July 14, 2020, 3:26 PM PDT</h2>
+    <div>
+      <p>Arizona’s data is muddled. Testing capacity is maxed, which affects the case count, as you can see by the similarity in the shape of those charts. But looking at other metrics, today the state reported record hospitalizations and its 2nd-highest number of deaths. https://t.co/b6DHtPoF0p</p>
+
+    </div>
+  
+    <h2>July 18, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>Another place where the reported numbers are likely lower than the reality is AZ, which continues to have reporting problems, including some dashboard trouble that prevented us from compiling a complete update today.</p>
+<p>https://t.co/OGTjaMHqLB</p>
+
+    </div>
+  
+    <h2>July 21, 2020, 3:06 PM PDT</h2>
+    <div>
+      <p>Arizona's cases are declining, and although testing has also fallen, the state's current hospitalization numbers are also down, which is unequivocally good. Still: the state’s two highest death tolls are Saturday (147) and today (134). https://t.co/34vOeRtNKm</p>
+
+    </div>
+  
+    <h2>July 23, 2020, 3:48 PM PDT</h2>
+    <div>
+      <p>We noted Arizona's falling case and completed test counts yesterday. It's worth recalling that on July 9, Governor Ducey said that his state would be doing 35k tests per day by the end of July.</p>
+<p>7-Day Rolling Average:</p>
+<p>Tests reported, 7/9: 13,175
+Tests reported, 7/23: 10,492 https://t.co/7o5figd9Lf</p>
+
+    </div>
+  
+    <h2>July 29, 2020, 3:44 PM PDT</h2>
+    <div>
+      <p>The hotspot states remain hotspots, even as their cases plateau a little or even decline. However, we’re now seeing more deaths reported in these states. Today, 773 deaths were reported by Arizona, California, Florida, and Texas alone. https://t.co/wv3NWzsJxk</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:12 PM PDT</h2>
+    <div>
+      <p>But there is good news to report as well. The 7-day new-case average is declining in all four of our major hotspot states: AZ, CA, FL, and TX. https://t.co/6c3MJLCLLl</p>
+
+    </div>
+  
+    <h2>September 1, 2020, 2:08 PM PDT</h2>
+    <div>
+      <p>Arizona and Missouri report only facilities with outbreaks, not actual cases, deaths, or facility names—this appears transparent, but doesn’t convey COVID-19’s true impact. County health depts (Maricopa, AZ and St. Louis, MO) provide both states’ most reliable source of LTC data.</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 4:54 PM PST</h2>
+    <div>
+      <p>Zooming into the state level, more than 10 states broke case records today: AK, AR, AZ, DE, IN, MA, ME, NJ, PA, RI, and VT. Note: AZ had a higher count on Dec. 1, but it was a data backlog. https://t.co/ao6T6EQxiH</p>
+
+    </div>
+  
+    <h2>December 11, 2020, 4:33 PM PST</h2>
+    <div>
+      <p>NV leads the nation in currently hospitalized patients per million people, followed by SD and AZ, which is close to its own summer peak. https://t.co/uD0hk69cJK</p>
+
+    </div>
+  
+    <h2>December 14, 2020, 4:42 PM PST</h2>
+    <div>
+      <p>AZ and NV have the highest hospitalizations per million people in the country. Current hospitalizations in AZ have surpassed the state's peak in the summer. https://t.co/pGEhaciSJ9</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 3:26 PM PST</h2>
+    <div>
+      <p>Our numbers, while drastic, are an undercount of COVID-19’s severity in long-term-care facilities. Arizona, Missouri, and New York provide incomplete LTC data, and are the largest contributors to the nation’s LTC undercount. https://t.co/bOWkmNiKjg</p>
+
+    </div>
+  
+    <h2>December 16, 2020, 4:33 PM PST</h2>
+    <div>
+      <p>The 7-day average for deaths is rising in 23 states across the US.  There are 16 states reporting higher per-million deaths than the summer peak in AZ. https://t.co/hJgDH4deVF</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 5:28 PM PST</h2>
+    <div>
+      <p>NV and AZ currently have the highest hospitalizations per million people in the country. https://t.co/pkiYjesNc3</p>
+
+    </div>
+  
+    <h2>December 18, 2020, 5:35 PM PST</h2>
+    <div>
+      <p>Per capita cases are growing at an alarming rate in AZ again. There are 1,049 new COVID-19 cases per million people in the state. In CA, the 7-day average for new cases per million people is quickly approaching 1,000. https://t.co/AqKmJOvMj6</p>
+
+    </div>
+  
+    <h2>January 7, 2021, 5:32 PM PST</h2>
+    <div>
+      <p>But some small states have severe problems, too. Alabama, Arizona, and Nevada have very high hospitalization rates per capita. https://t.co/Sz9H82Boz8</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 5:03 PM PST</h2>
+    <div>
+      <p>Hospitalizations in CA and AZ are increasing at an alarming rate. AZ has far surpassed their summer surge. https://t.co/vpqxOx3HDU</p>
+
+    </div>
+  
+    <h2>January 14, 2021, 4:29 PM PST</h2>
+    <div>
+      <p>Our eyes are on 5 states this week: AL, AZ, CA, GA, and FL―where surges in cases, hospitalizations, and deaths are steadily growing. Alarmingly, AZ currently has the worst per-capita new case numbers in the world.</p>
+
+    </div>
+  
+    <h2>January 21, 2021, 3:31 PM PST</h2>
+    <div>
+      <p>Correction: Earlier today, we tweeted that Indigenous people in AZ are 3x more likely to have been hospitalized with COVID-19 than their white neighbors. The correct number is 2.4x. We apologize for the error. https://t.co/FclsH9NJeo</p>
+
+    </div>
+  
+    <h2>February 5, 2021, 4:54 PM PST</h2>
+    <div>
+      <p>Only New York and Arizona have more than 400 people hospitalized with COVID-19 per million residents. A month ago, 19 states exceeded that level. https://t.co/6IPpFnUiMH</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

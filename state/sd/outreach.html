@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>South Dakota Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">South Dakota</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">South Dakota</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>December 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>As we've dug into the data, we're trying to make sense of this gap between the sums of the Trends chart and the Total provided on the SD Overview tab. Our team is wondering about the factors in that gap. Is it just that the topline has antigens and the PCR Total tests does not? Or are there other factors we can't see?</p>
+<p>If it's the former, do you think it would be possible to post topline PCR and antigen numbers somewhere (or in a downloadable file) that would allow us to keep the historical time series matched up with what we can collect going forward?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes that is correct, I will see what I can do.</p>
+
+        </div>
+      
+    
+  
+    <h2>December 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>SD reached out to us about their data entry error and data reporting by other states.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>December 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The data has been updated today there was an error yesterday we found that has been fixed on the new positivity rate graph that holds the historical pcr test data.Also wanted to check are there any differences among states and the days data gets reported? Are any states not updating daily?</p>
+
+        </div>
+      
+    
+  
+    <h2>October 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We asked for testing specimens data set.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>November 6, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I have brought it up with the staff and I do have something in the works. Unfortunately though they do want this on lower priority just due to the number of daily cases we are dealing with currently. Will let you know when this gets updated, I am hoping we can get something pushed out in a few weeks.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 22, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Regarding the low rate of unknowns on race/ethnicity, we'd love to have more granular info about the practices that have helped SD?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 22, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We do ongoing training with our DIS and continual data quality monitoring to encourage proper entry into all fields. Additionally, as our ELR reports get set up there is a thorough amount of validating data entry during the onboarding process.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 22, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>As you continue to update your state dashboard, are you planning to begin releasing data on cases/deaths linked to LTCs &amp; nursing homes?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 22, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, that is in draft form currently just cases by industry.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 22, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does the figure for &quot;total negative cases&quot; refer to the number of people who have tested negative for the virus, or to the number of lab specimens that have returned a negative result?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 22, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Currently our negative cases is person specific. Although we plan to incorporate all tests as we start to report positivity test rate ratio, also in draft.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>When will SD begin reporting COVID-19 deaths broken out by race and ethnicity?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our data and informatics team is currently working on this enhancement.</p>
+
+        </div>
+      
+        <h4>June 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>This will be rolling out in the next few weeks, we do not have a set date yet but it is being developed.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can you share any insight as to what accounts for the 10% &quot;unknowns&quot; being reported in SD?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our team is making every effort when following up with positive cases to ensure this information is collected.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Will you be posting antibody test numbers on your state COVID dashboard?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>If you are already tracking antibody tests, are you combining PCR and antibody test #s in your total test # reporting?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We plan to list PCR and antibody test results separately on our website.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

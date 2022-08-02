@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Rhode Island Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Rhode Island</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Rhode Island</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>December 26, 2020, 9:13 AM PST</td>
+          <td>1029</td>
+          <td>
+            <a href="#issue-1029">[RI] Clear confirmed cases</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 13, 2020, 11:27 AM PST</td>
+          <td>1011</td>
+          <td>
+            <a href="#issue-1011">[RI] Clear Positive Cases (PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 20, 2020, 2:17 PM PDT</td>
+          <td>781</td>
+          <td>
+            <a href="#issue-781">[RI] Incorrect value entered on 8/19 for Negative </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 19, 2020, 9:25 AM PDT</td>
+          <td>778</td>
+          <td>
+            <a href="#issue-778">[RI] Bad data on website for 3/2 total tests</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 14, 2020, 11:23 AM PDT</td>
+          <td>764</td>
+          <td>
+            <a href="#issue-764">[RI] backfill new encounters data to populate that column</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 8:15 PM PDT</td>
+          <td>697</td>
+          <td>
+            <a href="#issue-697">[RI] Revisit time series data, especially stale weekend numbers</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 8, 2020, 5:02 PM PDT</td>
+          <td>591</td>
+          <td>
+            <a href="#issue-591">[RI] 7/8 now provides tests &amp; negatives in people in addition to specimens. Backfill of full data series</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 6:29 AM PDT</td>
+          <td>523</td>
+          <td>
+            <a href="#issue-523">[RI] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 24, 2020, 9:08 PM PDT</td>
+          <td>286</td>
+          <td>
+            <a href="#issue-286">[States Daily CSV] RI positiveIncrease is negative for 2020-03-07</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 20, 2020, 5:34 PM PDT</td>
+          <td>241</td>
+          <td>
+            <a href="#issue-241">[RI] 4/19 Data inconsistency</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 3, 2020, 7:32 AM PDT</td>
+          <td>154</td>
+          <td>
+            <a href="#issue-154">CA, NY &amp; RI inicuCumulative missing</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1029">#1029: [RI] Clear confirmed cases</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1029</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 26, 2020, 9:13 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1029" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: RI</p>
+<p><strong>Describe the problem</strong>
+Quote from our outreach to RI:
+&quot;RI reports antigen and PCR tests as case/positive test counts and both are included in total test counts. &quot;
+We should not be capturing these cases in confirmed.</p>
+<p><strong>Link to data source</strong>
+N/A</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-751376667">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 26, 2020, 9:20 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1029#issuecomment-751376667" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5743438/Changes.10.txt">Changes (10).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1011">#1011: [RI] Clear Positive Cases (PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1011</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on December 13, 2020, 11:27 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1011" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: RI</p>
+<p><strong>Describe the problem</strong>
+According to outreach 10/22, RI includes antigen positive cases in its case counts. We should clear Positive Cases (PCR).</p>
+<p><strong>Link to data source</strong>
+N/A</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-751861874">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 28, 2020, 12:57 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1011#issuecomment-751861874" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-752604499">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on December 30, 2020, 5:31 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1011#issuecomment-752604499" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>#1029</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-781">#781: [RI] Incorrect value entered on 8/19 for Negative </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            781</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on August 20, 2020, 2:17 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/781" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: RI</p>
+<p>Problem: Value entered on 8/19 was incorrect updating to value provided from state.</p>
+<p>Upon further research it turned out the value did match what the state provided on 8/19. The value was reverted to match that provided by the state.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+    
+  
+
+    <h2 id="issue-778">#778: [RI] Bad data on website for 3/2 total tests</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            778</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on August 19, 2020, 9:25 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/778" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: RI</p>
+<p><strong>Describe the problem</strong>
+The data for total tests in Rhode Island on 3/2 is clearly mistaken on both the website and in the API:
+<img src="https://user-images.githubusercontent.com/404503/90662903-f96c3e80-e216-11ea-9c77-9a24116c3bb8.png" alt="image"></p>
+<p>In the source data, there's a blank cell on 3/1 that may be causing the issue:
+<img src="https://user-images.githubusercontent.com/404503/90662956-0be67800-e217-11ea-952e-6091544e1265.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-676552692">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 19, 2020, 10:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/778#issuecomment-676552692" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixed by <strong>@muamichali</strong></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-764">#764: [RI] backfill new encounters data to populate that column</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            764</p>
+          <p>
+            <strong>theomichel</strong> opened this issue on August 14, 2020, 11:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/764" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> TBD, likely 8/17
+<strong>Overview:</strong> https://covid-tracking.slack.com/archives/C014K4D6R26/p1597330970130300
+<strong>Potential challenges:</strong> Need to figure out what to do with the existing total tests PCR data/column</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-675196836">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 17, 2020, 6:26 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/764#issuecomment-675196836" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ol>
+<li>We populated the full time series of total test encounters based on the data from 8/12-8/17 in the Trends tab in the spreadsheet RI publishes.</li>
+<li>We removed the values of <code>Total Tests (PCR)</code> after 8/12 because RI changed the methodology of how they calculate this value on 8/12 and it now reflects test encounters.</li>
+</ol>
+<p><a href="../../assets/github/files/5087621/Logs.-.Copy.of.RI.Test.Encounters.20200817.pdf">Logs - Copy of RI Test Encounters 20200817.pdf</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-675203021">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 17, 2020, 6:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/764#issuecomment-675203021" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/62236447/90461299-c01ebc00-e0ba-11ea-8b43-883946832258.png" alt="Screenshot from 2020-08-17 18-51-19">
+Dating:
+RI posts daily numbers on the dashboard + trends in a Google spreadsheet.
+Earlier today, we filled the new <code>Test Encounters</code> column, dating it differently than the rest of the data for RI.
+During pub-shift, every day, we report the numbers from the previous day. When we backfill, we should continue this reporting scheme.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-697">#697: [RI] Revisit time series data, especially stale weekend numbers</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            697</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on July 29, 2020, 8:15 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Rhode Island publishes a Google Spreadsheet with full time series for all the metrics we capture. We need to check whether we miss weekend updates because the dashboard is frozen, and backfill from RI's data if this is the case</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-671547685">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 10, 2020, 12:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-671547685" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We concluded that we aren't missing cases in the cumulative counts, but our graphs are ugly with giant dips on weekends followed by spikes on Mondays, because RI doesn't update their dashboard on the weekends.</p>
+<p>We decided to go ahead and do a very targeted weekly backfill, where every Monday we backfill in RI's cumulative totals for Saturday and Sunday from their google sheet of data. This will smooth the graph somewhat, although it'll leave a small spike on saturday.</p>
+<p>The likely reason for the saturday spike is that the monday spikes were actually due to 2 factors:</p>
+<ol>
+<li>the saturday+sunday cases were showing up on Monday</li>
+<li>the cases from other prior days, that happened to arrive at the website on Monday, would also show up on Monday.</li>
+</ol>
+<p>We’ve solved #1, but we have moved #2 to showing up on Saturday instead of Monday.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671607592">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 10, 2020, 2:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-671607592" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/17862035/89835007-bb856100-db18-11ea-97a1-bc28858bf764.png" alt="image">The bold cells are the values that we changed. (<strong>@space-buzzer</strong> made the change)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673037126">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 12, 2020, 11:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-673037126" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is now a weekly task and we (<strong>@space-buzzer</strong> <strong>@muamichali</strong> and I) agreed that we'll use a slack shiftbot for the weekly reminder. So now the work for this issue is to create and train the shift bot. : )</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673049908">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on August 12, 2020, 11:53 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-673049908" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I created a workflow for mondays at 11am with the RI reminder. I don’t see a way to manually trigger it now to test it, so I'm moving this card to &quot;needs verification&quot; and set myself a separate reminder for next Monday.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-675127764">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 17, 2020, 2:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-675127764" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Update 2020-08-17
+<img src="../../assets/github/images/62236447/90446822-e92d5580-e096-11ea-9bf9-f21d01a16706.png" alt="Screenshot from 2020-08-17 14-33-17">
+<img src="../../assets/github/images/62236447/90446824-e9c5ec00-e096-11ea-88d0-0a38fc41af52.png" alt="Screenshot from 2020-08-17 14-33-42"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-675202584">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 17, 2020, 6:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-675202584" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We shifted the days we filled by 1 day, to be compatible with how pub-shift is capturing the numbers.
+Every day, during pub shift, we capture numbers for the previous day (and they're added to todays count). For weekend update, we should continue using the same strategy, otherwise, we report the &quot;Sunday&quot; number twice -- for Sunday and Monday</p>
+<p>To remedy it, weekend update will behave exactly like pub-shift wrt day attribution</p>
+<p><img src="../../assets/github/images/62236447/90461063-3373fe00-e0ba-11ea-87e9-1bf1735dd776.png" alt="Screenshot from 2020-08-17 18-38-59">
+<img src="../../assets/github/images/62236447/90461068-340c9480-e0ba-11ea-9a06-a14f0d7452f1.png" alt="Screenshot from 2020-08-17 18-42-25"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-683978273">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on August 31, 2020, 12:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-683978273" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Another week, another update
+<img src="../../assets/github/images/62236447/91757829-d67d4b00-eb83-11ea-873d-85e4786adcd7.png" alt="Screenshot from 2020-08-31 12-15-06">
+<img src="../../assets/github/images/62236447/91757831-d715e180-eb83-11ea-8db0-23cdf094726f.png" alt="Screenshot from 2020-08-31 12-15-36"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-689006982">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 8, 2020, 9:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-689006982" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Laber day weekend
+<img src="../../assets/github/images/62236447/92505395-e1a22d80-f1b8-11ea-9c6f-cc894c5097cf.png" alt="Screenshot from 2020-09-08 09-49-21">
+<img src="../../assets/github/images/62236447/92505400-e23ac400-f1b8-11ea-9f3c-2ddc0c15024e.png" alt="Screenshot from 2020-09-08 09-50-29"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-692236591">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on September 14, 2020, 11:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-692236591" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Weekend fill for 9/12 and 9/13:</p>
+<p>Rows edited: 2</p>
+<p>RI 2020-09-13
+positive: 23098 (was 22905)
+negative: 284385 (was 280118)
+hospitalizedCumulative: 2644 (was 2620)
+inIcuCurrently: 7 (was 8)
+onVentilatorCurrently: 4 (was 3)
+recovered: 2223 (was 2201)
+death: 1075 (was 1071)
+positiveTestsViral: 32660 (was 32589)
+negativeTestsViral: 600850 (was 583094)
+positiveCasesViral: 23098 (was 22905)
+totalTestEncountersViral: 633510 (was 615683)
+totalTestsPeopleViral: 307483 (was 303023)</p>
+<p>RI 2020-09-12
+positive: 22999 (was 22905)
+negative: 283137 (was 280118)
+hospitalizedCumulative: 2639 (was 2620)
+onVentilatorCurrently: 4 (was 3)
+recovered: 2220 (was 2201)
+death: 1072 (was 1071)
+positiveTestsViral: 32558 (was 32589)
+negativeTestsViral: 595533 (was 583094)
+positiveCasesViral: 22999 (was 22905)
+totalTestEncountersViral: 628091 (was 615683)
+totalTestsPeopleViral: 306136 (was 303023)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-696264825">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 21, 2020, 10:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-696264825" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>2020-09-21
+All done!</p>
+<p><img src="../../assets/github/images/62236447/93801319-aa8b3d80-fbf6-11ea-8cfa-415fff2d7875.png" alt="Screenshot from 2020-09-21 10-31-44">
+<img src="../../assets/github/images/62236447/93801322-ab23d400-fbf6-11ea-8499-05bfce5bb03f.png" alt="Screenshot from 2020-09-21 10-35-09"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-812551987">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 2, 2021, 7:22 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/697#issuecomment-812551987" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@space-buzzer</strong> <strong>@theomichel</strong> I think this was solved with RI bot! Unless we need to log those edits here, I'm going to close this issue.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-591">#591: [RI] 7/8 now provides tests &amp; negatives in people in addition to specimens. Backfill of full data series</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            591</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on July 8, 2020, 5:02 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/591" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We can backfill specimens information for RI and also update the way &quot;Negative&quot;s are reported</p>
+<p>Link to datasource:
+https://docs.google.com/spreadsheets/d/1c2QrNMz8pIbYEKzMJL7Uh2dtThOJa2j1sSMwiDo5Gz4/edit#gid=1592746937</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-655843301">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 8, 2020, 6:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/591#issuecomment-655843301" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/4893994/ri_backfill.zip">ri_backfill.zip</a></p>
+<p>Updated the following columns:</p>
+<ul>
+<li>Specimens:
+<ul>
+<li><code>totalTestsViral</code></li>
+<li><code>positiveTestsViral</code></li>
+<li><code>negativeTestsViral</code></li>
+</ul>
+</li>
+<li>People:
+<ul>
+<li><code>positiveCasesViral</code></li>
+<li><code>totalTestResults</code></li>
+<li><code>positive</code></li>
+<li><code>negative</code></li>
+</ul>
+</li>
+</ul>
+<p>The attached file shows the before/after values.</p>
+<p><em>Notice</em> RI is now publishing full data about specimens (total number of tests, with a breakdown to positive and negative results).
+Additionally, RI publishes unique people tested, including people with positive and negative results. This is now used as the source for <code>positiveCasesViral</code>, <code>positive</code> and <code>negative</code> API fields.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655853739">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 8, 2020, 7:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/591#issuecomment-655853739" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/1749380/86989207-e8d09f00-c167-11ea-93e3-6dce910c9d15.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-523">#523: [RI] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            523</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on June 25, 2020, 6:29 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/523" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for RI. However, RI’s death values represent lumped probable and confirmed figures, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649852775">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 3:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/523#issuecomment-649852775" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Confirmed the data matched &quot;Deaths&quot;, then removed &quot;Deaths (Confirmed)&quot; for RI between today and 5/12.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649896208">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/523#issuecomment-649896208" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated RI's source note for Deaths (confirmed) to Not Provided and explained in RI private notes</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650175660">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on June 26, 2020, 6:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/523#issuecomment-650175660" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'd by DZL - 6/26 9:24</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-286">#286: [States Daily CSV] RI positiveIncrease is negative for 2020-03-07</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            286</p>
+          <p>
+            <strong>acobolew</strong> opened this issue on April 24, 2020, 9:08 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/286" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>RI has positiveIncrease  &lt; 0 on 2020-03-07</p>
+<blockquote>
+<p>covidtracking.dt &lt;- fread('https://covidtracking.com/api/v1/states/daily.csv')
+covidtracking.dt[, date := as.Date(as.character(date), '%Y%m%d')]
+covidtracking.dt[order(date, decreasing=FALSE)][ , .(date, state, positive, positiveIncrease) ][positiveIncrease &lt; 0]
+date state positive positiveIncrease
+1: 2020-03-07    RI        2               -1
+2: 2020-04-20    GU      133               -3
+3: 2020-04-22    HI      582               -2
+4: 2020-04-22    PR      915             -383</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626270732">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 9, 2020, 9:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/286#issuecomment-626270732" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631234771">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 19, 2020, 9:51 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/286#issuecomment-631234771" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-241">#241: [RI] 4/19 Data inconsistency</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            241</p>
+          <p>
+            <strong>iservin</strong> opened this issue on April 20, 2020, 5:34 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/241" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>It appears today RI DOH retroactively changed their positive test numbers for Sunday 4/19.</p>
+<p>They had originally published 4,706 positive tests as a total as of Sunday. Today the historical numbers for that date now shows 4,751 positive tests.</p>
+<p>This is why the calculated new positive case number 384 is out of sync with the DOH's published number of 339.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-624398336">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 5, 2020, 6:33 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/241#issuecomment-624398336" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-624719803">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on May 6, 2020, 8:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/241#issuecomment-624719803" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>RI DOH's day by day historical data: https://docs.google.com/spreadsheets/d/1n-zMS9Al94CPj_Tc3K7Adin-tN9x1RSjjx2UzJ4SV7Q/edit#gid=1998687529</p>
+<p>There are noticeable revisions upwards between our data/what RI was reporting in the past vs. what RI reports now in the spreadsheet for 4/18-4/23. Updating pos, cur hosp, cum hosp, and deaths for those days (negs were also reported but were the same as our data).
+Our data before:
+<img src="../../assets/github/images/15933271/81194601-d761ef80-8f8a-11ea-9c6c-bef0aec226a2.png" alt="RI data 4:18-4:23 before2">
+Our data after:
+<img src="../../assets/github/images/15933271/81194618-dd57d080-8f8a-11ea-9557-f1f54c5a5efc.png" alt="RI data 4:18-4:23 after">
+RI state data as of 5/6/2020:
+<img src="../../assets/github/images/15933271/81195116-6bcc5200-8f8b-11ea-8f7d-f97043e51031.png" alt="RI State data"></p>
+<p>In addition, we noticed there was a one-day lag for positives for all the RI data, so changed the timestamps on the last updated field to 00:00 the day of the check for each day of data.
+Before:
+<img src="../../assets/github/images/15933271/81195031-50614700-8f8b-11ea-9b46-2efc839fc4a6.png" alt="before last updated RI 1">
+<img src="../../assets/github/images/15933271/81195033-50614700-8f8b-11ea-8987-d3c2d1d9f4c6.png" alt="before last updated RI 2">
+After:
+<img src="../../assets/github/images/15933271/81195842-59064d00-8f8c-11ea-8b64-91a9409a38a4.png" alt="last update after">
+<img src="../../assets/github/images/15933271/81195846-59064d00-8f8c-11ea-8a1f-254a2c368baa.png" alt="last update after2"></p>
+<p>Because there may be other discrepancies hiding in the RI DOH spreadsheet, I will write a script to compare the two csvs to catch any further potential changes</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-154">#154: CA, NY &amp; RI inicuCumulative missing</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            154</p>
+          <p>
+            <strong>xaminmo</strong> opened this issue on April 3, 2020, 7:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On 04-02, the inicuCumulative value is missing for CA, NY and RI.  These should be the greater of the last value, or the currently in ICU, but it is probably a data import error.</p>
+<p>This error affects the state and US, both for 04-02 and for &quot;current&quot;.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-608466813">
+          <div class="frontmatter">
+            <div>
+              <strong>xaminmo</strong> commented on April 3, 2020, 7:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-608466813" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This is related to COVID19Tracking/covid-tracking-data#26</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-608972495">
+          <div class="frontmatter">
+            <div>
+              <strong>julia326</strong> commented on April 3, 2020, 9:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-608972495" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks <strong>@xaminmo</strong>! Forwarding to our data team</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-610128715">
+          <div class="frontmatter">
+            <div>
+              <strong>xaminmo</strong> commented on April 6, 2020, 6:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-610128715" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Also, Indiana just showed up missing cumulative ICU.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-611639428">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 9, 2020, 10:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/154#issuecomment-611639428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Duplicate of #132 and you can find the resolution process on that issue</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

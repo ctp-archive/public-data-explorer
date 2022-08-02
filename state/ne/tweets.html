@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Nebraska Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Nebraska</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Nebraska</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>April 29, 2020, 9:41 PM PDT</h2>
+    <div>
+      <p>We just updated the race and ethnicity data in the COVID Racial Data Tracker and we're happy to report progress.
+Only four states do not report some kind of race/ethnicity data.</p>
+<p>They are: North Dakota, Nebraska, Nevada, and South Dakota.</p>
+<p>https://t.co/hTyV0MA5tA</p>
+
+    </div>
+  
+    <h2>April 30, 2020, 5:33 PM PDT</h2>
+    <div>
+      <p>South Dakota began reporting race &amp; ethnicity data today. In a 90% white state, almost 70% of cases are people of color because of meatpacking outbreaks.</p>
+<p>Of the 3 states still not reporting any of this data -- NE, ND, NV -- Nebraska, especially, may have similar dynamics. https://t.co/ox1kC9bIb1</p>
+
+    </div>
+  
+    <h2>April 30, 2020, 5:33 PM PDT</h2>
+    <div>
+      <p>With previous data, governors have been able to make more information available. Nebraska's @GovRicketts, North Dakota's @DougBurgum, and Nevada's @GovSisolak probably can improve transparency, if their constituents let them know how important this data is.</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 11:43 AM PDT</h2>
+    <div>
+      <p>Two weeks ago, @Nebraskagov's @GovRicketts told @eduff88 and @owhnews they were working on publishing race and ethnicity data.</p>
+<p>https://t.co/yN8Ehkc17L</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 11:44 AM PDT</h2>
+    <div>
+      <p>Since then, the large number of meatpacking outbreaks, which disproportionately affect people of color, has become a national issue. Yet, still, Nebraska has not released demographic data. https://t.co/iudqVEyVei</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 11:45 AM PDT</h2>
+    <div>
+      <p>In Nebraska: Hall, Dakota, Colfax, and Dawson counties all have COVID-19 hotspots. Local reporting has tied these outbreaks to meatpacking plants.</p>
+<p>Hall, Dawson, and Dakota:
+https://t.co/y2gNSInW7J</p>
+<p>Colfax: https://t.co/zBAODGPUw5</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 11:45 AM PDT</h2>
+    <div>
+      <p>Nebraska is still 1 of only 3 states not releasing any race or ethnicity information.</p>
+<p>The others are North Dakota (@ndgov &amp; @DougBurgum) and Nevada (@NVGovernment &amp; @GovSisolak)</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 11:46 AM PDT</h2>
+    <div>
+      <p>We think better data is better for everyone. It informs where governments spend money, allocate resources, and manage a crisis. Residents can make better decisions.</p>
+<p>Data is not a panacea, but it can help Nebraska and others plan for the rest of this pandemic—and future ones.</p>
+
+    </div>
+  
+    <h2>May 31, 2020, 3:03 PM PDT</h2>
+    <div>
+      <p>Almost 24k new cases reported today. Fourth day in a row over 23k, which hasn't happened since early May.</p>
+<p>The south and west (and to a lesser extent the southwest) have growing, newer outbreaks, which are beginning to offset the abating outbreak in the NE. https://t.co/7kZFiNpBLz</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 10:42 AM PDT</h2>
+    <div>
+      <p>We ~finally~ have some race/ethnicity data from NE and ND, but we're getting it via e-mailed spreadsheets and occasional press conferences.</p>
+<p>Initial numbers suggest large disparities: in NE, a state with an 11% Hispanic population, 40% of those hospitalized have been Hispanic.</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 10:42 AM PDT</h2>
+    <div>
+      <p>People in Nebraska and North Dakota deserve regular race/ethnicity updates @govricketts @dougburnam. Most states began reporting this info over a month ago.</p>
+
+    </div>
+  
+    <h2>June 3, 2020, 10:42 AM PDT</h2>
+    <div>
+      <p>North Dakota says they're not posting because they don't want people to misinterpret the data. Nebraska says they're waiting because they have a high % of unknowns — but this is true of many states.</p>
+
+    </div>
+  
+    <h2>June 23, 2020, 3:12 PM PDT</h2>
+    <div>
+      <p>On a per capita basis, the South and West are not yet approaching the levels that the Northeast experienced in spring.</p>
+<p>Testing was also less available in the NE at the height of the outbreak, so a smaller percentage of infections were confirmed. https://t.co/RttQUfLd0d</p>
+
+    </div>
+  
+    <h2>June 29, 2020, 3:36 PM PDT</h2>
+    <div>
+      <p>More cases have been discovered in the South than in any other region. Caveat: Testing shortages in the NE outbreak mean that tests caught only a fraction of infections. We don’t yet know what % of infections are being caught in the South, where backlogs have begun to appear. https://t.co/6If2BugbBV</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:44 PM PDT</h2>
+    <div>
+      <p>There’s been a lot of discussions about deaths continuing to trend down as cases have surged. This chart provides a partial answer to what’s been happening. The falling numbers in the NE were offsetting rising deaths in AZ, TX, FL. https://t.co/hmZkhZXTPS</p>
+
+    </div>
+  
+    <h2>October 30, 2020, 4:29 PM PDT</h2>
+    <div>
+      <p>Attention API users: As part of our ongoing work to provide more comparable data across states, we are switching 2 more states numbers in our totalTestResults field: NV and NE.</p>
+
+    </div>
+  
+    <h2>November 20, 2020, 4:14 PM PST</h2>
+    <div>
+      <p>There are 3 states reporting over 500 hospitalizations per million people: ND, SD, and now NE. https://t.co/YwNwFc4CIz</p>
+
+    </div>
+  
+    <h2>November 23, 2020, 4:38 PM PST</h2>
+    <div>
+      <p>Only 4 states—HI, ME, NH, VT—have fewer than 100 people per million hospitalized with COVID-19. South Dakota and Nebraska have the most people hospitalized per capita, with North Dakota, Illinois, and Indiana close behind. https://t.co/mxRLdjJQvH</p>
+
+    </div>
+  
+    <h2>November 25, 2020, 9:17 AM PST</h2>
+    <div>
+      <p>COVID-19 tore through Nebraska long-term care facilities as the state reported close to a 70% increase in new long-term care deaths since last week. https://t.co/M1zv9Kwsav</p>
+
+    </div>
+  
+    <h2>December 9, 2020, 5:02 PM PST</h2>
+    <div>
+      <p>Cases in the NE and West are increasingly rapidly. The 7-day average for cases per million people is up to 628 in the NE and 644 in the West. https://t.co/gF8gKNWabU</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

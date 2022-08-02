@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Virginia Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Virginia</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Virginia</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>October 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have separate totals for specimens tested and individuals tested? If so, do you have plans to or would you be willing to publish those figures?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>• We're not currently publishing any data on specimens tested or individuals tested for a couple of reasons</p>
+<p>• Specimens tested - this one is theoretically possible but operationally difficult. Many of the encounters we see are actually situations where the same specimen is being tested multiple times. Because of the difficulty operationalizing this and the potential confusion between 'specimens tested' and 'testing encounters', we likely won't be publishing these data.</p>
+<p>• Individuals tested - we shared this statistic earlier on in the response, but we discontinued it when we started differentiating our data by test type. We would need to separately aggregate these by test type and the overlap will need some talking points. For example, we may have 100 unique people tested, 70 unique people tested by molecular amplification, 50 unique people tested for antigen, 60 unique people tested for antibody. While it would theoretically be easy to release just a total number of unique people tested, we know questions would come up about how many of those people became cases, which would require that we stratify by test type. Reporting data in this manner is possible, but not high on our priority list currently.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Please clarify for us -- when an individual gets tested on separate days and gets back two different results – one positive and one negative, do you only count the first positive result for that individual? What is your logic on that?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>• If a person is tested multiple times and the results are discrepant, we have some specific criteria based on the test types and timing.</p>
+<p>• If any of the tests are a positive molecular test (including PCR), then the case is counted.</p>
+<p>• If the positive test is an antigen or antibody test and there is a negative molecular test within 2 days before or after the positive specimen collection date, then it rules out the positive result.</p>
+<p>• If the negative molecular test is more than 2 days before or after a positive antigen/antibody test, then it does not rule out the positive result.</p>
+<p>• Negative antigen or antibody tests do not rule out positive tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does your department maintain spreadsheets for all of Virginia’s historical COVID-19 testing data? Would you be willing to make it available for download in a research-friendly format, such as an ArcGIS or CKAN API file or a CSV or JSON document.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We maintain a complex database that stores laboratory testing data for COVID (and other communicable diseases), but we do not release those data as they contain protected health information. We do release aggregated data with small-count suppression.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 22, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The total tests on the testing tab of VA's main data dashboard still contain only PCR+Serology. Are you conducting any antigen tests? And, if so, do you plan to report them [antigen test results] on the dashboard?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 22, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No, the default view is PCR results only, but users can select to see all results which include antigen and serologic results. Many facilities are conducting antigen testing in VA. VDH will be adding independent antigen analysis in the future.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Will Virginia be reporting on other racial categories?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Virginia does not have the ability to drill further down in the race/ethnicity data. Race data for epidemiologic investigations is largely self-reported.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What groups are included in “other”?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Other is an option included. Since June 15, the Other category has only included individuals who specifically selected 'Other.' We don't have any further data on these cases.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 18, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What are some of the factors leading to the missing data for cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 18, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Missing data are largely due to clinicians or labs not submitting that information. Race and ethnicity are required to be sent if available, but one big hole in that transmission pathway is when clinicians order a test from a reference lab (one that's not performed at the point of care). If they don't send race and ethnicity data, then the lab won't have it available to send to VDH. Generally speaking, a lab report that identifies a new case will be followed up by a case investigation. The epidemiologist will reach out to the case patient themselves and can ask a lot of the questions we're interested in, including race and ethnicity. The hole in this portion of the process comes when the case patient doesn't pick up the phone and can't be reached. Epis will generally call several times, both during office hours and in the evening, but some people will never answer.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What types of tests for Covid-19 are being done in Virginia?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We do report serology tests on the data portal. On the testing tab of the main data dashboard there is a drop down menu allowing users to choose only PCR (viral) or all tests (PCR + serology).</p>
+<p>As of now there have been 88,305 serology tests reported.</p>
+<p><a href="https://www.vdh.virginia.gov/coronavirus/covid-19-daily-dashboard/">https://www.vdh.virginia.gov/coronavirus/covid-19-daily-dashboard/</a></p>
+
+        </div>
+      
+    
+  
+    <h2>July 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does Virginia conduct Pool Testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 17, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>As of now, Virginia is not conducting pool testing. The state laboratory - the Division of Consolidated Laboratory Services (DCLS) - is exploring the possibility of pool testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>April 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Can VA start sharing data on:</p>
+<ul>
+<li>negative tests?</li>
+<li>pre-existing conditions?</li>
+<li>ethnicity?</li>
+</ul>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 27, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Hi Deirdre, Our epidemiologists shared with me that we unfortunately don't have numbers of daily negative COVID-19 tests or data on pre-existing conditions available right now. Deaths are identified through public health investigation and not reported by hospitals. As for ethnicity data, we have breakdowns of cases, hospitalizations, and deaths by ethnicity for the entire state. That data is updated weekly on Mondays and is available here: https://www.vdh.virginia.gov/coronavirus/weekly-report/</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

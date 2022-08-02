@@ -1,0 +1,2429 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Puerto Rico Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Puerto Rico</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Puerto Rico</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-17T07:47:53.000-08:00">February 17, 2021, 7:47 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-22T01:11:57.000-08:00">December 22, 2020, 1:11 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-20T10:44:43.000-08:00">December 20, 2020, 10:44 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-11T08:04:39.000-08:00">December 11, 2020, 8:04 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T22:18:02.000-08:00">December 8, 2020, 10:18 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-14T14:03:12.000-08:00">November 14, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-07T13:02:28.000-08:00">November 7, 2020, 1:02 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-07T12:52:28.000-08:00">November 7, 2020, 12:52 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-07T20:03:16.000-07:00">October 7, 2020, 8:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-07T19:41:53.000-07:00">October 7, 2020, 7:41 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-29T10:03:14.000-07:00">September 29, 2020, 10:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-07T10:01:59.000-07:00">July 7, 2020, 10:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-29T17:04:53.000-07:00">June 29, 2020, 5:04 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-20T07:01:37.000-07:00">May 20, 2020, 7:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-04T00:01:12.000-07:00">May 4, 2020, 12:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-24T18:01:24.000-07:00">April 24, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-20T07:01:27.000-07:00">April 20, 2020, 7:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-15T06:01:16.000-07:00">April 15, 2020, 6:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-13T07:01:30.000-07:00">April 13, 2020, 7:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-11T04:01:30.000-07:00">April 11, 2020, 4:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-30T12:33:08.000-07:00">March 30, 2020, 12:33 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T11:00:06.000-07:00">March 25, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T22:00:07.000-07:00">March 17, 2020, 10:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T15:00:07.000-07:00">March 17, 2020, 3:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Fatalidades%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados%2CT_Recuperados</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>On March 7, 2021, Puerto Rico's dashboard link was broken and required a login. As a result, data will be frozen until a suitable replacement is found.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports. The most recent test data for Puerto Rico is taken from a <a href="https://github.com/COVID19Tracking/issues/files/5307568/Actualizacion.de.los.resultados.de.las.pruebas.moleculares.y.serologicas.para.Covid-19.registradas.en.Bioportal.del.Depto.de.Salud.pdf">Departamento de Salud press release</a> from August 28, 2020.</p>
+<p>Puerto Rico’s <strong>Recovered</strong> numbers occasionally decrease without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-07T16:55:53.000-08:00">March 7, 2021, 4:55 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Fatalidades%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados%2CT_Recuperados</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports. The most recent test data for Puerto Rico is taken from a <a href="https://github.com/COVID19Tracking/issues/files/5307568/Actualizacion.de.los.resultados.de.las.pruebas.moleculares.y.serologicas.para.Covid-19.registradas.en.Bioportal.del.Depto.de.Salud.pdf">Departamento de Salud press release</a> from August 28, 2020.</p>
+<p>Puerto Rico’s <strong>Recovered</strong> numbers occasionally decrease without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-17T07:47:53.000-08:00">February 17, 2021, 7:47 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Fatalidades%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados%2CT_Recuperados</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>Puerto Rico’s <strong>Recovered</strong> numbers occasionally decrease without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-22T01:11:57.000-08:00">December 22, 2020, 1:11 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>Puerto Rico’s <strong>Recovered</strong> numbers occasionally decrease without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-20T10:44:43.000-08:00">December 20, 2020, 10:44 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>Puerto Rico’s <strong>Recovered</strong> numbers occasionally decreases without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://services5.arcgis.com/klquQoHA0q9zjblu/ArcGIS/rest/services/Datos_Totales_View7/FeatureServer/0/query?where=1%3D1&amp;outFields=T_Muertes_COVID_RD%2CT_Muertes_Combinadas%2CT_Pacientes_Int_Covid%2CT_Vent_Covid%2CT_Serologicos_Pos%2CT_Casos_Unicos%2CT_Molecular_Pos%2CT_Fatalidades%2CT_Hospitalizados</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>Puerto Rico’s Recovered numbers occasionally decreases without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-11T08:04:39.000-08:00">December 11, 2020, 8:04 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>Puerto Rico’s Recovered numbers occasionally decreases without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T22:18:02.000-08:00">December 8, 2020, 10:18 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>Puerto Rico’s Recovered numbers occasionally decreases without explanation. We suspect this is due to some sort of data quality assurance or de-deduplication.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-14T14:03:12.000-08:00">November 14, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared the history of our <strong>Probable Cases</strong> field to match the new definition. We also modified our <strong>Cases (confirmed + probable)</strong> field to remove probables identified via antibody from April 24, 2020 onward, when we have access to a breakdown.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-07T13:02:28.000-08:00">November 7, 2020, 1:02 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>On November 7, 2020, Puerto Rico switched from using antibody tests to antigen tests to identify probable cases in accordance with August 2020 CSTE guidelines. This caused probable cases to drop by 33,888. We cleared probable case history to match the new definition.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-07T12:52:28.000-08:00">November 7, 2020, 12:52 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+<p>On November 2, 2020, Puerto Rico removed 551 recoveries without explanation.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-07T20:03:16.000-07:00">October 7, 2020, 8:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-07T19:41:53.000-07:00">October 7, 2020, 7:41 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+<p>Puerto Rico does not report test data on its data dashboard. Data for <strong>Total PCR Tests (in specimens)</strong> and <strong>Positive PCR Tests (in specimens)</strong> is taken from infrequent press reports.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-29T10:03:14.000-07:00">September 29, 2020, 10:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 22, 2020, Puerto Rico's data changed due to deduplication. This resulted in a decrease in <strong>Total cases</strong>.</p>
+<p>On May 6, 2020, Puerto Rico stopped reporting <strong>Negative PCR tests</strong>.</p>
+<p>On July 7, 2020, we updated <strong>Negative PCR tests</strong> based on press releases from May and June.</p>
+<p>Reported <strong>Deaths</strong> include both confirmed and probable COVID-19 deaths.</p>
+<p>Puerto Rico reports both confirmed cases, which are identified by positive PCR tests, and probable cases, which the territory reports are identified by positive antibody tests. It is not clear whether Puerto Rico requires additional epidemiological, clinical, or vital records evidence to classify a person with a positive antibody test as a probable case. The combined case number in our dataset includes Puerto Rico's confirmed and probable cases as the territory reports them.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.</p>
+<p>On April 22, Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.</p>
+<p>Puerto Rico reported negative testing numbers through April 23, after no updates we removed these from our data on May 6. Total test numbers were impacted by around 9,000.</p>
+<p>On July 7, we added back negative testing numbers based on sporadic press reports in May and June.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.
+On April 22, Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.
+Puerto Rico reported negative testing numbers through April 23, after no updates we removed these from our data on May 6. Total test numbers were impacted by around 9,000.
+On July 7, we added back negative testing numbers based on sporadic press reports in May and June.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.
+On 4/22 Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.
+Puerto Rico reported negative testing numbers through April 23, after no updates we removed these from our data on May 6. Total test numbers were impacted by around 9,000.
+On July 7, we added back negative testing numbers based on sporadic press reports in May and June.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-07T10:01:59.000-07:00">July 7, 2020, 10:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.
+On 4/22 Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.
+Puerto Rico reported negative testing numbers through April 23, after no updates we removed these from our data on May 6. Total test numbers were impacted by around 9,000.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-29T17:04:53.000-07:00">June 29, 2020, 5:04 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.
+On 4/22 Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.
+On 4/22 Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both PCR and antibody.
+On 4/22 Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-25T13:02:30.000-07:00">May 25, 2020, 1:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both molecular and serological tests.
+On 4/22 Puerto Rico revised down its positive count from 1,298 to 915 to exclude double-counted cases.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-20T07:01:37.000-07:00">May 20, 2020, 7:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both molecular and serological tests.
+Negative counts haven't been reported since 4/23. Working to get numbers back</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-04T00:01:12.000-07:00">May 4, 2020, 12:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Death counts include both confirmed and presumed COVID deaths.
+When it is reported, we add inconclusive results to pending.
+Positive counts reflect individual who test positive, combining both molecular and serological tests.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Deaths include confirmed and presumed COVID deaths.
+Puerto Rico reports positive, negative, pending, and inconclusive results. We have added the inconclusive results to the pending results. (These numbers are currently missing on the dashboard as of 4/24)
+Tests now reflect individual people but combines both molecular and serological</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-24T18:01:24.000-07:00">April 24, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Deaths include confirmed and presumed COVID deaths.
+Puerto Rico reports positive, negative, pending, and inconclusive results. We have added the inconclusive results to the pending results.
+Tests refer to specimens, not people http://periodismoinvestigativo.com/2020/04/las-matematicas-de-salud-estan-mal/</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-20T07:01:27.000-07:00">April 20, 2020, 7:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Deaths include confirmed and presumed COVID deaths.
+Puerto Rico reports positive, negative, pending, and inconclusive results. We have added the inconclusive results to the pending results.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-15T06:01:16.000-07:00">April 15, 2020, 6:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://bioseguridad.maps.arcgis.com/apps/opsdashboard/index.html#/3bfb64c9a91944bc8c41edd8ff27e6df</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Deaths include confirmed and presumed COVID deaths.
+Puerto Rico reports positive, negative, and pending.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-13T07:01:30.000-07:00">April 13, 2020, 7:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Deaths include confirmed and presumed COVID deaths.
+Puerto Rico reports positive, negative, and pending.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-11T04:01:30.000-07:00">April 11, 2020, 4:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Puerto Rico reports positive, negative, and pending.
+One positive was reclassified as a negative on 3/30</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-30T12:33:08.000-07:00">March 30, 2020, 12:33 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Puerto Rico reports positive, negative, and pending.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://estadisticas.pr/en/covid-19</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-25T11:00:06.000-07:00">March 25, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>New data dashboard available: https://estadisticas.pr/en/covid-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Puerto Rico: Latest info from <a href="https://twitter.com/DeptSaludPR/status/1239581678860939267">Twitter</a></p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T22:00:07.000-07:00">March 17, 2020, 10:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Latest information from <a href="https://twitter.com/DeptSaludPR/status/1239581678860939267">Twitter</a></p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T15:00:07.000-07:00">March 17, 2020, 3:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No statistics provided. Gathering from news articles.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>http://www.salud.gov.pr/Pages/coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>No statistics provided. Gathering from news articles.</p>
+
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

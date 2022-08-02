@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Missouri Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Missouri</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Missouri</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>February 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Currently, the HHS does not use data directly provided by MO in its PCR testing dataset (accessible here: https://healthdata.gov/dataset/covid-19-diagnostic-laboratory-testing-pcr-testing-time-series), as it does for most jurisdictions. Instead, it uses data submitted directly by laboratories in MO, which is very incomplete data—about 53% lower than MO’s total tests on its dashboard.</p>
+<p>Does MO submit any COVID-19 testing data to the federal government, either in aggregate or the line level? If so, do you know why the CDC does not use MO’s data? If not, why doesn’t MO submit data to the federal government?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>March 19, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We began submitting line-level testing data to CDC on January 20 via CELR (COVID-19 Electronic Laboratory Reporting). Prior to that, CDC indicated they were using a federal dataset. I inquired how they derived data for the federal dataset and they responded, “For the federal dataset, it includes reporting from commercial and public health labs reporting via CDC Biosense and PHLIP as well as direct reporting from facilities to HHS Protect through a secure upload process; collectively known as the &quot;Federal reporting pipeline&quot; and is leveraged where CELR reporting is incomplete or unavailable. ​This dataset includes all test types (antigen, antibody, &amp; PCR.)”
+ 
+We had been working with CDC to approve their reporting using our CELR data instead of the federal dataset, but we received an email from them last Friday that they went ahead and made that transition and will use CELR data for results reported beginning on January 20. We are still working with them to upload the testing data prior to January 20. Our IT is working with APHL to upload the files since they are too big to be sent through PHIN MS. CDC indicated that once they receive our “backlog” files, they will validate them and will fully replace the federal dataset with our CELR data.</p>
+
+        </div>
+      
+    
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>(question with links and screenshot can be found in this doc: https://docs.google.com/document/d/19PFG6YUP1awDTq_f7-gEoxw8G6bzbZze9DGopFS4au0/edit)</p>
+<p>We have been comparing our data to the CDC Cases and Deaths data. We found that the total number of cases matches perfectly to the confirmed cases on Missouri’s dashboard. However, in the CDC data Missouri’s cases are not recorded as confirmed cases, and we were wondering if you had any insight into why this might be?</p>
+<p>We are also interested in the process of cases and deaths reporting to the federal government in general. We understand from the CDC website that there is a process of the CDC collecting and then confirming aggregate numbers from each jurisdiction, and that this aggregate reporting complements line level reporting.
+Can you tell us about the different mechanisms of reporting cases and deaths to the federal government (voluntary NNDS, aggregate counts process, and line level reporting from the state health department)? We are particularly interested in the aggregate count process as it appears to be the source of the state-level data published by the federal government regularly.</p>
+
+    </div>
+    
+  
+    <h2>October 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Thank you for adding the “Total Individuals Tested” metrics to your dashboard! Regarding the Serology value - On 10/1, the total individuals tested by serology was 67113. However, on 9/27, the &quot;Serology Tested Individuals&quot; metric from your previous dashboard was 74259. When you began releasing “Total Tests” - Serology on the new dashboard, we noticed that it aligns with the time series we have for the “Serology Tested Individuals” metric from the previous dashboard. Did the “Serology Tested Individuals” from the previous dashboard actually refer to the total number of Antibody tests performed? If so, could you provide a full time series of your “Total Individuals Tested” - Serology metric?</p>
+
+    </div>
+    
+  
+    <h2>October 2, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Data Automation: If ArcGIS is not going to be updated going forward, is it possible to add a csv download file with the full dashboard data and time series through a stable url? A download link on the page will be very convenient. Through Tableau, it’s possible to achieve this behaviour if you enable Crosstab download and add the CSV with the data you want to make public as the 1st item. In this way it’s available for automatic download when appending .csv to the dashboard).</p>
+<p>For example, NC and WI do it for their data.
+NC, the table at the bottom of this page: https://covid19.ncdhhs.gov/dashboard/about-data
+WI, for testing data dashboard: https://bi.wisconsin.gov/t/DHS/views/PercentPositivebyTestPersonandaComparisonandTestCapacity/TestCapacityDashboard
+Has this crosstab: https://bi.wisconsin.gov/t/DHS/views/PercentPositivebyTestPersonandaComparisonandTestCapacity/TestCapacityDashboard.csv</p>
+
+    </div>
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>You have more than one PCR testing value on your new dashboard; one under &quot;Tests to Date&quot; on the Statewide Tab and the other in the Detail: Testing tab. What is the difference between the two values?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>That difference should be resolved as of today (difference was due to tests being tagged to &quot;bad&quot; counties in terms of data quality -- some are not MO, etc.</p>
+<p>-- we filter those out until they are QC'd to the proper county on the back end -- the number on the testing detail tab was not properly excluding those from the count).</p>
+
+        </div>
+      
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>There is also a dashboard at https://mophep.maps.arcgis.com/apps/opsdashboard/index.html#/d05d2bf6e13745c5afffc8fc87d5b1c5 which reports another set of PCR test encounters:
+As of 9/29 am, the Statewide tab reported 1,802,228 tests, the Detail Testing reports 1,826,199 tests and the arcgis dashboard reports a total of 1,813,137
+What is the difference between these three numbers?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I will investigate this third dashboard and get back to you but you should use the new dashboard as the &quot;source of truth&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>You only report 7-day averages and general ventilator usage on the Detail: Healthcare System tab https://showmestrong.mo.gov/public-healthcare/. Could you report current and cumulative hospitalization values?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes we can add to our list to report day-of values as well as 7-day averages -- can do our best to add this in coming days</p>
+
+        </div>
+      
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Same question asked twice:</p>
+<ol>
+<li>
+<p>Prior to the dashboard change, we were able to get &quot;PCR Tested Individuals,&quot; &quot;Serology Tested Individuals,&quot; and &quot;Individuals with Positive Serology Results.&quot; Do these metrics exist on your new dashboard? If not, could you begin providing them?</p>
+</li>
+<li>
+<p>Currently, we can still capture &quot;PCR Tested Individuals&quot; on this dashboard. Do you still maintain this? Will you switch this metric to your new dashboard?</p>
+</li>
+</ol>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Added as of today on the testing detail tab. Thanks!</p>
+
+        </div>
+      
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>The number of &quot;Serology Tested Individuals&quot; on the previous dashboard is very close to the number of &quot;Total Tests&quot; - Serology that is on the new dashboard. Do they refer to the same metric? Can you clarify whether the newly reported number of Serology tests is unique people, unique people per day, or tests?</p>
+
+    </div>
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>You stopped reporting the number of Long-Term Care facilities with a COVID-19 case and now there is no LTC reporting that we can find on your dashboard. Why? (Is it hidden somewhere?) If no, do you plan to add Long-Term Care reporting for cases and deaths? CTP currently uses data from St. Louis County but we would prefer to report data directly from the state. (Facility-level data for cases and deaths preferred) If you aren’t planning to post that on your dashboard, can you provide us with that data directly?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, we did simply because of a move away from our ArcGIS -- however, I believe we are able to add this relatively easily -- let me validate on our side that a certain ltcf field in the primary dataset is what we would need, and I can get back to you.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 29, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Data automation: The previous dashboard was powered by ArcGIS, which was easy to query and automate. This is not the case with Tableau dashboards. Will the data be available in the same ArcGIS data layers? Is it possible to sync the updates to these layers when the dashboard is updated (such that when we rely on automated retrieval of data it’ll match what’s currently visible on the dashboard)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 2, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>ArcGIS -- likely not - but we are actively trying to make more of this data scrapable using Tableau·  It would actually be very helpful if you could point us to use case of your being able to do this from a state that uses Tableau dashboards so we can mimic - even better if you could put me in touch with a contact in that state</p>
+
+        </div>
+      
+    
+  
+    <h2>August 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting the graph labeled “Daily COVID-19 PCR Test Encounter Results” as referring to the total number of tests conducted, as per the annotation on your website. Is this correct? If so, do you have plans to release the total number of individuals tested?</p>
+
+    </div>
+    
+  
+    <h2>August 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach the PCR Tested Individuals and/or Daily PCR Test Encounter Results numbers? If so, how? (i.e. instances swabbed, day, week, or recording only one positive test per person, but multiple negative tests for the same person)?
+If two samples are taken from a person in a given day, would you record one test or two tests? If a person is being tested once today and once again the following week, would you report one test or two tests? If the same person gets different tests results on different days, would you report the raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+  
+    <h2>August 17, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’re also interested in testing data in units of “testing encounters,” which we may define a bit differently as “the number of people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two tests, however, if the same person has two samples collected at a testing center visit, then that only counts as one testing encounter. Might Missouri be willing to release testing encounters? If so, will you be able to provide historical data consistently in a machine readable format?</p>
+
+    </div>
+    
+  
+    <h2>August 3, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is the difference between the &quot;Individuals with Positive PCR Results&quot; and &quot;Lab Confirmed Cases in Missouri as of 2pm Today&quot; on the dashboard? Are positive antibody or antigen tests included in lab confirmed case counts?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The cumulative total number of cases that have been identified through PCR testing by state and private laboratories and reported to the state of Missouri, to-date. Most cases will recover from their illness, but this will not change the cumulative total. Serology tests are not included in the total number of Missouri cases, since they are considered to indicate possible past infection, and are not currently considered to be confirmed cases. Antigen are also not included.These two terms are interchangeable. The only reason those numbers are slightly different from one another on our dashboard is due to timing. The confirmed case count is a number pulled midday for our 2 p.m. daily update, while the positive PCR tested number on the testing tab of the dashboard is pulled around midnight the night prior.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 6, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Because the &quot;Other&quot; category now represents 6.95% of cases, is it possible to break those out into census categories?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 6, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are still working to improve the race data for our COVID-19 lab-confirmed cases. Unfortunately, a significant proportion of the ‘other’ race category continues to be submitted to us as ‘Other’, rather than having a race listed that would permit us to break the category down into smaller partitions. Our staff are diligently working with data providers to address the quality and completeness of this information.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is the value shown previous to the percentage (and could it be the number instead of what looks like an index)? So, for example, if you look at &quot;Cases by Race&quot; and you hover over the pie chart, for &quot;white&quot; it says 0.4 (43.54%).</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The value shown next to the percent is the rounded decimal that is being used to generate the percent. We are working to improve the performance of the dashboard, which includes removing confusing extraneous numbers such as these.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Could Other be broken out into the separate groups? When it says &quot;Other includes: Asian, Indian, Pacific, Other Races, and Refused to Answer. Each with less than 1% of cases,&quot; does that mean each of those five categories is less than 1% of cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are grouping any individual races that have less than 1% of total cases into the ‘other’ category to maintain confidentiality. A significant proportion of individuals within the ‘Other’ race category do not have additional race information listed (i.e., the race information submitted with the patient’s test result is listed as is ‘Other’ without additional clarification). We continue to work with reporting entities, including labs and hospitals, to improve the quality of this data.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 15, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>RE: Missouri's data on Counties with Congregate Living Cases, you currently only provide the number of facilities with a case in each county. Can you give resident positives and deaths and staff positives and deaths? And also facility names with associated case counts?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Section 192.067, RSMo, prohibits the Missouri Department of Health and Senior Services from disclosing the medical facility identified in the medical information abstracted from or reported to the department. This medical record information includes information obtained by the Missouri Department of Health and Senior Services as a result of conducting epidemiological studies to promote and safeguard the health of the citizens of Missouri, such as the COVID-19 pandemic. As such, we are unable to provide the number of cases or deaths at the facility level.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

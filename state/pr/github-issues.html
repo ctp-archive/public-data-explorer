@@ -1,0 +1,3595 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Puerto Rico Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Puerto Rico</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Puerto Rico</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>April 1, 2021, 4:03 PM PDT</td>
+          <td>1139</td>
+          <td>
+            <a href="#issue-1139">[PR] Patch 03/07/21 data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2021, 4:03 PM PDT</td>
+          <td>1139</td>
+          <td>
+            <a href="#issue-1139">[PR] Patch 03/07/21 data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 11, 2021, 8:02 AM PST</td>
+          <td>1096</td>
+          <td>
+            <a href="#issue-1096">[PR] Patch 10/01/20 - 02/10/21 Total PCR tests (specimens), Negative PCR tests (specimens), Positive PCR tests (specimens)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 11, 2021, 8:02 AM PST</td>
+          <td>1096</td>
+          <td>
+            <a href="#issue-1096">[PR] Patch 10/01/20 - 02/10/21 Total PCR tests (specimens), Negative PCR tests (specimens), Positive PCR tests (specimens)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 7, 2020, 4:51 PM PST</td>
+          <td>938</td>
+          <td>
+            <a href="#issue-938">[PR] Probable cases totals for Nov. 5-6</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 7, 2020, 12:47 PM PST</td>
+          <td>937</td>
+          <td>
+            <a href="#issue-937">[PR] Clear PR Probable Cases History</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 6, 2020, 4:53 PM PST</td>
+          <td>936</td>
+          <td>
+            <a href="#issue-936">[PR] Puerto Rico to redefine &quot;probable&quot; cases to mean antigen testing</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 23, 2020, 10:19 AM PDT</td>
+          <td>910</td>
+          <td>
+            <a href="#issue-910">[PR] Update 10/23/20</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 30, 2020, 11:32 AM PDT</td>
+          <td>878</td>
+          <td>
+            <a href="#issue-878">[PR] Total Tests, Positive Tests, and Negative Tests(PCR) Backfill 8/28/20-9/30/20</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 14, 2020, 11:31 AM PDT</td>
+          <td>829</td>
+          <td>
+            <a href="#issue-829">[PR] Backfill probable cases time-series starting on 4/24</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 7:38 AM PDT</td>
+          <td>703</td>
+          <td>
+            <a href="#issue-703">[PR] PCL Cases Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 24, 2020, 11:32 AM PDT</td>
+          <td>669</td>
+          <td>
+            <a href="#issue-669">[PR] New Puerto Rico testing count report for July 24</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 19, 2020, 3:57 PM PDT</td>
+          <td>649</td>
+          <td>
+            <a href="#issue-649">[PR] Confirmed + probable cases is a bad metric for Puerto Rico</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 17, 2020, 6:40 PM PDT</td>
+          <td>645</td>
+          <td>
+            <a href="#issue-645">[PR] Puerto Rico Department of Health testing data API</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 11, 2020, 1:18 AM PDT</td>
+          <td>604</td>
+          <td>
+            <a href="#issue-604">[PR] Historical Puerto Rico hospitalizations data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 10, 2020, 2:24 PM PDT</td>
+          <td>603</td>
+          <td>
+            <a href="#issue-603">[PR] New Puerto Rico testing data report (as of 2020-07-09)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 2, 2020, 1:40 PM PDT</td>
+          <td>568</td>
+          <td>
+            <a href="#issue-568">[PR] Official testing data for Puerto Rico</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 23, 2020, 3:17 PM PDT</td>
+          <td>276</td>
+          <td>
+            <a href="#issue-276">[States Daily CSV] PR positiveIncrease is negative for 2020-04-22</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 21, 2020, 9:45 AM PDT</td>
+          <td>247</td>
+          <td>
+            <a href="#issue-247">GA data discrepancy (~ APR 20)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 17, 2020, 1:25 PM PDT</td>
+          <td>211</td>
+          <td>
+            <a href="#issue-211">PR Test Data Note [Dept of Health has been double/triple counting]</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 27, 2020, 5:32 AM PDT</td>
+          <td>65</td>
+          <td>
+            <a href="#issue-65">PR: Correct URL for Puerto Rico</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1139">#1139: [PR] Patch 03/07/21 data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1139</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 1, 2021, 4:03 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1139" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> PR</p>
+<p><strong>Dates affected:</strong> 03/07/21</p>
+<p><strong>Describe the issue:</strong> On March 7, 2021, Puerto Rico relocated their data to another link. To allow our data quality team time to investigate this source, we did not update their data on March 7, 2021. We're backfilling their data for March 7, 2021, from screenshots of their <a href="https://covid19datos.salud.gov.pr/https://covid19datos.salud.gov.pr/">new dashboard</a> and <a href="http://www.salud.gov.pr/Estadisticas-Registros-y-Publicaciones/Estadsticas%20Casos%20Positivos%20COVID19%20Marzo%202021/Informe%20Casos%20Positivos%20COVID-19%20(07%20marzo%202021%20).pdf">their COVID-19 report from the day</a>.</p>
+<p><strong>Screenshots:</strong> https://covid-tracking-project-data.s3.amazonaws.com/state_screenshots/PR/manual/PR-data-dashboard-20210307-171200.png
+https://covid-tracking-project-data.s3.amazonaws.com/state_screenshots/PR/manual/PR-data-dashboard-20210307-171201.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-812224875">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 1, 2021, 4:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1139#issuecomment-812224875" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+PR 2021-03-07
+positive: 101632 (was 101327)
+hospitalizedCurrently: 134 (was 147)
+inIcuCurrently: 21 (was 24)
+onVentilatorCurrently: 19 (was 18)
+death: 2062 (was 2059)
+deathConfirmed: 1752 (was 1749)
+probableCases: 8012 (was 7991)
+positiveCasesViral: 93620 (was 93336)
+positiveTestsAntibody: 85241 (was 84115)
+lastUpdateTime: 2021-03-07 05:00:00+00:00 (was 2021-03-06 05:00:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1139">#1139: [PR] Patch 03/07/21 data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1139</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 1, 2021, 4:03 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1139" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> PR</p>
+<p><strong>Dates affected:</strong> 03/07/21</p>
+<p><strong>Describe the issue:</strong> On March 7, 2021, Puerto Rico relocated their data to another link. To allow our data quality team time to investigate this source, we did not update their data on March 7, 2021. We're backfilling their data for March 7, 2021, from screenshots of their <a href="https://covid19datos.salud.gov.pr/https://covid19datos.salud.gov.pr/">new dashboard</a> and <a href="http://www.salud.gov.pr/Estadisticas-Registros-y-Publicaciones/Estadsticas%20Casos%20Positivos%20COVID19%20Marzo%202021/Informe%20Casos%20Positivos%20COVID-19%20(07%20marzo%202021%20).pdf">their COVID-19 report from the day</a>.</p>
+<p><strong>Screenshots:</strong> https://covid-tracking-project-data.s3.amazonaws.com/state_screenshots/PR/manual/PR-data-dashboard-20210307-171200.png
+https://covid-tracking-project-data.s3.amazonaws.com/state_screenshots/PR/manual/PR-data-dashboard-20210307-171201.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-812224875">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 1, 2021, 4:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1139#issuecomment-812224875" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+PR 2021-03-07
+positive: 101632 (was 101327)
+hospitalizedCurrently: 134 (was 147)
+inIcuCurrently: 21 (was 24)
+onVentilatorCurrently: 19 (was 18)
+death: 2062 (was 2059)
+deathConfirmed: 1752 (was 1749)
+probableCases: 8012 (was 7991)
+positiveCasesViral: 93620 (was 93336)
+positiveTestsAntibody: 85241 (was 84115)
+lastUpdateTime: 2021-03-07 05:00:00+00:00 (was 2021-03-06 05:00:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1096">#1096: [PR] Patch 10/01/20 - 02/10/21 Total PCR tests (specimens), Negative PCR tests (specimens), Positive PCR tests (specimens)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1096</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 11, 2021, 8:02 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1096" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> PR</p>
+<p><strong>Dates affected:</strong> 10/01/20 - 02/10/21</p>
+<p><strong>Describe the issue:</strong> On October 1, 2020, we received a press release from Dept. de Salud with updated Total PCR tests (specimens), Negative PCR tests (specimens), and Positive PCR tests (specimens) for Puerto Rico dating back to August 28, 2020. We backfilled these values from August 28, 2020 through September 30, 2020, however due to an error in the backfill process, we did not begin capturing these new values on subsequent dates. On February 11, 2021, we corrected this error and backfilled our timeseries of Total PCR tests (specimens), Negative PCR tests (specimens), and Positive PCR tests (specimens) for October 1, 2020 through February 10, 2020 with the values from the August 28, 2020 press release. Our data quality team continues to search for updated data for these metrics.</p>
+<p><strong>Previous GH issues:</strong> https://github.com/COVID19Tracking/issues/issues/878</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-777604560">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 11, 2021, 8:05 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1096#issuecomment-777604560" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 133
+PR 2021-02-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-31
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-31
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-31
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1096">#1096: [PR] Patch 10/01/20 - 02/10/21 Total PCR tests (specimens), Negative PCR tests (specimens), Positive PCR tests (specimens)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1096</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 11, 2021, 8:02 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1096" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> PR</p>
+<p><strong>Dates affected:</strong> 10/01/20 - 02/10/21</p>
+<p><strong>Describe the issue:</strong> On October 1, 2020, we received a press release from Dept. de Salud with updated Total PCR tests (specimens), Negative PCR tests (specimens), and Positive PCR tests (specimens) for Puerto Rico dating back to August 28, 2020. We backfilled these values from August 28, 2020 through September 30, 2020, however due to an error in the backfill process, we did not begin capturing these new values on subsequent dates. On February 11, 2021, we corrected this error and backfilled our timeseries of Total PCR tests (specimens), Negative PCR tests (specimens), and Positive PCR tests (specimens) for October 1, 2020 through February 10, 2020 with the values from the August 28, 2020 press release. Our data quality team continues to search for updated data for these metrics.</p>
+<p><strong>Previous GH issues:</strong> https://github.com/COVID19Tracking/issues/issues/878</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-777604560">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 11, 2021, 8:05 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1096#issuecomment-777604560" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 133
+PR 2021-02-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-02-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-31
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2021-01-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-31
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-12-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-11-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-31
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-30
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-29
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-28
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-27
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-26
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-25
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-24
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-23
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-22
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-21
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-20
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-19
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-18
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-17
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-16
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-15
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-14
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-13
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-12
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-11
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-10
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-09
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-08
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-07
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-06
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-05
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-04
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-03
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-02
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)
+PR 2020-10-01
+totalTestsViral: 415664 (was 310546)
+positiveTestsViral: 20103 (was 7002)
+negativeTestsViral: 395291 (was 303412)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-938">#938: [PR] Probable cases totals for Nov. 5-6</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            938</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on November 7, 2020, 4:51 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/938" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p>As reported in https://github.com/COVID19Tracking/issues/issues/936, Puerto Rico on Nov. 7, 2020 changed its case classification to reclassify cases supported by only an antibody test as &quot;suspect,&quot; and use the &quot;probable&quot; label for cases arising from antigen testing. As a response to this, https://github.com/COVID19Tracking/issues/issues/937 cleared the probable case history, and the Nov. 7 daily update picked up the 77 probable cases total for that day.</p>
+<p>But the Puerto Rico Department of Health's daily report (released Nov. 7 data up to Nov. 6 inside) actually has a footnote documenting the probable cases total for a couple of earlier dates:</p>
+<p><img src="https://user-images.githubusercontent.com/4076056/98454262-7670cb00-2117-11eb-9a3b-b783c7c62221.png" alt="fn4"></p>
+<p>...which reads at the beginning: &quot;The total of probable cases from October 10, 2020 to November 4, 2020 was seventy two (72): [detail list of the dates and counts by sample date].&quot; From this we can backfill the count of probable cases on Nov. 5 and 6 as 72. (Yes, Nov. 5 and 6. See below.)</p>
+<p><strong>NOTE ON OFF-BY-ONE DATES:</strong> The way the Puerto Rico Department of Health daily reports are dated is that the front page has a &quot;data update date&quot; field (&quot;fecha de actualización de los datos&quot;), and then they are published on the next date, which makes the dates inside the official report systematically one date earlier than the COVID Tracking Project's scraper-based capture. So while the Project's data currently says 37,490 confirmed cases in Puerto Rico on Nov. 7, the Department of Health gives that as its Nov. 6 total.  <strong>Therefore, the Nov. 4 date on the footnote above should be read as Nov. 5 using the Project's dating convention.</strong> And that implies:</p>
+<ul>
+<li>72 cases as of Nov. 4 (PRDoH) ⟹ 72 cases on Nov. 5 (COVID Tracking)</li>
+<li>5 new, 77 total on Nov. 6 (PRDoH) ⟹ 72 on Nov. 6 and 77 on Nov. 7 (COVID Tracking)</li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li>Puerto Rico Department of Health <a href="http://www.salud.gov.pr/Estadisticas-Registros-y-Publicaciones/Estadsticas%20Casos%20Positivos%20COVID19%20Noviembre%202020/Informe%20Casos%20Positivos%20COVID-19%20(07%20noviembre%202020).pdf">daily report released Nov. 7, 2020 (data up to Nov. 6)</a></li>
+</ul>
+<p>Screenshot of front page of this report. Note that it reads November 6, 2020, but the filename says Nov. 7 and the totals it reports are what the Project tracks as Nov. 7.</p>
+<p><img src="https://user-images.githubusercontent.com/4076056/98454426-28f55d80-2119-11eb-8a21-f0762557aa90.jpg" alt="2020-11-06_announcement"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-725047544">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on November 10, 2020, 4:20 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/938#issuecomment-725047544" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you as always <strong>@sacundim</strong> for helping us have the best data possible for PR!</p>
+<p>Before:
+<img width="174" alt="image" src="../../assets/github/images/404503/98749377-855eb400-2389-11eb-942d-b0d438971be4.png"></p>
+<p>After:
+<img width="177" alt="image" src="../../assets/github/images/404503/98749355-7415a780-2389-11eb-898d-b81183d0a687.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-937">#937: [PR] Clear PR Probable Cases History</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            937</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on November 7, 2020, 12:47 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/937" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: PR</p>
+<p><strong>Describe the problem</strong>
+As reported in #936, PR is changing probable case reporting to reflect antigen instead of antibody reporting, moving to report antibody in a suspected category. Probable cases have dropped to 77.
+To avoid the appearance of a ~33,000 case drop today nationally and to reflect most up to date CSTE August definition, we are clearing PR's probable case history.</p>
+<p><strong>Link to data source</strong>
+PR dash
+<img width="870" alt="Screen Shot 2020-11-07 at 3 37 39 PM" src="https://user-images.githubusercontent.com/15933271/98451077-83d68700-2110-11eb-8937-5cc7709b6964.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-723493974">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on November 7, 2020, 12:50 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/937#issuecomment-723493974" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <img width="769" alt="Screen Shot 2020-11-07 at 3 49 52 PM" src="../../assets/github/images/15933271/98451118-e596f100-2110-11eb-9be4-910da02b2170.png">
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-723495021">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on November 7, 2020, 1:01 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/937#issuecomment-723495021" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am also duplicating confirmed into confirmed+probable to reflect that antigen cases were 0 during this period. This only applies to April 24 onward, when we have a breakdown.
+<img width="587" alt="Screen Shot 2020-11-07 at 4 00 57 PM" src="../../assets/github/images/15933271/98451303-76ba9780-2112-11eb-853a-bd90975a6af2.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-936">#936: [PR] Puerto Rico to redefine &quot;probable&quot; cases to mean antigen testing</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            936</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on November 6, 2020, 4:53 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/936" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p>Puerto Rico's Department of Health announced today that it's going to revise its COVID-19 dashboard to adopt the case classification in the Council of State and Territorial Epidemiologists' <a href="https://wwwn.cdc.gov/nndss/conditions/coronavirus-disease-2019-covid-19/case-definition/2020/08/05/">Coronavirus Disease 2019 (COVID-19) 2020 Interim Case Definition, Approved August 5, 2020</a>, so that:</p>
+<ul>
+<li>Confirmed case: Positive PCR test</li>
+<li>Probable case: Positive antigen test</li>
+<li>Suspect case: Positive antibody test</li>
+</ul>
+<p>Previous to this, the &quot;probable case&quot; category was (mis)used to cover cases that generally all they had was a positive antibody test. These cases will now be reclassified as &quot;suspect,&quot; which means that the number of cases labeled as &quot;probable&quot; will soon drop from the current 33,615 to something in the neighborhood of 160 (my estimate using PRDoH testing API data).</p>
+<p>Sources:</p>
+<ul>
+<li><a href="https://twitter.com/angelicaserran0/status/1324824895784714240">Journalist's Twitter thread with press release</a></li>
+<li>Puerto Rico Department of Health press release (attached below)</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/4076056/98427006-2b3fb500-2050-11eb-82fc-21481f7d8b45.jpg" alt="2020-11-06_reclassification"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-723381533">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on November 6, 2020, 7:10 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/936#issuecomment-723381533" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you so much <strong>@sacundim</strong> for letting us know!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-731700890">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on November 21, 2020, 9:26 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/936#issuecomment-731700890" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-737001448">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on December 1, 2020, 9:32 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/936#issuecomment-737001448" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-910">#910: [PR] Update 10/23/20</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            910</p>
+          <p>
+            <strong>esquared</strong> opened this issue on October 23, 2020, 10:19 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/910" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> 10/23/20
+<strong>Overview:</strong> Update via press release from PR Dept. of Salud
+<img src="https://user-images.githubusercontent.com/71461067/97034039-e4b76a00-1529-11eb-96c5-868488e46d05.jpg" alt="PR 231020 Update1">
+<img src="https://user-images.githubusercontent.com/71461067/97034046-e719c400-1529-11eb-9f50-80031e0b2cfa.jpg" alt="PR 231020 Update2">
+<img src="https://user-images.githubusercontent.com/71461067/97034049-e7b25a80-1529-11eb-8888-bc69b696f9d9.jpg" alt="PR 231020 Update3">
+<img src="https://user-images.githubusercontent.com/71461067/97034053-e8e38780-1529-11eb-8dab-198ec5b21f33.jpg" alt="PR 231020 Update4"></p>
+<p>.
+<strong>Contribution to milestone:</strong> Explain how the issue contributes to the overall milestone.
+<strong>Other benefits:</strong> Explain any side benefits we could get from completing this issue.
+<strong>Potential challenges:</strong> Explain any potential blockers.
+<strong>Editorial:</strong> The specific editorial content we expect to come out of this issue.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-717235483">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on October 27, 2020, 6:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/910#issuecomment-717235483" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Translation:</strong> The report from the Dept of Health reported 8 deaths by COVID-19; meanwhile, 1114 confirmed cases and 878 additional probable cases were registered.[breakdown of 8 deaths, 2 of which are probable]With these additional deaths, confirmed deaths rose to 682 and probable deaths to 189 so that the total deceased are 791.  It’s important to remember that any deaths registered after this report will be reflected in later reports.The change in the number of deaths should not be interpreted as those which might have occurred in the last 24 hours.  IN the same manner, it’s important to note that the death reports can vary, owed to the registration process and coding of the cause of death, which can take various days.From another part, the total results of confirmed COVID-19 cases is 30,956, of which 16,665 are women and 14,291 are men.  The total of the confirmed cases was adjusted after adding 43 cases with test-taking dates from July 25- October 9; additionally, 5 duplicate cases were subtracted. The reported cases are those which have a positive PCR test, with a test-taking date from Oct. 10- Oct. 20.As part of the report, 878 additional probable cases were registered, with the understood test-taking date between Oct. 10- Oct. 20.  In this row, the total is 30,028 after being adjusted, when subtracting 105 cases which later had a positive molecular test and which are added to the registered cases as part of this report; additionally, 28 cases were added with the test-taking date of April 22 - Oct 9, and 6 duplicate cases were subtracted.  The probable cases divide into 16,742 women and 13,286 men.The private clinical labs and the Dept. of Health continue working to optimize the reporting of the COVID-19 tests to the BioPortal in an electronic manner.
+In the past days, work is being done to electronically connect one of the systems which manages the information used by the clinical labs with the BioPortal.  This new connection will permit the reporting of results of COVID-19 tests in a more efficient, complete, and rapid manner.  During this period, various records of COVID-19 test results have accumulated, which were entered late, simultaneously.  This explains the high number of cases reported in today’s report; however, this does not represent a significant change in the epidemiological curve.  En the graph of confirmed cases, the distribution of cases according to the test-taking date can be observed.Additional Confirmed Cases = 1114
+Additional Confirmed Cases Adjusted = 43Title of graph: Confirmed Cases(molecular test) not duplicated, not previously reported, with test-taking date from Oct. 10 - 20, 2020Title of 2nd graph:  Confirmed cases(molecular test) not duplicated, not previously reported, with test-taking date from July 25 - Oct. 9, 2020The adjustments of totals are done as part of an effort by the Dept. of Health, entities, and clinical labs to ensure that all COVID-19 tests performed are registered in the BioPortal, independently of the date it was taken.Summary of Dept of Health Report:
+Additional confirmed cases:  1114
+Total confirmed cases:  30,956Additional probable cases: 878
+Total probable cases: 30,028Additional confirmed deaths:  6
+Total confirmed deaths:  602Additional probable deaths: 2
+Total probable deaths:  189Total reported deaths: 791</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-717351095">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on October 27, 2020, 9:08 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/910#issuecomment-717351095" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data already captured.  Patch note filed.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-878">#878: [PR] Total Tests, Positive Tests, and Negative Tests(PCR) Backfill 8/28/20-9/30/20</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            878</p>
+          <p>
+            <strong>esquared</strong> opened this issue on September 30, 2020, 11:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/878" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [Puerto Rico]</p>
+<p><strong>Describe the problem</strong>
+Received press release from Dept. de Salud with values updated to 8/28/20.</p>
+<p><strong>Action Plan</strong>
+Backfill from 8/28/20-9/30/20 for <code>Total Tests(PCR)</code>, <code>Positive Tests(PCR)</code>, and <code>Negative Tests(PCR)</code>.</p>
+<p><strong>Link to data source</strong>
+<a href="https://github.com/COVID19Tracking/issues/files/5307568/Actualizacion.de.los.resultados.de.las.pruebas.moleculares.y.serologicas.para.Covid-19.registradas.en.Bioportal.del.Depto.de.Salud.pdf">Actualización de los resultados de las pruebas moleculares y serológicas para Covid-19 registradas en Bioportal del Depto. de Salud..pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702259773">
+          <div class="frontmatter">
+            <div>
+              <strong>esquared</strong> commented on October 1, 2020, 9:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/878#issuecomment-702259773" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and after values
+<a href="../../assets/github/files/5313532/PR.Backfill.Github.Issue.878.xlsx">PR Backfill Github Issue #878.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-829">#829: [PR] Backfill probable cases time-series starting on 4/24</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            829</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 14, 2020, 11:31 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/829" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p><strong>Describe the problem</strong>
+CTP did not separately capture what they report as probable cases, though we do lump that number with the confirmed to make the Positive Cases (People, confirmed + probable)  number.</p>
+<p><strong>Action Plan</strong></p>
+<ul>
+<li>[x] Backfill<code> Probable Cases</code> from 4/29-now from <code>Positive Antibody Tests</code></li>
+<li>[x] Update Positive Cases (PCR) on 5/18 to 1195 from 2710</li>
+<li>[x] Backfill <code>Probable Cases</code> &amp; <code>Positive Antibody Tests</code> from 4/24-4/28 from total-confirmed</li>
+</ul>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/PR/PR-secondary-20200424-181629.png
+https://covidtracking.com/screenshots/PR/PR-secondary-20200518-184759.png</p>
+<p><strong>Previous Issue</strong>
+https://github.com/COVID19Tracking/issues/issues/703</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-692239192">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 14, 2020, 11:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/829#issuecomment-692239192" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and After values in the attached sheet
+<a href="../../assets/github/files/5220305/Probable.Timeseries.Backfill.-.PR.xlsx">Probable Timeseries Backfill - PR.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-703">#703: [PR] PCL Cases Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            703</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on July 30, 2020, 7:38 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/703" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: PR</p>
+<p><strong>Describe the problem</strong>
+There exists data for probable confirmed breakdown for PR prior to the implementation of the new case breakdown columns on 4/29. The dates affected extend from 4/24 to 4/28.  PR also updated in the morning at 6:00 AM, so using the 6:00 pm screenshots of the date of interest can accurately capture the data.</p>
+<p><strong>Link to data source</strong>
+http://covid-tracking-project-data.s3-website.us-east-1.amazonaws.com/state_screenshots/PR/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666416659">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 30, 2020, 7:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/703#issuecomment-666416659" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixing now...
+BEFORE:
+<img src="../../assets/github/images/25627274/88936487-f94cd480-d250-11ea-9b53-b3c885882a06.png" alt="image">
+AFTER:
+<img src="../../assets/github/images/25627274/88942366-2a7cd300-d258-11ea-98af-ec3c8338d060.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-666418158">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 30, 2020, 7:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/703#issuecomment-666418158" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>MattHilliard <strong>@muamichali</strong> said there might be a better source for PR than screenshots -- assigning this to you for now.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-669">#669: [PR] New Puerto Rico testing count report for July 24</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            669</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on July 24, 2020, 11:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/669" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p>The Puerto Rico Department of Health shared a new Bioportal report with its testing counts as of July 23. As usual, it just shares them with some journalists who share it on Twitter:</p>
+<ul>
+<li>https://twitter.com/angelicaserran0/status/1286690476968599555</li>
+<li>https://twitter.com/RobbyCortes/status/1286697081705566208</li>
+</ul>
+<p>As usual as well, I have a CSV with all the data of all these irregular reports:</p>
+<ul>
+<li>https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/data/cases/PuertoRico-bioportal.csv</li>
+</ul>
+<hr>
+<p>Images of the report (2 pages):</p>
+<p><img src="https://user-images.githubusercontent.com/4076056/88423807-40465000-cda1-11ea-8d10-e5d17d7f1a34.jpg" alt="2020-07-23_bioportal"></p>
+<p><img src="https://user-images.githubusercontent.com/4076056/88423816-450b0400-cda1-11ea-939c-fd4557fc7e34.jpg" alt="2020-07-23_bioportal_p2"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-663761413">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 24, 2020, 3:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/669#issuecomment-663761413" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you <strong>@sacundim</strong> and <strong>@</strong>MattHilliard so much!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663771826">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 24, 2020, 4:25 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/669#issuecomment-663771826" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>OK, so there was a miscommunication after <a href="https://github.com/COVID19Tracking/issues/issues/603">the last update I made</a> and the daily data entry team continued carrying over the previous (6/29) numbers on 7/12 and after. So I not only put in <strong>@sacundim</strong>'s new numbers for 7/23 and 7/24, I also fixed the data for previous two weeks. This time I will make sure we handle this correctly in tomorrow's data entry shift.</p>
+<p>I did this right after today's publication, so these numbers aren't factored into the test numbers in today's tweets. The website however should pick them up in an hour or so.</p>
+<p>PCR columns before:
+<img src="../../assets/github/images/404503/88442176-84594500-cde1-11ea-9f45-9a867b43063a.png" alt="image"></p>
+<p>PCR columns after:
+<img src="../../assets/github/images/404503/88442234-ca160d80-cde1-11ea-9107-7c8a633f8d8f.png" alt="image"></p>
+<p>Negative column before:
+<img src="../../assets/github/images/404503/88442334-1a8d6b00-cde2-11ea-909b-b119ebc5d2e9.png" alt="image"></p>
+<p>Negative column after:
+<img src="../../assets/github/images/404503/88442349-2da03b00-cde2-11ea-80e5-14a026057930.png" alt="image"></p>
+<p>One anomaly here is that on 7/15 the data entry team reported a new number for Positive Cases (PCR) that is lower than the data point we had for 7/9. I'm not sure what happened there yet but wanted to get the data fixed first.</p>
+<p>As always, thanks so much <strong>@sacundim</strong> for keeping us informed of these data releases!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663772446">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 24, 2020, 4:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/669#issuecomment-663772446" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Quick update: I don't see anything in the data entry conversations to indicate where the Positive Cases (PCR) data point on 7/15 came from. Since this data source contradicts it, I'm not too worried about losing it.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-649">#649: [PR] Confirmed + probable cases is a bad metric for Puerto Rico</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            649</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on July 19, 2020, 3:57 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/649" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p>I figure this isn't an easy issue to tackle, but I'm growing more and more concerned that the Project's choice to foreground the confirmed + probable cases figures for Puerto Rico, it's not giving the best quality of information available. Perhaps this can be summed up with this chart that I make with <a href="https://github.com/sacundim/covid-19-puerto-rico">my Puerto Rico COVID-19 data collection and visualization project</a>:</p>
+<img width="858" alt="Screen Shot 2020-07-19 at 3 20 54 PM" src="https://user-images.githubusercontent.com/4076056/87886612-7e272b00-c9d3-11ea-896a-ec1a668f5860.png">
+<p>This shows, <em>by date sample taken</em> (which I'm aware is different from reported date as the Project uses):</p>
+<ul>
+<li>Blue: New confirmed cases</li>
+<li>Orange: New probable cases</li>
+</ul>
+<p>Lines are 7-day averages, dots are the raw values straight from charts in Puerto Rico's Department of Health's official daily PDF reports, samples of which I attach at the bottom of this issue.</p>
+<p>The very striking pattern I wish to highlight in my chart is the following:</p>
+<ul>
+<li>New probable cases (orange line) have been found at a more or less flat rate (70-100) since early May.</li>
+<li>New confirmed cases, on the other hand, fell from 51.4/day on April 1st to 4.9/day on May 27, and have been on an exponential rise since then (162.1/day on July 13).</li>
+</ul>
+<p>And the key observation I'd like to make is that if one tracks of Puerto Rico's epidemic by the sum of confirmed and probable cases, one doesn't spot the exponential climb until very recently, because the probable cases figures—which have in many ways behaved as background noise—mask it out.</p>
+<p>Some additional facts that are worth remarking:</p>
+<ul>
+<li>Puerto Rico's Department of Health, in its daily case count bulletins (<a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/pdf/2020-07/Informe%20Casos%20Positivos%20COVID-19%20(19%20julio%202020).pdf">here's the most recent</a>), defines a &quot;confirmed case&quot; as one that has a positive RT-PCR test (footnote 1) and a &quot;probable case&quot; as one that has a positive serological test (footnote 3).</li>
+<li>There were numerous news reports during May from officials in Puerto Rico that large volumes of persons being indiscriminately given serological tests was producing a large number of &quot;false positives&quot; that were later testing negative on PCR. (I put &quot;false positives&quot; in scare quotes because the people making the complaints didn't seem to clearly distinguish between people with antibodies who no longer had the virus and false positive proper.) See for example this May 24 news story: <a href="https://www.noticel.com/gobierno/ahora/20200524/52-empleados-de-comedores-positivos-a-covid19-ahora-dan-negativo-en-prueba-molecular/">&quot;52 school cafeteria employees who were positive to COVID-19 in serological tests give negative to molecular tests&quot;</a>, and note that these 52 were <em>all</em> of the positive cases—not a single one from this incident tested positive on molecular!</li>
+</ul>
+<h3>Data sources</h3>
+<ul>
+<li><a href="http://www.salud.gov.pr/Estadisticas-Registros-y-Publicaciones/Pages/COVID-19.aspx">Puerto Rico Department of Health daily COVID-19 reports</a>, which have daily charts of COVID-19 cases by test sample date, with separate charts for probable and for confirmed cases.</li>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico">My Puerto Rico COVID-19 tracking project</a>, which has <a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/data/cases/PuertoRico-bitemporal.csv">data files where I've transcribed all of the PRDoH cases charts I've seen since April 22nd</a></li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/4076056/87886795-8e8bd580-c9d4-11ea-81d9-0e73075f68c5.jpg" alt="2020-07-18_confirmed_part1"></p>
+<p><img src="https://user-images.githubusercontent.com/4076056/87886789-87fd5e00-c9d4-11ea-9f02-2574d187a873.jpg" alt="2020-07-18_confirmed"></p>
+<p><img src="https://user-images.githubusercontent.com/4076056/87886797-964b7a00-c9d4-11ea-9335-7c8bdaa660df.jpg" alt="2020-07-18_probable"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660749660">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 19, 2020, 6:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/649#issuecomment-660749660" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@sacundim</strong></p>
+<p>I haven't looked at your post in detail yet, but this is something we are working towards, not just with PR but in general. https://github.com/COVID19Tracking/issues/issues/578</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660790320">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 19, 2020, 9:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/649#issuecomment-660790320" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ah, <strong>@muamichali</strong>,</p>
+<p>Didn't see that, good to hear.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-664033477">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 26, 2020, 1:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/649#issuecomment-664033477" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@sacundim</strong> Would you mind sending me your email to michal.mart<strong>@covidtracking.com</strong> or post it here? I would like to have another way to communicate outside github as well. Thanks again for everything you do to help us!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671565864">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 10, 2020, 1:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/649#issuecomment-671565864" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-678425826">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 21, 2020, 11:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/649#issuecomment-678425826" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-645">#645: [PR] Puerto Rico Department of Health testing data API</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            645</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on July 17, 2020, 6:40 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p>Just saw an informal announcement from a biostatistician collaborating with Puerto Rico's Department of Health that they now have an API for downloading test data:</p>
+<ul>
+<li>Tweet with the info: https://twitter.com/rafalab/status/1284292056697929730</li>
+<li>API: https://bioportal.salud.gov.pr/api/administration/reports/minimal-info-unique-tests</li>
+</ul>
+<p>Note that when I hit the latter URL with a regular browser I get an authorization failure message, but when I <code>wget</code> from it I get a 48.78M JSON data file:</p>
+<pre><code>$ wget https://bioportal.salud.gov.pr/api/administration/reports/minimal-info-unique-tests
+--2020-07-17 18:20:34--  https://bioportal.salud.gov.pr/api/administration/reports/minimal-info-unique-tests
+Resolving bioportal.salud.gov.pr (bioportal.salud.gov.pr)... 54.210.0.6
+Connecting to bioportal.salud.gov.pr (bioportal.salud.gov.pr)|54.210.0.6|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/json]
+Saving to: ‘minimal-info-unique-tests’
+
+minimal-info-unique-t     [                    &lt;=&gt; ]  48.78M  4.06MB/s    in 13s     
+
+2020-07-17 18:21:46 (3.79 MB/s) - ‘minimal-info-unique-tests’ saved [51154578]
+
+$ cat minimal-info-unique-tests |jq |head -n 30
+[
+  {
+    &quot;collectedDate&quot;: &quot;7/2/2020&quot;,
+    &quot;reportedDate&quot;: &quot;7/3/2020&quot;,
+    &quot;ageRange&quot;: &quot;60 to 69&quot;,
+    &quot;testType&quot;: &quot;Molecular&quot;,
+    &quot;result&quot;: &quot;Negative&quot;,
+    &quot;patientCity&quot;: &quot;Ceiba&quot;,
+    &quot;createdAt&quot;: &quot;07/07/2020 13:34&quot;
+  },
+  {
+    &quot;collectedDate&quot;: &quot;6/24/2020&quot;,
+    &quot;reportedDate&quot;: &quot;6/25/2020&quot;,
+    &quot;ageRange&quot;: &quot;60 to 69&quot;,
+    &quot;testType&quot;: &quot;Molecular&quot;,
+    &quot;result&quot;: &quot;Negative&quot;,
+    &quot;patientCity&quot;: &quot;Bayamón&quot;,
+    &quot;createdAt&quot;: &quot;06/26/2020 11:26&quot;
+  },
+  {
+    &quot;collectedDate&quot;: &quot;6/10/2020&quot;,
+    &quot;reportedDate&quot;: &quot;6/16/2020&quot;,
+    &quot;ageRange&quot;: &quot;50 to 59&quot;,
+    &quot;testType&quot;: &quot;Molecular&quot;,
+    &quot;result&quot;: &quot;Negative&quot;,
+    &quot;patientCity&quot;: &quot;San Sebastián&quot;,
+    &quot;createdAt&quot;: &quot;06/16/2020 17:07&quot;
+  },
+  {
+    &quot;collectedDate&quot;: &quot;5/26/2020&quot;,
+</code></pre>
+<p>The file is a single big JSON list with individual records for each test. I saw an earlier version of this data the other day (it was shared as an Excel file) and there's some data quality issues. Summary of the ones I'm aware of:</p>
+<ul>
+<li><code>result</code> field not normalized. I just treat the ones that match <code>Positive</code> anywhere inside as positive, rest as negative.</li>
+<li>A couple thousand records (out of 275K+) don't have some of the date fields.</li>
+<li>Some records have individually nonsensical date values, like from 1937</li>
+<li>A couple thousand records have collectedDate &gt; reportedDate</li>
+</ul>
+<p>Here are the cleanups I ended up doing on it if it's of any help:</p>
+<ul>
+<li>https://github.com/sacundim/covid-19-puerto-rico/blob/master/postgres/020-load-data.sql#L34</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660404621">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 17, 2020, 6:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660404621" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Wow, <strong>@sacundim</strong>! Thank you so much for this and all the helpful info you provide us about PR. We are going to follow this closely.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660411440">
+          <div class="frontmatter">
+            <div>
+              <strong>Nosferican</strong> commented on July 17, 2020, 7:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660411440" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Agreed. I watched the governor's press conference yesterday which included some of the work by <strong>@rafalab</strong> et at. Thanks for sharing the API announcement <strong>@sacundim</strong>!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660414706">
+          <div class="frontmatter">
+            <div>
+              <strong>Nosferican</strong> commented on July 17, 2020, 8:08 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660414706" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I seems the license of the data falls under the EULA</p>
+<blockquote>
+<p>No se pueden descargar, republicar, revender, duplicar o hacer &quot;web scraping&quot;, en su totalidad o
+en parte, de los datos de propiedad de los sitios web y / o servicios del DSPR para ningún fin que
+no sea el uso personal permitido en estos Términos de Uso.</p>
+</blockquote>
+<p>Which basically says it can only be used for personal use. Hopefully we can get the all clear from the copyright holders to incorporate the API in the project (ref: https://twitter.com/Nosferican/status/1284323770694619136).</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660416976">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 17, 2020, 8:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660416976" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>All the tests are tagged as <em>Molecular</em>, so I can't understand the <em>result</em> field:</p>
+<ul>
+<li>Negative</li>
+<li>Positive 2019-nCoV</li>
+<li>COVID-19 Negative</li>
+<li>COVID-19 Positive</li>
+<li>Positive</li>
+<li>Inconclusive</li>
+<li>Invalid</li>
+<li>Other</li>
+<li>Not Valid</li>
+<li>Not Tested</li>
+<li>Presumptive Positive : Does it mean that the test is inconclusive? &quot;presumptive positive&quot; by CDC's definition?</li>
+<li>Positive IgM Only</li>
+<li>Positive IgM and IgG</li>
+</ul>
+<p>So &quot;Molecular* test type does not mean PCR?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660418229">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 17, 2020, 8:44 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660418229" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I'm afraid I haven't seen any real documentation, <strong>@space-buzzer.</strong> The number of records in the spreadsheet I saw earlier this week was about 275K, which is consistent with all tests being PCR based on other information.</p>
+<p>The approach I took, personally, is that the strange values like &quot;Positive IgM Only&quot; and &quot;Positive IgM and IgG&quot; are very infrequent so they don't make a big dent on the counts, which are only going to be an approximation anyway due to issues with date data. I personally assumed that they're positive PCR results.</p>
+<p>Some context (that I don't fully understand): the data are extracted a the PRDoH's website (&quot;Bio Portal&quot;) that has a web form for labs to report test results. So I think these are probably a mix of data entry errors by users and bugs in that web UI that allowed weird values to be entered.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660418396">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 17, 2020, 8:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660418396" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oops, I hit &quot;Close issue&quot; by accident.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660418491">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 17, 2020, 8:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660418491" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>Nosferican Do you have a link to that EULA?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660418808">
+          <div class="frontmatter">
+            <div>
+              <strong>Nosferican</strong> commented on July 17, 2020, 8:49 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660418808" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <blockquote>
+<p><strong>@</strong>Nosferican Do you have a link to that EULA?</p>
+</blockquote>
+<p>It's under the <a href="https://bioportal.salud.gov.pr/assets/terms/terms-and-conditions.pdf">terms and services agreement</a> when signing up for an account at the bioportal.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660422441">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 17, 2020, 9:22 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660422441" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am not a lawyer nor a professional translator, but I'll take a stab at this specific section:</p>
+<blockquote>
+<h3>Intellectual property</h3>
+<p>Most of the content of our web sites is public domain and doesn't include copyright or other intellectual property statements.</p>
+<p>The government's information is normally public domain. Public domain information can be used and copied freely. However, you're authorized to use our contractor's computer software and the related database only for informational ends and not for direct or indirect commercial purposes. Also, other materials in the web sites and/or services that is not government material cannot [sic] be copyright protected and cannot be used for any direct or indirect commercial purpose. Any use not authorized in this document is forbidden. Any copy made of materials must conserve all copyrights and other warnings. Except as explicitly provided in these Terms of Use, you may not reproduce, modify, publish, transmit, show, produce, distribute, disseminate, disseminate [sic] or disseminate any materials to third parties, nor participate in the transfer or sale, create derived works or in any manner exploit the contents of the web sites and/or services of the PRDoH or in any part of these without prior written consent by PRDoH.</p>
+</blockquote>
+<p>I've put &quot;[sic]&quot; on some bits that rendered literally but understand are flat out wrong. In particular, the part that says that &quot;other materials in the web sites and/or services that is not government material <strong>cannot</strong> [sic] be copyright protected and cannot be used for any direct or indirect commercial purpose&quot; is just contradictory and I think it is intended to read &quot;may.&quot;</p>
+<p>I think one important piece of context is that this Bioportal web site is normally used as a web UI for:</p>
+<ol>
+<li>Doctors to order tests from the PRDoH labs and view their results.</li>
+<li>Private labs to submit their test results to PRDoH.</li>
+</ol>
+<p>And they've apparently added a public API endpoint to publish the testing data that the system contains.</p>
+<hr>
+<p>Original Spanish:</p>
+<blockquote>
+<h3>Propiedad intelectual</h3>
+<p>La mayor parte del contenido de nuestros sitios web es de dominio público y no incluye avisos
+de derechos de autor u otros avisos de propiedad intelectual.</p>
+<p>La información del gobierno normalmente es de dominio público. La información de dominio
+público se puede distribuir y copiar libremente. Sin embargo, está autorizado a utilizar el software
+de la computadora de nuestro contratista y la base de datos relacionada solo con fines
+informativos y no con fines comerciales directos o indirectos. Además, otro material en los sitios
+web y / o servicios que no sea material del gobierno no puede estar protegido por derechos de
+autor por entidades privadas y no puede usarse para ningún propósito comercial directo o
+indirecto. Cualquier uso no autorizado en este documento está prohibido. Cualquier copia que
+haga de los materiales debe conservar todos los derechos de autor y otros avisos. Salvo lo
+dispuesto expresamente en estos Términos de Uso, no puede reproducir, modificar, publicar,
+transmitir, mostrar, realizar, distribuir, difundir, difundir o transmitir ningún material a terceros,
+ni participar en la transferencia o venta de, crear trabajos derivados o de cualquier manera
+explotar el contenido de los sitios web y / o servicios del DSPR o cualquier parte de estos sin el
+previo consentimiento por escrito del DSPR.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660423722">
+          <div class="frontmatter">
+            <div>
+              <strong>Nosferican</strong> commented on July 17, 2020, 9:36 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660423722" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>In this case, a simple written notice from the copyright holder / publisher saying the generic catch-all EULA doesn't apply to the dataset and that it can be used freely should suffice.</p>
+<p>The generic boilerplate seems to suggest the API may not be that well maintained. However, if we can get a contact person / data steward for basic questions such as the ones <strong>@space-buzzer</strong> mentioned, that would be great. The data curation can occur upstream but that still requires some basic data lineage / governance information. <strong>@rafalab</strong> might be able to help with making that initial contact with the dept.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660456368">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 18, 2020, 2:31 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660456368" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Observations from playing a little bit with the API:</p>
+<ol>
+<li>The <code>createdAt</code> field might be more reliable than <code>reportedDate</code>. With two downloads that I've done about 8 hours apart on 2020-07-17 and 2020-07-18, I'm noting some differences in aggregates for <code>createdDate</code> and <code>reportedDate</code> between 2020-07-09 to 2020-07-16 (inclusive). Looks like there is some lag such that data with <code>reportedDate</code> in this range was still being added to the data set on the night of the 17th to 18th.</li>
+<li>The timezone of the <code>createdAt</code> field seems to be UTC.</li>
+</ol>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660512993">
+          <div class="frontmatter">
+            <div>
+              <strong>edusoccer1121</strong> commented on July 18, 2020, 10:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660512993" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@</strong>Nosferican,</p>
+<p><strong>@gabynevada</strong> can help clarifying some of the provided data he is the lead maintainer of the public API.</p>
+<p>Good day.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660712731">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 19, 2020, 2:29 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660712731" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I set a <code>cron</code> job to download it daily, but noting will happen until we figure out:</p>
+<ul>
+<li>Licensing issues</li>
+<li>What kind of tests are we talking about?</li>
+<li>Consistent data sanitizing strategies we can take</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-660884769">
+          <div class="frontmatter">
+            <div>
+              <strong>gabynevada</strong> commented on July 20, 2020, 1:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-660884769" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hey all, I'm the project manager for the BioPortal system.</p>
+<p>I'll start inquiring on what we need on the legal side for this to proceed.</p>
+<p>On the data side, we're on the process of cleaning it up as much as possible.</p>
+<ul>
+<li>The data is directly reported from the island's testing facilities.</li>
+<li>If it comes via interface it comes in mostly as is, later we run missing or incorrect value identification and send notifications to the testing facilities to fix their reported data.</li>
+<li>We have teams cleaning up the data, but are focusing on the tests for the positive Covid-19 cases as those are of the most importance to us.</li>
+<li>Data may change as it's cleaned/verified by our personnel or the testing facilities.</li>
+</ul>
+<p>Some answers to the questions here:</p>
+<ul>
+<li>Molecular in this case are PCR tests.</li>
+<li>The test results vary depending on the kit being used.</li>
+<li>Presumptive Positive in most cases means that it requires additional confirmation, it depends on the kit that was used</li>
+<li>The createdAt field is just a timestamp of when it was reported or uploaded into the system, it has no other correlation to the data.</li>
+<li>The missing collectedDate and reportedDate fields are caused by testing facilities not reporting all required data. The system was implemented after the pandemic had begun and the prior process was mostly manual. We're still on the process of improving the data collection methods for the tests.</li>
+</ul>
+<p>I'm available for any questions and i'll see what I can do to help in this process.</p>
+<p>Regards</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-662205006">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 21, 2020, 7:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-662205006" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hey <strong>@gabynevada</strong>! Thank you so much for interacting with us here. I will send you an email so we can have a better way to find out what is the status on the legal side.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669657040">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 5, 2020, 8:10 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-669657040" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-671150858">
+          <div class="frontmatter">
+            <div>
+              <strong>Nosferican</strong> commented on August 9, 2020, 8:49 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-671150858" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Any updates on this? <strong>@gabynevada</strong>, any updates on the data quality issues?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674416952">
+          <div class="frontmatter">
+            <div>
+              <strong>gabynevada</strong> commented on August 15, 2020, 9:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-674416952" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>Nosferican The test results that did not matched with the test types were verified and cleaned. We're still working on additional interfaces with Laboratory Information Systems to get as much electronic information as possible.</p>
+<p>We're working with the legal side on the Terms and Conditions on the API. It's taking longer than expected.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-683442482">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 30, 2020, 9:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/645#issuecomment-683442482" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-604">#604: [PR] Historical Puerto Rico hospitalizations data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            604</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on July 11, 2020, 1:18 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/604" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p><strong>Describe the problem</strong></p>
+<p>So, on Thursday (July 9) the number of COVID-19 hospitalizations in Puerto Rico climbed to 147, prompting a leading local paper to publish a story pointing out that, according to the data they had, this was a record high:</p>
+<ul>
+<li><a href="https://www.elnuevodia.com/noticias/locales/notas/record-de-pacientes-las-hospitalizaciones-por-covid-19-aumentan-a-147/">&quot;Record patients: hospitalizations for COIVD-19 increase to 147&quot;</a> <em>El Nuevo Día</em>, July 9, 2020.</li>
+</ul>
+<p>This seemingly didn't sit well with the Secretary of Health, who responded by saying that his department's records refute this and that there were 201 hospitalizations on April 30:</p>
+<ul>
+<li>https://twitter.com/DeptSaludPR/status/1281261229403713537</li>
+</ul>
+<p>And as part of this, he also shared a table of historical hospitalization data with some journalists. It goes from April 18 to July 9, and also breaks the totals down by region:</p>
+<ul>
+<li>https://twitter.com/angelicaserran0/status/1281256666881802241</li>
+<li>https://twitter.com/RobbyCortes/status/1281536898230558720</li>
+</ul>
+<p>I have dutifully transcribed this data into a CSV, and used a spreadsheet to check that the regional totals add up to the listed totals:</p>
+<ul>
+<li>https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/data/PuertoRico-hospitalizations.csv</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657148662">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 11, 2020, 4:46 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/604#issuecomment-657148662" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you yet again <strong>@sacundim</strong>! Your CSV made this really easy for me to check against our numbers. All our recent data matched, just a discrepancy or two around the edges of our gaps. And of course this fills in a vastly better picture of the &quot;first wave&quot; than we had before.</p>
+<p>Our existing current hospitalization data:
+<img src="../../assets/github/images/404503/87235845-f9268b00-c3ae-11ea-8e64-dc1b5e2e0929.png" alt="image"></p>
+<p>Fixed data:
+<img src="../../assets/github/images/404503/87235846-ffb50280-c3ae-11ea-8a32-d98765f40764.png" alt="image"></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1t3SJqFsQjuUI8NEIHZpkC2lNG15XFIe1NX0fc0Obkt4/edit#gid=0">Details</a>, including before/after of States Daily</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-603">#603: [PR] New Puerto Rico testing data report (as of 2020-07-09)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            603</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on July 10, 2020, 2:24 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/603" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p>This is a continuation of https://github.com/COVID19Tracking/issues/issues/568</p>
+<p>As infuriatingly usual, the only way to get official data on the number of tests in Puerto Rico is to follow certain journalists on Twitter who pester the Department of Health periodically for the numbers. We just got a new set today:</p>
+<ul>
+<li>https://twitter.com/angelicaserran0/status/1281694446233497602</li>
+<li>https://twitter.com/RobbyCortes/status/1281697289279545344</li>
+</ul>
+<p>I've got the images and copied the data into a CSV file with all of the previous ones here:</p>
+<ul>
+<li>https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/data/PuertoRico-bioportal.csv</li>
+<li>https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-07-09/2020-07-09_bioportal.jpg</li>
+<li>https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-07-09/2020-07-09_bioportal_p2.jpg</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-656964765">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 10, 2020, 6:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/603#issuecomment-656964765" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>PCR Columns Before:
+<img src="../../assets/github/images/404503/87213903-74783600-c2f6-11ea-8831-2a88af0f8589.png" alt="image"></p>
+<p>PCR Columns After:
+<img src="../../assets/github/images/404503/87213943-ba34fe80-c2f6-11ea-8126-b58cc7299dbe.png" alt="image"></p>
+<p>Negative column before:
+<img src="../../assets/github/images/404503/87213992-21eb4980-c2f7-11ea-95ff-a5e0d88890a2.png" alt="image"></p>
+<p>Negative column after (using Total Tests PCR - Positive Cases PCR from first day (258001 - 2235 = 255766) per extensive discussion with <strong>@muamichali</strong> last time:
+<img src="../../assets/github/images/404503/87213990-1ac43b80-c2f7-11ea-81a7-d24f55a3686c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-656964887">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 10, 2020, 6:51 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/603#issuecomment-656964887" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oh and thank you so much <strong>@sacundim</strong> for passing along this data! Your help is very much appreciated!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-568">#568: [PR] Official testing data for Puerto Rico</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            568</p>
+          <p>
+            <strong>sacundim</strong> opened this issue on July 2, 2020, 1:40 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/568" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Puerto Rico</p>
+<p><strong>Describe the problem</strong></p>
+<p>Since Puerto Rico's Department of Health doesn't publish tests data regularly, and when it does it doesn't do so in any manner or medium that's amenable to automatic capture, the testing data in the Project for Puerto Rico is very sorely out of date, leading to <a href="https://coronavirus.jhu.edu/testing/testing-positivity">reports that show, for example, Puerto Rico's COVID-19 positive test rate at 100%</a> which then <a href="https://www.metro.pr/pr/noticias/2020/07/02/puerto-rico-tiene-la-mayor-tasa-de-casos-positivos-de-coronavirus-en-estados-unidos.html">get picked up by the press</a>.</p>
+<p>I have been manually compiling a set of the official data that has been available. The official reports linked below are shared with some journalists by the Department of Health, with no appreciable schedule. These journalists tweet images of these reports out, which I have collected and copied their data into a CSV (also linked) over at my repo for my Puerto Rico data project:</p>
+<ul>
+<li>https://github.com/sacundim/covid-19-puerto-rico</li>
+</ul>
+<p>Insomuch as it is required I grant permission for you to use my CSVs (which I understand are facts and therefore not copyrightable anyway).</p>
+<ul>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/data/PuertoRico-bioportal.csv">CSV file with data from all of the below</a></li>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-06-29/2020-06-29_bioportal.jpg">Bio Portal report dated June 30, with data up to June 29</a></li>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-06-12/2020-06-12_bioportal.jpeg">Bio Portal report dated June 15, with data up to June 12</a></li>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-06-06/2020-06-06_bioportal.jpeg">Bio Portal report dated June 8, with data up to June 6</a></li>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-05-28/2020-05-28_bioportal.jpeg">Bio Portal report dated May 29, with data up to May 28</a></li>
+<li><a href="https://github.com/sacundim/covid-19-puerto-rico/blob/master/assets/source_material/2020-05-21/2020-05-21_bioportal.jpeg">Bio Portal report dated May 23, with data up to May 21</a></li>
+</ul>
+<p>While there is no evident path to automating the capture of this data, even a small one-time manual update to your numbers would likely avoid some modest amount of public misinformation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-654990076">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 7, 2020, 9:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/568#issuecomment-654990076" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@sacundim</strong>, thank you for bringing this to our attention! I've updated our historical data based on these five data points. It should be visible on the web site within an hour. Hopefully we can get a more reliable official source at some point, but in the meantime if you catch more things like this, please don't hesitate to open more Github issues!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655193892">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 7, 2020, 4:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/568#issuecomment-655193892" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@sacundim</strong> would you kindly share with us the twitter handles of the journalists that post this info so we can follow them as well?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-655415928">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on July 8, 2020, 2:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/568#issuecomment-655415928" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> The two journalists I follow who post these on Twitter are <strong>@angelicaserran0</strong> and <strong>@</strong>RobbyCortes.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-276">#276: [States Daily CSV] PR positiveIncrease is negative for 2020-04-22</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            276</p>
+          <p>
+            <strong>hrushka</strong> opened this issue on April 23, 2020, 3:17 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/276" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Source: https://covidtracking.com/api/v1/states/daily.csv</p>
+<p>Reference: https://c19.dev/d/4S5AN4CZz/covid-19-us-state-data?panelId=5&amp;fullscreen&amp;orgId=1&amp;from=now-45d&amp;to=now&amp;var-state=PR&amp;var-population=3193694&amp;var-density=0&amp;var-total_cases=915&amp;var-total_deaths=46</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-621459279">
+          <div class="frontmatter">
+            <div>
+              <strong>Nosferican</strong> commented on April 29, 2020, 1:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/276#issuecomment-621459279" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>See #211 for the explanation.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628890799">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 2:15 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/276#issuecomment-628890799" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631486556">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on May 20, 2020, 6:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/276#issuecomment-631486556" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@hrushka</strong>,
+Thank you for pointing this out. As <strong>@</strong>Nosferican says, see <a href="https://github.com/COVID19Tracking/issues/issues/211">issue 211</a> for an explanation. We will add a note about this to the PR data.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-634848329">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 27, 2020, 11:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/276#issuecomment-634848329" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@</strong>Nosferican
+Wanted to give you a heads up on this from our web team</p>
+<blockquote>
+<p>We are now building the entire API to a repository. All the JSON/CSV files are built every 15 minutes and put into this repo.
+https://github.com/COVID19Tracking/covid-public-api</p>
+<p>We have a test version of the website available that exposes that repo at the same exact endpoints we have now.
+https://5ece700c83e8e9b0cd122372--upbeat-lovelace-3e9fff.netlify.app/api</p>
+<p>There is a new status endpoint that gives info on when the data was last updated. There's also a run number that we can use to go back and download a snapshot of the API at that moment.
+https://5ece700c83e8e9b0cd122372--upbeat-lovelace-3e9fff.netlify.app/api/v1/status.json
+https://github.com/COVID19Tracking/covid-public-api-build/actions/runs/116895561</p>
+<p>I have reproduced the exact same file structure and format across the different endpoints. The only changes are some additional fields that were in current endpoints are now in every entry for US or states' daily data - for example, dataQualityGrade, There were also some odd time offsets in the old API for fields like dateModified that were presented as UTC, but were in fact not. So they are now UTC.
+Please take some time to test out the new API files and endpoint and give feedback. I hope to have this replace our production API build tool by the</p>
+</blockquote>
+<blockquote>
+<p>end of this week. Any feedback filed as an issue in this repo https://github.com/COVID19Tracking/covid-public-api-build would be helpful!</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-247">#247: GA data discrepancy (~ APR 20)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            247</p>
+          <p>
+            <strong>dcorbin</strong> opened this issue on April 21, 2020, 9:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/247" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On Apr 20, in Georgia, you're data table shows about ~ 700 new cases.  I looked at the source page for that data (also visible in the screen shots).  The only place on that page that I can find to extract a &quot;new cases&quot; is from a chart (hover), and it is showing 36 new cases. I strongly suspect there is a data inconsistency on the source page, but I need more information on how the GA data is extracted from that page.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-617285655">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 21, 2020, 9:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/247#issuecomment-617285655" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@dcorbin</strong></p>
+<p>Thanks for writing
+The Georgia source page shows a total of 18,301 cases on 4/19
+https://covidtracking.com/screenshots/GA/GA-20200419-180551.png</p>
+<p>and a total of 18,947 cases on 4/20
+https://covidtracking.com/screenshots/GA/GA-20200420-180537.png</p>
+<p>18,947-18301 = 646
+https://covidtracking.com/data/state/georgia#historical</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-211">#211: PR Test Data Note [Dept of Health has been double/triple counting]</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            211</p>
+          <p>
+            <strong>Nosferican</strong> opened this issue on April 17, 2020, 1:25 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/211" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The Department of Health has been counting the RAPID and Molecular tests as a different subjects. The end result is that they might have two positive and one negative test results and they are all for the same subject. They had previously stated it was a per subject count. They are working on fixing the numbers by looking at the patient information.</p>
+<p>Source: http://periodismoinvestigativo.com/2020/04/las-matematicas-de-salud-estan-mal/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-616873523">
+          <div class="frontmatter">
+            <div>
+              <strong>goldfarb</strong> commented on April 20, 2020, 5:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/211#issuecomment-616873523" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you so much for pointing that out, <strong>@</strong>Nosferican</p>
+<p>We will keep an eye out for an update from the Department of Health, when they update the numbers.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-617466679">
+          <div class="frontmatter">
+            <div>
+              <strong>sacundim</strong> commented on April 21, 2020, 4:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/211#issuecomment-617466679" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This revision just happened today. The # of positive cases has been revised down from 1,298 to 915:</p>
+<ul>
+<li>https://www.theweeklyjournal.com/business/puerto-rico-businesses-expected-to-reopen-gradually/article_9e73d46c-840f-11ea-b9f1-7bca7219abcf.html</li>
+</ul>
+<blockquote>
+<h3>Fewer Cases Than Previously Informed</h3>
+<p>As the government continues to debate how to reinstate the economy, the Health Department acknowledged that it repeat-counted multiple confirmed cases of infection, meaning that the actual number of positives is lower than previously informed.</p>
+<p>While the agency had stated that there were 1,298 confirmed cases, the real number is 915. Of these, 736 are molecular tests and 189 are serological tests.</p>
+</blockquote>
+<p>I've seen no indication whether they plan to issue revised numbers for earlier dates. It's going to be rather infuriating if they don't.</p>
+<p>PS the article that <strong>@</strong>Nosferican posted above is now available in English translation:</p>
+<ul>
+<li>http://periodismoinvestigativo.com/2020/04/puerto-rico-health-departments-covid-19-math-is-wrong/</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-618088458">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 22, 2020, 4:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/211#issuecomment-618088458" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you <strong>@sacundim</strong> and <strong>@</strong>Nosferican</p>
+<p>We revised today's number based on the new information and we will update the historical numbers if those are published.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-621941860">
+          <div class="frontmatter">
+            <div>
+              <strong>gah-bo</strong> commented on April 30, 2020, 8:54 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/211#issuecomment-621941860" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Dept. Health must have published the fixed data because two of the independent dashboards I use for research now have the accurate numbers</p>
+<p>https://datastudio.google.com/u/0/reporting/1j-ZxP9IvddFJT-V0GQUJQQIV-G0YVVw4/page/ctiNB</p>
+<p>https://app.powerbi.com/view?r=eyJrIjoiMzgzNjhiOTItNjM2Mi00OWRlLWE2ZTgtNDVhNzliYjUyMmQzIiwidCI6IjIxY2ZmMGY5LWQ1ZGQtNGEzOS04N2NlLTVmNjg4MzFmMjNjZCIsImMiOjF9</p>
+<p>Unfortunately, they only name their source as the Dept. of Health and Dept. of Statistics, without providing links or anything of that sort. I will edit this comment if I manage to find an official source for developers to add. Else, I just wanted to leave these two links for other people to access in the meantime. The first of them allows for extracting data in .csv or Excel format.</p>
+<p>Edit: Use this dashboard in the meantime https://www.covid19prdata.org/dashboard its made by the Code4PR team and is on gitbub. It contains all accurate info and is easily downloadable.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-65">#65: PR: Correct URL for Puerto Rico</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            65</p>
+          <p>
+            <strong>amandafrench</strong> opened this issue on March 27, 2020, 5:32 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/65" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I think urlwatch might still be tracking an old Puerto Rico public health coronavirus page, since the Status column in the stats sheet says &quot;URL Not Found Anymore&quot; but the most trusted data source is now https://estadisticas.pr/en/covid-19. That URL is correct as of now on http://covidtracking.com and in the States column in the sheet.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-607015828">
+          <div class="frontmatter">
+            <div>
+              <strong>schwartzadev</strong> commented on March 31, 2020, 8:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/65#issuecomment-607015828" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This looks updated in the <a href="https://covidtracking.com/screenshots/PR/PR-20200331-001522.png">latest screenshots</a> :+1:</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

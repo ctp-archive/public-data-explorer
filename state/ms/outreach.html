@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Mississippi Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Mississippi</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Mississippi</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>May 4, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>MS' website still says they use the probable case definition from April, 2020 instead of the updated August one: https://msdh.ms.gov/msdhsite/_static/14,0,420.html</p>
+<p>&quot;Probable cases are those who test positive by other testing methods such as antibody or antigen, and have recent symptoms consistent with COVID-19, indicating a recent infection.&quot;</p>
+<p>Is that correct?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>May 13, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are still following the CSTE case definition as posted on the CDC website. <a href="https://gcc02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fndc.services.cdc.gov%2Fcase-definitions%2Fcoronavirus-disease-2019-2020-08-05%2F&amp;data=04%7C01%7CLiz.Sharlot%40msdh.ms.gov%7C29e7a962f0b7425d4eb008d91626874f%7C559042dc8bf04d869fc0fbf4c7503c79%7C0%7C0%7C637565176999830234%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=YK8nMnvg%2F%2F0vzwQbpFFU0aTzX%2Fb%2F0Ppt40vCa1Vh7bY%3D&amp;reserved=0">https://ndc.services.cdc.gov/case-definitions/coronavirus-disease-2019-2020-08-05/</a>
+ 
+And yes, there was an update in August.  I didn’t realize we had the case definition date listed somewhere on our website. 
+ 
+A probable case is a positive antigen test or a vital records report with no confirmatory lab evidence. (The other type of probable case doesn’t happen often since testing is so widely available, but a person who meets clinical criteria and has an epi link to a known case would also be considered probable.) 
+ 
+All of the details of the case definition are on the link above.</p>
+
+        </div>
+      
+    
+  
+    <h2>February 16, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For confirmed cases &amp; deaths, the MS website says: &quot;Confirmed cases and deaths are generally determined by positive PCR tests, which detect the presence of ongoing coronavirus infection.&quot;</p>
+<p>What is the reason for including &quot;generally&quot;? Are there any methods other than PCR used to confirm cases or deaths?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>February 23, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We follow CDC case definitions for all probable and confirmed cases and deaths. 
+ 
+For confirmed cases, we follow the CDC case definition that says “detection of severe acute respiratory syndrome coronavirus 2 ribonucleic acid (SARS-CoV-2 RNA) in a clinical or autopsy specimen using a molecular amplification test.” PCR is a specific name for a type of molecular amplification test, but it is probably the most common type. 
+ 
+In order to count as a confirmed death, there must be a positive molecular test.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Your dashboard has a category for “total PCR tests for COVID-19 statewide.” Does that mean total number of tests conducted (as opposed to individuals tested)? If so, do you have plans to release the total number of individuals tested, with historical data?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Total tests performed, not individuals tested. No on individuals. The data is historical, it reflects total testing since pandemic started.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>For getting that number—does MS perform any 'deduplication' to reach it? If so, what are the specifics?xz</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We count the tests that are reported, not based on number of individuals tested.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 3, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>HHS changes</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>None, we get our own detailed reports and do not use HHS</p>
+
+        </div>
+      
+    
+  
+    <h2>July 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is MS pool testing?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>July 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;Not MSDH. I am unaware of other facilities or clinics in Mississippi doing so&quot;</p>
+
+        </div>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No, we are not conducting pool testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Antigen testing?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>July 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;Yes. Not MSDH but some providers have elected to use rapid antigen. Yes positives are reported. No we don’t have those reported on our website yet. &quot;</p>
+
+        </div>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, private labs and hospitals are conducting this testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>In the race/ethnicity section, the note says that the &quot;other&quot; category includes American Indian and Asian. But both of those categories are broken out separately on the chart (in addition to other). Could you clarify?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;It means that when asked about race, the person identified as something other than the otherwise defined categories. Native Hawaiian and other pacific islander are included in the &quot;other&quot; category. Also, if a person identifies as more than one race (i.e., white and Asian), they would be counted in the &quot;other&quot; category as well. Also, we removed the note at the bottom of the chart that you referred to.&quot;</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

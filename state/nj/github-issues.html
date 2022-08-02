@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>New Jersey Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">New Jersey</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">New Jersey</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 25, 2021, 7:34 AM PST</td>
+          <td>1112</td>
+          <td>
+            <a href="#issue-1112">[NJ] Carry over hosp/ discharges from 4/10 - 4/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 25, 2021, 7:34 AM PST</td>
+          <td>1112</td>
+          <td>
+            <a href="#issue-1112">[NJ] Carry over hosp/ discharges from 4/10 - 4/27</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 9, 2021, 2:32 PM PST</td>
+          <td>1057</td>
+          <td>
+            <a href="#issue-1057">[NJ] Patch 01/08 Probable Cases, and Cases (confirmed + probable)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 9, 2021, 2:32 PM PST</td>
+          <td>1057</td>
+          <td>
+            <a href="#issue-1057">[NJ] Patch 01/08 Probable Cases, and Cases (confirmed + probable)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 5, 2021, 12:41 PM PST</td>
+          <td>1045</td>
+          <td>
+            <a href="#issue-1045">[NJ] Probable Cases (antigen positives)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 25, 2020, 6:31 PM PST</td>
+          <td>977</td>
+          <td>
+            <a href="#issue-977">[NJ] Patch transposed value in 10/18 Total PCR tests (specimens) and Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 13, 2020, 9:02 AM PDT</td>
+          <td>895</td>
+          <td>
+            <a href="#issue-895">[NJ] Patching anomalous hospitalization values from 10/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 3, 2020, 7:33 AM PDT</td>
+          <td>883</td>
+          <td>
+            <a href="#issue-883">[NJ] Weekly backfill: Probable deaths released on 10/1</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 18, 2020, 10:16 AM PDT</td>
+          <td>849</td>
+          <td>
+            <a href="#issue-849">[NJ] Weekly backfill: Probable deaths released on 9/15</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 8, 2020, 4:16 PM PDT</td>
+          <td>819</td>
+          <td>
+            <a href="#issue-819">[NJ] 9/8 update missed updating the positive cases value</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 4, 2020, 1:05 PM PDT</td>
+          <td>813</td>
+          <td>
+            <a href="#issue-813">[NJ] Weekly backfill: Probable deaths released on 9/3</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 3, 2020, 6:10 AM PDT</td>
+          <td>810</td>
+          <td>
+            <a href="#issue-810">[NJ] Correct mistaken data entry of total deaths on 8/21,9/1 &amp; 9/2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 28, 2020, 11:50 AM PDT</td>
+          <td>799</td>
+          <td>
+            <a href="#issue-799">[NJ] 8/27 Probable deaths backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 21, 2020, 3:49 PM PDT</td>
+          <td>787</td>
+          <td>
+            <a href="#issue-787">[NJ] Probable deaths backfill for 8/21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 14, 2020, 5:32 PM PDT</td>
+          <td>767</td>
+          <td>
+            <a href="#issue-767">[NJ] Recoveries decrease on 8/14</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 14, 2020, 1:46 PM PDT</td>
+          <td>766</td>
+          <td>
+            <a href="#issue-766">[NJ] Probable deaths backfill for week of 8/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 14, 2020, 8:09 AM PDT</td>
+          <td>762</td>
+          <td>
+            <a href="#issue-762">[NJ] SVP Fixes: Move &quot;Total Tests PCR (People)&quot; to &quot;Total Tests (PCR)&quot;  from 5/11-8/16</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 6:15 PM PDT</td>
+          <td>718</td>
+          <td>
+            <a href="#issue-718">[NJ] PCL Cases Backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 15, 2020, 9:56 AM PDT</td>
+          <td>629</td>
+          <td>
+            <a href="#issue-629">[NJ] Testing Numbers from 6/6-7 Need to be Updated</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 8, 2020, 4:28 PM PDT</td>
+          <td>590</td>
+          <td>
+            <a href="#issue-590">NJ: Backfilling probable deaths from 6/26 &amp; 7/8</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 5:02 PM PDT</td>
+          <td>540</td>
+          <td>
+            <a href="#issue-540">NJ data appears to be incorrect again</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 16, 2020, 3:46 PM PDT</td>
+          <td>426</td>
+          <td>
+            <a href="#issue-426">api/v1/states/current NJ deaths are way high</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 11, 2020, 3:26 PM PDT</td>
+          <td>409</td>
+          <td>
+            <a href="#issue-409">NJ 5/11 Test Increase</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 26, 2020, 11:03 AM PDT</td>
+          <td>305</td>
+          <td>
+            <a href="#issue-305">NJ Test Increase Incorrect for 4/13/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 12, 2020, 4:03 PM PDT</td>
+          <td>188</td>
+          <td>
+            <a href="#issue-188">NJ: Hospitalization data also available</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1112">#1112: [NJ] Carry over hosp/ discharges from 4/10 - 4/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1112</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 25, 2021, 7:34 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1112" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NJ</p>
+<p><strong>Dates affected:</strong> 04/11/20 - 04/27/21</p>
+<p><strong>Describe the issue:</strong> On February 10, 2021, we captured Hospital Discharges from a New Jersey <a href="https://www.youtube.com/watch?t=3126&amp;v=r1JE0Gr6Nxs&amp;feature=youtu.be">press conference</a>. Because this is a cumulative value, we're carrying this value over until 04/28, when we found a new source for Hospital Discharges.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-785992170">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 25, 2021, 7:37 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1112#issuecomment-785992170" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 17
+NJ 2020-04-27
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-26
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-25
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-24
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-23
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-22
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-21
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-20
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-19
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-18
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-17
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-16
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-15
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-14
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-13
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-12
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-11
+hospitalizedDischarged: 682 (was None)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1112">#1112: [NJ] Carry over hosp/ discharges from 4/10 - 4/27</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1112</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 25, 2021, 7:34 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1112" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NJ</p>
+<p><strong>Dates affected:</strong> 04/11/20 - 04/27/21</p>
+<p><strong>Describe the issue:</strong> On February 10, 2021, we captured Hospital Discharges from a New Jersey <a href="https://www.youtube.com/watch?t=3126&amp;v=r1JE0Gr6Nxs&amp;feature=youtu.be">press conference</a>. Because this is a cumulative value, we're carrying this value over until 04/28, when we found a new source for Hospital Discharges.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-785992170">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 25, 2021, 7:37 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1112#issuecomment-785992170" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 17
+NJ 2020-04-27
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-26
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-25
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-24
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-23
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-22
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-21
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-20
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-19
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-18
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-17
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-16
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-15
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-14
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-13
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-12
+hospitalizedDischarged: 682 (was None)
+NJ 2020-04-11
+hospitalizedDischarged: 682 (was None)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1057">#1057: [NJ] Patch 01/08 Probable Cases, and Cases (confirmed + probable)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1057</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 9, 2021, 2:32 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1057" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NJ</p>
+<p><strong>Dates affected:</strong> 01/08</p>
+<p><strong>Describe the issue:</strong> On January 8, 2021 New Jersey’s <strong>Probable cases</strong> increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Positive PCR tests (people) plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on  January 8, 2021 was a mistake, and are editing the number in out timeseries. In the absence of a historical timeseries for Probable cases, we are updating Probable cases for January 8, 2021 to be 53967, the same figure reported on January 7, 2021.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757377758">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 9, 2021, 2:36 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1057#issuecomment-757377758" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+NJ 2021-01-08
+positive: 570575 (was 588731)
+probableCases: 53967 (was 72123)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-757382256">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 9, 2021, 3:16 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1057#issuecomment-757382256" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated the values again, using the data from &quot;Case and Mortality Summaries&quot; tab, and then inside the &quot;PCR and Antigen Positives&quot; (with value captured on 2021-01-08)</p>
+<p><a href="../../assets/github/files/5791965/Multi-edit.tool-PRODUCTION.-.NJ-HMH-20210109_post.csv.txt">Multi-edit tool-PRODUCTION - NJ-HMH-20210109_post.csv.txt</a>
+<a href="../../assets/github/files/5791966/Multi-edit.tool-PRODUCTION.-.NJ-pre-20210109.csv.txt">Multi-edit tool-PRODUCTION - NJ-pre-20210109.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1057">#1057: [NJ] Patch 01/08 Probable Cases, and Cases (confirmed + probable)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1057</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on January 9, 2021, 2:32 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1057" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NJ</p>
+<p><strong>Dates affected:</strong> 01/08</p>
+<p><strong>Describe the issue:</strong> On January 8, 2021 New Jersey’s <strong>Probable cases</strong> increased from 53,967 to 72,123 without explanation. This affected their Cases (confirmed + probable), which is calculated as Positive PCR tests (people) plus Probable cases in the absence of an explicit total case number. On January 9, 2021, their Probable cases decreased from 72,123 to 56,147. Because of this, we believe that the figure reported on  January 8, 2021 was a mistake, and are editing the number in out timeseries. In the absence of a historical timeseries for Probable cases, we are updating Probable cases for January 8, 2021 to be 53967, the same figure reported on January 7, 2021.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-757377758">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on January 9, 2021, 2:36 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1057#issuecomment-757377758" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+NJ 2021-01-08
+positive: 570575 (was 588731)
+probableCases: 53967 (was 72123)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-757382256">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 9, 2021, 3:16 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1057#issuecomment-757382256" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated the values again, using the data from &quot;Case and Mortality Summaries&quot; tab, and then inside the &quot;PCR and Antigen Positives&quot; (with value captured on 2021-01-08)</p>
+<p><a href="../../assets/github/files/5791965/Multi-edit.tool-PRODUCTION.-.NJ-HMH-20210109_post.csv.txt">Multi-edit tool-PRODUCTION - NJ-HMH-20210109_post.csv.txt</a>
+<a href="../../assets/github/files/5791966/Multi-edit.tool-PRODUCTION.-.NJ-pre-20210109.csv.txt">Multi-edit tool-PRODUCTION - NJ-pre-20210109.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1045">#1045: [NJ] Probable Cases (antigen positives)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1045</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on January 5, 2021, 12:41 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1045" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The state of New Jersey added ~51K probables cases, established through antigen testing.
+On the main dashboard (https://njhealth.maps.arcgis.com/apps/MapSeries/index.html?appid=50c2c6af93364b4da9c0bf6327c04b45&amp;folderid=e5d6362c0f1f4f9684dc650f00741b24) there's no time series for the probables cases, only the confirmed ones.
+A time series is available under the &quot;Cases and Mortality summary&quot; tab, in the &quot;PCR and Antigen Positives&quot; (https://dashboards.doh.nj.gov/views/DailyConfirmedCaseSummary7_22_2020/PCRandAntigenPositives). The caveat is that probables there are reported by illness onset, which is not grate and does not match the reporting dating we for most data, but butter than adding 51K cases in a single day.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-754889189">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 5, 2021, 12:46 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1045#issuecomment-754889189" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5772491/Multi-edit.tool-PRODUCTION.-.NJ-reb-20210105.csv.txt">Multi-edit tool-PRODUCTION - NJ-reb-20210105.csv.txt</a>
+<a href="../../assets/github/files/5772492/Multi-edit.tool-PRODUCTION.-.NJ-reb-20210105_post.csv.txt">Multi-edit tool-PRODUCTION - NJ-reb-20210105_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-764035489">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 20, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1045#issuecomment-764035489" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-770302992">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 30, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1045#issuecomment-770302992" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-977">#977: [NJ] Patch transposed value in 10/18 Total PCR tests (specimens) and Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            977</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 25, 2020, 6:31 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/977" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: NJ</p>
+<p>Dates affected: 10/18</p>
+<p>Describe the issue: On 10/18 there was a transposed value in NJ's Total PCR tests (specimens, the value was entered as 4137596, but should have been 4135796.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-734037998">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 25, 2020, 6:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/977#issuecomment-734037998" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="655" alt="Screen Shot 2020-11-25 at 9 31 43 PM" src="../../assets/github/images/68712382/100301178-9e5c8d00-2f65-11eb-97c6-56980acae94f.png"></p>
+<p>AFTER:
+<img width="234" alt="Screen Shot 2020-11-25 at 9 33 33 PM" src="../../assets/github/images/68712382/100301299-df54a180-2f65-11eb-81bc-b6b7d74aa7f6.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-895">#895: [NJ] Patching anomalous hospitalization values from 10/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            895</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 13, 2020, 9:02 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/895" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: New Jersey</p>
+<p><strong>Describe the problem</strong>
+On 10/11, during the publication shift, NJ reported extremely low current hospitalization numbers. The values we recorded are as follows:</p>
+<p>Currently Hospitalized - 170 (dropped from 641)
+Currently in ICU - 60 (dropped from 156)
+Currently on Ventilator - 13 (dropped from 48)</p>
+<p>That night, NJ updated their dashboard to reflect much higher values that were more in line with their trend lines. We're backfilling these anomalously low values with the numbers sourced from their dashboard as of 9:48PM EST.</p>
+<p><strong>Link to data source</strong>
+Values as of 9:48PM EST
+<img src="https://user-images.githubusercontent.com/67408226/95885887-b1f3c180-0d32-11eb-8cef-4bbf17a3d583.png" alt="image"></p>
+<p>https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-707844473">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 13, 2020, 9:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/895#issuecomment-707844473" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/95886086-fa12e400-0d32-11eb-843b-5b34333b8f17.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-707845218">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 13, 2020, 9:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/895#issuecomment-707845218" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/95886183-1e6ec080-0d33-11eb-8934-b84ae3e075fb.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-883">#883: [NJ] Weekly backfill: Probable deaths released on 10/1</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            883</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on October 3, 2020, 7:33 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/883" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+As usual, NJ has updated their probable death time series this week. The data runs through Tuesday. When they do this, we replace our probable deaths column with their time series and update total deaths to be daily sum of our existing confirmed column plus the new probables.</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-703113976">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on October 3, 2020, 7:39 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/883#issuecomment-703113976" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data updated. Spreadsheet (including previous values) here: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=1515835087</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-849">#849: [NJ] Weekly backfill: Probable deaths released on 9/15</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            849</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on September 18, 2020, 10:16 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/849" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+As usual, NJ has updated their probable death time series this week. The data runs through Tuesday. When they do this, we replace our probable deaths column with their time series and update total deaths to be daily sum of our existing confirmed column plus the new probables.</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-695071406">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on September 18, 2020, 1:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/849#issuecomment-695071406" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data updated. Spreadsheet (including previous values) here: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=1515835087</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-819">#819: [NJ] 9/8 update missed updating the positive cases value</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            819</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 8, 2020, 4:16 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/819" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: NJ</p>
+<p>Problem: Pub Shift accidentally missed updating <strong>Total Cases</strong> (api: <code>positive</code>).</p>
+<p>Solution: update from Dash. <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/NJ/NJ-20200908-182100.png">screenshot</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-689185500">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 8, 2020, 4:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/819#issuecomment-689185500" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="296" alt="Screen Shot 2020-09-08 at 4 15 05 PM" src="../../assets/github/images/66583275/92536542-ceaa5000-f1ee-11ea-8150-8079c896e014.png"></p>
+<p>AFTER:
+<img width="342" alt="Screen Shot 2020-09-08 at 4 17 51 PM" src="../../assets/github/images/66583275/92536568-df5ac600-f1ee-11ea-95ce-ae556beea2c8.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-813">#813: [NJ] Weekly backfill: Probable deaths released on 9/3</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            813</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on September 4, 2020, 1:05 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/813" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+As usual, NJ has updated their probable death time series this week. The data runs through Tuesday but was only released on Thursday (9/3). When they do this, we replace our probable deaths column with their time series and update total deaths to be daily sum of our existing confirmed column plus the new probables.</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-695071357">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on September 18, 2020, 1:30 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/813#issuecomment-695071357" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was done soon after opening, looks like I forgot to close it at the time. The spreadsheet with the old/new values is here: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=810227789</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-810">#810: [NJ] Correct mistaken data entry of total deaths on 8/21,9/1 &amp; 9/2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            810</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 3, 2020, 6:10 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/810" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: New Jersey</p>
+<p><strong>Describe the problem</strong>
+Due to confusing/wrongly entered instructions, checkers did not calculate the total deaths in NJ from the confirmed+probable, but left them as is.</p>
+<p><strong>Link to data source</strong>
+8/31 https://covidtracking.com/screenshots/NJ/NJ-20200831-182223.png
+9/1 https://covidtracking.com/screenshots/NJ/NJ-20200901-182124.png
+9/2 https://covidtracking.com/screenshots/NJ/NJ-20200902-181951.png</p>
+<ul>
+<li>[x] Amend the totals on the dates in question</li>
+<li>[x] Change the instructions back to what they were on 8/27</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-686481773">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 3, 2020, 6:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/810#issuecomment-686481773" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/92119483-da001480-edc5-11ea-86ae-fe73d4415941.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/92120527-2d269700-edc7-11ea-8357-5b73861d2a28.png" alt="image"></p>
+<p>Restored Data Entry Instruction in <code>States Matrix</code>
+<img src="../../assets/github/images/1749380/92121000-c35abd00-edc7-11ea-91e8-4cceef6cb350.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-686529721">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 3, 2020, 7:26 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/810#issuecomment-686529721" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'd by DZL 9/3 10:26</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-799">#799: [NJ] 8/27 Probable deaths backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            799</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on August 28, 2020, 11:50 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/799" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+Every week, we backfill NJ probable deaths and recalculate its total deaths based on the state-provided time series.</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-683171537">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 28, 2020, 3:22 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/799#issuecomment-683171537" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>As is typical, probable deaths dropped, although there was a recent probable death (one on 8/18) for the first time since we started these backfills. This caused a temporary drop in total deaths on 8/26 when DE picked up the new probables number, but that's now been smoothed out.</p>
+<p>Still using the same spreadsheet for before/after: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=1030909519</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-787">#787: [NJ] Probable deaths backfill for 8/21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            787</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on August 21, 2020, 3:49 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/787" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+Every week, we backfill NJ probable deaths and recalculate its total deaths based on the state-provided time series.</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-678549485">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 21, 2020, 3:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/787#issuecomment-678549485" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>As usual, probables dipped a little bit. The weird two February probable deaths from last week have vanished (they aren't in the state's Confirmed dataset that we don't backfill either) so we're back to NJ's first death being on 3/11. For now, I'm leaving the rows in place with zeroes.</p>
+<p>Spreadsheet updated with this week's analysis and before/after: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=1749793441</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-767">#767: [NJ] Recoveries decrease on 8/14</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            767</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on August 14, 2020, 5:32 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/767" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: New Jersey</p>
+<p><strong>Describe the problem</strong>
+Today's recovery count results in a decrease, so the data from 8/13 should be carried forward in States Daily.</p>
+<p><strong>Link to data source</strong>
+https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/PPE_Capacity/FeatureServer/0/query?where=survey_period%3E%3Dtimestamp+%272020-04-27+07%3A00%3A00%27+AND+structure_measure_identifier+LIKE+%27%25of+COVID+%2B+Patients+Discharged+from+Hospital+-+Excluding+Deaths+%28Past+24+hours%29%27&amp;outStatistics=%5B%7B%27statisticType%27%3A+%27sum%27%2C+%27onStatisticField%27%3A+%27Value%27%2C+%27outStatisticFieldName%27%3A+%27recoveries%27%7D%5D</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-674321895">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 14, 2020, 5:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/767#issuecomment-674321895" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Data was confirmed to have decreased on 8/14. The 8/13 number was carried over.</p>
+<p>Before:
+<img width="946" alt="Screen Shot 2020-08-14 at 8 34 15 PM" src="../../assets/github/images/66738237/90301400-9ae93e00-de6d-11ea-9d6a-34d2d9426ee6.png">
+After:
+<img width="942" alt="Screen Shot 2020-08-14 at 8 34 31 PM" src="../../assets/github/images/66738237/90301401-9cb30180-de6d-11ea-928e-c8fcb093ab47.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-766">#766: [NJ] Probable deaths backfill for week of 8/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            766</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on August 14, 2020, 1:46 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/766" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+Every week New Jersey releases a time series of probable deaths. Since NJ does not do daily reports of probable deaths, we decided to do a weekly backfill to make our probable deaths column match their time series starting last week (August 7).</p>
+<p>Their dashboard's top line probable deaths number updated on Wednesday (8/12) but the time series wasn't available until Friday (8/14).</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-675041878">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 17, 2020, 11:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/766#issuecomment-675041878" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This has been done:</p>
+<ul>
+<li>Probables column now matches last week's NJ probable time series</li>
+<li>Confirmed deaths was extended back into March based on the assumption that pre-5/3 NJ total deaths were all confirmed</li>
+<li>Total deaths reflects our existing confirmed + new probables</li>
+</ul>
+<p>Note that we take NJ's probable death time series because we don't have a daily &quot;dashboard time&quot; series for it (NJ updates weekly) but we don't take their &quot;by death date&quot; confirmed deaths series because for now we are sticking with dashboard time data.</p>
+<p>Analysis sheet, with old and new values: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=263413081</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-762">#762: [NJ] SVP Fixes: Move &quot;Total Tests PCR (People)&quot; to &quot;Total Tests (PCR)&quot;  from 5/11-8/16</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            762</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 14, 2020, 8:09 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/762" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NJ</p>
+<p><strong>Describe the problem</strong>
+ON 5/11, NJ switched the units it reports total tests in from people to tests, but CTP continued to capture the tests in the &quot;peoplewise&quot; column.
+Any values captured starting 5/11 should be moved from the &quot;Total Tests PCR (People)&quot; column to &quot;Total Tests (PCR)&quot; column</p>
+<p><strong>Link to data source</strong>
+NJ Before: (reporting in people) https://covidtracking.com/screenshots/NJ/NJ-20200508-181426.png
+NJ After: (reporting in tests) https://covidtracking.com/screenshots/NJ/NJ-20200511-001724.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-674873708">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 17, 2020, 6:13 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/762#issuecomment-674873708" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <h3>Updating Data Store</h3>
+<p>I am copying the following values from <strong>&quot;Total Tests PCR (People)&quot;</strong> column to <strong>&quot;Total Tests (PCR)&quot;</strong>
+The screenshots reflect the top of the update portion
+BEFORE
+<img src="../../assets/github/images/1749380/90399793-8a9db280-e069-11ea-92df-033ae60a72a1.png" alt="image">
+AFTER
+<img src="../../assets/github/images/1749380/90399868-a7d28100-e069-11ea-94b3-b53c75718f6e.png" alt="image"></p>
+<h3>Updating Future Capture Instructions</h3>
+<p><img src="../../assets/github/images/1749380/90402717-db170f00-e06d-11ea-8093-bfc59b3a12bb.png" alt="image"></p>
+<p><strong>APPENDIX: Values from 5/11-8/16</strong>
+2490186
+2461383
+2429841
+2403690
+2376016
+2350310
+2324046
+2301852
+2252792
+2252792
+2230245
+2187018
+2164580
+2164580
+2145878
+2096329
+2096329
+2059564
+2042682
+1983841
+1983841
+1953289
+1887644
+1887644
+1859638
+1840929
+1817955
+1802874
+1791137
+1781450
+1768928
+1759904
+1742347
+1721231
+1700385
+1685604
+1661284
+1623158
+1599417
+1577848
+1560133
+1549209
+1534640
+1508548
+1485501
+1463913
+1442937
+1422374
+1403984
+1387833
+1367250
+1346672
+1320910
+1299645
+1283451
+1267399
+1244967
+1218873
+1194343
+1171734
+1147841
+1131782
+1116083
+1097616
+1078215
+1055396
+1030793
+1008934
+989497
+975089
+960425
+943016
+918891
+857729
+837420
+817677
+795600
+745308
+745308
+716411
+685857
+660325
+635892
+623797
+603807
+578735
+555314
+544274
+531343
+520182
+505569
+487565
+475224
+462972
+451696
+441450
+433060
+425933</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-674922449">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 17, 2020, 7:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/762#issuecomment-674922449" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'd by DZL 8/17 10:41</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-718">#718: [NJ] PCL Cases Backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            718</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on July 31, 2020, 6:15 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/718" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Describe the Issue:</strong> CTP started reporting confirmed cases on 4/29, but we have screenshots of data to 3/21.</p>
+<p><strong>Data Source:</strong> https://covid19.nj.gov/#live-updates</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-668051664">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 3, 2020, 7:23 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/718#issuecomment-668051664" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Of use may be the &quot;New and Cumulative Total Number of COVID-19 Cases in New Jersey&quot; graph in the daily PDF</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-687405086">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on September 4, 2020, 2:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/718#issuecomment-687405086" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The NJ dashboard has cumulative confirmed cases back to March 5 &quot;by date reported to NJDOH&quot;, which appears to correspond to what we would call &quot;dashboard time&quot; since they match what data entry collects once our Positive Cases (PCR) column begins. They also <em>almost</em> match our Positives column.</p>
+<p>I've used those numbers to extend our Positive Cases (PCR) column from 4/29 back to 3/5.</p>
+<p>I feel like we should also put these numbers in our Positives column since in the few places they conflict, we should go with the official state historical data. But I decided not to do that yet because the March columns for positive, negative, and Total PCR Tests (People) seem squirrelly to me. It looks like Total PCR Tests (People) was until recently a formula just adding positive and negative which seems...lame.</p>
+<p>Analysis spreadsheet, including previous States Daily columns, is here: https://docs.google.com/spreadsheets/d/1aaKr6wLcvN4dcd8_ne2uIgYROmjKr_eJEjMya_KfUNg/edit#gid=0</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-629">#629: [NJ] Testing Numbers from 6/6-7 Need to be Updated</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            629</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 15, 2020, 9:56 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/629" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: New Jersey</p>
+<p><strong>Describe the problem</strong>
+From an email - &quot;I just wanted to let you guys know that New Jersey updated their testing numbers for June 6 and 7 to break them up. They reported late on the 6th, so you guys rolled their data into the 7th. But they've now changed it to 24,125 on the 5th (which you guys report as the 6th) and 17,409 on the 6th (7th for covidtracking.com).</p>
+<p>Right now, you guys have 557 and 40,977 for those 2 days.&quot;</p>
+<p><strong>Link to data source</strong>
+Screenshot showing CTP data:
+<img src="https://user-images.githubusercontent.com/67408226/87572630-b26fb400-c680-11ea-9173-8cdf6fa685e5.png" alt="image">
+Screenshot from NJ site on 6/7 shows this breakdown:
+<img src="https://user-images.githubusercontent.com/67408226/87572515-848a6f80-c680-11ea-904a-8b957c6fa7bf.png" alt="image"></p>
+<p>***Note: Screenshots from NJ site from 6/7-22 show a different breakdown:
+<img src="https://user-images.githubusercontent.com/67408226/87573003-35910a00-c681-11ea-996b-159fc45baa87.png" alt="image"></p>
+<p>However, when summing the two revised values and subtracting our current 6/6 value, we come to our current 6/7 value:
+24125 + 17409 - 577 = 40977
+Using these revised values for 6/6-7 follows NJ's testing trends over those few days more consistently. This is also in line with the data lag the email mentions.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666576602">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 30, 2020, 11:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/629#issuecomment-666576602" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-669243905">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 5, 2020, 7:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/629#issuecomment-669243905" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/89427750-7617fc80-d6f0-11ea-8059-dc103ab7c72b.png" alt="image"></p>
+<p>AFTER:
+<img src="../../assets/github/images/67408226/89428507-4fa69100-d6f1-11ea-9dab-b8d02cc63525.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-590">#590: NJ: Backfilling probable deaths from 6/26 &amp; 7/8</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            590</p>
+          <p>
+            <strong>amandafrench</strong> opened this issue on July 8, 2020, 4:28 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/590" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: [NJ]</p>
+<p><strong>Describe the problem</strong>
+NJ has twice now reported previously-determined Probable deaths. We have asked them for the data so we can backfill but have not received it yet. Placeholder issue for doing the backfill once we receive it. &quot;On May 16, New Jersey had a significant jump in recovered (about 7,000) due to backfilling previous days after a shift in how this figure was reported on April 28. On June 25th, New Jersey reported 1854 probable deaths that occured in the past. This causes a perecived increase in the daily number of deaths.&quot; 89 new probable deaths on 7/8.</p>
+<p><strong>Link to data source</strong>
+https://covid19.nj.gov/#live-updates
+https://covidtracking.com/data/state/new-jersey</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665128681">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 28, 2020, 9:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/590#issuecomment-665128681" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-668053656">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 3, 2020, 7:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/590#issuecomment-668053656" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Found on 8/3: NJ dashboard now has a time series for their deaths separated by probable and confirmed. However, we should note that these are by 'Date of Death.' (Dash --&gt; Top tab labeled 'Case and Mortality Summaries' --&gt; Bottom tab labeled 'Mortality Summary')</p>
+<p>We may be able to make an exception regarding 'date of death' for this case?</p>
+<p>The hover-over graph looks like this:
+<img src="../../assets/github/images/67408226/89193392-c4939280-d55a-11ea-98ba-41e1e93c5709.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670651324">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on August 7, 2020, 11:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/590#issuecomment-670651324" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New Jersey probable deaths have been backfilled based on the state's historical time series. Total deaths were updated to take into account the new distribution of probable deaths. This smooths out the big jumps that took place on 6/25 and 7/8 as well as the declines on 7/22 and 7/29. Confirmed deaths were not backfilled; this column remains as reported by the state each day on its dashboard.</p>
+<p>Total deaths before/after:
+<img src="../../assets/github/images/404503/89676797-44eb2800-d8ba-11ea-93a4-99ebaa467cac.png" alt="image"></p>
+<p>Probable deaths before/after:
+<img src="../../assets/github/images/404503/89676819-4caacc80-d8ba-11ea-90f8-23eff860c03e.png" alt="image"></p>
+<p>State data source: https://covid19.nj.gov/#live-updates
+Backfill spreadsheet with NJ raw data, old copy of States Daily, etc: https://docs.google.com/spreadsheets/d/1HCQSdm9mpEOY3vCd3E9sBqxPoui4MB0M--DMrFxBTNU/edit#gid=466605614</p>
+<p>The backfill team plans to do this weekly on Wednesday, the same cadence NJ uses for updating its probable death numbers.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-540">#540: NJ data appears to be incorrect again</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            540</p>
+          <p>
+            <strong>ffrehner</strong> opened this issue on June 25, 2020, 5:02 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/540" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Hello.  The NJ data appears to be incorrect again.</p>
+<p>Thanks.
+<img src="https://user-images.githubusercontent.com/64551166/85807051-9756f780-b705-11ea-8f0d-8c9a5e4e3574.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649928135">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 25, 2020, 8:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/540#issuecomment-649928135" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@ffrehner</strong></p>
+<p>NJ has just added 1854 probable deaths to their count, but we are still awaiting the time series of when they occurred.
+We hope to get that information as soon as possible so we can correct the time series...</p>
+<p>If you are following us on Twitter, we also try to explain these kinds of anomalies there.
+<img src="../../assets/github/images/1749380/85815753-4102ac80-b737-11ea-8f1c-7470fb264acc.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-426">#426: api/v1/states/current NJ deaths are way high</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            426</p>
+          <p>
+            <strong>ffrehner</strong> opened this issue on May 16, 2020, 3:46 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/426" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The most-recent data update appears to an incorrect (high) death count for NJ...
+<img src="https://user-images.githubusercontent.com/64551166/82131664-6b526900-978c-11ea-869f-0bfbdfda9a16.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-629715847">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 16, 2020, 3:50 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/426#issuecomment-629715847" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@ffrehner</strong>! It was a mistake by entry today and we have fixed it on our API. If you retrieve the data now it should be fixed.
+<a href="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRwAqp96T9sYYq2-i7Tj0pvTf6XVHjDSMIKBdZHXiCGGdNC0ypEU9NbngS8mxea55JuCFuua1MUeOj5/pubhtml">Our public spreadsheet</a> have reflected this change</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-409">#409: NJ 5/11 Test Increase</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            409</p>
+          <p>
+            <strong>Prindle19</strong> opened this issue on May 11, 2020, 3:26 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/409" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Showing a single day increase in tests for NJ of  113486? That's a huge jump, is this accurate?</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-627023175">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on May 11, 2020, 4:41 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/409#issuecomment-627023175" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>That’s how they reported it. We’re trying to track down precisely why they had this big backlog.</p>
+<p>We believe it is similar to what happened in California a couple weeks ago. They changed both what they are reporting (switching to test completed instead of people tested) — and put out a huge number of tests.</p>
+<p>We’ll let you know if we can get more clarity from the state.</p>
+<p>A</p>
+<blockquote>
+<p>On May 11, 2020, at 3:26 PM, Sean Wohltman <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<p>Showing a single day increase in tests for NJ of 113486? That's a huge jump, is this accurate?</p>
+<p>—
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly, view it on GitHub, or unsubscribe.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-627338720">
+          <div class="frontmatter">
+            <div>
+              <strong>Prindle19</strong> commented on May 12, 2020, 6:17 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/409#issuecomment-627338720" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Interesting, where does this data come from specifically? I don't see it on the https://covid19.nj.gov/#live-updates dashboard</p>
+<p>I filed an OPRA request back in April to get test data by the actual day of the test (haven't heard back of course)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-627581265">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 12, 2020, 1:39 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/409#issuecomment-627581265" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>Prindle19 it was on their dashboard yesterday afternoon as 425,933. Here is a screenshot we captured. https://covidtracking.com/screenshots/NJ/NJ-20200511-184534.png
+It is currently up to 433,060
+I think that it showed up as pending on their dashboard when you asked.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-627589856">
+          <div class="frontmatter">
+            <div>
+              <strong>Prindle19</strong> commented on May 12, 2020, 1:57 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/409#issuecomment-627589856" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Got it, yeah found that today, thank you! Also noted that now there's a note saying that this could include re-tests...wondering if that has always been the case, and whether the &quot;confirmed cases&quot; could represent multiple positive tests of the same patient...</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628684883">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 14, 2020, 7:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/409#issuecomment-628684883" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@</strong>Prindle19</p>
+<p>I am closing this issue. We are watching closely all aspects related to what exactly is being reported from each state.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-305">#305: NJ Test Increase Incorrect for 4/13/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            305</p>
+          <p>
+            <strong>Prindle19</strong> opened this issue on April 26, 2020, 11:03 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/305" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Negativeincrease, Positiveincrease, Totalincrease for 4/13 show as:</p>
+<p>6065 | 2734 | 2734</p>
+<p>Total should be 6065 + 2734 = 8,799</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626876721">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 11, 2020, 11:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/305#issuecomment-626876721" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626998402">
+          <div class="frontmatter">
+            <div>
+              <strong>Prindle19</strong> commented on May 11, 2020, 3:25 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/305#issuecomment-626998402" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Not stale. Still an issue.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-631540751">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on May 20, 2020, 8:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/305#issuecomment-631540751" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi Sean,
+We’re seeing <code>&quot;negativeIncrease&quot;:0,&quot;positiveIncrease&quot;:2734,&quot;totalTestResultsIncrease&quot;:2734</code> which matches the best data the state provided that day.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-188">#188: NJ: Hospitalization data also available</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            188</p>
+          <p>
+            <strong>dlin</strong> opened this issue on April 12, 2020, 4:03 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Apologies if this is not the right place to post this. (Please help me find the correct location.)</p>
+<p>NJ has a hospital census hidden at the second tab of</p>
+<p>https://maps.arcgis.com/apps/MapSeries/index.html?appid=c2efd1898e48452e83d7218329e953d7&amp;entry=2</p>
+<p>Screenshot taken 2020-04-12 18:56 EST. Note that data is for &quot;10PM Previous Day&quot;</p>
+<p><img src="https://user-images.githubusercontent.com/578535/79081883-57c86400-7cef-11ea-817d-6f83f8d35e66.png" alt="image"></p>
+<p>It shows total hospatilization at 7,604 and ICU at 823, and ventilator use at 1,644.</p>
+<p>The charts show history. Hovering over the bars, I read</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>ICU</th>
+<th>Ventilator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020-04-04</td>
+<td>724</td>
+<td>1346</td>
+</tr>
+<tr>
+<td>2020-04-05</td>
+<td>711</td>
+<td>1306</td>
+</tr>
+<tr>
+<td>2020-04-06</td>
+<td>801</td>
+<td>1513</td>
+</tr>
+<tr>
+<td>2020-04-07</td>
+<td>823</td>
+<td>1568</td>
+</tr>
+<tr>
+<td>2020-04-08</td>
+<td>714</td>
+<td>1519</td>
+</tr>
+<tr>
+<td>2020-04-09</td>
+<td>740</td>
+<td>1626</td>
+</tr>
+<tr>
+<td>2020-04-10</td>
+<td>822</td>
+<td>1655</td>
+</tr>
+<tr>
+<td>2020-04-11</td>
+<td>823</td>
+<td>1644</td>
+</tr>
+</tbody>
+</table>
+<p>I can't quite make the other numbers add up to the total hospitalized.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-613158949">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 13, 2020, 5:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-613158949" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Screenshot of just now
+<img src="../../assets/github/images/578535/79172829-cf67c300-7dc3-11ea-9564-811ea3599a85.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-613710789">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 14, 2020, 3:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-613710789" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Recent screenshot:
+<img src="../../assets/github/images/578535/79279896-0e0d8400-7e7d-11ea-953b-d65be0092d37.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-614348179">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 15, 2020, 5:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-614348179" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Another day, another screenshot:
+<img src="../../assets/github/images/578535/79402098-ed1a6100-7f58-11ea-8355-adecd2d787f6.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-614998268">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 16, 2020, 7:09 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-614998268" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Another screenshot. Looks like they have some permission issues, but the numbers are still legible
+<img src="../../assets/github/images/578535/79524612-fe35a180-802e-11ea-8eb0-859314840bc3.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-616006276">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 18, 2020, 7:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-616006276" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Sorry I forgot to screenshot yesterday. Looks like they changed the format today or yesterday.</p>
+<p><img src="../../assets/github/images/578535/79677507-27d20280-81c0-11ea-9935-95a98806cc6b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-616282471">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 19, 2020, 8:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-616282471" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Screenshot just now:</p>
+<p><img src="../../assets/github/images/578535/79710009-acd91c80-8291-11ea-8684-ecb061e09725.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-618737603">
+          <div class="frontmatter">
+            <div>
+              <strong>dlin</strong> commented on April 23, 2020, 5:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-618737603" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Another screenshot:
+Values for the last few days hovering over the graph:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Hospitalizations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020-04-17</td>
+<td>7758</td>
+</tr>
+<tr>
+<td>2020-04-18</td>
+<td>7551</td>
+</tr>
+<tr>
+<td>2020-04-19</td>
+<td>7473</td>
+</tr>
+<tr>
+<td>2020-04-20</td>
+<td>7594</td>
+</tr>
+<tr>
+<td>2020-04-21</td>
+<td>7384</td>
+</tr>
+<tr>
+<td>2020-04-22</td>
+<td>7240</td>
+</tr>
+</tbody>
+</table>
+<p>I guess they revised the historic numbers since they don't match old screenshots.</p>
+<p><img src="../../assets/github/images/578535/80162091-570db880-85a0-11ea-8e15-5cb47bd05dc8.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-626081752">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 8, 2020, 6:16 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-626081752" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-630539738">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 18, 2020, 7:26 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/188#issuecomment-630539738" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

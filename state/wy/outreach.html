@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wyoming Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wyoming</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wyoming</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 13, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What defines an outbreak?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 13, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Our standard definition for outbreak is three or more non-household contacts within an incubation period (14 days for COVID-19).For long-term care facilities, once case leads to increased testing and prevention measures. We consider outbreaks resolved after three clear rounds of weekly testing.</p>
+
+        </div>
+      
+    
+  
+    <h2>April 13, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have a specific date in March that your cumulative data dates back to?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>3/13/20</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Has WY now been classifying cases of two or more races as only the primary race  recently? If so, at what point did this classification change happen? Is it possible to break these categories out to include 'two or more' or 'multiple races' as a separate category in line with the census so that an accurate comparison to the overall population is possible?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I’m told we've always classified race as “check all that apply,” meaning we do not force into a single race category and count cases in each race/ethnicity they identify as. We have not changed the way this is pulled since the pandemic’s beginning. At some point we may make a change but have no current plans to do so. [I asked a follow up as well because this didn't seem to answer the initial question: I think there's some confusion here between how WY collects race/ethnicity data - which may well for &quot;check all that apply&quot; and the way that data is classified in WY's public data dashboard - if someone DOES check more than one box for race, would their case be counted multiple times toward every category they checked? If not, how does the state determine where to classify a case and/or fatality of someone who checked multiple boxes?]</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting “COVID-19 Resulted Tests” as referring to the total number of tests conducted, and we are interpreting “Number of People Tested” as referring to the total number of unique individuals tested. Are these correct interpretations?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes this is a correct interpretation with the limitation that we know that all tests conducted may not be reported to us, especially negative results.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach these figures? If so, how? If the same person gets different tests results on different days, would you report the raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, testing data reported to WDH is deduplicated to get a count of individuals tested. Only one positive result is reported per individual. A person may have more than one negative result.</p>
+
+        </div>
+      
+    
+  
+    <h2>September 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We’re interested in testing data in units of “testing encounters,” which can be defined as “the number of people who have been tested per day.” Under this metric, if a person is being tested once today and once again the following week, that counts as two tests, however, if the same person has two samples collected at a testing center visit, then that only counts as one testing encounter. Might Wyoming be willing to release testing encounters numbers again ideally in an automation-friendly format?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>September 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>A person is included each time they are tested until they have a positive test and then future positive tests are excluded as duplicates.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 3, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Case data for White is being reported at 0% where previously it was 59.4% while Native Hawaiian/Pacific Islander is being reported at 59.2%. We’re curious what those groups’ values should be, and if any of the other groups should be adjusted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>There was a data error that was made by the staff updating the data over the weekend that was discovered this morning. The categories of White Non Hispanic and Native Hawaiian/PI were inadvertently switched. It will be corrected at the 3pm update today</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>When is Wyoming planning to begin publishing data on cases &amp; fatalities linked to LTC facilities / Nursing homes? It sounds like that information is not being tracked in aggregate either for deaths or for cases, is that right?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>At this time, you can find that information, if it is available, in the news release issued for each death. Those releases are saved here [https://health.wyo.gov/news/] [NO answer re: cases, but I followed up to ask about that again...]</p>
+<p>We track this data internally to inform decision making and develop guidance as we work with long term care facilities. But no, it is not included on our public facing dashboard in aggregate at this time.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 16, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you know when Wyoming will begin reporting race &amp; ethnicity data for COVID-19 deaths?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 16, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Wyoming does report race and ethnicity data for COVID-19 deaths when it is available. It is included on the Case Map and Statistics Dashboard under &quot;COVID-19 Related Death Information&quot;. The Wyoming Department of Health, similar to other public health entities, faces challenges in collecting and publishing race and ethnicity information. Some of those challenges include:
+-The way data is collected: the primary way to collect this information is self-report, or how people view themselves. Some people may be reluctant to share this information, or a person may be unavailable to ask this information.
+-Small sample size: Wyoming has a relatively small population. Often we cannot produce reliable estimates for some racial or ethnic groups due to small sample sizes. Additionally in some locations racial and ethnic information may be personally identifying and we have policies in place that help protect the personal health information of Wyoming residents.
+-Contributing factors: It is important to understand that racial and ethnic information is only one piece of the story. Health data about race, culture, or income can mean more about the community where a person lives, works, or plays than the choices a person makes. For example, differences in access to healthcare can have a bigger impact on health than the choices a person makes.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What is n= for the percentages? (is the percentage out of the total number of cases)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>n= total number of lab confirmed COVID-19 cases / Race and ethnicity are self reported based on how a person identifies.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How are the race/ethnicity categories defined, that they add up to  more than 100%?</p>
+
+    </div>
+    
+      <h3>Answers
+      </h3>
+      
+        <h4>June 15, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Race and ethnicity are self reported based on how a person identifies. A person can identify as more than one race and / or ethnicity. For that reason, the percentages will not add up to 100%.</p>
+
+        </div>
+      
+        <h4>June 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>A person can identify as more than one race and / or ethnicity. For that reason, the percentages will not add up to 100%.</p>
+
+        </div>
+      
+    
+  
+    <h2>April 23, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Outreach re: revised  “testing numbers” and “resulted tests”</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 23, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>On further analysis of our testing data we identified that some hospitals and reference laboratories were reporting duplicate results (multiple of the same results from the same patient from the same day). The decreased numbers reflect our removal of duplicate results, we felt it was important to post the more accurate data.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

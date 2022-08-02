@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Ohio Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Ohio</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Ohio</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>March 3, 2021, 2:42 PM PST</td>
+          <td>1123</td>
+          <td>
+            <a href="#issue-1123">[OH] Backfill 03/03/21 Deaths (confirmed + probable) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 3, 2021, 2:42 PM PST</td>
+          <td>1123</td>
+          <td>
+            <a href="#issue-1123">[OH] Backfill 03/03/21 Deaths (confirmed + probable) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 30, 2020, 8:34 AM PST</td>
+          <td>1033</td>
+          <td>
+            <a href="#issue-1033">[OH] Backfill PCR and Antigen timeseries from data provided by Ohio</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 15, 2020, 5:24 PM PST</td>
+          <td>950</td>
+          <td>
+            <a href="#issue-950">[OH] Fix typo in 11/15 cur. hosp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 14, 2020, 1:49 PM PDT</td>
+          <td>830</td>
+          <td>
+            <a href="#issue-830">[OH] Back-fill explicit probable cases from 4/10 through 7/27 using confirmed and total</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 13, 2020, 8:01 AM PDT</td>
+          <td>760</td>
+          <td>
+            <a href="#issue-760">[OH] Backfill total test numbers prior to 5/13</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 17, 2020, 10:18 AM PDT</td>
+          <td>641</td>
+          <td>
+            <a href="#issue-641">[OH] 4/27-28 Incorrectly recorded only confirmed cases in our lumped column</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 12, 2020, 9:04 AM PDT</td>
+          <td>606</td>
+          <td>
+            <a href="#issue-606">[OH] Sync test numbers with state historical data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 12, 2020, 6:26 AM PDT</td>
+          <td>605</td>
+          <td>
+            <a href="#issue-605">[OH]Review historicals for mismatches with Ohio&#39;s page</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 6, 2020, 7:45 AM PDT</td>
+          <td>577</td>
+          <td>
+            <a href="#issue-577">[OH] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1123">#1123: [OH] Backfill 03/03/21 Deaths (confirmed + probable) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1123</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on March 3, 2021, 2:42 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1123" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> OH</p>
+<p><strong>Dates affected:</strong> 03/02/21</p>
+<p><strong>Describe the issue:</strong> On March 2, 2021, Ohio changed the way that they report COVID-19 deaths, and updates their mortality figures twice a week as death certificate information is received and verified from the National Center for Health Statistics. As a result of this change, Deaths (confirmed + probable) decreased from 17,346 to 17,189 on March 2, 2021. To allow our data quality team time to evaluate this change, we did not record this change on March 2, 2021, and backfilled our timeseries on March 3, 2021.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790125661">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on March 3, 2021, 2:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1123#issuecomment-790125661" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+OH 2021-03-02
+death: 17189 (was 17346)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1123">#1123: [OH] Backfill 03/03/21 Deaths (confirmed + probable) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1123</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on March 3, 2021, 2:42 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1123" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> OH</p>
+<p><strong>Dates affected:</strong> 03/02/21</p>
+<p><strong>Describe the issue:</strong> On March 2, 2021, Ohio changed the way that they report COVID-19 deaths, and updates their mortality figures twice a week as death certificate information is received and verified from the National Center for Health Statistics. As a result of this change, Deaths (confirmed + probable) decreased from 17,346 to 17,189 on March 2, 2021. To allow our data quality team time to evaluate this change, we did not record this change on March 2, 2021, and backfilled our timeseries on March 3, 2021.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790125661">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on March 3, 2021, 2:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1123#issuecomment-790125661" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+OH 2021-03-02
+death: 17189 (was 17346)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1033">#1033: [OH] Backfill PCR and Antigen timeseries from data provided by Ohio</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1033</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on December 30, 2020, 8:34 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1033" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Ohio</p>
+<p><strong>Describe the problem</strong>
+As of 12/29/2020, Ohio is providing a download of antigen and pcr tests, including positive tests</p>
+<p><strong>Link to data source</strong>
+https://data.ohio.gov/wps/portal/gov/data/view/covid-nineteen-key-metrics-on-testing</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-755552084">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on January 6, 2021, 11:22 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1033#issuecomment-755552084" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5777721/OH.before.xlsx">OH before.xlsx</a>
+<a href="../../assets/github/files/5777730/OH.after.xlsx">OH after.xlsx</a>
+<img src="../../assets/github/images/15933271/103811195-8d09a480-502a-11eb-9b46-582e444c1972.png" alt="Columns C-D"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-755557315">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on January 6, 2021, 11:25 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1033#issuecomment-755557315" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5777752/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-950">#950: [OH] Fix typo in 11/15 cur. hosp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            950</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 15, 2020, 5:24 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/950" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: OH</p>
+<p>Dates affected: 11/15</p>
+<p>Describe the issue: On 11/15 we had a typo in OH currently hospitalized, we published the number 2175, but should have been 3175.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-727680428">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 15, 2020, 5:25 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/950#issuecomment-727680428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="188" alt="Screen Shot 2020-11-15 at 8 25 16 PM" src="../../assets/github/images/68712382/99203474-adcb2180-2780-11eb-98cf-b1703ef6a3ba.png"></p>
+<p>AFTER:
+<img width="186" alt="Screen Shot 2020-11-15 at 8 25 51 PM" src="../../assets/github/images/68712382/99203493-c3404b80-2780-11eb-8464-5c68ee6c1300.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-830">#830: [OH] Back-fill explicit probable cases from 4/10 through 7/27 using confirmed and total</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            830</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 14, 2020, 1:49 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/830" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Ohio</p>
+<p><strong>Describe the problem</strong>
+Ohio has been reporting probable cases on its dashboard since 4/10. CTP did not create a column to capture explicit probable cases until 7/28, so there is a gap between 4/10-7/27</p>
+<p><strong>Action Plan</strong></p>
+<ul>
+<li>[ ] Fill out  probable cases from 4/10 through 7/27 using the difference between confirmed and total</li>
+</ul>
+<p><strong>Link to data source</strong>
+<a href="https://covidtracking.com/data/state/ohio/screenshots">Ohio Screenshots on CovidTracking.com</a>
+<a href="https://covidtracking.com/screenshots/OH/OH-20200410-181556.png">4/10 Screenshot</a>
+<a href="https://covidtracking.com/screenshots/OH/OH-20200727-182032.png">7/27 Screenshot</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-692308287">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 14, 2020, 1:53 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/830#issuecomment-692308287" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before and After Spreadsheet</strong>
+<a href="../../assets/github/files/5220907/Probable.Timeseries.Backfill.-.Ohio.xlsx">Probable Timeseries Backfill - Ohio.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-760">#760: [OH] Backfill total test numbers prior to 5/13</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            760</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on August 13, 2020, 8:01 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/760" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Ohio</p>
+<p><strong>Describe the problem</strong>
+CTP's current values for Total PCR Tests (People) only goes back until 5/13. We can use the secondary screenshots to backfill to 4/20 (inclusive). OH reports the value as &quot;Total Tested in Ohio.&quot;</p>
+<p>OH's total test units are unclear, and we're performing outreach to confirm whether or not OH reports total testing numbers in specimens or people. Until we hear back from outreach, we are defaulting to recording in Total Tests (PCR).</p>
+<p>We need to:</p>
+<ol>
+<li>Backfill through 4/20</li>
+<li>Move from <strong>Total PCR Tests (People)</strong> to <strong>Total Tests (PCR)</strong></li>
+<li>Edit States Matrix to reflect changes.</li>
+</ol>
+<p><strong>Link to data source</strong>
+State Screenshots</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-675517084">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 18, 2020, 7:36 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/760#issuecomment-675517084" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE BACKFILL:</p>
+<p><img src="../../assets/github/images/67408226/90520726-94cdb880-e11e-11ea-8a7b-98a6b6b54cc8.png" alt="image"></p>
+<p>AFTER BACKFILL:</p>
+<p><img src="../../assets/github/images/67408226/90525458-255ac780-e124-11ea-9880-b1c760fb9235.png" alt="image"></p>
+<p>Backfill values:
+209153
+203672
+195533
+183269
+175060
+167978
+159838
+154290
+149346
+145021
+139725
+133148
+128206
+122706
+119391
+115783
+111379
+107109
+102325
+97998
+94239
+90839
+86989</p>
+<hr>
+<p>BEFORE MOVE:</p>
+<p><img src="../../assets/github/images/67408226/90525720-694dcc80-e124-11ea-9e56-e650efa0d0c0.png" alt="image"></p>
+<p>AFTER MOVE:</p>
+<p><img src="../../assets/github/images/67408226/90526150-e711d800-e124-11ea-96a7-92e6924f46fe.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-675524428">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on August 18, 2020, 7:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/760#issuecomment-675524428" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>STATES MATRIX BEFORE:</p>
+<p><img src="../../assets/github/images/67408226/90528046-0c074a80-e127-11ea-988f-d911fe854a67.png" alt="image"></p>
+<p>STATES MATRIX AFTER:</p>
+<p><img src="../../assets/github/images/67408226/90528118-1fb2b100-e127-11ea-91d8-b7cf32c323fc.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-641">#641: [OH] 4/27-28 Incorrectly recorded only confirmed cases in our lumped column</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            641</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 17, 2020, 10:18 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/641" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Ohio</p>
+<p><strong>Describe the problem</strong>
+Where we report &quot;positive&quot; as &quot;people with confirmed or probable COVID-19,&quot; we recorded only the confirmed values from 4/27-28. This causes a decrease in our &quot;positive&quot; trend. We should revise these values as such:
+4/27: 15699 --&gt; 16325
+4/28: 16128 --&gt; 16769</p>
+<p><strong>Link to data source</strong>
+CTP Data:
+<img src="https://user-images.githubusercontent.com/67408226/87813313-7ff7bf80-c816-11ea-9371-7975fa38548e.png" alt="image"></p>
+<p>4/27 Screenshot:
+<img src="https://user-images.githubusercontent.com/67408226/87813356-97cf4380-c816-11ea-9c80-39d4dcff6613.png" alt="image"></p>
+<p>4/28 Screenshot:
+<img src="https://user-images.githubusercontent.com/67408226/87813436-c6e5b500-c816-11ea-9645-811ce6daab31.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-660517723">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on July 18, 2020, 10:52 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/641#issuecomment-660517723" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img width="439" alt="BEFORE_OH" src="../../assets/github/images/31285549/87858693-9f5d1e00-c8e4-11ea-85d2-108d6b2e6d29.png"></p>
+<p><strong>AFTER</strong>
+<img width="401" alt="AFTER_OH" src="../../assets/github/images/31285549/87858698-a4ba6880-c8e4-11ea-8033-893bd3edb862.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-606">#606: [OH] Sync test numbers with state historical data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            606</p>
+          <p>
+            <strong>MattHilliard</strong> opened this issue on July 12, 2020, 9:04 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/606" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: OH</p>
+<p><strong>Describe the problem</strong>
+There are some days that OH did not report a new total test number, which means people graphing percent positive metrics will show a 100% positive rate on those days. The state has a Tableau dashboard with tests by result date that we can potentially use to fix this.</p>
+<p><strong>Link to data source</strong>
+https://coronavirus.ohio.gov/wps/portal/gov/covid-19/dashboards/key-metrics/testing</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665834803">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 29, 2020, 11:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/606#issuecomment-665834803" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-670960951">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 8, 2020, 11:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/606#issuecomment-670960951" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-679009687">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 24, 2020, 2:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/606#issuecomment-679009687" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-686377736">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 3, 2020, 2:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/606#issuecomment-686377736" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-605">#605: [OH]Review historicals for mismatches with Ohio&#39;s page</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            605</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 12, 2020, 6:26 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/605" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>From a Front ticket:</p>
+<p>&quot;I am an avid COVID-19 tracker from Cincinnati.  I refer to your Ohio page regularly to get testing data, and share that with my social network.  But your recent chart showing zero cases on July 2nd a large spike in new cases on July 3rd caught my attention.  This information is wrong.  So, I double checked the rest of July and found every single date was wrongly reported.  I did not check June's info.</p>
+<p>July 1 you reported 1,076 new cases; actual new Ohio cases were 1,041
+July 2 you reported 0 new cases; actual new Ohio cases were 1,260
+July 3 you reported 2,392 new cases; actual new Ohio cases were 1,058.<br>
+July 4 you reported 926 new cases; actual new Ohio cases were 907
+July 5 you reported 968 new cases; actual new Ohio cases were 970
+July 6 you reported 805 new cases; actual new Ohio cases were 774
+July 7 you reported 948 new cases; actual new Ohio cases were 918
+July 8 you reported 1,277 new cases; actual new Ohio cases were 1,234
+July 9 you reported 1,150 new cases; actual new Ohio cases were 1,122
+July 10 you reported 1,525 new cases; actual new Ohio cases were 1,494</p>
+<p>Incidentally, the number of new cases on July 10th was our highest to date.  And we have not had any date with zero cases reported since we started reporting on or about March 8th.</p>
+<p>I strongly encourage you to correct the Ohio errors, or take down the page.&quot;</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_25y6p">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657239402">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 12, 2020, 8:43 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/605#issuecomment-657239402" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Took a quick look. July 2 they must have updated late, we have no new numbers. On July 9th our negatives number repeats but cases and deaths were updated. I can repair July 2nd from screenshots. On July 9th, screenshots indicate the state didn't update its total test number. So I think we are stuck there.</p>
+<p>Based on a spot check, I believe the other &quot;discrepancies&quot; listed here are due to the fact our reported cases are confirmed + probables and not just probables.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-657240176">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 12, 2020, 8:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/605#issuecomment-657240176" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Actually re: 7/9, There's a daily testing by result date time series available here: https://coronavirus.ohio.gov/wps/portal/gov/covid-19/dashboards/key-metrics/testing  However the daily totals there don't agree with the daily reports from the state, so we would need to sync the whole history. But this seems like a valid path to fixing 7/9.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-657241482">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 12, 2020, 8:59 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/605#issuecomment-657241482" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>7/2 Before:
+<img src="../../assets/github/images/404503/87250922-36822b80-c436-11ea-900a-5e5e5da8c066.png" alt="image"></p>
+<p>7/2 After:
+<img src="../../assets/github/images/404503/87251034-da6bd700-c436-11ea-95ea-8f9406befd0f.png" alt="image"></p>
+<p>Ohio's secondary dashboard with total tests did not update by our latest 7/2 screenshot, so there's no way to update Negatives or Total PCR tests. The 7/2 death number now matches 7/3; this is true in the screenshots as well. Current hospitalization numbers don't appear to be screenshotted so those remain unchanged for 7/2.</p>
+<p>The tests by result date time series I mentioned in the earlier comment might also let us fix the total tests for 7/2 in addition to 7/9.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-657241742">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on July 12, 2020, 9:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/605#issuecomment-657241742" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I'm going to close this issue and open a new one for the potential sync of daily testing data since I won't have time to do that before today's pub shift.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-577">#577: [OH] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            577</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on July 6, 2020, 7:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/577" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We have confirmed deaths for OH going back to 4/15. However, there is a gap in our confirmed deaths from 5/4-5/11 which needs to be filled, and we didn't track probables before 5/13 even though we were tracking the confirmed number and OH historically provided probables.</p>
+<p>OH also appears to have provided breakdowns even before then, <a href="https://covidtracking.com/screenshots/OH/OH-20200410-181556.png">since 4/10</a>, and I don't want to leave OH half-backfilled, so I'm going to fill in those days</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-654309789">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 6, 2020, 8:32 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/577#issuecomment-654309789" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Blanks before</strong>
+<img src="../../assets/github/images/15933271/86608614-c4fb3680-bf78-11ea-966e-0dfd9f15ee12.png" alt="Screen Shot 2020-07-06 at 10 50 15 AM"></p>
+<p>Another problem I noticed: our values for our confirmed backfill from 4/15-5/3 also lagged five days behind what the screenshots reflect were reported those days. I am overriding those values—both because this appears to be an error and to match our total column, which does not lag.</p>
+<p><strong>Lagged Values Before</strong>
+<img src="../../assets/github/images/15933271/86608564-b876de00-bf78-11ea-8b20-49c5564c6233.png" alt="Screen Shot 2020-07-06 at 10 57 29 AM"></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/15933271/86611215-5a4bfa00-bf7c-11ea-9039-c73dbc3aa42e.png" alt="Screen Shot 2020-07-06 at 11 32 02 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

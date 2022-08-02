@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Wisconsin Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Wisconsin</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Wisconsin</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On this page there is a chart showing cumulative total cases &quot;by date confirmed&quot;. We'd like to understand whether the &quot;date confirmed&quot; is the date that a positive test was administered, or the date that the positive test result was produced. Similarly, on this page, there is a chart for &quot;all people tested versus testing capacity&quot;. The X axis of that graph is labeled &quot;date of test result&quot;, but the chart legend is labeled &quot;total people tested daily&quot;. Are test results assigned to days in this graph using the day that the test was administered, or the date that the test result was produced?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Date confirmed is the date that a case’s record was set to “confirmed” status, so it most closely aligns with the date the positive result is received by public health.</p>
+<p>So in New confirmed cases by date confirmed, and 7-day average the daily cases are today’s cumulative minus yesterday’s cumulative, whereas the epi curve that’s filterable by county (Number of reported confirmed and probable cases by date of symptom onset or diagnosis) is presented by onset or diagnosis date (if patient was asymptomatic/onset date is missing, then it’s the date the specimen was collected). So in the first graph it aligns more with the date the positive test was resulted and reported, and the second one aligns more closely when the specimen was collected (unless the patient was symptomatic, in which case it’s symptom onset date).</p>
+<p>In all of the testing charts, the data are by the date the test was resulted.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We are currently interpreting &quot;Total People tested&quot; as referring to the total number of unique individuals tested. Is this correct for Wisconsin?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, that is correct</p>
+
+        </div>
+      
+    
+  
+    <h2>August 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>If so, do you have plans to release the total number of tests conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>You will find that information at the bottom of our Summary Data page, in the chart titled “All specimens tested versus testing capacity”.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you perform any deduplication to reach the &quot;&quot;Total people tested&quot;&quot; count? If so, how? (i.e. instances swabbed per day/week; recording only one positive test per person, but multiple negative tests for the same person; etc.)?</p>
+<p>When reporting testing results, if the same person gets different test results on different days, would you report raw results as part of the daily positives or do you apply any kind of logic such as reporting only the first negative or positive result per individual?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We do deduplicate our data. All data are laboratory-confirmed cases of COVID-19 that we extract from our live Wisconsin Electronic Disease Surveillance System (WEDSS).  Our teams are constantly working working to verify that data, and make corrections if necessary. You will see that information on the Summary Data page, in the chart titled “All people tested by positive and negative result, with 7-day average percent positive, by person” people are included as testing positive (dark blue bars) on the date of their positive test result. If they tested positive more than once, they are only included once on the date of their first positive test result. People who tested negative and never positive (gray bars) are counted once on the date of their first negative test result.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 13, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does the LTC facility number provided include Nursing Homes?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 13, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Regarding long-term care investigations, nursing homes are included in the LTCF total. You can refer to our webpage for the types of facilities included in this category: “Long-term care facilities include skilled nursing facilities (nursing homes) and assisted living facilities (community-based residential facilities and residential care apartment complexes).”</p>
+
+        </div>
+      
+    
+  
+    <h2>July 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is WI conducting antigen testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We do see some antigen testing. If an individual only has a positive antigen test (and no positive PCR), and they meet the probable case definition (e.g., epi linkage), they would be counted among probable cases (and not confirmed cases). We follow the CDC/CSTE case definition for COVID-19.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is WI conducting pool testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I am not aware of COVID-19 pool testing being conducted as part of public health surveillance.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 1, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How do you define probables ? What must happen to report probables into confirmed? Is a positive antibody without additional criteria a probable?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 1, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We follow the CDC/CSTE case definition.A person is counted as a COVID-19 probable case if they are not positive by a confirmatory laboratory test (for example, a test that detects the virus in the nose or throat), but have a combination of other factors. These other factors are symptoms of COVID-19, exposure to COVID-19 (for example, being a contact of someone who has laboratory confirmed COVID-19), or a positive non-confirmatory laboratory test (for example, a blood test that detects antibodies against the virus causing COVID-19).A COVID-19 probable death is a COVID-19 probable case who died, or a person's death certificate lists COVID-19 (or the virus causing COVID-19) as a cause of death or a significant condition contributing to death.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 9, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does the DHS have plans to parse out Nursing Home case and death counts from LTC?   Since your Nursing Home data isn't fully available, how does Wisconsin's Nursing Home cases and deaths compare to the CMS's recent data release?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 9, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I am not as familiar with the CMS/NHSN data system, but based on discussions with our Healthcare Associated Infections Prevention Program staff, the reporting requirements are different (e.g., CMS reporting includes suspect and confirmed, DHS includes confirmed only). There are also data completeness issues with NHSN. For example, some facilities are currently working on registering staff to use the CMS/NHSN system and be able to report through it.For both CMS and DHS data, these are point-in-time metrics, but the reporting timeframes are different. For CMS data, nursing home staff indicate how many cases were in each category since the last time they reported. There is no required timeline for reporting, other than at least once a week (e.g., some report daily, some weekly, some in between). Adding these data week to week would not be accurate; if a suspect case was reported during one week, and then tested positive, they would be counted as a new confirmed case during the next week.Unlike NHSN, the DHS data system is live, so updates or corrections are made into a live data system. There are a lot of intricacies and nuances, but the bottom line is that in the early weeks of data collection we’re definitely seeing differences and are working with the facilities, local health departments, and the different systems to try and figure out the main issues and, when needed, correct them.</p>
+
+        </div>
+      
+    
+  
+    <h2>June 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Why did WI deaths decrease by one on 6/8?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 1, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We reported 646 cumulative total deaths, with no new deaths being reported today. The total cumulative death count went down by 1 today because this one from Milwaukee was merged yesterday (with another existing record), and no new deaths were reported in WEDSS yesterday</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Pennsylvania Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Pennsylvania</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Pennsylvania</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-03-03T16:53:54.000-08:00">March 3, 2021, 4:53 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-09T15:03:59.000-08:00">February 9, 2021, 3:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-03T11:06:32.000-08:00">February 3, 2021, 11:06 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-01T17:44:18.000-08:00">February 1, 2021, 5:44 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-29T17:06:11.000-08:00">January 29, 2021, 5:06 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-28T15:07:34.000-08:00">January 28, 2021, 3:07 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-04T15:21:30.000-08:00">January 4, 2021, 3:21 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-29T15:15:58.000-08:00">December 29, 2020, 3:15 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-14T17:31:11.000-08:00">December 14, 2020, 5:31 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-10T10:17:55.000-08:00">December 10, 2020, 10:17 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-07T17:10:27.000-07:00">October 7, 2020, 5:10 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-04T15:03:27.000-07:00">September 4, 2020, 3:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-04T14:03:07.000-07:00">September 4, 2020, 2:03 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-30T09:02:42.000-07:00">July 30, 2020, 9:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-21T17:04:25.000-07:00">June 21, 2020, 5:04 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-20T07:01:37.000-07:00">May 20, 2020, 7:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-06T14:01:14.000-07:00">May 6, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-30T14:37:59.000-07:00">March 30, 2020, 2:37 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T11:00:13.000-07:00">March 19, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-16T14:20:23.000-07:00">March 16, 2020, 2:20 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-11T16:27:00.000-07:00">March 11, 2020, 4:27 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Test Encounters (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Encounters</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestEncountersViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Pennsylvania’s Recovered is calculated as total cases multiplied by the percentage of recovered cases from their <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx">data page</a>. As a result of this calculation, this figure may fluctuate from day to day. We urge caution when interpreting this data.</p>
+<p>On February 9, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1286">announced</a> via a press release that case data for February 8, 2021 would be low as a result of “technical maintenance to the data server on Sunday”. Data for February 9, 2021, will include cases from “catch-up reporting because of lengthy server downtime”. Additionally, they noted that death data is sourced from a different server and was not affected.</p>
+<p>As of February 2, 2021, Pennsylvania's totalTestResults field is drawn from the 'totalTestEncountersViral' field instead of being calculated from positive+negative.</p>
+<p>On February 1, 2021, we backfilled the full time series of <strong>Total Test Encounters (PCR)</strong>, from data now available on <a href="https://data.pa.gov/Health/COVID-19-PCR-Test-Counts-March-2020-Current-Statew/r6ti-va88">Open Data Pennsylvania</a>, and cleared our <strong>Total Tests (PCR)</strong> column. Going forward, we will enter PA's &quot;Total PCR Tests&quot; into Our <strong>Total Test Encounters (PCR)</strong> column rather than <strong>Total Tests (PCR)</strong>, as the state's site describes the data as encounters.</p>
+<p>On January 28, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1273">noted</a> that their case counts included backlogged antigen testing data from urgent care centers collected over a week ago. Pennsylvania will continue to report this data over the next few days, which will in turn affect our reported case counts.</p>
+<p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-03-03T16:53:54.000-08:00">March 3, 2021, 4:53 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Test Encounters (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Encounters</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestEncountersViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On February 9, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1286">announced</a> via a press release that case data for February 8, 2021 would be low as a result of “technical maintenance to the data server on Sunday”. Data for February 9, 2021, will include cases from “catch-up reporting because of lengthy server downtime”. Additionally, they noted that death data is sourced from a different server and was not affected.</p>
+<p>As of February 2, 2021, Pennsylvania's totalTestResults field is drawn from the 'totalTestEncountersViral' field instead of being calculated from positive+negative.</p>
+<p>On February 1, 2021, we backfilled the full time series of <strong>Total Test Encounters (PCR)</strong>, from data now available on <a href="https://data.pa.gov/Health/COVID-19-PCR-Test-Counts-March-2020-Current-Statew/r6ti-va88">Open Data Pennsylvania</a>, and cleared our <strong>Total Tests (PCR)</strong> column. Going forward, we will enter PA's &quot;Total PCR Tests&quot; into Our <strong>Total Test Encounters (PCR)</strong> column rather than <strong>Total Tests (PCR)</strong>, as the state's site describes the data as encounters.</p>
+<p>On January 28, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1273">noted</a> that their case counts included backlogged antigen testing data from urgent care centers collected over a week ago. Pennsylvania will continue to report this data over the next few days, which will in turn affect our reported case counts.</p>
+<p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-09T15:03:59.000-08:00">February 9, 2021, 3:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Test Encounters (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Encounters</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestEncountersViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of February 2, 2021, Pennsylvania's totalTestResults field is drawn from the 'totalTestEncountersViral' field instead of being calculated from positive+negative.</p>
+<p>On February 1, 2021, we backfilled the full time series of <strong>Total Test Encounters (PCR)</strong>, from data now available on <a href="https://data.pa.gov/Health/COVID-19-PCR-Test-Counts-March-2020-Current-Statew/r6ti-va88">Open Data Pennsylvania</a>, and cleared our <strong>Total Tests (PCR)</strong> column. Going forward, we will enter PA's &quot;Total PCR Tests&quot; into Our <strong>Total Test Encounters (PCR)</strong> column rather than <strong>Total Tests (PCR)</strong>, as the state's site describes the data as encounters.</p>
+<p>On January 28, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1273">noted</a> that their case counts included backlogged antigen testing data from urgent care centers collected over a week ago. Pennsylvania will continue to report this data over the next few days, which will in turn affect our reported case counts.</p>
+<p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-03T11:06:32.000-08:00">February 3, 2021, 11:06 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On February 1, 2021, we backfilled the full time series of <strong>Total Test Encounters (PCR)</strong>, from data now available on <a href="https://data.pa.gov/Health/COVID-19-PCR-Test-Counts-March-2020-Current-Statew/r6ti-va88">Open Data Pennsylvania</a>, and cleared our <strong>Total Tests (PCR)</strong> column. Going forward, we will enter PA's &quot;Total PCR Tests&quot; into Our <strong>Total Test Encounters (PCR)</strong> column rather than <strong>Total Tests (PCR)</strong>, as the state's site describes the data as encounters.</p>
+<p>On January 28, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1273">noted</a> that their case counts included backlogged antigen testing data from urgent care centers collected over a week ago. Pennsylvania will continue to report this data over the next few days, which will in turn affect our reported case counts.</p>
+<p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-01T17:44:18.000-08:00">February 1, 2021, 5:44 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On January 28, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1273">noted</a> that their case counts included backlogged antigen testing data from urgent care centers collected over a week ago. Pennsylvania will continue to report this data over the next few days, which will in turn affect our reported case counts.</p>
+<p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-29T17:06:11.000-08:00">January 29, 2021, 5:06 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On January 28, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1273">noted</a> that their case counts included backlogged antigen testing data, with 1,214 newly identified cases having their specimens collected over a week ago. Pennsylvania will continue to report this data over the next few days, which will in turn affect our reported case counts.</p>
+<p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-28T15:07:34.000-08:00">January 28, 2021, 3:07 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On January 4, 2021, Pennsylvania <a href="https://www.media.pa.gov/pages/health-details.aspx?newsid=1231">announced</a> &quot;3,226 additional positive cases of COVID-19, in addition to 4,579 new cases reported Sunday, January 3 for a two-day total of 8,992 additional positive cases of COVID-19.&quot; In addition, case counts for January 4, 2021 are &quot;atypically low&quot; due to technical maintenance.</p>
+<p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-04T15:21:30.000-08:00">January 4, 2021, 3:21 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 28, 2020, Pennsylvania's Total PCR tests (specimens) value increased by ~690,000 from 7,202,533 tests to 7,892,184 tests. On December 29, 2020, this Total PCR tests value decreased by ~580,000 to 7,312,858 tests. We were unable to find an explanation for this fluctuation.</p>
+<p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-29T15:15:58.000-08:00">December 29, 2020, 3:15 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 14, 2020, Pennsylvania’s <strong>Total PCR tests (specimens)</strong> decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 14, 2020, Pennsylvania’s Total PCR tests (specimens) decreased by roughly 297k without explanation.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-14T17:31:11.000-08:00">December 14, 2020, 5:31 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-10T10:17:55.000-08:00">December 10, 2020, 10:17 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+<p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-23T16:03:34.000-07:00">October 23, 2020, 4:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://padoh.maps.arcgis.com/apps/opsdashboard/index.html#/5662e22517b644ba874ca51fa7b61c94</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-07T17:10:27.000-07:00">October 7, 2020, 5:10 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+<p>On September 3, 2020, Pennsylvania <a href="https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx">clarified</a> that the test numbers they have been reporting previously are in units of unique people and began publishing new test data in units of specimens. On September 4, 2020, we therefore moved the appropriate historical data to the <strong>Total PCR tests (people)</strong> field and began capturing <strong>Total PCR tests (specimens)</strong>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-04T15:03:27.000-07:00">September 4, 2020, 3:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsPeopleViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-04T14:03:07.000-07:00">September 4, 2020, 2:03 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Unclear units</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On April 23, 2020, Pennsylvania revised down its total <strong>Deaths (confirmed and probable)</strong> from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID-19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://pema.maps.arcgis.com/apps/opsdashboard/index.html?rand_1596123643354=1596123643354#/034bec0bab3b450888a32012f81b8fe4</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives.</p>
+<p>On April 23, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-30T09:02:42.000-07:00">July 30, 2020, 9:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives.</p>
+<p>On April 23, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. On April 23, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. On 4/23, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-21T17:04:25.000-07:00">June 21, 2020, 5:04 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. On 4/27, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. On 4/27, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. On 4/27, Pennsylvania revised down its total deaths from 1,622 to 1,421 to exclude some probable deaths that needed further confirmation to be linked to COVID 19.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-20T07:01:37.000-07:00">May 20, 2020, 7:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-16T18:02:53.000-07:00">May 16, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://www.arcgis.com/apps/opsdashboard/index.html#/85054b06472e4208b02285b8557f24cf</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. As of April 27, Pennsylvania is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-06T14:01:14.000-07:00">May 6, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives. As of April 27, Pennsylvania is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data may differ from the state totals. We are not adding deaths back into positives.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data doesn't add up to the totals provided. We are not adding deaths back into positives.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-30T14:37:59.000-07:00">March 30, 2020, 2:37 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data doesn't add up to the totals provided. We don't add deaths back into positives until we have more clarity on whether they are already included in the positive count.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data doesn't add up to the totals provided. We don't add deaths back into positives until we have more clarity on whether they are already included in the positive count.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>County level data doesn't add up to the totals provided. We don't add deaths back into positives until we have more clarity on whether they are already included in the positive count.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-19T11:00:13.000-07:00">March 19, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-18T11:00:18.000-07:00">March 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of 3/16, no longer reporting pending test numbers.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of 3/16, no longer reporting pending test numbers.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-16T14:20:23.000-07:00">March 16, 2020, 2:20 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of 3/11, reporting all numbers we track, though approximate.  Thank you, PA!</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T21:01:17.000-07:00">March 12, 2020, 9:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of 3/11, Pennsylvania now reports all numbers we track. Thank you, PA!</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-11T16:27:00.000-07:00">March 11, 2020, 4:27 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.health.pa.gov/topics/disease/Pages/Coronavirus.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

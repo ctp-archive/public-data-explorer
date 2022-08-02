@@ -1,0 +1,2566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Oregon Metadata history</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Oregon</a>
+              
+            </li>
+          
+            <li>
+              
+                Metadata history
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Oregon</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <ul class="unstyled">
+    
+      <li>
+        <a href="#2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-24T23:08:02.000-08:00">February 24, 2021, 11:08 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-08T12:04:20.000-08:00">February 8, 2021, 12:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-02-01T15:07:45.000-08:00">February 1, 2021, 3:07 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-27T23:26:40.000-08:00">January 27, 2021, 11:26 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-19T15:32:02.000-08:00">January 19, 2021, 3:32 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2021-01-13T17:21:16.000-08:00">January 13, 2021, 5:21 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-16T17:35:30.000-08:00">December 16, 2020, 5:35 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-10T10:17:55.000-08:00">December 10, 2020, 10:17 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-10T07:33:07.000-08:00">December 10, 2020, 7:33 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-09T17:30:35.000-08:00">December 9, 2020, 5:30 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-04T17:49:51.000-08:00">December 4, 2020, 5:49 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-12-04T15:45:17.000-08:00">December 4, 2020, 3:45 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-20T10:31:41.000-08:00">November 20, 2020, 10:31 AM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-06T12:02:44.000-08:00">November 6, 2020, 12:02 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-11-05T14:03:10.000-08:00">November 5, 2020, 2:03 PM PST</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-10-09T09:58:17.000-07:00">October 9, 2020, 9:58 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-15T18:02:24.000-07:00">July 15, 2020, 6:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-07-04T16:02:09.000-07:00">July 4, 2020, 4:02 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-20T14:01:55.000-07:00">June 20, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-15T10:01:55.000-07:00">June 15, 2020, 10:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-05-27T11:02:16.000-07:00">May 27, 2020, 11:02 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-18T13:01:27.000-07:00">April 18, 2020, 1:01 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-12T11:01:25.000-07:00">April 12, 2020, 11:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-11T04:01:30.000-07:00">April 11, 2020, 4:01 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-04-10T09:13:23.000-07:00">April 10, 2020, 9:13 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-20T16:00:09.000-07:00">March 20, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</a>
+      </li>
+    
+      <li>
+        <a href="#2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</a>
+      </li>
+    
+  </ul>
+
+  
+
+    <h2 id="2021-04-09T11:10:57.000-07:00">April 9, 2021, 11:10 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of January 13, 2021, Oregon’s data is on a 1 day lag in our timeseries due to consistently updating after 7:30 pm Eastern Time, when we publish our daily update.</p>
+<p>On February 8, 2021, we cleared the history of our confirmed and probable cases fields in Oregon. Before Oregon switched to reporting tests in units of specimens, we had used its figures for people testing positive to represent confirmed cases and subtracted that number from total cases to get probable cases. However, it turned out that Oregon's people tested figure included people testing positive with antigen, so the positive people tested figure did not accurately reflect confirmed cases.</p>
+<p>On January 29, 2021, Oregon <a href="https://twitter.com/ohaoregon/status/1355286471687745537?s=21">announced</a> that their COVID-19 case database would be down “for server and file migration maintenance” on January 30, 2021, and as a result there would be no update to their data on January 31, 2021. Because Oregon’s data is on a one day lag in our timeseries due to late updates, we were unable to update their data on February 1, 2021.</p>
+<p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults from people to specimens on December 2, 2020, and stopped calculating <strong>Negative (people or cases)</strong>. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>On October 9, 2020, Oregon [announced}(https://www.oregon.gov/oha/ERD/Pages/OHA-changes-recovered-cases-reporting.aspx) they were removing the <strong>Recovered</strong> metric from their reporting and working on a revised definition of recovered. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for the metric is available in the historical data, and our data downloads.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-24T23:08:02.000-08:00">February 24, 2021, 11:08 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of January 13, 2021, Oregon’s data is on a 1 day lag in our timeseries due to consistently updating after 7:30 pm Eastern Time, when we publish our daily update.</p>
+<p>On February 8, 2021, we cleared the history of our confirmed and probable cases fields in Oregon. Before Oregon switched to reporting tests in units of specimens, we had used its figures for people testing positive to represent confiirmed cases and subtracted that number from total cases to get probable cases. However, it turned out that Oregon's people tested figure included people testing positive with antigen, so the positive people tested figure did not accurately reflect confirmed cases.</p>
+<p>On January 29, 2021, Oregon <a href="https://twitter.com/ohaoregon/status/1355286471687745537?s=21">announced</a> that their COVID-19 case database would be down “for server and file migration maintenance” on January 30, 2021, and as a result there would be no update to their data on January 31, 2021. Because Oregon’s data is on a one day lag in our timeseries due to late updates, we were unable to update their data on February 1, 2021.</p>
+<p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults from people to specimens on December 2, 2020, and stopped calculating <strong>Negative (people or cases)</strong>. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>On October 9, 2020, Oregon [announced}(https://www.oregon.gov/oha/ERD/Pages/OHA-changes-recovered-cases-reporting.aspx) they were removing the <strong>Recovered</strong> metric from their reporting and working on a revised definition of recovered. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for the metric is available in the historical data, and our data downloads.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-08T12:04:20.000-08:00">February 8, 2021, 12:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of January 13, 2021, Oregon’s data is on a 1 day lag in our timeseries due to consistently updating after 7:30 pm Eastern Time, when we publish our daily update.</p>
+<p>On January 29, 2021, Oregon <a href="https://twitter.com/ohaoregon/status/1355286471687745537?s=21">announced</a> that their COVID-19 case database would be down “for server and file migration maintenance” on January 30, 2021, and as a result there would be no update to their data on January 31, 2021. Because Oregon’s data is on a one day lag in our timeseries due to late updates, we were unable to update their data on February 1, 2021.</p>
+<p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults from people to specimens on December 2, 2020, and stopped calculating <strong>Negative (people or cases)</strong>. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>On October 9, 2020, Oregon [announced}(https://www.oregon.gov/oha/ERD/Pages/OHA-changes-recovered-cases-reporting.aspx) they were removing the <strong>Recovered</strong> metric from their reporting and working on a revised definition of recovered. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for the metric is available in the historical data, and our data downloads.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-02-01T15:07:45.000-08:00">February 1, 2021, 3:07 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of January 13, 2021, Oregon’s data is on a 1 day lag in our timeseries due to consistently updating after 7:30 pm Eastern Time, when we publish our daily update.</p>
+<p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults from people to specimens on December 2, 2020, and stopped calculating <strong>Negative (people or cases)</strong>. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>On October 9, 2020, Oregon [announced}(https://www.oregon.gov/oha/ERD/Pages/OHA-changes-recovered-cases-reporting.aspx) they were removing the <strong>Recovered</strong> metric from their reporting and working on a revised definition of recovered. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for the metric is available in the historical data, and our data downloads.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-27T23:26:40.000-08:00">January 27, 2021, 11:26 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of January 13, 2021, Oregon’s data is on a 1 day lag in our timeseries due to consistently updating after 7:30 pm Eastern Time, when we publish our daily update.</p>
+<p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>On October 9, 2020, Oregon [announced}(https://www.oregon.gov/oha/ERD/Pages/OHA-changes-recovered-cases-reporting.aspx) they were removing the <strong>Recovered</strong> metric from their reporting and working on a revised definition of recovered. Due to this we cannot continue reporting <strong>Recovered</strong>, however the time series for the metric is available in the historical data, and our data downloads.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-19T15:32:02.000-08:00">January 19, 2021, 3:32 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of January 13, 2021, Oregon’s data is on a 1 day lag in our timeseries due to consistently updating after 7:30 pm Eastern Time, when we publish our daily update.</p>
+<p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2021-01-13T17:21:16.000-08:00">January 13, 2021, 5:21 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-18T22:04:35.000-08:00">December 18, 2020, 10:04 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 16, 2020, Oregon did not update its data before our daily publication time.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-16T17:35:30.000-08:00">December 16, 2020, 5:35 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-10T10:17:55.000-08:00">December 10, 2020, 10:17 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPITested</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-10T07:33:07.000-08:00">December 10, 2020, 7:33 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPITested</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of December 9, 2020, Oregon’s total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. This change will cause Oregon’s <code>totalTestResults</code> to begin on March 29, 2020 instead of March 4, 2020. Because Oregon’s totalTestsViral represent only electronic laboratory reporting, whereas its cases and negatives represented tests from all sources, this change causes a decrease of 10,296 tests in <code>totalTestResults</code> on March 29. The old numbers remain available by summing the positive and negative fields of our API.
+In addition, Oregon has not reported their total tests in people units since December 2, 2020 and they indicated that they will not continue to report total tests in people, so we have removed any values in <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-09T17:30:35.000-08:00">December 9, 2020, 5:30 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPITested</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>Total Tests (PCR)</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>Specimens</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>totalTestsViral</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of December 9, 2020, Oregon's total test results are drawn from our <code>totalTestsViral</code> field instead of calculated via positive+negative. Oregon has not reported their total tests in people units since December 2,2020 and they indicated that they will not continue to report total tests in people, so we have removed any <strong>Total PCR tests (people)</strong> we previously carried over.</p>
+<p>On December 3, 2020, Oregon removed its total people tested metric, after adding total specimens on December 1. Because they did not provide a full timeseries of specimens, as of December 4, we switched our totalTestResults and  <strong>Negative (people or cases)</strong> from people to specimens on December 2, 2020. This causes an artificial increase of totalTestResults by 960,248 on that day.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-08T12:54:05.000-08:00">December 8, 2020, 12:54 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-04T17:49:51.000-08:00">December 4, 2020, 5:49 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPITested</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 3, Oregon announced that they are changing their test results units to specimens and are updating their dashboards. The main dashboard[https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPITested] has been removed, and we will be pulling data from their other in-process dashboards.</p>
+<p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-12-04T15:45:17.000-08:00">December 4, 2020, 3:45 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+        <dt>Quinary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPITested</dd>
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On December 1, 2020, <strong>Negative (people or cases)</strong> decreased by 3,258 from 968,686 to 965,428. Oregon did not post an explanation. Since <code>totalTestResults</code> are computed positive+negative in the state, this caused <code>totalTestResults</code> to drop by 2,035.</p>
+<p>On November 5, 2020 we began reporting current hospitalizations from <a href="https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity">Oregon's COVID-19 Update Dashboard</a>. Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-20T10:31:41.000-08:00">November 20, 2020, 10:31 AM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+        <dt>Quaternary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity</dd>
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On November 5, 2020 we began reporting current hospitalizations from [Oregon's COVID-19 Update Dashboard] (https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity). Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-09T15:17:57.000-08:00">November 9, 2020, 3:17 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-06T12:02:44.000-08:00">November 6, 2020, 12:02 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On November 5, 2020 we began reporting current hospitalizations from [Oregon's COVID-19 Update Dashboard] (https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/HospitalCapacity). Previously we had been capturing these metrics on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+<p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-11-05T14:03:10.000-08:00">November 5, 2020, 2:03 PM PST</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+<p>On November 4, 2020, Oregon stopped reporting current hospitalization data on the <a href="https://govstatus.egov.com/OR-OHA-COVID-19">Oregon Health Authority page</a>, and so we did not update Oregon's current hospitalization data. Current hospitalization data is provided on Oregon's data dashboard, but it lags a day behind the other source. We will evaluate this change and resume reporting Oregon hospital data when we are sure we can preserve the time series.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-18T11:00:06.000-07:00">October 18, 2020, 11:00 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-10-09T09:58:17.000-07:00">October 9, 2020, 9:58 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6th, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-25T09:03:42.000-07:00">September 25, 2020, 9:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+        <dt>Total test resulst field</dt>
+        <dd>posNeg</dd>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6th, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-18T11:03:24.000-07:00">September 18, 2020, 11:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+        <dt>CTP website preferred total test units</dt>
+        <dd>People</dd>
+      
+      
+        <dt>CTP website preferred total test field</dt>
+        <dd>posNeg</dd>
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6th, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-09-02T08:03:15.000-07:00">September 2, 2020, 8:03 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>As of June 6th, 2020, Oregon only releases updated data for <strong>Cases (confirmed plus probable)</strong>, <strong>Deaths (confirmed and probable)</strong>, and <strong>Negative PCR tests (people)</strong> metrics on the weekend.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-08-25T16:02:51.000-07:00">August 25, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho.</p>
+<p>As of April 27, Oregon is reporting people tested.</p>
+<p>For June 15, we reported deaths, cases and negatives from Oregon’s press release from <a href="https://www.oregon.gov/oha/ERD/Pages/Oregon-reports-101-new-confirmed-presumptive-COVID-19-cases-2-new-deaths.aspx">June 14</a>.</p>
+<p>On June 20, per weekend report, two cases in Polk County previously reported as COVID-19 were determined to be non-COVID-19 and numbers updated to reflect the change.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-29T16:02:16.000-07:00">July 29, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.
+For June 15, we reported deaths, cases and negatives from Oregon’s press release from <a href="https://www.oregon.gov/oha/ERD/Pages/Oregon-reports-101-new-confirmed-presumptive-COVID-19-cases-2-new-deaths.aspx">June 14</a>. On June 20, per weekend report, two cases in Polk County previously reported as COVID-19 were determined to be non-COVID-19 and numbers updated to reflect the change.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-28T16:02:09.000-07:00">July 28, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+        <dt>Tertiary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19TestingandOutcomesbyCounty/OregonsCOVID-19TestingandOutcomesbyCounty?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.
+For June 15, we report deaths, cases and negatives from Oregon’s press release from <a href="https://www.oregon.gov/oha/ERD/Pages/Oregon-reports-101-new-confirmed-presumptive-COVID-19-cases-2-new-deaths.aspx">June 14</a>. On 6/20/20, per weekend report, two cases in Polk County previously reported as COVID-19 were determined to be non-COVID-19 and numbers updated to reflect the change.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-15T18:02:24.000-07:00">July 15, 2020, 6:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonCOVID-19Update/CaseandTesting</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.
+For June 15, we report deaths, cases and negatives from Oregon’s press release from <a href="https://www.oregon.gov/oha/ERD/Pages/Oregon-reports-101-new-confirmed-presumptive-COVID-19-cases-2-new-deaths.aspx">June 14</a>. On 6/20/20, per weekend report, two cases in Polk County previously reported as COVID-19 were determined to be non-COVID-19 and numbers updated to reflect the change.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-07-04T16:02:09.000-07:00">July 4, 2020, 4:02 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPICases?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.
+For June 15, we report deaths, cases and negatives from Oregon’s press release from <a href="https://www.oregon.gov/oha/ERD/Pages/Oregon-reports-101-new-confirmed-presumptive-COVID-19-cases-2-new-deaths.aspx">June 14</a>. On 6/20/20, per weekend report, two cases in Polk County previously reported as COVID-19 were determined to be non-COVID-19 and numbers updated to reflect the change.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-20T14:01:55.000-07:00">June 20, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPICases?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.
+For June 15, we report deaths, cases and negatives from Oregon’s press release from <a href="https://www.oregon.gov/oha/ERD/Pages/Oregon-reports-101-new-confirmed-presumptive-COVID-19-cases-2-new-deaths.aspx">June 14</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-15T10:01:55.000-07:00">June 15, 2020, 10:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPICases?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T18:01:56.000-07:00">June 4, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPICases?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-06-04T14:01:44.000-07:00">June 4, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPICases?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-06-01T18:01:41.000-07:00">June 1, 2020, 6:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPICases?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-05-27T11:02:16.000-07:00">May 27, 2020, 11:02 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPIConfirmed?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho. As of April 27, Oregon is reporting people tested.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-29T18:08:40.000-07:00">April 29, 2020, 6:08 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPIConfirmed?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-25T14:01:20.000-07:00">April 25, 2020, 2:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPIConfirmed?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho, as the state does in its table (noted below).</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-18T13:01:27.000-07:00">April 18, 2020, 1:01 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+        <dt>Secondary site</dt>
+        <dd>https://public.tableau.com/profile/oregon.health.authority.covid.19#!/vizhome/OregonHealthAuthorityCOVID-19DataDashboard/COVID-19EPIConfirmed?:display_count=y&amp;:toolbar=n&amp;:origin=viz_share_link&amp;:showShareOptions=false</dd>
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho, as the state does in its table (noted below).  Negatives = Totals - Positives. Positives sometimes update before totals do; when this happens, we keep the last calculated negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-12T11:01:25.000-07:00">April 12, 2020, 11:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Total includes Oregon &amp; Montana residents tested in Idaho, as the state does in its table (noted below).  Negatives = Totals - Positives. Positives sometimes update before totals do; when this happens, we keep the last calculated negative.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-11T04:01:30.000-07:00">April 11, 2020, 4:01 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>On 4/7, Oregon <a href="https://www.wweek.com/news/2020/04/07/329-oregonians-have-been-hospitalized-for-covid-19-as-case-count-nears-1200/">revised downward</a> their Cumulative Hospitalized and Ventilator counts.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-04-10T09:13:23.000-07:00">April 10, 2020, 9:13 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-27T16:44:13.000-07:00">March 27, 2020, 4:44 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-25T16:00:06.000-07:00">March 25, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-20T16:00:09.000-07:00">March 20, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Click to expand the Situation in Oregon section. Death sourced from <a href="https://www.oregon.gov/oha/ERD/Pages/State-Local-Officials-Announce-First-Fatality-from-COVID-19-in-Oregon.aspx">press release</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-19T16:00:08.000-07:00">March 19, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Click to expand the Situation in Oregon section. Death sourced from <a href="https://www.oregon.gov/oha/ERD/Pages/State-Local-Officials-Announce-First-Fatality-from-COVID-19-in-Oregon.aspx">press release</a>.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-18T16:00:07.000-07:00">March 18, 2020, 4:00 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Click to expand the Situation in Oregon section.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-17T10:17:08.000-07:00">March 17, 2020, 10:17 AM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      <p>Click to expand the Situation in Oregon section.</p>
+
+    </div>
+
+  
+
+    <h2 id="2020-03-14T15:56:40.000-07:00">March 14, 2020, 3:56 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    <h2 id="2020-03-12T14:21:40.000-07:00">March 12, 2020, 2:21 PM PDT</h2>
+
+    <h3>State COVID websites</h3>
+    <dl>
+      
+        <dt>Primary site</dt>
+        <dd>https://www.oregon.gov/oha/PH/DISEASESCONDITIONS/DISEASESAZ/Pages/emerging-respiratory-infections.aspx</dd>
+      
+      
+      
+      
+      
+    </dl>
+    <h3>Metadata</h3>
+    <dl>
+      
+      
+      
+    </dl>
+
+    <h3>Notes</h3>
+
+    <div>
+      
+    </div>
+
+  
+
+    </main>
+  </body>
+</html>

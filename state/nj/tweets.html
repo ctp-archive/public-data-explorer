@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>New Jersey Tweets</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">New Jersey</a>
+              
+            </li>
+          
+            <li>
+              
+                Tweets
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">New Jersey</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+
+  
+    <h2>March 12, 2020, 10:10 PM PDT</h2>
+    <div>
+      <p>@hackingdata @KrisKennedy You can see our notes on each number, too.</p>
+<p>https://t.co/6QmjEwwfNJ https://t.co/k2vHokt1uK</p>
+
+    </div>
+  
+    <h2>March 15, 2020, 1:35 PM PDT</h2>
+    <div>
+      <p>By known positive tests, the 10 states with the highest per capita number of cases are:
+Washington
+New York
+Colorado
+Massachusetts
+Louisiana
+Rhode Island
+New Jersey
+South Dakota
+New Hampshire
+Georgia</p>
+
+    </div>
+  
+    <h2>March 18, 2020, 2:28 PM PDT</h2>
+    <div>
+      <p>Among individual states, two stand out for different reasons. First, New Jersey's case total jumped from 267 to 427. Unfortunately, they only report total tests by their own public health lab, so we don't know the true denominator for the positives. https://t.co/NGrSCgFldX</p>
+
+    </div>
+  
+    <h2>March 19, 2020, 10:56 PM PDT</h2>
+    <div>
+      <p>@GunaRockYa Do you think it's possible we'll see something like this out of New Jersey? https://t.co/fCH0Sk3mxR</p>
+<p>Big transparency win and keeps people from thinking the positive rate for testing is too high! -@alexismadrigal</p>
+
+    </div>
+  
+    <h2>March 21, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>New York accelerated past Washington in per capita positive tests. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Massachusetts
+Colorado
+Rhode Island
+Illinois</p>
+
+    </div>
+  
+    <h2>March 22, 2020, 2:25 PM PDT</h2>
+    <div>
+      <p>New York continues to have the highest positive tests per capita, an indication of both the intensity of testing there and the severity of the outbreak. Here’s the top 10:</p>
+<p>New York
+Washington
+New Jersey
+Louisiana
+DC
+Michigan
+Illinois
+Vermont
+Colorado
+Rhode Island</p>
+
+    </div>
+  
+    <h2>March 24, 2020, 1:59 PM PDT</h2>
+    <div>
+      <p>New Jersey released new total test numbers today, too. The confirmed cases have grown rapidly as testing ramps up in the NY metro area. https://t.co/PARqhvwpSo</p>
+
+    </div>
+  
+    <h2>March 25, 2020, 2:20 PM PDT</h2>
+    <div>
+      <p>Over the past two days, it is worth noting that two large states have begun reporting more complete testing data. NJ yesterday and OH today both moved the numbers.</p>
+<p>CA remains a major question mark. We hope to see movement there later today.</p>
+<p>WA is not yet reporting outcomes.</p>
+
+    </div>
+  
+    <h2>April 2, 2020, 3:27 PM PDT</h2>
+    <div>
+      <p>Michigan continues to be a real trouble spot and now has the third highest number of confirmed cases (after NY and NJ), crossing 10,000 total today.</p>
+<p>(We don't know nearly enough about their testing regime in the state, either.) https://t.co/5Vf1ymWOMH</p>
+
+    </div>
+  
+    <h2>April 5, 2020, 2:36 PM PDT</h2>
+    <div>
+      <p>On Michigan. The state has the third-most confirmed cases and deaths (after NY, then NJ). We had not been including their negative test number because the state said it represented &quot;specimens&quot; not people.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 7:52 AM PDT</h2>
+    <div>
+      <p>@JPVMan @Ian_Myers @GovMurphy Also, the number of hospitalizations went up by 1000 the next day. Could be NJ is a day or two behind NY. So many confounding factors.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 3:15 PM PDT</h2>
+    <div>
+      <p>The nation passed 10,000 deaths today.</p>
+<p>New York stands at 4,758 deaths.  New Jersey passed 1,000.</p>
+<p>16 states have lost more than 100 people to COVID-19.</p>
+
+    </div>
+  
+    <h2>April 6, 2020, 5:50 PM PDT</h2>
+    <div>
+      <p>As of today, 8 states are reporting racial demographics for COVID cases:
+CT, IL, MI, MN, NC, NJ, SC, VA</p>
+<p>And 5 states are reporting racial demographics for COVID deaths:
+CT, IL, LA, MN, NC</p>
+
+    </div>
+  
+    <h2>April 7, 2020, 3:23 PM PDT</h2>
+    <div>
+      <p>One thing to note about hospitalization data: New Jersey, Illinois, and California are all including  different sets of people in their numbers. We are reporting the <em>lower</em> numbers where they are available (as in CA, which breaks out confirmed and suspected COVID-19 cases).</p>
+
+    </div>
+  
+    <h2>April 8, 2020, 9:09 AM PDT</h2>
+    <div>
+      <p>@vscooper @CCgirt I agree. NJ is going to see some very scary situations. --@alexismadrigal</p>
+
+    </div>
+  
+    <h2>April 11, 2020, 2:24 PM PDT</h2>
+    <div>
+      <p>The death toll continues to be concentrated in New York and New Jersey, although Michigan, Illinois, and Pennsylvania continue to see substantial numbers of  deaths each day. https://t.co/GbJ5RNM0mc</p>
+
+    </div>
+  
+    <h2>April 12, 2020, 2:23 PM PDT</h2>
+    <div>
+      <p>Outside the NY-centric outbreak (NY, NJ, CT), Michigan  has the most severe outbreak. https://t.co/P3hqp3Hd9B</p>
+
+    </div>
+  
+    <h2>April 30, 2020, 1:59 PM PDT</h2>
+    <div>
+      <p>Deaths stayed above 2,000 today. New Jersey alone reported 460 deaths today. https://t.co/Fcj7uquV2k</p>
+
+    </div>
+  
+    <h2>May 2, 2020, 2:40 PM PDT</h2>
+    <div>
+      <p>9 states reported over 50 deaths:</p>
+<p>California: 98
+Florida: 74
+Illinois: 102
+Indiana: 54
+Massachusetts: 130
+Michigan: 154
+New Jersey: 204
+New York: 299
+Pennsylvania: 64</p>
+
+    </div>
+  
+    <h2>May 4, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>One reason to expect that the death number will rise tomorrow would be to look at some key states—NJ, CA, MI, MA—all seem to show the same kind of reporting dip. https://t.co/m5TT3QWQfY</p>
+
+    </div>
+  
+    <h2>May 8, 2020, 2:18 PM PDT</h2>
+    <div>
+      <p>Cases continued their slight drift downward, but it's important to remember that outside NY-NJ-CT, cases are <em>not</em> falling. https://t.co/LB17L585rx</p>
+
+    </div>
+  
+    <h2>May 9, 2020, 2:17 PM PDT</h2>
+    <div>
+      <p>And an important reminder: the story is very different in different regions of the country. Outside NY-NJ-CT, cases  are not really declining. https://t.co/LCsljoCpXK</p>
+
+    </div>
+  
+    <h2>May 11, 2020, 2:46 PM PDT</h2>
+    <div>
+      <p>Our daily update is published. We’ve now tracked 9.4 million tests, up 395k from yesterday, a new high with a major caveat: NJ dumped a big backlog, it seems.</p>
+<p>Note that we can only track tests that a state reports.</p>
+<p>For details, see: https://t.co/PZrmH4bl5Y https://t.co/3gDkpXkH6o</p>
+
+    </div>
+  
+    <h2>May 11, 2020, 2:48 PM PDT</h2>
+    <div>
+      <p>New Jersey appears to have taken the road that California did recently, moving away from reporting &quot;people tested&quot; and to &quot;tests completed.&quot; But we're still trying to get confirmation on this.</p>
+<p>As you can see, today is a bit of an outlier. https://t.co/2E9fh6WSuI</p>
+
+    </div>
+  
+    <h2>May 29, 2020, 3:25 PM PDT</h2>
+    <div>
+      <p>States reported 1,186 deaths. Only New Jersey reported more than 100.</p>
+<p>The 7-day average remained under 1,000. https://t.co/XL5uqsOUBf</p>
+
+    </div>
+  
+    <h2>June 2, 2020, 2:56 PM PDT</h2>
+    <div>
+      <p>2/2</p>
+<p>Missouri
+Nevada
+New Jersey
+New York
+North Carolina
+Ohio
+Pennsylvania
+South Carolina
+Tennessee
+Wisconsin</p>
+
+    </div>
+  
+    <h2>June 7, 2020, 3:35 PM PDT</h2>
+    <div>
+      <p>Only 20k new cases were reported today. 24 states reported more than 300 new cases today.</p>
+<p>New York and New Jersey tested more than 102k people combined, and only got ~1k positives.</p>
+<p>On the other end of the spectrum, Arizona tested ~10k people and confirmed 1,438 new cases. https://t.co/q7b8gj50V2</p>
+
+    </div>
+  
+    <h2>June 8, 2020, 3:14 PM PDT</h2>
+    <div>
+      <p>States reported 640 deaths. The 7-day average ticked up a little.</p>
+<p>Deaths in the NY, NJ, and CT have plummeted. They've also fallen elsewhere, but much more slowly. https://t.co/9DYyuzcrLY</p>
+
+    </div>
+  
+    <h2>June 22, 2020, 2:59 PM PDT</h2>
+    <div>
+      <p>Take out just three states from the data—NY, NJ, and CT—and a different story emerges.</p>
+<p>The positive rate outside that area never reached as high, nor did it ever get as low. And it began climbing over the last week. https://t.co/23x5Yse3wV</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:08 PM PDT</h2>
+    <div>
+      <p>There are important caveats in today's data:</p>
+<p>New Jersey reported 1800+ probable deaths from previous days. That number is in our API, but we will exclude it from charts here.</p>
+<p>We think we'll be able to get historical data from NJ in order to properly assign those deaths.</p>
+
+    </div>
+  
+    <h2>June 25, 2020, 3:08 PM PDT</h2>
+    <div>
+      <ol start="2">
+<li>Wisconsin reported 2.8k probable cases today from previous days. They are also in the API, but excluded from the charts presented here.</li>
+</ol>
+<p>As with NJ, we hope to be able to properly assign those probable cases to the right dates, too, with the state's help.</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 4:48 PM PDT</h2>
+    <div>
+      <p>This is the same pattern we saw for cases and hospitalizations over the last couple months. Compare Arizona, New Jersey, New York, and Texas. https://t.co/Uz6d2aQ9LU</p>
+
+    </div>
+  
+    <h2>July 8, 2020, 5:05 PM PDT</h2>
+    <div>
+      <p>New Jersey has been adding probable deaths to its backlog. We put them in our raw data, but have kept it out of these charts, so that it’s easier to see the current trends. We’re still hoping to get more data from the state so that we can properly backfill those deaths. https://t.co/DDhlQT8tcA</p>
+
+    </div>
+  
+    <h2>July 25, 2020, 3:49 PM PDT</h2>
+    <div>
+      <p>It’s the weekend, so as usual, the data is less complete than on weekdays. Michigan didn’t update today bc of tech problems; New Jersey only posted positive results, no totals or negatives.</p>
+
+    </div>
+  
+    <h2>July 30, 2020, 4:03 PM PDT</h2>
+    <div>
+      <p>California is now #3 in the United States for total COVID-19 deaths, behind New York and New Jersey. We hope that declining case counts in CA will be reflected in falling deaths within the next 2-3 weeks. https://t.co/iGGokUAjGB</p>
+
+    </div>
+  
+    <h2>July 31, 2020, 3:46 PM PDT</h2>
+    <div>
+      <p>The 7-day rolling average of deaths for Texas and Florida has now surpassed some early hotspots like Michigan and Massachusetts.</p>
+<p>The trajectory looks more like harder hit states like New Jersey. https://t.co/D49edXZKXT</p>
+
+    </div>
+  
+    <h2>August 4, 2020, 3:29 PM PDT</h2>
+    <div>
+      <p>Data on current hospitalizations remains iffy. Today we saw hospitalization numbers in ID and NJ drop by ~50%, which seems unlikely to reflect reality. Some states with rising cases have dropping hosp. figures.</p>
+<p>Last week's post is likely still relevant: https://t.co/wLbFSPAfZW</p>
+
+    </div>
+  
+    <h2>August 7, 2020, 3:52 PM PDT</h2>
+    <div>
+      <p>We were able to backfill all New Jersey deaths, redistributing the previous large June 25 spike of probable deaths to the correct days. Thank you to @govmurphy and @NJDeptofHealth for publishing the data we needed to improve the dataset. https://t.co/2kKeoGhUi8</p>
+
+    </div>
+  
+    <h2>November 14, 2020, 3:20 PM PST</h2>
+    <div>
+      <p>38 states reported over 1k cases. CO, IN, KY, MD, MN, MO, MT, ND, NH, NJ, NV, PA, WV, and UT all set records for detected cases. (5 states did not report cases.) https://t.co/3Gi0ieFO3i</p>
+
+    </div>
+  
+    <h2>November 15, 2020, 5:00 PM PST</h2>
+    <div>
+      <p>New Jersey reported 128,343 tests today—much higher than a normal day. We haven’t found an explanation, but we’ll keep an eye out.</p>
+
+    </div>
+  
+    <h2>November 21, 2020, 4:44 PM PST</h2>
+    <div>
+      <p>40 states reported over 1,000 cases today. And four didn't report. New Jersey, California, Mississippi, Idaho, and Oregon reported record numbers of cases. https://t.co/q23xwQ3BW7</p>
+
+    </div>
+  
+    <h2>December 1, 2020, 4:35 PM PST</h2>
+    <div>
+      <p>A handful of states reported data for more than one day today, a result of data disruptions caused by the Thanksgiving holiday. On the other hand, CO, NJ, TX, WA, and WY only published partial updates today.</p>
+
+    </div>
+  
+    <h2>December 3, 2020, 4:54 PM PST</h2>
+    <div>
+      <p>Zooming into the state level, more than 10 states broke case records today: AK, AR, AZ, DE, IN, MA, ME, NJ, PA, RI, and VT. Note: AZ had a higher count on Dec. 1, but it was a data backlog. https://t.co/ao6T6EQxiH</p>
+
+    </div>
+  
+    <h2>January 8, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>NJ reported nearly 20K probable COVID-19 cases and CA reported over 50K cases. Both states greatly influenced the large uptick in today's total cases.</p>
+
+    </div>
+  
+    <h2>January 9, 2021, 4:58 PM PST</h2>
+    <div>
+      <p>The past week had the most reported cases, average hospitalizations, and deaths of any week during the pandemic.</p>
+<p>We are still seeing post-holiday instability in the data - NJ reduced their probable cases number by more than 10k since yesterday. https://t.co/0Ab7viJ7Wr</p>
+
+    </div>
+  
+
+    </main>
+  </body>
+</html>

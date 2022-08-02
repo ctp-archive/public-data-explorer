@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Missouri Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Missouri</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Missouri</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>January 14, 2021, 3:13 PM PST</td>
+          <td>1068</td>
+          <td>
+            <a href="#issue-1068">[MO] Remove values carried over after Missouri stopped reporting Positive and Negative antibody tests (people) on 9/28/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 14, 2021, 3:13 PM PST</td>
+          <td>1068</td>
+          <td>
+            <a href="#issue-1068">[MO] Remove values carried over after Missouri stopped reporting Positive and Negative antibody tests (people) on 9/28/2020</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 2, 2021, 1:20 PM PST</td>
+          <td>1037</td>
+          <td>
+            <a href="#issue-1037">[MO] Delete accidental recoveries</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 22, 2020, 11:27 AM PDT</td>
+          <td>908</td>
+          <td>
+            <a href="#issue-908">[MO] Backfilling the first day MO reported Currently on Ventilator</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 20, 2020, 11:30 AM PDT</td>
+          <td>905</td>
+          <td>
+            <a href="#issue-905">[MO] Patch 10/19 Cur. ICU</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 20, 2020, 10:45 AM PDT</td>
+          <td>904</td>
+          <td>
+            <a href="#issue-904">[MO] Backfilling curr. hosp. numbers 9/29 - 10/7</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 10, 2020, 1:53 PM PDT</td>
+          <td>894</td>
+          <td>
+            <a href="#issue-894">[MO] 10/9 Typo in Positive Cases (confirmed + probable)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 8, 2020, 2:19 PM PDT</td>
+          <td>891</td>
+          <td>
+            <a href="#issue-891">[MO] Patch 10/7 neg. antibody tests </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 2, 2020, 8:14 AM PDT</td>
+          <td>881</td>
+          <td>
+            <a href="#issue-881">[MO] Capture Total Tests Antibody (People) &amp; Total Tests Antigen (People) values of 10/1 </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 29, 2020, 4:14 PM PDT</td>
+          <td>874</td>
+          <td>
+            <a href="#issue-874">[MO] Update 9/29 Total Tests PCR, Positive Tests PCR, Negative Tests PCR </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 31, 2020, 7:11 AM PDT</td>
+          <td>710</td>
+          <td>
+            <a href="#issue-710">[MO] Re-correct source for Positive (lumped) and Positive Cases PCR (confirmed) </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 30, 2020, 7:11 AM PDT</td>
+          <td>702</td>
+          <td>
+            <a href="#issue-702">[MO] Antibody test reporting in people</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 27, 2020, 7:08 AM PDT</td>
+          <td>679</td>
+          <td>
+            <a href="#issue-679">[Historical MO]: Switching to using the &quot;Testing - PCR&quot; tab instead of the &quot;Overview&quot; tab on the dashboard for confirmed cases  </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 7:46 AM PDT</td>
+          <td>531</td>
+          <td>
+            <a href="#issue-531">[MO] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 23, 2020, 1:38 PM PDT</td>
+          <td>445</td>
+          <td>
+            <a href="#issue-445">[Historical MO] Missouri is providing PCR &amp; Serology - update historical testing info (they used to lump)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 18, 2020, 1:30 PM PDT</td>
+          <td>434</td>
+          <td>
+            <a href="#issue-434">[Historical MO]: Total tests was accidentally put in as negative tests on 5/17</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 7, 2020, 2:46 PM PDT</td>
+          <td>386</td>
+          <td>
+            <a href="#issue-386">MO Total Tests is a day behind</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 25, 2020, 7:47 AM PDT</td>
+          <td>50</td>
+          <td>
+            <a href="#issue-50">MO Numbers Not Updated 3/24</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 12, 2020, 8:23 AM PDT</td>
+          <td>8</td>
+          <td>
+            <a href="#issue-8">MO data stale</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1068">#1068: [MO] Remove values carried over after Missouri stopped reporting Positive and Negative antibody tests (people) on 9/28/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1068</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 14, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1068" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Missouri</p>
+<p>Issue: On September 28, 2020, Missouri removed the Positive and Negative antibody tests (people) metrics from their dashboards. We carried over the last available values for both, but the metrics have not returned, so the values are out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from September 28, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-760537125">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 14, 2021, 3:13 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1068#issuecomment-760537125" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values
+<s>add chart annotation</s> no chart annotation added because we don't have a chart with these metrics</li>
+<li>[x]  add public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-762605734">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 18, 2021, 9:12 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1068#issuecomment-762605734" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values Removed:
+<a href="../../assets/github/files/5833765/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1068">#1068: [MO] Remove values carried over after Missouri stopped reporting Positive and Negative antibody tests (people) on 9/28/2020</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1068</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 14, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1068" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Missouri</p>
+<p>Issue: On September 28, 2020, Missouri removed the Positive and Negative antibody tests (people) metrics from their dashboards. We carried over the last available values for both, but the metrics have not returned, so the values are out of date and potentially confusing. We will be keeping the time series as provided by the state, but removing the carried over values from September 28, 2020, forward.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-760537125">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 14, 2021, 3:13 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1068#issuecomment-760537125" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x]  make GH issue</li>
+<li>[x]  double check the metrics aren't being reported somewhere by the state</li>
+<li>[x]  remove carried over values</li>
+<li>[x]  null out source notes</li>
+<li>[x]  null out WS2 values
+<s>add chart annotation</s> no chart annotation added because we don't have a chart with these metrics</li>
+<li>[x]  add public note</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-762605734">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 18, 2021, 9:12 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1068#issuecomment-762605734" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Values Removed:
+<a href="../../assets/github/files/5833765/Changes.1.txt">Changes (1).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1037">#1037: [MO] Delete accidental recoveries</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1037</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on January 2, 2021, 1:20 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1037" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MO</p>
+<p><strong>Describe the problem</strong>
+Recoveries got accidentally entered on MO on 1/2. Deleting the value.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-753531376">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on January 2, 2021, 1:23 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1037#issuecomment-753531376" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5760887/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-908">#908: [MO] Backfilling the first day MO reported Currently on Ventilator</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            908</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 22, 2020, 11:27 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/908" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Missouri</p>
+<p><strong>Describe the problem</strong>
+On 10/21, MO began reporting a number for COVID-19 Patients on Ventilators. We are beginning daily capture today and need to backfill values for 10/21 and prior.</p>
+<p><strong>Link to data source</strong>
+https://showmestrong.mo.gov/public-healthcare/</p>
+<p>https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MO/MO-tertiary-20201021-002746.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MO/MO-tertiary-20201021-122651.png
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MO/MO-tertiary-20201022-122607.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-715454846">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 23, 2020, 9:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/908#issuecomment-715454846" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/97031142-af545180-1514-11eb-9125-5840e646b8bc.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-715456157">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 23, 2020, 9:49 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/908#issuecomment-715456157" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/97031345-fd695500-1514-11eb-9b03-0af9aca2f7f2.png" alt="image"></p>
+<p>Note: Also updated a value for <strong>In ICU - Currently</strong> that we missed from 10/20.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-905">#905: [MO] Patch 10/19 Cur. ICU</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            905</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 20, 2020, 11:30 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/905" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: MO</p>
+<p>Dates affected: 10/19</p>
+<p>Describe the issue: On 10/19 MO added cur. icu to their dash. Per our policy of not adding new data points on shift, we did not start capturing this value until 10/20. We should patch 10/19 cur. icu from screenshots</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-713059460">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 20, 2020, 11:38 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/905#issuecomment-713059460" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1241" alt="Screen Shot 2020-10-20 at 2 34 15 PM" src="../../assets/github/images/68712382/96629228-55b81100-12e1-11eb-8c05-9ce33601012f.png"></p>
+<p>AFTER:
+<img width="1276" alt="Screen Shot 2020-10-20 at 2 34 56 PM" src="../../assets/github/images/68712382/96629297-6e282b80-12e1-11eb-80b8-ac027459e809.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-904">#904: [MO] Backfilling curr. hosp. numbers 9/29 - 10/7</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            904</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 20, 2020, 10:45 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/904" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Missouri</p>
+<p><strong>Describe the problem</strong>
+On 9/28, Missouri updated their dashboard. This new dashboard did not report current hospitalization numbers, so we carried over the value for 7 days. As per CTP policy, we stopped carrying over the current hospitalization value after 7 days. On 10/8, MO returned the value to their dashboard, and we have captured ever since.</p>
+<p>Backfilling the days we missed, using the hover-over graph labeled &quot;COVID-19 Total Patients in the Hospital by Day&quot; on the MO website, under the <a href="https://showmestrong.mo.gov/public-healthcare/">Detail: Healthcare System</a> tab.</p>
+<p><strong>Link to data source</strong>
+https://showmestrong.mo.gov/public-healthcare/</p>
+<p>As of 10/20 13:43, the values from the graph are:
+10/7: 1352
+10/6: 1249
+10/5: 1201
+10/4: 1135
+10/3: 1144
+10/2: 1184
+10/1: 1185
+9/30: 1171
+9/29: 1219</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-713032988">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 20, 2020, 10:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/904#issuecomment-713032988" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/96624798-1deda100-12c2-11eb-9a62-86f061a0a5c7.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-713033595">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 20, 2020, 10:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/904#issuecomment-713033595" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/96624887-437aaa80-12c2-11eb-99f6-7d953f435958.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-894">#894: [MO] 10/9 Typo in Positive Cases (confirmed + probable)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            894</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 10, 2020, 1:53 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/894" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MO</p>
+<p><strong>Dates affected:</strong> 10/9</p>
+<p><strong>Describe the issue:</strong> On 10/9 we reported 139164 cases for MO, when we should have reported 139614</p>
+<p><strong>Links:</strong> https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1602362417156400</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-706743481">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on October 11, 2020, 11:04 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/894#issuecomment-706743481" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>For MO both <code>Positives</code> and <code>Positive Cases (PCR)</code> come from the same place on the dashboard, &quot;Cases to date&quot;. On 10/9, data entry recorded 139,164 for <code>Positives</code> and 139,614 for <code>Positive Tests (PCR)</code>. So far, as reported, however from the screenshot I believe 139,164 is the correct value and accordingly will update <code>Positive Tests (PCR)</code> to match.</p>
+<p>Relevant screenshot: https://covidtracking.com/screenshots/MO/MO-20201009-182247.png</p>
+<p>Before:
+<img src="../../assets/github/images/404503/95686120-fe6fbd80-0bc9-11eb-892a-e9cf42c1a48d.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/95686193-5c9ca080-0bca-11eb-957d-707a254be040.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-891">#891: [MO] Patch 10/7 neg. antibody tests </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            891</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 8, 2020, 2:19 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/891" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> MO</p>
+<p><strong>Dates affected:</strong> 10/7</p>
+<p><strong>Describe the issue:</strong> On 10/7 neg. antibody tests was entered incorrectly. We need to patch this mistake using screencaps.</p>
+<p><strong>Links:</strong> https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1602191791464600</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-706178708">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 9, 2020, 6:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/891#issuecomment-706178708" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="752" alt="Screen Shot 2020-10-09 at 9 22 47 AM" src="../../assets/github/images/68712382/95588112-00425100-0a11-11eb-91cb-539072f8fab2.png"></p>
+<p>AFTER:
+<img width="754" alt="Screen Shot 2020-10-09 at 9 23 26 AM" src="../../assets/github/images/68712382/95588188-1819d500-0a11-11eb-991c-eb9aabcb75ac.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-881">#881: [MO] Capture Total Tests Antibody (People) &amp; Total Tests Antigen (People) values of 10/1 </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            881</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 2, 2020, 8:14 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/881" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Missouri</p>
+<p><strong>Describe the problem</strong>
+Missouri started reporting total individuals tested for antibodies &amp; antigens in a new section of the dashboard and we did not capture it on the shift.</p>
+<p><strong>Note</strong>
+The antibody tested individuals value presents a drop from values we previously captured on the old dashboard. We are reaching out to MO to clarify whether the previous number was in <em>people</em> or <em>tests</em> units.</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/screenshots/MO/MO-secondary-20201001-181830.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702794390">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on October 2, 2020, 8:18 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/881#issuecomment-702794390" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE
+<img src="../../assets/github/images/1749380/94939849-b4d3f400-04a0-11eb-968d-05cf37dacbb8.png" alt="image"></p>
+<p>AFTER
+<img src="../../assets/github/images/1749380/94940060-fbc1e980-04a0-11eb-8c80-be5dd0b25dcf.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-874">#874: [MO] Update 9/29 Total Tests PCR, Positive Tests PCR, Negative Tests PCR </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            874</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 29, 2020, 4:14 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/874" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Missouri</p>
+<p><strong>Describe the problem</strong>
+The dashboard changed and we are getting these values from a new source</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.
+<img src="https://user-images.githubusercontent.com/1749380/94625943-f9d10e00-0287-11eb-82ec-8345c6838bfe.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-701041596">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 29, 2020, 4:17 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/874#issuecomment-701041596" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE
+<img src="../../assets/github/images/1749380/94626131-6d731b00-0288-11eb-9da7-e1cc64cca2a5.png" alt="image"></p>
+<p>AFTER
+<img src="../../assets/github/images/1749380/94626243-ab703f00-0288-11eb-8632-0fc51b5c078b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-710">#710: [MO] Re-correct source for Positive (lumped) and Positive Cases PCR (confirmed) </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            710</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on July 31, 2020, 7:11 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/710" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MO</p>
+<p><strong>Describe the problem</strong>
+After discussion, we decided to revert the source for MO total cases and confirmed cases back to the original source on the &quot;Overview&quot; tab of the dashboard http://mophep.maps.arcgis.com/apps/MapSeries/index.html?appid=8e01a5d8d8bd4b4f85add006f9e14a9d</p>
+<p><strong>Link to data source</strong>
+Using screenshots to backfill Wednesday (7/29) and Thursday (7/30) and Tuesday (7/28)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-667141088">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 31, 2020, 7:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/710#issuecomment-667141088" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Screenshots
+7/30 6pm Screenshot
+<img src="../../assets/github/images/25627274/89043453-8017b500-d316-11ea-89e5-1852c2ba0fc0.png" alt="image">
+7/29 6pm Screenshot
+<img src="../../assets/github/images/25627274/89043481-8e65d100-d316-11ea-8c98-ab49ad149325.png" alt="image">
+7/28 6pm Screenshot
+<img src="../../assets/github/images/25627274/89044835-86a72c00-d318-11ea-8dce-9c5dad44661b.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667150285">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on July 31, 2020, 7:31 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/710#issuecomment-667150285" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixes:
+BEFORE:
+<img src="../../assets/github/images/25627274/89044710-58295100-d318-11ea-936e-8a8b0a9e91c9.png" alt="image">
+AFTER:
+<img src="../../assets/github/images/25627274/89045139-033a0a80-d319-11ea-80f5-5520da0e9a08.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-667156448">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on July 31, 2020, 7:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/710#issuecomment-667156448" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>LGTM</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-702">#702: [MO] Antibody test reporting in people</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            702</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 30, 2020, 7:11 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/702" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Missouri</p>
+<p><strong>Describe the problem</strong>
+MO's use of &quot;Individuals&quot; for antibody test counts implies that they report in people, not specimens, tested. States Daily needs to be updated accordingly.</p>
+<p><strong>Link to data source</strong>
+http://mophep.maps.arcgis.com/apps/MapSeries/index.html?appid=8e01a5d8d8bd4b4f85add006f9e14a9d</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-666392318">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on July 30, 2020, 7:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/702#issuecomment-666392318" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Our need to transfer to people antibody reporting was verified.</p>
+<p>Action items:</p>
+<p><strong>1/4: WS2 private note left</strong>
+Before&quot;
+<img width="326" alt="Screen Shot 2020-07-30 at 10 12 38 AM" src="../../assets/github/images/66738237/88933459-6fe7d300-d24d-11ea-9d21-4d3f213cb0a2.png">
+After:
+<img width="328" alt="Screen Shot 2020-07-30 at 10 12 50 AM" src="../../assets/github/images/66738237/88933468-724a2d00-d24d-11ea-84d3-ebef7520b360.png"></p>
+<p><strong>2/4: WS2 source notes changed</strong>
+Before:
+<img width="1002" alt="Screen Shot 2020-07-30 at 10 13 06 AM" src="../../assets/github/images/66738237/88933472-74ac8700-d24d-11ea-9b24-2903fb821b61.png">
+After:
+<img width="999" alt="Screen Shot 2020-07-30 at 10 13 16 AM" src="../../assets/github/images/66738237/88933485-77a77780-d24d-11ea-89f5-f31199b6ae77.png"></p>
+<p><strong>3/4: Data in States Daily copied to correct columns</strong>
+Before:
+<img width="817" alt="Screen Shot 2020-07-30 at 10 13 34 AM" src="../../assets/github/images/66738237/88933503-7d9d5880-d24d-11ea-8975-1f92ccae82de.png">
+After:
+<img width="1024" alt="Screen Shot 2020-07-30 at 10 18 30 AM" src="../../assets/github/images/66738237/88933955-103df780-d24e-11ea-80ed-de477678cf6c.png"></p>
+<p><strong>4/4: WS2 pre-filled</strong></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-679">#679: [Historical MO]: Switching to using the &quot;Testing - PCR&quot; tab instead of the &quot;Overview&quot; tab on the dashboard for confirmed cases  </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            679</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on July 27, 2020, 7:08 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/679" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: MO</p>
+<p><strong>Describe the problem</strong>
+We have been using the number of &quot;lab confirmed cases&quot; in the &quot;Overview&quot; tab of the MO dashboard. However, there were concerns they were lumping positive antibody tests in this figure. We propose to use the &quot;individuals with positive PCR results&quot; on the &quot;Testing - PCR&quot; tab instead. This new dashboard links back to May 21st.</p>
+<p><strong>Link to data source</strong>
+<a href="https://services6.arcgis.com/Bd4MACzvEukoZ9mR/ArcGIS/rest/services/Dashboard_Daily_Numbers_Automated/FeatureServer/0/query?where=Description%3D%27PCR+Positive%27&amp;outFields=value+as+confirmed">ArcGIS query link</a> -- hopefully this can be used to backfill</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-668060834">
+          <div class="frontmatter">
+            <div>
+              <strong>brianskli</strong> commented on August 3, 2020, 7:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/679#issuecomment-668060834" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>MO lists a confirmed number in their secondary screenshot history since 3/28 that could be useful.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-697733657">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 23, 2020, 10:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/679#issuecomment-697733657" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We don't have the &quot;dashboard view&quot; time series for confirmed cases, we only have a continuously backfilled series available from the state -- which we will <em>not</em> use for backfilling.
+According to screenshots (e.g., https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/MO/MO-secondary-20200428-121449.png) they were publishing <em>confirmed</em> case numbers, and this is what we were capturing for positives.
+<em>Suggestion:</em> fill from positives</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-697817876">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on September 23, 2020, 11:11 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/679#issuecomment-697817876" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><img src="../../assets/github/images/62236447/94052188-6d0ce880-fd8d-11ea-90d2-8db7a212b1d7.png" alt="Screenshot from 2020-09-23 11-05-01">
+<img src="../../assets/github/images/62236447/94052189-6da57f00-fd8d-11ea-91c2-e00a4a0b17b6.png" alt="Screenshot from 2020-09-23 11-08-27"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-531">#531: [MO] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            531</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on June 25, 2020, 7:46 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/531" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for MO. However, MO’s death values represent lumped probable and confirmed figures, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+<p>5/12: Started reporting same value for deaths (probable and confirmed) and confirmed deaths</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649841429">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 3:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/531#issuecomment-649841429" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Confirmed the values matched &quot;Deaths&quot;, then removed &quot;Deaths (confirmed) for MO between today and 5/12.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-649897698">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 25, 2020, 6:26 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/531#issuecomment-649897698" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>(Jesse updated the source note for Deaths (confirmed) and the private note this morning)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650175774">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on June 26, 2020, 6:21 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/531#issuecomment-650175774" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DC'ed by JJA 6/26 9:21:00 a.m. ET</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-445">#445: [Historical MO] Missouri is providing PCR &amp; Serology - update historical testing info (they used to lump)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            445</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 23, 2020, 1:38 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/445" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><a href="https://services6.arcgis.com/Bd4MACzvEukoZ9mR/ArcGIS/rest/services/Tests_by_Age_Ser/FeatureServer/0/query?where=1%3D1&amp;objectIds=&amp;time=&amp;resultType=tile&amp;outFields=*&amp;returnIdsOnly=false&amp;returnUniqueIdsOnly=false&amp;returnCountOnly=false&amp;returnDistinctValues=false&amp;cacheHint=false&amp;orderByFields=&amp;groupByFieldsForStatistics=&amp;outStatistics=&amp;having=&amp;resultOffset=50&amp;resultRecordCount=100&amp;sqlFormat=none&amp;f=html&amp;token=">PCR Query</a></p>
+<p><a href="https://services6.arcgis.com/Bd4MACzvEukoZ9mR/arcgis/rest/services/SERTestbydates/FeatureServer/0/query?f=json&amp;where=column0%3Etimestamp%20%272020-04-02%2003%3A59%3A59%27%20AND%20column0%3Ctimestamp%20%272020-05-21%2004%3A00%3A00%27&amp;returnGeometry=false&amp;spatialRel=esriSpatialRelIntersects&amp;outFields=*&amp;orderByFields=column0%20asc&amp;resultOffset=0&amp;resultRecordCount=32000&amp;resultType=standard&amp;cacheHint=true">Serology Query</a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTaqMxtp2Ydfnhp0tqQcGOmmARWnKbmWN05XK1k-Y3mTQxm2YsggCqi69CQhXR0XUdD3vE4l0oscw0G/pubhtml">RAW spreadsheet w data</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-635381918">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 28, 2020, 7:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/445#issuecomment-635381918" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The information was updated in <strong>States Daily</strong> from the queries above using <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR9wj80NnCUVQ8BkTCnxfTAsa0B7etulIPnVOifgkFSnWOcOjd5CPdN4DXDq_snjh_CCL2Xr7nPYMUY/pubhtml">this spreadsheet</a> to calculate cumulative from daily numbers.</p>
+<p>(Thanks <strong>@erfgottlieb</strong> <strong>@karaschechtman</strong> and <strong>@camille-le</strong> for your work on this)</p>
+<p><img src="../../assets/github/images/1749380/83153688-3f5caf00-a0cd-11ea-93a6-be20e7bbde05.png" alt="image"></p>
+<p><img src="../../assets/github/images/1749380/83153710-45529000-a0cd-11ea-93d7-864d4a1706e7.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-434">#434: [Historical MO]: Total tests was accidentally put in as negative tests on 5/17</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            434</p>
+          <p>
+            <strong>qpmnguyen</strong> opened this issue on May 18, 2020, 1:30 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/434" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On 5/17, there was an entry error in MO where the number of total tests was put in place of the number of the negative tests.</p>
+<p>Entry Negative Tests (5/17) should be fixed from 146255 to 146255-10789 = 135466</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-630419633">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 18, 2020, 1:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/434#issuecomment-630419633" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixed the issue for you Quang!</p>
+<p>Before screenshot
+<img src="../../assets/github/images/25627274/82256784-f2d2e000-9924-11ea-8147-1f9ca20a7a50.JPG" alt="Before"></p>
+<p>After screenshot
+<img src="../../assets/github/images/25627274/82256801-f9615780-9924-11ea-8cd8-1fa4f79e3037.JPG" alt="after"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-703969262">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on October 5, 2020, 6:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/434#issuecomment-703969262" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>On 5/17 the Total Tests PCR value is blank. It should be updated to 146255</p>
+<p><strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/95147184-03f28100-074e-11eb-8f63-76159398841e.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/95147247-2daba800-074e-11eb-905e-3a1768325a27.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-386">#386: MO Total Tests is a day behind</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            386</p>
+          <p>
+            <strong>JonRyanL</strong> opened this issue on May 7, 2020, 2:46 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/386" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>I've been tracking the Missouri data for two weeks now and recently the total tests have been a day behind. The Health Department updates the total positives around 2 PM, but the total gets updated around 5 PM (Central). I think the problem was they never updated total deaths for 5/2, but since then:
+5/3 was 91083
+5/4 was 100747
+5/6 was 103622
+They just updated 5/7 to 108721</p>
+<p>Your data has gotten me incredibly interested in the numbers and how they track, thanks!</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-626754357">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on May 11, 2020, 7:52 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/386#issuecomment-626754357" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for your input <strong>@</strong>JonRyanL! MO updated its total tests after our publish time cutoff. If a state updates the number of tests or cases after that time, we catch that update on the following day. So far, the historicals we keep seem to agree with this pattern. We're working internally to best represent this data as well as shifting our time to catch states that update only slightly after our publish time.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-50">#50: MO Numbers Not Updated 3/24</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            50</p>
+          <p>
+            <strong>eschmidt2</strong> opened this issue on March 25, 2020, 7:47 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/50" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The numbers for Missouri were not updated on the States Daily 4PM ET tab in the spreadsheet.  They have updated however on States Current tab so you should have the correct numbers.  Can you update the daily tab?</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-604818698">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 26, 2020, 10:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/50#issuecomment-604818698" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hello,
+MO has been updated as the state provides.</p>
+<ul>
+<li>
+<p>[ ] From our Data Logs:
+<img src="../../assets/github/images/43073915/77723645-6e6c7c80-6fc7-11ea-8bbc-4272a57cae4e.png" alt="Screen Shot 2020-03-27 at 1 06 48 AM"></p>
+</li>
+<li>
+<p>[ ] The Daily (only at 4 pm)
+<img src="../../assets/github/images/43073915/77723769-b7243580-6fc7-11ea-95ef-0d67e5bb184f.png" alt="Screen Shot 2020-03-27 at 1 09 33 AM"></p>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-8">#8: MO data stale</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            8</p>
+          <p>
+            <strong>hammer</strong> opened this issue on March 12, 2020, 8:23 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/8" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>From Chad Huber via email:</p>
+<blockquote>
+<p>Hi there. I noticed your Missouri numbers are incomplete due to Missouri not publishing numbers on their website but rather through an obscure (yet verified) twitter account. I've messaged the Health Director - I was on the Governor's transition team that installed him - in the hopes of pushing him towards the reporting suggested in your Best Practices document. However, until then, I'd be happy to take their tweets and update the numbers for Missouri on a daily basis.</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-598249378">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 12, 2020, 8:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/8#issuecomment-598249378" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Here's the tweet: https://twitter.com/HealthyLivingMo/status/1237857732327137285</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-598249378">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 12, 2020, 8:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/8#issuecomment-598249378" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Here's the tweet: https://twitter.com/HealthyLivingMo/status/1237857732327137285</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

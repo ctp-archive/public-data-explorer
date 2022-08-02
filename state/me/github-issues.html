@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Maine Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Maine</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Maine</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>March 4, 2021, 1:51 PM PST</td>
+          <td>1124</td>
+          <td>
+            <a href="#issue-1124">[ME] Update PCR and antigen testing to complete full time series of tested residents</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 4, 2021, 1:51 PM PST</td>
+          <td>1124</td>
+          <td>
+            <a href="#issue-1124">[ME] Update PCR and antigen testing to complete full time series of tested residents</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 2, 2020, 10:46 PM PST</td>
+          <td>924</td>
+          <td>
+            <a href="#issue-924">[ME] Backfilling first day reporting Antigen tests (11/2)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 24, 2020, 6:59 AM PDT</td>
+          <td>862</td>
+          <td>
+            <a href="#issue-862">[ME] Did not update testing update for 9/22</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 16, 2020, 7:00 AM PDT</td>
+          <td>837</td>
+          <td>
+            <a href="#issue-837">[ME] Explicit Probables Backfill </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 16, 2020, 6:50 AM PDT</td>
+          <td>836</td>
+          <td>
+            <a href="#issue-836">[ME] Incorrect positive cases (PCR) values on 6/9 and 6/3</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 29, 2020, 7:05 AM PDT</td>
+          <td>691</td>
+          <td>
+            <a href="#issue-691">[ME] PCL Historicals (3/15-4/28)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 13, 2020, 11:41 AM PDT</td>
+          <td>619</td>
+          <td>
+            <a href="#issue-619">[ME] Patching Total Tests Skipped 7/11</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 8:32 AM PDT</td>
+          <td>536</td>
+          <td>
+            <a href="#issue-536">[ME] Decrease in Deaths (confirmed) on 6/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 6:34 AM PDT</td>
+          <td>524</td>
+          <td>
+            <a href="#issue-524">[ME] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 22, 2020, 9:34 AM PDT</td>
+          <td>512</td>
+          <td>
+            <a href="#issue-512">[ME] Maine data page is now wrong</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 8, 2020, 9:01 AM PDT</td>
+          <td>169</td>
+          <td>
+            <a href="#issue-169">PUBLISH TIME</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1124">#1124: [ME] Update PCR and antigen testing to complete full time series of tested residents</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1124</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on March 4, 2021, 1:51 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Source: https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</p>
+<p>The testing time series, available in the &quot;Daily Testing Data&quot; tab is a complete time series for PCR and antigen testing. The difference between this time series and the values we were previously using is that the previous values (the daily snapshot data table at the bottom of the page) contains both residents and non residents tested in Maine. This time series includes only residents.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790977235">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on March 4, 2021, 2:03 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124#issuecomment-790977235" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6086856/Multi-edit.tool-PRODUCTION.-.ME-reb-20210304.csv.txt">Multi-edit tool-PRODUCTION - ME-reb-20210304.csv.txt</a>
+<a href="../../assets/github/files/6086857/Multi-edit.tool-PRODUCTION.-.ME-reb-20210304_post.csv.txt">Multi-edit tool-PRODUCTION - ME-reb-20210304_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-803175556">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 19, 2021, 3:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124#issuecomment-803175556" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-810739790">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 30, 2021, 8:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124#issuecomment-810739790" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1124">#1124: [ME] Update PCR and antigen testing to complete full time series of tested residents</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1124</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on March 4, 2021, 1:51 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Source: https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</p>
+<p>The testing time series, available in the &quot;Daily Testing Data&quot; tab is a complete time series for PCR and antigen testing. The difference between this time series and the values we were previously using is that the previous values (the daily snapshot data table at the bottom of the page) contains both residents and non residents tested in Maine. This time series includes only residents.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790977235">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on March 4, 2021, 2:03 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124#issuecomment-790977235" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6086856/Multi-edit.tool-PRODUCTION.-.ME-reb-20210304.csv.txt">Multi-edit tool-PRODUCTION - ME-reb-20210304.csv.txt</a>
+<a href="../../assets/github/files/6086857/Multi-edit.tool-PRODUCTION.-.ME-reb-20210304_post.csv.txt">Multi-edit tool-PRODUCTION - ME-reb-20210304_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-803175556">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 19, 2021, 3:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124#issuecomment-803175556" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-810739790">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on March 30, 2021, 8:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1124#issuecomment-810739790" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-924">#924: [ME] Backfilling first day reporting Antigen tests (11/2)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            924</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on November 2, 2020, 10:46 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/924" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Maine</p>
+<p>Issue: Maine started Reporting Total, Positive, and Negative Antigen tests. Backfilling today's values.</p>
+<p>Source: State Page: https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml
+Screenshot:
+<a href="https://github.com/COVID19Tracking/issues/files/5479589/screencapture-maine-gov-dhhs-mecdc-infectious-disease-epi-airborne-coronavirus-data-shtml-2020-11-02-22_44_58.pdf">screencapture-maine-gov-dhhs-mecdc-infectious-disease-epi-airborne-coronavirus-data-shtml-2020-11-02-22_44_58.pdf</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-720936599">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on November 2, 2020, 10:46 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/924#issuecomment-720936599" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img width="407" alt="Screen Shot 2020-11-02 at 10 46 13 PM" src="../../assets/github/images/66583275/97956359-49aa6580-1d5d-11eb-8743-60930882cf4c.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-862">#862: [ME] Did not update testing update for 9/22</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            862</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 24, 2020, 6:59 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/862" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Maine</p>
+<p><strong>Describe the problem</strong>
+On 9/22, due to technical difficulties, ME did not update their testing data, so CTP carried over values for total, positive, and negative antibody and PCR tests. On 9/23, CTP recorded data as of 9/21 where we should have recorded data as of 9/22.</p>
+<p>We need to:</p>
+<ul>
+<li>Take the testing values from 9/23 (as of 9/21) and record them for 9/22</li>
+<li>Record testing values in 9/23 with data as of 9/22</li>
+</ul>
+<p><strong>Link to data source</strong>
+https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698363413">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 24, 2020, 7:00 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/862#issuecomment-698363413" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/94155214-8d8f7e00-fe33-11ea-8d65-20720f614dae.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-698365808">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 24, 2020, 7:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/862#issuecomment-698365808" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/94155658-0e4e7a00-fe34-11ea-92a8-3ad9571d1e9e.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-837">#837: [ME] Explicit Probables Backfill </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            837</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 16, 2020, 7:00 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/837" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: ME</p>
+<p><strong>Describe the problem</strong>
+CTP started reporting probables on 7/28. ME started reporting values for probables on 5/4, and we can reasonably backfill by calculating positive (confirmed + probables) - positive PCR cases back until 5/4.</p>
+<p><strong>Link to data source</strong></p>
+<ul>
+<li>CTP screenshots [https://covidtracking.com/data/state/maine/screenshots] 5/4-7/28</li>
+</ul>
+<p>PROPOSED VALUES (from 5/4-9/15)</p>
+<p>503
+502
+487
+485
+475
+473
+476
+469
+471
+472
+470
+468
+472
+467
+467
+466
+465
+457
+455
+453
+447
+449
+446
+445
+445
+438
+441
+435
+432
+430
+421
+418
+418
+410
+408
+406
+408
+417
+417
+415
+415
+424
+427
+429
+423
+421
+413
+411
+409
+405
+410
+406
+403
+400
+403
+402
+423
+424
+421
+394
+397
+391
+392
+398
+399
+396
+389
+389
+394
+395
+390
+389
+387
+385
+388
+377
+372
+360
+356
+353
+345
+344
+339
+337
+339
+331
+328
+328
+327
+323
+327
+320
+315
+307
+305
+301
+287
+287
+284
+283
+275
+271
+272
+265
+266
+259
+256
+258
+257
+255
+238
+223
+215
+216
+210
+209
+199
+199
+187
+180
+180
+176
+171
+166
+160
+143
+139
+134
+124
+121
+110
+99
+80
+76
+69</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-693426017">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 7:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/837#issuecomment-693426017" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/57415941/93347892-9795f900-f803-11ea-8ff3-a3082e1613dc.png" alt="Screen Shot 2020-09-16 at 9 50 18 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-693426724">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 7:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/837#issuecomment-693426724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/57415941/93347976-ad0b2300-f803-11ea-9274-d4fdd138d3df.png" alt="Screen Shot 2020-09-16 at 10 01 55 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-836">#836: [ME] Incorrect positive cases (PCR) values on 6/9 and 6/3</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            836</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on September 16, 2020, 6:50 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/836" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: ME</p>
+<p><strong>Describe the problem</strong>
+We had the value 2903 for positive cases (PCR) on 6/3, which contradicts screenshots [https://covidtracking.com/screenshots/ME/ME-20200603-183749.png] for that day. Similarly, we had the value of 2606 for positive cases (PCR) on 6/9, which is not correct according to screenshots [https://covidtracking.com/screenshots/ME/ME-20200609-124232.png].</p>
+<p><strong>Link to data source</strong></p>
+<ul>
+<li>Screenshots linked above</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-693419309">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 6:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/836#issuecomment-693419309" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:</p>
+<p><img src="../../assets/github/images/57415941/93346597-26097b00-f802-11ea-990d-1ea9b75b6c86.png" alt="Screen Shot 2020-09-16 at 9 50 34 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-693419577">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on September 16, 2020, 6:51 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/836#issuecomment-693419577" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/57415941/93346645-31f53d00-f802-11ea-84a9-c0760f44b484.png" alt="Screen Shot 2020-09-16 at 9 50 18 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-691">#691: [ME] PCL Historicals (3/15-4/28)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            691</p>
+          <p>
+            <strong>brianskli</strong> opened this issue on July 29, 2020, 7:05 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/691" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Maine</p>
+<p><strong>Describe the problem</strong></p>
+<ol>
+<li>ME data capture good after 4/29, with separated confirmed and confirmed+positive reporting.</li>
+<li>CTP Capture of <code>Cases (Confirmed and Probable)</code> can be used to fill in <code>Positive Cases (PCR)</code> values between 3/15-4/28, as Maine has always reported confirmed cases.</li>
+</ol>
+<p><strong>Link to data source</strong>
+http://covid-tracking-project-data.s3-website.us-east-1.amazonaws.com/state_screenshots/ME/</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698351648">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 24, 2020, 6:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/691#issuecomment-698351648" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE
+<img src="../../assets/github/images/1749380/94152834-07326680-fe4a-11ea-9f8e-c0c9a6a7a035.png" alt="image"></p>
+<p>AFTER
+<img src="../../assets/github/images/1749380/94152965-2e893380-fe4a-11ea-8350-b5f8abd395aa.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-706230195">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 9, 2020, 7:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/691#issuecomment-706230195" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-712248918">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 19, 2020, 8:33 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/691#issuecomment-712248918" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-619">#619: [ME] Patching Total Tests Skipped 7/11</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            619</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on July 13, 2020, 11:41 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/619" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>ME did not update its data on PCR or tests 7/11 and provided the figures on 7/12. Historicals need to be updated
+https://covidtracking.com/screenshots/ME/ME-20200712-181559.png</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-657735584">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on July 13, 2020, 12:01 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/619#issuecomment-657735584" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<img width="1194" alt="Screen Shot 2020-07-13 at 2 44 36 PM" src="../../assets/github/images/15933271/87342707-b7662380-c519-11ea-82b3-65b7a4293cb5.png">
+<strong>After</strong>
+<img width="1195" alt="Screen Shot 2020-07-13 at 3 00 06 PM" src="../../assets/github/images/15933271/87342715-bcc36e00-c519-11ea-9bfc-3bc7b5cd807c.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-536">#536: [ME] Decrease in Deaths (confirmed) on 6/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            536</p>
+          <p>
+            <strong>schmian</strong> opened this issue on June 25, 2020, 8:32 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/536" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>ME began separating confirmed and probable deaths on 6/23. We were previously recording state reported deaths as Deaths (confirmed) but it is now unclear whether they were lumped (confirmed + probable) or if those numbers were only confirmed. This should be looked into further to determine whether our historical Deaths (confirmed) values should be updated.</p>
+<p>Some notes:</p>
+<ul>
+<li>Deaths (confirmed) decreased from 6/22 (102) to 6/23 (101)</li>
+<li>Since there was only 1 probable death on 6/23 it is possible that it was counted as confirmed from 6/17-6/22 until it was separated out on 6/23</li>
+<li>I watched the beginning of ME <a href="https://livestream.com/mainepublictv/events/9044263?fbclid=IwAR3x20ES5RvBrKURodUM9_JncxEYa-zuK6Yh5WhJIzl20FKcx95yaemnKQA">press releases</a> from 6/22 and 6/24 and there was no mention of the change to confirmed and probable deaths, though this may be addressed later in the video</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-658241558">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 14, 2020, 8:18 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/536#issuecomment-658241558" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663657703">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 24, 2020, 10:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/536#issuecomment-663657703" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-524">#524: [ME] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            524</p>
+          <p>
+            <strong>schmian</strong> opened this issue on June 25, 2020, 6:34 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/524" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>As of 6/23, ME now provides separate confirmed and probable deaths. Deaths provided in the &quot;Cumulative COVID-19 Cases by County&quot; table are lumped but Confirmed and Probable can be separate by changing the &quot;Case Status&quot; in the &quot;COVID-19 Case Trends&quot; chart.</p>
+<p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for ME. However, ME’s total death values represent lumped probable and confirmed figures, so they should only be recorded in the main &quot;Deaths&quot; field and confirmed and probably deaths should be separated beginning on 6/23.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649561689">
+          <div class="frontmatter">
+            <div>
+              <strong>schmian</strong> commented on June 25, 2020, 7:01 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/524#issuecomment-649561689" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Changed the Worksheet2 tooltips</strong>
+Updated source for Deaths (confirmed) to &quot;Select &quot;Confirmed&quot; in Case Status dropdown to view Confirmed Deaths&quot; to reflect ME separating confirmed and probable deaths in &quot;Case Trends&quot; chart</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-650197376">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on June 26, 2020, 7:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/524#issuecomment-650197376" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>DZL is DCing this - 6/26 10:29</p>
+<p>Reopening this issue:
+There is a week gap from 6/03 - 6/10 where we did not input values in &quot;Deaths (confirmed)&quot;
+Since deaths before 6/23 may have been confirmed ([https://github.com/COVID19Tracking/issues/issues/536]), we're keeping the &quot;Deaths (confirmed)&quot; column populated for now.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651787841">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on June 30, 2020, 6:23 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/524#issuecomment-651787841" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img src="../../assets/github/images/15933271/86131061-21f77800-bab3-11ea-98b0-c929d7c64b92.png" alt="before-deaths confirmed missing">
+<strong>AFTER</strong>
+<img src="../../assets/github/images/15933271/86131174-4ce1cc00-bab3-11ea-9066-959e6c6f0af0.png" alt="after-deaths confirmed added"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-512">#512: [ME] Maine data page is now wrong</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            512</p>
+          <p>
+            <strong>cvermilion</strong> opened this issue on June 22, 2020, 9:34 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/512" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>The Maine CDC page that hosts daily data updates changed a few days ago.</p>
+<p>The new link is: https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml</p>
+<p>The historical data seems to be ok, but the screenshots are broken since the URL change.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647801941">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on June 22, 2020, 3:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/512#issuecomment-647801941" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@cvermilion</strong> Thanks for letting us know! This should be fixed going forward.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-169">#169: PUBLISH TIME</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            169</p>
+          <p>
+            <strong>joshuaellinger</strong> opened this issue on April 8, 2020, 9:01 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Org
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/169" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <h2>History</h2>
+<p>Alexis  Madrigal brought two pain points to my attention:
+1. He gets a lot of questions about why our data is out-of-sync with the state's dashboards.
+2. He feels publishing to history at 5PM (in retrospect) feels like a mistake.
+3. He likes the idea of a midnight update but worries that it would be too hard on data entry.</p>
+<p>A group of us (Elliot/Zach/Julia/me) looked at how we could fix this.</p>
+<p>Elliot is close to the data entry process.  He said that 5PM ET is a problem because the west coast often does not report on/at the deadline.  He thinks 8PM ET (5PM PT) is sufficient to insure that we get an update for each state every day in the history table (assuming they make one) .</p>
+<p>The next step in fixing this is for Alexis to find the right people to hash out the best publish date.</p>
+<h2>RECOMMENDATION</h2>
+<p>Our current recommendation is that we move the publish step to 8PM ET but do not change the process otherwise (keep it in the 2nd push) in the near future.  This would reduce operational pressure and make the numbers a lot more consistent.  There are other variations that I will add as comments for separate consideration.</p>
+<p>We also recommend adding a field, called Source Date perhaps, to the published data that tells the consumers the 'as-of' date.  It would be on a per-state per-day basis.  It would clear up both the questions Alexis is getting and the questions about inconsistencies between Current and History.</p>
+<p>My only concern about this change is if we have consumers who are news organizations with evening edition cutoffs.  I will list some alternatives in the comments.</p>
+<h2>IMPLEMENTATION</h2>
+<ol>
+<li>[Now] Add a column called &quot;Source Date (ET)&quot; to the worksheet that tracks the timestamp of the data from the state and display that in the history table.  This is very close to the &quot;Last Updated (ET)&quot; conceptually but we may want the flexibility to put a different date into the history from the actual date that we last looked at it.</li>
+</ol>
+<p>That would enable us to be clear on the website about when each record was from.  It would also enable us to leave the old date if the state fails to make an update in the day.</p>
+<ol start="2">
+<li>
+<p>[Now] Back fill all the history records so that &quot;Source Date (ET)&quot; is the time of the 5PM push.  Initially, we should make it be the same time (5PM) but eventually we may update it based on the data in the CHECKS tab that records the actual time of update.</p>
+</li>
+<li>
+<p>[Now] Tell everyone that consumes is a high profile consumer of our data to that we are planning to switch to an 8 PM ET publish time in the near future and listen for objections.</p>
+</li>
+<li>
+<p>[Next Week] Move the history out of the spreadsheet into a relational database.  This is discussed as a separate issue but mentioned here because it is what will enable us to take the next steps without breaking the current process.</p>
+</li>
+<li>
+<p>[Following week]  Rebuild the history using an 8PM ET publish time using  the Checks tab, the screen shots, and backups of the worksheet.  Apply the other data fixes in the same process.   Publish it on a 'version 2' of the API.</p>
+</li>
+<li>
+<p>[Go Live] Data Entry switches to an 8PM ET publish time.  The web site changes to use the new version of the API.  If you use the old version, the only change is that from this date forward you have data from 8PM.  If you use the new version, you get all the changes and fixes.</p>
+</li>
+</ol>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-611049436">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on April 8, 2020, 9:10 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/169#issuecomment-611049436" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <h2>VARIATION 1 - Publish by Time Zone</h2>
+<p>We divide the states into groups by time zones and update each at 5PM local.  This would be easy for our consumers to understand and not much different from the 'polls closed' behavior we are used to in politics.</p>
+<p>It aligns with the data update schedule of the states.  It supports consumer that really just want a single state better than a later date.  It turns the one big publish into 4 smaller publishes and opens the door to enabling people to be double checkers without having to understand the idiosyncrasies of every state.</p>
+<p>This is the best approach if we're can't wait until 8PM ET.   We have not investigated if this would really work for data entry</p>
+<h2>VARIATION 2: Continuous deployment</h2>
+<p>We change our model so that the current data in history is always 'mutable'.  Current never gets out of sync with history.  For humans consuming our data, this would feel natural.  We make the first row in the history table in a different color to make it feel different.</p>
+<p>For our algorithmic consumers, we implement a web-hook that tells then when we change data.  This has the valuable side-effect that we can publish changes to history without having to reach out of each person using our data to drive other analysis.  This would make us a much more useful source of information for those systems.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-611190132">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 8, 2020, 1:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/169#issuecomment-611190132" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>FYI WY is now moving to a 3 pm (MDT, I assume) data release, so 5 pm EDT.</p>
+<p>https://twitter.com/SethKlamann/status/1247915490170863617</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-611623748">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on April 9, 2020, 9:31 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/169#issuecomment-611623748" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Related to <a href="https://github.com/COVID19Tracking/issues/issues/163">issue 163</a></p>
+<h2>VARIATION 3 - Move the Publish step out of the Google Spreadsheet.</h2>
+<p>We didn't talk about this option in detail but natural time for the consumers of the data is &quot;as-of&quot; midnight.  The problem with this is that we are organized around having the 2nd shift be the critical shift that gets the most vetting and the other two shift have newer staff.</p>
+<p>To scope this, we would need to move to a system where we do most of the work on the history during the 4PM shift and then 'pre-publish' it to a staging location.  Then we vet every change from 4PM to midnight to decide if it should roll into the history.</p>
+<h2>POSSIBLE IMPLEMENTATION</h2>
+<ol>
+<li>
+<p>Separate the 'Publish' process from the 'push' step.  'Push' happens inside of the google spreadsheet and it updates both the current and history numbers in a database table that is only visible internally.  The data entry team no longer worries about publish.</p>
+</li>
+<li>
+<p>The 4PM ET data is assumed to be well vetted.  After this push, the pre-publish table is populated with those numbers and locked.  Any changes between that will go into the public history have to be approved in a separate work.  We could also have a threshold so that small changes are allowed through automatically but big changes aren't.</p>
+</li>
+<li>
+<p>When the 3rd shift signs off, the 'publish manager' (a new role) looks at a (new) web page that shows only shows everything changed between 5PM and 12PM and decides what to include on a per state basis.  It would be easy enough to use Twilio to send SMS messages so that the publish manager is an on-call type position rather than an active participant in the 3rd push.</p>
+</li>
+<li>
+<p>The table would auto-publish if there is no issues at Midnight.  Depending on editorial policy, we could have code the notifies people if there are unresolved issues or we could flag a few states as preliminary and update them in the morning.</p>
+</li>
+</ol>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623790101">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 6:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/169#issuecomment-623790101" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628990102">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 7:31 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/169#issuecomment-628990102" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

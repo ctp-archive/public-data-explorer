@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Guam Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Guam</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Guam</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>November 21, 2020, 1:11 PM PST</td>
+          <td>965</td>
+          <td>
+            <a href="#issue-965">[GU] Patch 11/19-11/20 Total antigen tests (specimens), Total PCR tests (specimens), Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 21, 2020, 12:50 PM PST</td>
+          <td>964</td>
+          <td>
+            <a href="#issue-964">[GU] Remove Total PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>November 5, 2020, 6:11 AM PST</td>
+          <td>928</td>
+          <td>
+            <a href="#issue-928">[GU] Patch 11/4 Timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 7, 2020, 12:56 PM PDT</td>
+          <td>888</td>
+          <td>
+            <a href="#issue-888">[GU] Total pcr tests (people) entered incorrectly on 10/6</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 2, 2020, 8:46 AM PDT</td>
+          <td>882</td>
+          <td>
+            <a href="#issue-882">[GU] Guam added reporting of total and positive antigen tests to situ report</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 15, 2020, 7:18 AM PDT</td>
+          <td>832</td>
+          <td>
+            <a href="#issue-832">[GU] Back-fill Probable Cases and Positive Cases (PCR) from screenshots</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 2, 2020, 9:54 PM PDT</td>
+          <td>808</td>
+          <td>
+            <a href="#issue-808">[GU] Removing negative serology/antibody calculation</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 18, 2020, 10:12 PM PDT</td>
+          <td>775</td>
+          <td>
+            <a href="#issue-775">[GU] On 8/11 Total Tests (PCR) was not recorded in the spreadsheet</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 12, 2020, 7:20 AM PDT</td>
+          <td>751</td>
+          <td>
+            <a href="#issue-751">[GU] Unclear Units for Total Tests (PCR), Positive Tests (PCR) and Negative Tests (PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 10, 2020, 12:59 PM PDT</td>
+          <td>747</td>
+          <td>
+            <a href="#issue-747">[GU] Backfill current icu values 8/6-8/8</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 3, 2020, 6:50 AM PDT</td>
+          <td>725</td>
+          <td>
+            <a href="#issue-725">[GU] Patch Total PCR Tests (People) for 8/1</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 28, 2020, 6:54 AM PDT</td>
+          <td>684</td>
+          <td>
+            <a href="#issue-684">[GU] PCL Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 26, 2020, 6:33 AM PDT</td>
+          <td>543</td>
+          <td>
+            <a href="#issue-543">[GU] PCL Historicals and WS2</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 24, 2020, 9:12 PM PDT</td>
+          <td>287</td>
+          <td>
+            <a href="#issue-287">[States Daily CSV] GU positiveIncrease is negative for 2020-03-07</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-965">#965: [GU] Patch 11/19-11/20 Total antigen tests (specimens), Total PCR tests (specimens), Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            965</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 21, 2020, 1:11 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/965" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Guam</p>
+<p>Dates affected: 11/19-11/20</p>
+<p>Describe the issue: On 11/21 we switched our sources for Guam's Total antigen tests (specimens), Total PCR tests (specimens), Negative PCR tests (people) to account for their new reporting schedule and new information gained by outreach.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-731637635">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 21, 2020, 1:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/965#issuecomment-731637635" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1308" alt="Screen Shot 2020-11-21 at 4 15 05 PM" src="../../assets/github/images/68712382/99887723-b904ce00-2c14-11eb-9df5-b6841f5ba4df.png"></p>
+<p>AFTER:
+<img width="1182" alt="Screen Shot 2020-11-21 at 4 13 53 PM" src="../../assets/github/images/68712382/99887711-8eb31080-2c14-11eb-87bb-adc8bce74a6c.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-964">#964: [GU] Remove Total PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            964</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 21, 2020, 12:50 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/964" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: GU</p>
+<p>Dates affected: 5/13 - 11/20</p>
+<p>Describe the issue: Prior to 11/20, we had been capturing Guam's Total PCR tests (people) as {Positive PCR tests (people) + Negative PCR tests (people)}. However due to new information discovered through outreach, we learned that the negative test value we had been using was actually Negative PCR tests (specimens). In order to ensure our data is as accurate as possible, we are removing Guam's Total PCR tests (people) from our time series.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-731635449">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 21, 2020, 12:56 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/964#issuecomment-731635449" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5578368/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-731704418">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on November 21, 2020, 10:11 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/964#issuecomment-731704418" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>An extra people entry snuck in, modified the source note
+<a href="../../assets/github/files/5579048/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-928">#928: [GU] Patch 11/4 Timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            928</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on November 5, 2020, 6:11 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/928" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: GU</p>
+<p>Dates affected: 11/4</p>
+<p>Describe the issue: On 11/4, there was a typo in the GU timestamp and it was entered as 10/4 instead of 11/4. We should patch that mistake.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-722403683">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on November 5, 2020, 6:13 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/928#issuecomment-722403683" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="91" alt="Screen Shot 2020-11-05 at 9 12 21 AM" src="../../assets/github/images/68712382/98251688-057ab900-1f47-11eb-81e8-744e2902d327.png"></p>
+<p>AFTER:
+<img width="79" alt="Screen Shot 2020-11-05 at 9 13 19 AM" src="../../assets/github/images/68712382/98251778-293dff00-1f47-11eb-9f9f-34d87cd4d34e.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-888">#888: [GU] Total pcr tests (people) entered incorrectly on 10/6</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            888</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on October 7, 2020, 12:56 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/888" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> GU</p>
+<p><strong>Dates affected:</strong> 10/6</p>
+<p><strong>Describe the issue:</strong> On 10/6, pos. cases (pcr) was entered incorrectly in the total tests (pcr) calculation. We should patch this from the 10/6 JIC release where we source our data.</p>
+<p><strong>Links:</strong> https://ghs.guam.gov/jic-release-no-379-cumulative-results-65-test-positive-covid-19-profiles-confirmed-cases-one-gdoe</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-705559451">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on October 8, 2020, 6:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/888#issuecomment-705559451" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="1326" alt="Screen Shot 2020-10-08 at 9 11 28 AM" src="../../assets/github/images/68712382/95463008-41b9fa00-0946-11eb-9372-3b7848a385d5.png"></p>
+<p>AFTER:
+<img width="1326" alt="Screen Shot 2020-10-08 at 9 14 06 AM" src="../../assets/github/images/68712382/95463325-9fe6dd00-0946-11eb-8ab6-a6aedaa0fc2d.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-882">#882: [GU] Guam added reporting of total and positive antigen tests to situ report</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            882</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on October 2, 2020, 8:46 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/882" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Guam</p>
+<p><strong>Describe the problem</strong>
+On 10/1 Guam started reporting positive and total antigen tests on their situation report.</p>
+<p><strong>Link to data source</strong>
+https://drive.google.com/file/d/1n-vrUGzEzs7rjcxXBFEbIMmeUQykuyO9/view</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-702839246">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on October 2, 2020, 9:45 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/882#issuecomment-702839246" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Added values from 10/1
+PDF linked in issue is 10/2. We used 10/1 which we had archived:
+<a href="../../assets/github/files/5319260/Guam.COVID-19.Surveillance.Sit.Rep.pdf">Guam COVID-19 Surveillance Sit Rep.pdf</a></p>
+<p><strong>After</strong>
+<img src="../../assets/github/images/15933271/94948176-e783e980-04ac-11eb-9dba-3e19f0f7d4d6.png" alt="Screen Shot 2020-10-02 at 12 43 29 PM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-832">#832: [GU] Back-fill Probable Cases and Positive Cases (PCR) from screenshots</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            832</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on September 15, 2020, 7:18 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/832" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Guam</p>
+<p><strong>Describe the problem</strong>
+Guam started to separate reporting of probable and confirmed cases on 4/19.
+CTP capture of Positive Cases (PCR) started on 4/29.
+CTP capture of Probable cases started on 7/28.</p>
+<p><strong>Action Plan</strong></p>
+<ul>
+<li>[ ] Backfill Positive Cases PCR  from 4/19 - 4/28 using screenshots</li>
+<li>[ ] Backfill probable cases from 4/19 - 7/28 using<code> { Positive - Positive Cases PCR}</code> (spot check screenshots)</li>
+<li>[ ] Slightly amend total cases on 4/23, 4/24, 4/27 and 4/28 based on screenshots</li>
+</ul>
+<p><strong>Link to data source</strong>
+<a href="https://covidtracking.com/data/state/guam/screenshots">Guam Screenshots on CovidTracking.com</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-692847660">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on September 15, 2020, 10:03 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/832#issuecomment-692847660" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before and After data is in the attached spreadsheet
+<a href="../../assets/github/files/5226550/Guam.Probable.Timeseries.Backfill.xlsx">Guam Probable Timeseries Backfill.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-808">#808: [GU] Removing negative serology/antibody calculation</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            808</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 2, 2020, 9:54 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/808" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State or Territory: Guam</p>
+<p>Describe the problem: CTP started calculating negative serology tests on 6/3/2020 based on GU's Total antibody tests - Positive antibody tests. We are removing this metric.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-686252436">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on September 2, 2020, 9:56 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/808#issuecomment-686252436" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img width="268" alt="Screen Shot 2020-09-02 at 9 51 13 PM" src="../../assets/github/images/66583275/92072822-f91b8980-ed66-11ea-9d31-be71ad0bd1d2.png"></p>
+<p>AFTER:
+<img width="282" alt="Screen Shot 2020-09-02 at 9 51 33 PM" src="../../assets/github/images/66583275/92072842-06d10f00-ed67-11ea-8ab1-2278c28dca79.png"></p>
+<p>Values Removed:156
+156
+156
+156
+156
+156
+156
+156
+156
+156
+153
+153
+153
+153
+153
+153
+153
+151
+151
+151
+150
+149
+149
+145
+145
+145
+145
+145
+144
+144
+144
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+143
+140
+140
+140
+140
+140
+140
+140
+140
+140
+140
+126
+126
+126
+126
+126
+126
+126
+123
+123
+123
+120
+120
+120
+120
+114
+114
+112
+112
+111
+111
+111
+108
+108
+108
+107
+107
+107
+107
+103
+103
+103
+92
+91</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-775">#775: [GU] On 8/11 Total Tests (PCR) was not recorded in the spreadsheet</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            775</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on August 18, 2020, 10:12 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Missing Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/775" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: GU</p>
+<p>Describe the problem: For some reason the value entered on 8/11 for Total Tests (PCR) was not recorded in the spreadsheet but was captured in the edit history as well as the slack thread for GU 8/11.</p>
+<p>Link to data source:
+<img width="1044" alt="GU edit history screenshot" src="https://user-images.githubusercontent.com/66583275/90594679-d81c3b80-e19f-11ea-9e67-c3b185180e8a.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-675856923">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on August 18, 2020, 10:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/775#issuecomment-675856923" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE
+<img width="245" alt="GU 8:11 BEFORE" src="../../assets/github/images/66583275/90594857-51b42980-e1a0-11ea-81b4-fdff422d216b.png">
+AFTER
+<img width="248" alt="GU 8:11 AFTER" src="../../assets/github/images/66583275/90595018-bb343800-e1a0-11ea-9be9-f4e3bb74123b.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-751">#751: [GU] Unclear Units for Total Tests (PCR), Positive Tests (PCR) and Negative Tests (PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            751</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on August 12, 2020, 7:20 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/751" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State/Territory: GU</p>
+<p>Dates impacted: 5/19-8/11 and 5/25-5/26</p>
+<p>Issues: On 7/1, we stopped reporting <strong>positive tests (PCR)</strong> and <strong>negative tests (PCR)</strong> because were unsure about the units that they were reported in (we suspected they were reported in people as opposed to specimens). A Guam annotation says <strong>Total Tests (PCR)</strong> is in <em>specimens</em>, but <strong>positive tests (PCR)</strong> and <strong>negative tests (PCR)</strong> summed to Total Tests (PCR). We are not sure about the units of <strong>Total Tests (PCR)</strong> because <strong>positive tests (PCR)</strong> and <strong>negative tests (PCR)</strong> are both unclear unit-wise.</p>
+<p>Currently, we are summing <strong>Positive Cases (PCR)</strong> and <strong>negative (people or cases)</strong> in order to get <strong>Total PCR Tests</strong> <strong>(People).</strong> The <strong>Total PCR Tests (People)</strong> value is consistently equal or roughly the same as the value in <strong>Total Tests (PCR)</strong>, even though <strong>Total Tests (PCR)</strong> is supposedly in specimens and <strong>Total PCR Tests (People)</strong> is in people.</p>
+<p>We need to outreach to confirm whether <strong>Total Tests (PCR)</strong> is in people or in specimens as well as whether <strong>positive tests (PCR)</strong> and <strong>negative tests (PCR)</strong> are in people or specimens.</p>
+<p>Source: https://www.ghs.guam.gov/jic-release-no-210-updated-reporting-procedures-results-end-day-results-four-test-positive-covid-19</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-682075601">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 27, 2020, 10:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/751#issuecomment-682075601" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-814450369">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/751#issuecomment-814450369" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue is moot. See https://github.com/COVID19Tracking/issues/issues/964</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-747">#747: [GU] Backfill current icu values 8/6-8/8</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            747</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on August 10, 2020, 12:59 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/747" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State</strong>: GU
+<strong>Dates impacted</strong>: 8/6-8/8
+<strong>Issue described</strong>: On 8/10, we discovered a new source for current icu figures. GU has began posting daily &quot;Guam COVID-19 Case Update&quot;, which include current icu numbers. We should patch current icu for 8/6, 8/7, and 8/8 using the case updates from that day.
+<strong>Sources</strong>: https://www.facebook.com/GHSOCD/?tn-str=k*F</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-680253264">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 25, 2020, 1:28 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/747#issuecomment-680253264" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-687395896">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 4, 2020, 2:27 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/747#issuecomment-687395896" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-687411398">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on September 4, 2020, 2:55 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/747#issuecomment-687411398" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Before:
+<img src="../../assets/github/images/404503/92287259-4585d700-eed7-11ea-8cec-98b5cbad02d6.png" alt="image"></p>
+<p>After:
+<img src="../../assets/github/images/404503/92287373-98f82500-eed7-11ea-8e2d-22943651e84c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-725">#725: [GU] Patch Total PCR Tests (People) for 8/1</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            725</p>
+          <p>
+            <strong>ladyzhetse</strong> opened this issue on August 3, 2020, 6:50 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/725" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Guam</p>
+<p><strong>Describe the problem</strong>
+During pub shift on 8/2, we realized that the &quot;Total PCR Tests (People)&quot; figure had been incorrectly calculated the previous day, 8/1. It should be 22,044 (359+21685), not 22,052 (367+21685).</p>
+<p><strong>Link to data source</strong>
+359 = PCR confirmed cases (356 from dashboard + 3 from 8/1 press release); 21685 = negative cases (from press release)
+https://ghs.guam.gov/jic-release-no-245-cumulative-results-three-test-positive-covid-19-dphss-tests-doc-employees-new
+https://covid-tracking.slack.com/archives/CUQ4MMTPD/p1596401618039500</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-668045276">
+          <div class="frontmatter">
+            <div>
+              <strong>qpmnguyen</strong> commented on August 3, 2020, 7:12 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/725#issuecomment-668045276" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixing according to the JIC release number 245 linked above
+BEFORE:
+<img src="../../assets/github/images/25627274/89191969-aedd9780-d571-11ea-9fa2-042ee8ebc255.png" alt="image">
+AFTER:
+<img src="../../assets/github/images/25627274/89192048-cb79cf80-d571-11ea-92eb-563338f29b6c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-684">#684: [GU] PCL Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            684</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on July 28, 2020, 6:54 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/684" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State: GU</strong></p>
+<p><strong>Current issue:</strong> gaps in data reporting on 6/4 and 6/3 for positive cases (PCR). Additionally, we only started reporting positive cases (PCR) on 4/28.</p>
+<p><strong>Sources:</strong>
+6/4 data: https://ghs.guam.gov/jic-release-no-161-end-day-results-zero-test-positive-covid-19-dphss-one-confirmed-positive-gmha
+6/3 data: https://ghs.guam.gov/jic-release-no-159-end-day-results-one-tests-positive-covid-19-dphss</p>
+<p><strong>Link to source for time series:</strong>
+<a href="https://ghs.guam.gov/coronavirus-covid-19?page=1">https://ghs.guam.gov/coronavirus-covid-19?page=1</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-665055008">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 28, 2020, 6:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/684#issuecomment-665055008" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE (6/4 and 6/3 gaps):
+<img src="../../assets/github/images/57415941/88674999-77c23e80-d0b8-11ea-802c-1064f2026e0d.png" alt="Screen Shot 2020-07-28 at 9 42 53 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-665055127">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on July 28, 2020, 6:55 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/684#issuecomment-665055127" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER (6/4 and 6/3 gaps):</p>
+<p><img src="../../assets/github/images/57415941/88675024-801a7980-d0b8-11ea-906e-ee877fc2e57c.png" alt="Screen Shot 2020-07-28 at 9 46 44 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-543">#543: [GU] PCL Historicals and WS2</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            543</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on June 26, 2020, 6:33 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  PCL/SVP Historicals
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/543" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Death values are historically recorded in both the &quot;Deaths&quot; and &quot;Deaths (Confirmed)&quot; columns for GU. However, GU’s death values are unclear about what they represent, so they should only be recorded in the main &quot;Deaths&quot; field.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-650183549">
+          <div class="frontmatter">
+            <div>
+              <strong>pscsharon</strong> commented on June 26, 2020, 6:37 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/543#issuecomment-650183549" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Updated tooltip to &quot;no data&quot; and added process note.</p>
+<img width="884" alt="Screen Shot 2020-06-26 at 6 35 45 AM" src="../../assets/github/images/67423649/85862965-51d31280-b777-11ea-9940-1f6e66bf9e34.png">
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-651143171">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on June 29, 2020, 7:02 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/543#issuecomment-651143171" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<img src="../../assets/github/images/1749380/86015371-7b966e80-b9ef-11ea-86de-2ef85fa45f15.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="../../assets/github/images/1749380/86015507-a84a8600-b9ef-11ea-8cd8-915bdcb1e4fb.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-287">#287: [States Daily CSV] GU positiveIncrease is negative for 2020-03-07</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            287</p>
+          <p>
+            <strong>acobolew</strong> opened this issue on April 24, 2020, 9:12 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/287" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Guam has positiveIncrease  &lt; 0 on 2020-04-20</p>
+<blockquote>
+<p>library(data.table)
+covidtracking.dt &lt;- fread('https://covidtracking.com/api/v1/states/daily.csv')
+covidtracking.dt[, date := as.Date(as.character(date), '%Y%m%d')]
+covidtracking.dt[order(date, decreasing=FALSE)][ , .(date, state, positive, positiveIncrease) ][positiveIncrease &lt; 0]
+date state positive positiveIncrease
+1: 2020-03-07    RI        2               -1
+2: 2020-04-20    GU      133               -3
+3: 2020-04-22    HI      582               -2
+4: 2020-04-22    PR      915             -383</p>
+</blockquote>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-620148626">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 27, 2020, 11:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/287#issuecomment-620148626" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@acobolew</strong>
+It turned that the 136 numbers included 3 probable cases, we revised the historical data to exclude them https://covidtracking.com/screenshots/GU/GU-20200420-180557.png</p>
+<p><strong>Before</strong>
+<img width="170" alt="Screen Shot 2020-04-27 at 2 10 21 PM" src="../../assets/github/images/1749380/80405894-39d33580-8891-11ea-82fd-73c5118fa9c9.png"></p>
+<p><strong>After</strong>
+<img width="161" alt="Screen Shot 2020-04-27 at 2 11 03 PM" src="../../assets/github/images/1749380/80405913-3f308000-8891-11ea-9b69-4e3c2ff4973b.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

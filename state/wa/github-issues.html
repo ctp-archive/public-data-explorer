@@ -1,0 +1,3162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Washington Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Washington</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Washington</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>February 12, 2021, 12:49 PM PST</td>
+          <td>1097</td>
+          <td>
+            <a href="#issue-1097">[WA] Clear Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>February 12, 2021, 12:49 PM PST</td>
+          <td>1097</td>
+          <td>
+            <a href="#issue-1097">[WA] Clear Negative PCR tests (people)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>January 27, 2021, 3:13 PM PST</td>
+          <td>1082</td>
+          <td>
+            <a href="#issue-1082">Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 20, 2020, 7:00 PM PST</td>
+          <td>1023</td>
+          <td>
+            <a href="#issue-1023">[WA] Clear confirmed deaths time series after 12/17</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 19, 2020, 10:51 AM PST</td>
+          <td>1021</td>
+          <td>
+            <a href="#issue-1021">Fix for WA Total PCR tests (test encounters) and Negative PCR tests (people) data problem on 12/18</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 18, 2020, 11:02 AM PST</td>
+          <td>1017</td>
+          <td>
+            <a href="#issue-1017">[WA] Backfill confirmed and probable cases from timeseries provided by Washington</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>December 4, 2020, 9:51 AM PST</td>
+          <td>995</td>
+          <td>
+            <a href="#issue-995">[WA] Backfill Currently hospitalized and Currently in ICU timeseries.</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>October 14, 2020, 8:24 AM PDT</td>
+          <td>897</td>
+          <td>
+            <a href="#issue-897">[WA] Backfilling late update on 10/13</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 23, 2020, 8:13 AM PDT</td>
+          <td>861</td>
+          <td>
+            <a href="#issue-861">[WA] Backfilling late update from 9/22</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 14, 2020, 10:03 AM PDT</td>
+          <td>828</td>
+          <td>
+            <a href="#issue-828">[WA] Updated after pub shift on 9/12 and needs backfill</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 8, 2020, 8:59 PM PDT</td>
+          <td>820</td>
+          <td>
+            <a href="#issue-820">[WA] Website was down during 9/8 pub shift so update was missed.</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 26, 2020, 12:05 PM PDT</td>
+          <td>793</td>
+          <td>
+            <a href="#issue-793">[WA] Washington revised their test count methodology from unique people to tests</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 28, 2020, 7:21 AM PDT</td>
+          <td>685</td>
+          <td>
+            <a href="#issue-685">[WA] PCL Historicals</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 3, 2020, 7:11 AM PDT</td>
+          <td>570</td>
+          <td>
+            <a href="#issue-570">[WA] 200 count lag in data </a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 25, 2020, 3:40 PM PDT</td>
+          <td>537</td>
+          <td>
+            <a href="#issue-537">[WA] WA PCRs off on 6/21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 24, 2020, 3:52 PM PDT</td>
+          <td>517</td>
+          <td>
+            <a href="#issue-517">[WA] has negative new cases for 2020-06-21</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 7, 2020, 4:52 PM PDT</td>
+          <td>478</td>
+          <td>
+            <a href="#issue-478">[WA Historicals]</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 22, 2020, 5:18 PM PDT</td>
+          <td>467</td>
+          <td>
+            <a href="#issue-467">WA historical for the last 3-4 days is borked</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 25, 2020, 10:06 AM PDT</td>
+          <td>454</td>
+          <td>
+            <a href="#issue-454">Someone tried to add WA counties to counties.csv from covid-tracking-data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 21, 2020, 8:55 AM PDT</td>
+          <td>440</td>
+          <td>
+            <a href="#issue-440">WA 5/18 New Cases appear as negative</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>May 7, 2020, 10:26 AM PDT</td>
+          <td>383</td>
+          <td>
+            <a href="#issue-383">WA data out of date and timestamp looks wrong</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 23, 2020, 3:21 PM PDT</td>
+          <td>277</td>
+          <td>
+            <a href="#issue-277">[States Daily CSV] Totals for WA data lower 2020-04-23 than 2020-04-22</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 13, 2020, 2:00 AM PDT</td>
+          <td>189</td>
+          <td>
+            <a href="#issue-189">WA recent days not showing NA</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 10, 2020, 3:01 PM PDT</td>
+          <td>177</td>
+          <td>
+            <a href="#issue-177">WA more than a little sporadic</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 29, 2020, 9:07 PM PDT</td>
+          <td>81</td>
+          <td>
+            <a href="#issue-81">WA: state changed the format of their reporting page</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 20, 2020, 7:59 PM PDT</td>
+          <td>32</td>
+          <td>
+            <a href="#issue-32">WA historical deaths</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 11, 2020, 10:03 PM PDT</td>
+          <td>7</td>
+          <td>
+            <a href="#issue-7">WA: Need proxy setup</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 11, 2020, 11:29 AM PDT</td>
+          <td>5</td>
+          <td>
+            <a href="#issue-5">WA: all scraped data null</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1097">#1097: [WA] Clear Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1097</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 12, 2021, 12:49 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1097" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WA</p>
+<p><strong>Dates affected:</strong> 02/08/21 - 02/11/21</p>
+<p><strong>Describe the issue:</strong> On February 8, 2021, we began capturing Negative PCR tests (specimens) and duplicated that column it into Negative PCR tests (people). However, this figure represents specimens, not people, and should not have been captured as Negative PCR tests (people). On February 12, 2021, we cleared our timeseries of Washington's Negative PCR tests (people).</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778447984">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 12, 2021, 12:51 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1097#issuecomment-778447984" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 4
+WA 2021-02-11
+negative: None (was 4506197)
+WA 2021-02-10
+negative: None (was 4485964)
+WA 2021-02-09
+negative: None (was 4464543)
+WA 2021-02-08
+negative: None (was 4412414)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1097">#1097: [WA] Clear Negative PCR tests (people)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1097</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on February 12, 2021, 12:49 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1097" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WA</p>
+<p><strong>Dates affected:</strong> 02/08/21 - 02/11/21</p>
+<p><strong>Describe the issue:</strong> On February 8, 2021, we began capturing Negative PCR tests (specimens) and duplicated that column it into Negative PCR tests (people). However, this figure represents specimens, not people, and should not have been captured as Negative PCR tests (people). On February 12, 2021, we cleared our timeseries of Washington's Negative PCR tests (people).</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-778447984">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on February 12, 2021, 12:51 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1097#issuecomment-778447984" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 4
+WA 2021-02-11
+negative: None (was 4506197)
+WA 2021-02-10
+negative: None (was 4485964)
+WA 2021-02-09
+negative: None (was 4464543)
+WA 2021-02-08
+negative: None (was 4412414)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1082">#1082: Removing values from the API field Negative from AK, CA, DC, GA, KY, NY, OH, OR, TX, VA and WA </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1082</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on January 27, 2021, 3:13 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>States: Alaska, California, Washington DC, Georgia, Kentucky, New York, Ohio, Oregon, Texas, Virginia, Washington</p>
+<p>Issue: We are removing negatives that were created from mixed units (specimens minus cases or test encounters minus cases) for states that are using explicit totals in our main total test results field (called totalTestResults in the API). See the <a href="https://covidtracking.com/about-data/faq#why-are-you-removing-values-from-the-api-field-negative-from-various-states-starting-on-january-27-2021">Data FAQ</a> for additional explanation.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-768640566">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768640566" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Alaska: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884433/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768649620">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:35 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768649620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>California: Never reported negatives directly, but did report in Total tests (people) until April 21, 2020. Removing time series from present to April 22, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884453/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768653053">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:45 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768653053" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington DC: Never reported negatives directly, and has always reported encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884465/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654010">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:48 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654010" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Georgia: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884501/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768654534">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 3:49 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768654534" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Kentucky: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884518/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768659397">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:02 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768659397" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>New York: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884548/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768661668">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:09 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768661668" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Ohio: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884598/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768663461">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:14 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768663461" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Oregon: Never reported negatives directly, but did report in Total tests (people) until December 1, 2020. Removing time series from present to December 2, 2020.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884616/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768667761">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 4:24 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768667761" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Texas: Never reported negatives directly and always reported in specimens, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884627/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768724724">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 5:44 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768724724" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Virginia: Never reported negatives directly and always reported in encounters, removing total time series</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884705/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-768757202">
+          <div class="frontmatter">
+            <div>
+              <strong>jaclyde</strong> commented on January 27, 2021, 6:43 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1082#issuecomment-768757202" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington: Negatives were backfilled with values calculated from total tests (encounters)-confirmed cases in <a href="https://github.com/COVID19Tracking/issues/issues/793">August 2020</a>. Removing total time series.</p>
+<p>Values Removed:
+<a href="../../assets/github/files/5884730/Changes.txt">Changes.txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1023">#1023: [WA] Clear confirmed deaths time series after 12/17</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1023</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on December 20, 2020, 7:00 PM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1023" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WA</p>
+<p><strong>Dates affected:</strong> 12/17-12/20</p>
+<p><strong>Describe the issue:</strong>
+On December 16, 2020, Washington added all <strong>Probable cases</strong> reported since June, 2020 to their data for December 16, 2020. Because Washington’s data is on a one day lag in our data, this affects our data for December 17, 2020. Because Washington's death data no longer includes only confirmed cases, we are clearing our time series of Confirmed Deaths from 12/17 and onwards.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-748730296">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 20, 2020, 7:03 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1023#issuecomment-748730296" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 4
+WA 2020-12-20
+deathConfirmed: None (was 3104)
+WA 2020-12-19
+deathConfirmed: None (was 3104)
+WA 2020-12-18
+deathConfirmed: None (was 3117)
+WA 2020-12-17
+deathConfirmed: None (was 3042)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1021">#1021: Fix for WA Total PCR tests (test encounters) and Negative PCR tests (people) data problem on 12/18</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1021</p>
+          <p>
+            <strong>theomichel</strong> opened this issue on December 19, 2020, 10:51 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1021" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: WA</p>
+<p><strong>Describe the problem</strong>
+On 12/18, Washington's Total Tests number dropped from the 12/17 number of 3432892 to a much lower 2765404, before rising again on 12/19. CTP collected the lower number on 12/18, which was clearly a temporarily blip in their data.</p>
+<p>The planned fix is to carry the 12/17 number forward to 12/18 in order to avoid a major spike in the curve.</p>
+<p><strong>Link to data source</strong>
+https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-748513694">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on December 19, 2020, 11:15 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1021#issuecomment-748513694" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Fixed!</p>
+<p>Rows edited: 1
+WA 2020-12-18
+totalTestEncountersViral: 3432892 (was 2765404)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-748542352">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 19, 2020, 4:05 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1021#issuecomment-748542352" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The same decision was made for WA's Negative PCR tests (specimens).
+Rows edited: 1
+WA 2020-12-18
+negative: 3226298 (was 2556060)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1017">#1017: [WA] Backfill confirmed and probable cases from timeseries provided by Washington</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1017</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on December 18, 2020, 11:02 AM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1017" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Washington</p>
+<p><strong>Describe the problem</strong>
+ON 12/17/2020, Washington started providing a breakdown of confirmed and probable cases on its dashboard. The &quot;Case counts&quot; tab on the dashboard provides a historical time series of cases by specimen collection date. In order to present a more accurate view of when the probable cases were classified, we are going to backfill our historic time series, to reflect the cases on the dates the specimen was collected.
+We are also going to update the Cases (Confirmed and Proabable) values in our database to reflect the probable cases, and we are going to refresh the full time series of Positive Cases (PCR) so that it matches the probable and lumped timeseries.</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.
+<img src="https://user-images.githubusercontent.com/1749380/102650791-6ea23e80-4139-11eb-94c3-d0822ffc1ba2.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-748333508">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on December 18, 2020, 1:42 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1017#issuecomment-748333508" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5718193/Multi-edit.tool-PRODUCTION.-.WA-reb-20201218.csv.txt">Multi-edit tool-PRODUCTION - WA-reb-20201218.csv.txt</a>
+<a href="../../assets/github/files/5718194/Multi-edit.tool-PRODUCTION.-.WA-reb-20201218_post.csv.txt">Multi-edit tool-PRODUCTION - WA-reb-20201218_post.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-753536727">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 2, 2021, 2:15 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1017#issuecomment-753536727" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-759116998">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on January 12, 2021, 4:10 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1017#issuecomment-759116998" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-759119681">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on January 12, 2021, 4:18 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1017#issuecomment-759119681" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Good bot</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-995">#995: [WA] Backfill Currently hospitalized and Currently in ICU timeseries.</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            995</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on December 4, 2020, 9:51 AM PST</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/995" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> WA</p>
+<p><strong>Dates affected:</strong> 5/13 - 12/3</p>
+<p><strong>Describe the issue:</strong> On December 3, 2020, we discovered a new source for Washington's Currently hospitalized and Currently in ICU. Starting on December 4, 2020, we will capture these metrics during our daily publish shifts, and apply this change retroactively going back to May 13, 2020 for Currently hospitalized, and September 19, 2020 for Currently in ICU.</p>
+<p><strong>Link to data source:</strong> https://coronavirus.wa.gov/what-you-need-know/covid-19-risk-assessment-dashboard</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-738929620">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on December 4, 2020, 9:59 AM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/995#issuecomment-738929620" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/5644509/Changes-_2_.xlsx">Changes-<em>2</em>.xlsx</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-897">#897: [WA] Backfilling late update on 10/13</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            897</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on October 14, 2020, 8:24 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/897" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Washington</p>
+<p><strong>Describe the problem</strong>
+On 10/13, WA missed the cutoff time for our daily publication shift.</p>
+<p><strong>Link to data source</strong>
+https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard</p>
+<p>Backfilling with their dashboard which currently has data as of 10/12 11:59PM
+<img src="https://user-images.githubusercontent.com/67408226/96010509-b71a4480-0df6-11eb-82c0-d779cf1655b8.png" alt="image">
+<img src="https://user-images.githubusercontent.com/67408226/96010552-c39e9d00-0df6-11eb-947c-5505f9111fb9.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-708476837">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 14, 2020, 8:24 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/897#issuecomment-708476837" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/96010471-ab2e8280-0df6-11eb-9915-b76d632922ff.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-708479460">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on October 14, 2020, 8:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/897#issuecomment-708479460" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/96010961-3e67b800-0df7-11eb-93cd-eda5da22d3cd.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-861">#861: [WA] Backfilling late update from 9/22</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            861</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 23, 2020, 8:13 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/861" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Washington</p>
+<p><strong>Describe the problem</strong>
+On 9/22, WA updated after the end of our publication shift.</p>
+<p><strong>Link to data source</strong>
+https://www.doh.wa.gov/Emergencies/COVID19/DataDashboard</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-697521562">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 23, 2020, 8:14 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/861#issuecomment-697521562" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/94032406-d03e5100-fd74-11ea-8666-5fe169fec552.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-697529497">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 23, 2020, 8:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/861#issuecomment-697529497" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/94033101-7e49fb00-fd75-11ea-994a-85826ff40ad9.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-828">#828: [WA] Updated after pub shift on 9/12 and needs backfill</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            828</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on September 14, 2020, 10:03 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/828" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: Washington</p>
+<p><strong>Describe the problem</strong>
+On 9/12, WA had a late update and needs to be backfilled.</p>
+<p><strong>Link to data source</strong>
+Backfilling from this screenshot:
+https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20200912-183200.png</p>
+<p>Since we do not have screenshots of current hosp/vent values, we're carrying over those values from the previous day. archive.org did not have a record of this site for those days, either.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-692240522">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 14, 2020, 11:42 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/828#issuecomment-692240522" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>BEFORE:
+<img src="../../assets/github/images/67408226/93124995-596fcc80-f67f-11ea-8b30-70c19e6243d7.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-692242132">
+          <div class="frontmatter">
+            <div>
+              <strong>the-daniel-lin</strong> commented on September 14, 2020, 11:45 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/828#issuecomment-692242132" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:
+<img src="../../assets/github/images/67408226/93125327-d3a05100-f67f-11ea-9566-925d00061df3.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-820">#820: [WA] Website was down during 9/8 pub shift so update was missed.</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            820</p>
+          <p>
+            <strong>jaclyde</strong> opened this issue on September 8, 2020, 8:59 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/820" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>State: Washington</p>
+<p>Problem: The WA Department of Health's websites were down during pub shift due to a storm, so the 9/8 update was missed.
+<img width="621" alt="Screen Shot 2020-09-08 at 2 28 00 PM" src="https://user-images.githubusercontent.com/66583275/92552725-27411380-f216-11ea-8af7-2dfdaebeeda8.png"></p>
+<p>Solution: The site is back up. Dashboard screenshot:
+<img src="https://user-images.githubusercontent.com/66583275/92552669-10022600-f216-11ea-829b-4b811c6b72d0.png" alt="screencapture-doh-wa-gov-Emergencies-COVID19-DataDashboard-2020-09-08-20_52_16"></p>
+<p>Hospital values screenshot:
+<img src="https://user-images.githubusercontent.com/66583275/92552695-1abcbb00-f216-11ea-9d92-37c34da7c0c9.png" alt="screencapture-doh-wa-gov-Emergencies-COVID19-2020-09-08-20_52_44"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698127078">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 23, 2020, 10:48 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/820#issuecomment-698127078" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-703208962">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 3, 2020, 11:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/820#issuecomment-703208962" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-793">#793: [WA] Washington revised their test count methodology from unique people to tests</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            793</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 26, 2020, 12:05 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/793" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: WA</p>
+<p><strong>Describe the problem</strong>
+Washington has retroactively revised their test count methodology</p>
+<p><strong>Link to data source</strong>
+[
+<a href="https://github.com/COVID19Tracking/issues/files/5132303/Copy.of.PUBLIC_Tests_by_Specimen_Collection.xlsx">Copy of PUBLIC_Tests_by_Specimen_Collection.xlsx</a>
+](url)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-681147524">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on August 26, 2020, 3:04 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/793#issuecomment-681147524" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <ul>
+<li>[x] Backfill
+<ul>
+<li>Information was backfilled from WA XLS</li>
+<li><code>Positive Cases (PCR) </code>- sum of county information from XLS</li>
+<li><code>Positive</code>- sum of county information from XLS</li>
+<li><code>Negative (People or Cases)</code>- sum of county information from XLS</li>
+<li><code>Total Test Encounters (PCR) </code>- sum of positive + negative</li>
+</ul>
+</li>
+</ul>
+<p><a href="../../assets/github/files/5132946/WA.-.Analysis.for.793.pdf">WA - Analysis for #793.pdf</a></p>
+<ul>
+<li>[x] Update future checking instructions in WS2 for <code>Negative (People or Cases)</code> &amp;  <code>Total Test Encounters (PCR) </code></li>
+<li>[x] Remove values in <code>Total Test Results PCR (People) </code> after 8/5</li>
+</ul>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-690789729">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 10, 2020, 4:47 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/793#issuecomment-690789729" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-695870659">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 20, 2020, 6:59 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/793#issuecomment-695870659" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-685">#685: [WA] PCL Historicals</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            685</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on July 28, 2020, 7:21 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/685" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:  Washington</p>
+<p><strong>Describe the problem</strong>
+Our best understanding is that Washington reports only lab-confirmed PCR cases. The time series of column &quot;Positive&quot; and &quot;Positive Cases (PCR)&quot;column should be identical.
+However, there are multiple differences between the columns.</p>
+<ol>
+<li>From 2/29 to 6/22 the values are very different. <a href="https://github.com/COVID19Tracking/issues/issues/495">These values were added by a previous back-fill</a><a href="https://docs.google.com/spreadsheets/d/1HBLpM-CDTvgw8phKtzAD_Mt9CPmCEFSvaso9Rz1nAUs/edit#gid=1869230983"> Using this sheet </a></li>
+<li>Before 2/29 there are no values in</li>
+</ol>
+<p><strong>Link to data source</strong></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-672916297">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 12, 2020, 7:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/685#issuecomment-672916297" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-678662876">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 22, 2020, 9:41 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/685#issuecomment-678662876" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-570">#570: [WA] 200 count lag in data </h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            570</p>
+          <p>
+            <strong>camille-le</strong> opened this issue on July 3, 2020, 7:11 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/570" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: WA</p>
+<p><strong>Describe the problem</strong>
+&quot;WA question from Front - looks like we have a 200ish count lag that causes a blip in our data. I didn't want to match the historical data without checking in&quot; - <strong>@careeningspace</strong></p>
+<p><strong>Link to data source</strong>
+N/A</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-653688193">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on July 3, 2020, 3:21 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/570#issuecomment-653688193" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Cumulative cases and death downloaded from WA's dashboard today</p>
+<p><a href="../../assets/github/files/4871735/wa_cases_death_20200703.zip">wa_cases_death_20200703.zip</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663814252">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 24, 2020, 10:51 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/570#issuecomment-663814252" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-668413920">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 3, 2020, 11:49 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/570#issuecomment-668413920" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-537">#537: [WA] WA PCRs off on 6/21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            537</p>
+          <p>
+            <strong>pscsharon</strong> opened this issue on June 25, 2020, 3:40 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/537" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>On 6/21, we recorded 28,255 total cases, but it should be 28,225.</p>
+<p>This affects &quot;Positive Cases (PCR)&quot; and &quot;Positive Cases (People, confirmed + probable)&quot;.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-651182958">
+          <div class="frontmatter">
+            <div>
+              <strong>camille-le</strong> commented on June 29, 2020, 8:09 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/537#issuecomment-651182958" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE</strong>
+<img width="1054" alt="2020-06-21_WA_BEFORE" src="../../assets/github/images/31285549/86022780-a973b700-b9df-11ea-9518-3fe3bf2e0d47.png"></p>
+<p><strong>AFTER</strong>
+<img width="1045" alt="2020-06-21_AFTER_WA" src="../../assets/github/images/31285549/86022786-ac6ea780-b9df-11ea-97d9-747303459c5c.png"></p>
+<p>Source: <a href="https://covid-tracking-project-data.s3.us-east-1.amazonaws.com/state_screenshots/WA/WA-20200621-185137.png">Washington State Department of Health (CTP Screenshot)</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-517">#517: [WA] has negative new cases for 2020-06-21</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            517</p>
+          <p>
+            <strong>dgdosen</strong> opened this issue on June 24, 2020, 3:52 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/517" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>:
+Washington</p>
+<p><strong>Describe the problem</strong>
+getting data from https://covidtracking.com/api/v1/states/wa/daily.json shows:
+negative &quot;positiveIncrease&quot; for 2020-06-21  That shouldn't be possible</p>
+<p><strong>Link to data source</strong>
+https://covidtracking.com/api/v1/states/wa/daily.json</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-656392233">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 9, 2020, 4:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/517#issuecomment-656392233" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-663814250">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 24, 2020, 10:51 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/517#issuecomment-663814250" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-668413930">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 3, 2020, 11:49 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/517#issuecomment-668413930" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-478">#478: [WA Historicals]</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            478</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on June 7, 2020, 4:52 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/478" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Washington State</p>
+<p>Washington regularly reclassifies their cases based on illness onset. The new positive cases from the daily dashboard (and the screenshots captured by CTP) do not match the epi curve in Washington state.</p>
+<p>Washington cases were obtained from PowerBI tab 2 (via JSON)
+<img src="https://user-images.githubusercontent.com/1749380/83982889-1cfe3900-a8f8-11ea-90de-3746da3bc10d.png" alt="image"></p>
+<p>Washington tests were obtained from PowerBI tab 5 (via JSON)
+<img src="https://user-images.githubusercontent.com/1749380/83982911-4cad4100-a8f8-11ea-8250-2b8426e4aa29.png" alt="image"></p>
+<p>Raw before and after data was <a href="https://docs.google.com/spreadsheets/d/1ks34Zcx0LuoE_y7ZErrdHansqc_J0jCgzFkgNdjz88g/edit#gid=1580913689">saved in this spreadsheet</a></p>
+<p>Patch was applied to the following day numbers to prevent artificial drop
+<strong>BEFORE</strong>
+<img src="https://user-images.githubusercontent.com/1749380/83982843-c09b1980-a8f7-11ea-9f46-73571f9c7076.png" alt="image"></p>
+<p><strong>AFTER</strong>
+<img src="https://user-images.githubusercontent.com/1749380/83982853-db6d8e00-a8f7-11ea-953c-362e44358d79.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-647861544">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 22, 2020, 7:03 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/478#issuecomment-647861544" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653300473">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 2, 2020, 7:23 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/478#issuecomment-653300473" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-467">#467: WA historical for the last 3-4 days is borked</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            467</p>
+          <p>
+            <strong>stefanba3</strong> opened this issue on May 22, 2020, 5:18 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/467" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><img src="https://user-images.githubusercontent.com/3440321/82717262-45c3d480-9c50-11ea-97b4-a2d86a3e4825.jpg" alt="Annotation 2020-05-22 171828"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-636289201">
+          <div class="frontmatter">
+            <div>
+              <strong>theomichel</strong> commented on May 29, 2020, 11:58 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/467#issuecomment-636289201" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Disclaimer: I'm new here, so my opinions are based on limited context. But I have them in spades! :)</p>
+<p>Looking at the screenshots associated with those days, it seems that the data entry was probably correct at the time of entry. (although checkers are not pulling this info from the main dashboard, so the numbers don't quite match the dashboard screenshots)</p>
+<p>As I see it, the main issue here is that washington doesn't push new cases to their site &quot;evenly&quot; every day. They may queue up a batch and then dump it onto the site, and when they do, they assign each new case to the day it was reported to the doctor/hospital. (not the day it was posted to the site)</p>
+<p>Since it's been a few days, the sequence of cumulative case counts for 5/17 through 5/22 now looks like this, according to washington:</p>
+<p>5/17: 18782
+5/18: 18962
+5/19: 19139
+5/20: 19273
+5/21: 19422
+5/22: 19731</p>
+<p>The short term solution here is to do another data sync, similar to the one done in https://github.com/COVID19Tracking/issues/issues/424 and others.</p>
+<p>The long term solution is some sort of regular backfill process for states that update their historical data over time. (there are several, washington is one example)</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-643730149">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 14, 2020, 12:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/467#issuecomment-643730149" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-648667661">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 24, 2020, 1:09 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/467#issuecomment-648667661" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-454">#454: Someone tried to add WA counties to counties.csv from covid-tracking-data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            454</p>
+          <p>
+            <strong>julia326</strong> opened this issue on May 25, 2020, 10:06 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/454" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>https://github.com/COVID19Tracking/covid-tracking-data/pull/64</p>
+<p>(in case this is something we want to fix upstream, not sure what this affects)</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-633735021">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 25, 2020, 3:45 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/454#issuecomment-633735021" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I am not sure if the counties endpoint is used internally, maybe by visualization or race data folks? Perhaps <strong>@kevee</strong> knows?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-634660700">
+          <div class="frontmatter">
+            <div>
+              <strong>kevee</strong> commented on May 27, 2020, 6:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/454#issuecomment-634660700" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We don't use it for anything ATM.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-642648412">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 11, 2020, 6:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/454#issuecomment-642648412" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-440">#440: WA 5/18 New Cases appear as negative</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            440</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on May 21, 2020, 8:55 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/440" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>This is probably created by a historical data patch since WA regularly revises their data.</p>
+<p><strong>Front External Support Ticket</strong>; https://app.frontapp.com/open/cnv_82j3yoh</p>
+<blockquote>
+<p>The data for Washington State on 5/18 - your data shows negative cases - and negative increases in positive cases.</p>
+</blockquote>
+<p>Is there a way you can correct your data?</p>
+<p><strong>Related Issue</strong>: https://github.com/COVID19Tracking/issues/issues/424</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-632896263">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 22, 2020, 1:25 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/440#issuecomment-632896263" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I did another historical data patch for WA today based on the information in page 5 of their dashboard. They are currently reporting only tests performed up to 5/20 11:59PM</p>
+<p>I adjusted yesterday's number to prevent negative case numbers to the same as 5/20
+<strong>BEFORE</strong>
+<img src="../../assets/github/images/1749380/82706782-9e8f6f00-9c48-11ea-9027-eca4df491701.png" alt="image"></p>
+<p>AFTER
+<img src="../../assets/github/images/1749380/82706815-aea74e80-9c48-11ea-89fb-906937fa3dc8.png" alt="image"></p>
+<p>All the information including the raw JSON from WA DOH website is available here
+https://docs.google.com/spreadsheets/d/e/2PACX-1vTrTN4ZhOJo_DORpyHkTCNNL6-Ko_VQ0iI1qkYjlhL_MtxOWygRMRfsLtL-VY0d8uiFBNoeee7v3F8G/pubhtml</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-383">#383: WA data out of date and timestamp looks wrong</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            383</p>
+          <p>
+            <strong>easp</strong> opened this issue on May 7, 2020, 10:26 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/383" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Page in question: https://covidtracking.com/data/state/washington</p>
+<p>As of 10:15AM PDT:</p>
+<p>&quot;Last updated from our data: 1:12 pm EDT&quot;</p>
+<p>Data hasn't been updated to reflect last update on state website made 4:30pm PDT 5/6/2020 (which shows data as of Last updated: Tuesday May 5 2020 11:59 pm PDT).</p>
+<p>Page lists last updated as &quot;Last updated: Mon May 4 2020 11:59 pm EDT.&quot; Is that accurate, or should it reflect the state's cutoff time, which is 11:59 <em>PDT</em>?</p>
+<p>Last screenshot, dated Wed May 6 2020 at 9:24PM (EDT) is blank (file exists, but renders as white).</p>
+<p>Prior screenshots show the web page, but they don't show any data due to the sections being collapsed. Probably a result of how &quot;screenshot&quot; is taken. Some tools that allow capture of entire rendered webpage allow interaction with page before capturing final page state.</p>
+<p>Screenshots are not of the page <a href="https://www.doh.wa.gov/Emergencies/NovelCoronavirusOutbreak2020COVID19/DataDashboard">linked under best current data source</a>. They are of <a href="https://www.doh.wa.gov/Emergencies/Coronavirus">this page</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-625499770">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 7, 2020, 2:11 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/383#issuecomment-625499770" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thanks for contacting us <strong>@easp</strong></p>
+<p>Let me try to respond to all the points you raised</p>
+<ol>
+<li>
+<p>We publish the data daily around 4.30pm EST, so when a state adds data after our publishing cut off time, we capture it the following day. I think that's what happened when you looked at Washington this morning on the website.</p>
+</li>
+<li>
+<blockquote>
+<p>Page lists last updated as &quot;Last updated: Mon May 4 2020 11:59 pm EDT.&quot; Is that accurate, or should it reflect the state's cutoff time, which is 11:59 PDT?</p>
+</blockquote>
+</li>
+</ol>
+<p>We are going to look at this. It might be a timezone reporting issue</p>
+<ol start="3">
+<li>Screenshots
+We updated the screenshots logic this morning to point to the dashboard since the main page recently stopped showing the data. We are looking into why the screenshot capturing tool got a blank page.</li>
+</ol>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628737147">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on May 14, 2020, 9:12 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/383#issuecomment-628737147" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>The timezone issue reported above as #2 should be fixed with https://github.com/COVID19Tracking/website/pull/848</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-277">#277: [States Daily CSV] Totals for WA data lower 2020-04-23 than 2020-04-22</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            277</p>
+          <p>
+            <strong>hrushka</strong> opened this issue on April 23, 2020, 3:21 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/277" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Source: https://covidtracking.com/api/v1/states/daily.csv</p>
+<p>Fileds: totalTestResults,positive,negative,deaths
+Date: 2020-04-23</p>
+<p>Reference: https://c19.dev/d/4S5AN4CZz/covid-19-us-state-data?orgId=1&amp;from=now-45d&amp;to=now&amp;var-state=WA&amp;var-population=7614893&amp;var-density=147.46721965695642&amp;var-total_cases=12539&amp;var-total_deaths=696</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-618989173">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 24, 2020, 5:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/277#issuecomment-618989173" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Hi <strong>@hrushka</strong></p>
+<p>Your website is great! I am seeing very different numbers on https://c19.dev/d/4S5AN4CZz/covid-19-us-state-data?panelId=2&amp;fullscreen&amp;orgId=1&amp;from=now-45d&amp;to=now&amp;var-state=WA&amp;var-population=7614893&amp;var-density=147.46721965695642&amp;var-total_cases=12539&amp;var-total_deaths=696 than on our WA numbers. Positives and Testing numbers are off. Can you double check that you are using our numbers please?</p>
+<p><img src="../../assets/github/images/1749380/80214344-ab4c8300-8608-11ea-89b2-b310f0f1e367.png" alt="Screenshot_2020-04-24 Coronavirus numbers by state (CovidTracking, DEV COPY)"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-619280615">
+          <div class="frontmatter">
+            <div>
+              <strong>hrushka</strong> commented on April 24, 2020, 4:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/277#issuecomment-619280615" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@muamichali</strong> hey thanks for checking on this, I found the error in my import. I was relying on the Hash column to be a primary key for the state and day, so I was duplicating days in certain instances!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-189">#189: WA recent days not showing NA</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            189</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 13, 2020, 2:00 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/189" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Washington hasn't done any reporting in two days, it looks like, but the data are showing zeroes instead of nulls for the relevant fields (e.g., all the -Increase fields).</p>
+<p>PS the last screenshot on 4/12 seems to be an empty png.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-613051688">
+          <div class="frontmatter">
+            <div>
+              <strong>julia326</strong> commented on April 13, 2020, 12:19 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/189#issuecomment-613051688" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@</strong>Jmuccigr thanks for raising the screenshot issue! I'll keep an eye on it but that should be fixed going forward. We're discussing how to handle the zeroes vs nulls question.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-614027573">
+          <div class="frontmatter">
+            <div>
+              <strong>smrgit</strong> commented on April 15, 2020, 6:05 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/189#issuecomment-614027573" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>I live near Seattle and have a particular interest in the WA data --  if you need an extra set of hands/eyes to update/curate the WA data, I'd be happy to help.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-623774960">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 4, 2020, 5:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/189#issuecomment-623774960" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-628958147">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on May 14, 2020, 5:37 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/189#issuecomment-628958147" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-177">#177: WA more than a little sporadic</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            177</p>
+          <p>
+            <strong>Jmuccigr</strong> opened this issue on April 10, 2020, 3:01 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/177" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Since WA hasn't updated in 2 days, maybe it's time to note that and give them a grade somewhere south of A? 😄</p>
+<p>PS A bunch of their recent zeroes should really be NA, no?</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-612387959">
+          <div class="frontmatter">
+            <div>
+              <strong>Jmuccigr</strong> commented on April 11, 2020, 3:28 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/177#issuecomment-612387959" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Done now. Closing.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-81">#81: WA: state changed the format of their reporting page</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            81</p>
+          <p>
+            <strong>rainiernate</strong> opened this issue on March 29, 2020, 9:07 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data source
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/81" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Normally data was being pushed around 3p but today it went long overtime to about 9pm and they changed the whole format. I can't find a table unless I scroll down to the WA state map and click &quot;Table View&quot;. The data pull for 3/29 is inaccurate.
+<img width="802" alt="Screen Shot 2020-03-29 at 9 06 49 PM" src="https://user-images.githubusercontent.com/13302862/77874248-410b1300-7201-11ea-87d8-edde08920f1d.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-606131229">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on March 30, 2020, 10:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/81#issuecomment-606131229" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Still not updated as of now.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-606590285">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on March 31, 2020, 5:16 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/81#issuecomment-606590285" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Still <strong>@</strong> 3/28</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-606966257">
+          <div class="frontmatter">
+            <div>
+              <strong>bnm91</strong> commented on March 31, 2020, 6:02 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/81#issuecomment-606966257" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Washington State DOH is reporting an issue that prevents data from being updated.</p>
+<p><img src="../../assets/github/images/19519681/78088708-cd404600-7379-11ea-977b-a2a161f2387c.png" alt="image"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-620003941">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 27, 2020, 6:58 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/81#issuecomment-620003941" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We are now regularly updating WA data to match. If you right-click on a chart, it will let you see the data in a tabular format. This is not great, but slightly better than mousing over the charts.</p>
+<p>Please see Issue #233 for the most recent update.</p>
+<p>Thanks!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-32">#32: WA historical deaths</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            32</p>
+          <p>
+            <strong>ksenzee</strong> opened this issue on March 20, 2020, 7:59 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/32" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Washington state reported its first deaths on March 4, but the data doesn't include any deaths until March 11. I checked the Seattle Times daily updates for each of those dates and came up with this:</p>
+<pre><code>    &quot;2020-03-04&quot;: 10, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-update-march-4-what-we-know-so-far-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+    &quot;2020-03-05&quot;: 11, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-5-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+    &quot;2020-03-06&quot;: 14, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-6-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+    &quot;2020-03-07&quot;: 16, // https://www.seattletimes.com/seattle-news/coronavirus-deaths-in-washington-now-at-16-with-102-confirmed-cases/
+    &quot;2020-03-08&quot;: 18, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-8-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+    &quot;2020-03-09&quot;: 22, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-9-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+    &quot;2020-03-10&quot;: 24 // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-10-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+</code></pre>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-601984509">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 20, 2020, 8:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/32#issuecomment-601984509" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for the information! We will get that added to our data set as quickly as possible.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601991531">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on March 20, 2020, 9:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/32#issuecomment-601991531" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We started tracking around March 11. The CDC has also retrospectively reclassified some deaths as COVID deaths.</p>
+<p>I think the first reported death was actually Feb 29: https://www.nbcnews.com/news/us-news/1st-coronavirus-death-u-s-officials-say-n1145931</p>
+<blockquote>
+<p>On Mar 20, 2020, at 7:59 PM, Katherine Senzee <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<p>Washington state reported its first deaths on March 4, but the data doesn't include any deaths until March 11. I checked the Seattle Times daily updates for each of those dates and came up with this:</p>
+<pre><code>&quot;2020-03-04&quot;: 10, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-update-march-4-what-we-know-so-far-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-05&quot;: 11, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-5-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-06&quot;: 14, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-6-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-07&quot;: 16, // https://www.seattletimes.com/seattle-news/coronavirus-deaths-in-washington-now-at-16-with-102-confirmed-cases/
+&quot;2020-03-08&quot;: 18, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-8-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-09&quot;: 22, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-9-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-10&quot;: 24 // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-10-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+</code></pre>
+<p>—
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly, view it on GitHub, or unsubscribe.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601984509">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 20, 2020, 8:06 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/32#issuecomment-601984509" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Thank you for the information! We will get that added to our data set as quickly as possible.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601991531">
+          <div class="frontmatter">
+            <div>
+              <strong>realfuture</strong> commented on March 20, 2020, 9:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/32#issuecomment-601991531" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We started tracking around March 11. The CDC has also retrospectively reclassified some deaths as COVID deaths.</p>
+<p>I think the first reported death was actually Feb 29: https://www.nbcnews.com/news/us-news/1st-coronavirus-death-u-s-officials-say-n1145931</p>
+<blockquote>
+<p>On Mar 20, 2020, at 7:59 PM, Katherine Senzee <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a> wrote:</p>
+<p>Washington state reported its first deaths on March 4, but the data doesn't include any deaths until March 11. I checked the Seattle Times daily updates for each of those dates and came up with this:</p>
+<pre><code>&quot;2020-03-04&quot;: 10, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-update-march-4-what-we-know-so-far-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-05&quot;: 11, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-5-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-06&quot;: 14, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-6-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-07&quot;: 16, // https://www.seattletimes.com/seattle-news/coronavirus-deaths-in-washington-now-at-16-with-102-confirmed-cases/
+&quot;2020-03-08&quot;: 18, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-8-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-09&quot;: 22, // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-9-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+&quot;2020-03-10&quot;: 24 // https://www.seattletimes.com/seattle-news/health/coronavirus-daily-news-update-march-10-what-to-know-today-about-covid-19-in-the-seattle-area-washington-state-and-the-nation/
+</code></pre>
+<p>—
+You are receiving this because you are subscribed to this thread.
+Reply to this email directly, view it on GitHub, or unsubscribe.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-607358072">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on April 1, 2020, 9:35 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/32#issuecomment-607358072" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>WA has been updated accordingly:
+<img src="../../assets/github/images/43073915/78162752-53f63100-7415-11ea-889b-094fda87868b.png" alt="Screen Shot 2020-04-01 at 12 31 43 PM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-7">#7: WA: Need proxy setup</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            7</p>
+          <p>
+            <strong>joshellington</strong> opened this issue on March 11, 2020, 10:03 PM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/7" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>Currently all requests from <code>urlwatch</code>/<code>curl</code>/<code>pyppeteer</code> etc are failing due to an obfuscated Javascript redirect 😞. Attempts at getting around the redirect with various User Agents/Cookies/system time settings have failed so far.</p>
+<p>We need help setting up a proxy that uses manually tuned headless browser behaviors to execute/follow the redirect. Zach found an issue containing potential solutions that deals with a similar issue (using <code>puppeteer</code>): https://github.com/puppeteer/puppeteer/issues/3323</p>
+<p>Couple additional notes:</p>
+<ul>
+<li>&quot;Real&quot; browser requests are being transitioned through a URL like so: https://www.doh.wa.gov/TSPD/08d53046a7ab200030db30739056f4b6426264413af7c58414d4cc4d5281786dd10707e0eb2dbef4?type=8</li>
+<li>Cookie/<code>curl</code> details: https://covid-tracking.slack.com/archives/CUW8MKCD7/p1583988311288700</li>
+<li>Other header attempts: https://covid-tracking.slack.com/archives/CUW8MKCD7/p1583988346289300</li>
+</ul>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-599155033">
+          <div class="frontmatter">
+            <div>
+              <strong>joshellington</strong> commented on March 14, 2020, 6:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/7#issuecomment-599155033" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Proxy is up and working!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-599155033">
+          <div class="frontmatter">
+            <div>
+              <strong>joshellington</strong> commented on March 14, 2020, 6:18 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/7#issuecomment-599155033" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Proxy is up and working!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-5">#5: WA: all scraped data null</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            5</p>
+          <p>
+            <strong>lucasgonze</strong> opened this issue on March 11, 2020, 11:29 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <blockquote>
+<p>The data is still there but the parser is not finding the data.  My generic table scanner picks it up.  It is probably just an ID change.</p>
+</blockquote>
+<p><img src="https://user-images.githubusercontent.com/111581/76450857-be263380-638b-11ea-85cf-6515c271e676.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-597932799">
+          <div class="frontmatter">
+            <div>
+              <strong>joshellington</strong> commented on March 11, 2020, 4:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5#issuecomment-597932799" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Possibly getting thrown a loop through a load balancer/ddos:
+<img src="../../assets/github/images/92450/76473662-65b85b80-63b6-11ea-9e87-925f4e4775aa.png" alt="image"></p>
+<p>Initial <code>curl</code> investigation is showing a time-based, expiring (~30s?) cookie requirement, routed through: https://www.doh.wa.gov/TSPD/08d53046a7ab200005e61969b75632c19fd50c8e240a4437520fdcf1a06b6fdce989b827dd851460?type=8</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601938878">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 20, 2020, 3:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5#issuecomment-601938878" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Is this resolved?  Please close or assign it back to me.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601957947">
+          <div class="frontmatter">
+            <div>
+              <strong>lucasgonze</strong> commented on March 20, 2020, 4:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5#issuecomment-601957947" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was stale.</p>
+<p>On Fri, Mar 20, 2020 at 3:51 PM Josh Ellington <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a>
+wrote:</p>
+<blockquote>
+<p>Closed #5 <a href="https://github.com/COVID19Tracking/issues/issues/5">https://github.com/COVID19Tracking/issues/issues/5</a>.</p>
+<p>—
+You are receiving this because you were assigned.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/5#event-3151133282">https://github.com/COVID19Tracking/issues/issues/5#event-3151133282</a>, or
+unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/AAA3HXKY3DJ3D7X7Q2HKAW3RIPXPVANCNFSM4LF4CBNQ">https://github.com/notifications/unsubscribe-auth/AAA3HXKY3DJ3D7X7Q2HKAW3RIPXPVANCNFSM4LF4CBNQ</a>
+.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-597932799">
+          <div class="frontmatter">
+            <div>
+              <strong>joshellington</strong> commented on March 11, 2020, 4:38 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5#issuecomment-597932799" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Possibly getting thrown a loop through a load balancer/ddos:
+<img src="../../assets/github/images/92450/76473662-65b85b80-63b6-11ea-9e87-925f4e4775aa.png" alt="image"></p>
+<p>Initial <code>curl</code> investigation is showing a time-based, expiring (~30s?) cookie requirement, routed through: https://www.doh.wa.gov/TSPD/08d53046a7ab200005e61969b75632c19fd50c8e240a4437520fdcf1a06b6fdce989b827dd851460?type=8</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601938878">
+          <div class="frontmatter">
+            <div>
+              <strong>joshuaellinger</strong> commented on March 20, 2020, 3:34 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5#issuecomment-601938878" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Is this resolved?  Please close or assign it back to me.</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601957947">
+          <div class="frontmatter">
+            <div>
+              <strong>lucasgonze</strong> commented on March 20, 2020, 4:54 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/5#issuecomment-601957947" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was stale.</p>
+<p>On Fri, Mar 20, 2020 at 3:51 PM Josh Ellington <a href="mailto:notifications<strong>@github.com</strong>">notifications<strong>@github.com</strong></a>
+wrote:</p>
+<blockquote>
+<p>Closed #5 <a href="https://github.com/COVID19Tracking/issues/issues/5">https://github.com/COVID19Tracking/issues/issues/5</a>.</p>
+<p>—
+You are receiving this because you were assigned.
+Reply to this email directly, view it on GitHub
+<a href="https://github.com/COVID19Tracking/issues/issues/5#event-3151133282">https://github.com/COVID19Tracking/issues/issues/5#event-3151133282</a>, or
+unsubscribe
+<a href="https://github.com/notifications/unsubscribe-auth/AAA3HXKY3DJ3D7X7Q2HKAW3RIPXPVANCNFSM4LF4CBNQ">https://github.com/notifications/unsubscribe-auth/AAA3HXKY3DJ3D7X7Q2HKAW3RIPXPVANCNFSM4LF4CBNQ</a>
+.</p>
+</blockquote>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Rhode Island Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Rhode Island</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Rhode Island</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 1, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <ul>
+<li>What percentage of the total testing volume that Rhode Island posts on its dashboard is antigen?</li>
+<li>(long shot) Would Rhode Island be willing to post separate PCR and antigen counts?</li>
+</ul>
+
+    </div>
+    
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Clear full definitions of cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Elizabeth, please see our Data FAQs. In the Positive Cases section, we added a reference to the CDC definition, which is what we use. <a href="https://health.ri.gov/publications/guides/COVID-19-Data-Notes.pdf">https://health.ri.gov/publications/guides/COVID-19-Data-Notes.pdf</a></p>
+
+        </div>
+      
+    
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Providing breakdown of confirmed and probable cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>In the past our state medical directors recommended we not break out probable cases, in part because we would miss probables as determined by clinical criteria. The medical directors' opinion on this matter had not changed when we checked back recently.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Confirmed is viral RNA only?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>​This would be the case if we only used PCR tests to confirm positivity; we also use antigen tests although there are some settings or situations in which only a confirmed PCR test is adequate proof of case positivity or negativity.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Probables fully match CSTE definition (either old or new)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Not applicable for reasons noted above.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Within this category, we are missing the following point values: Overall point values: Staff Cumulative Cases,​ Staff Cumulative Deaths, Staff Outbreak Cases, Staff Outbreak Deaths, Res Outbreak Deaths</p>
+<p>Within this category, we are missing the following point values: At the facility level: ​Staff Cumulative Cases, Staff Cumulative Deaths, Staff Outbreak Cases, Staff Outbreak Deaths, Res Outbreak Deaths</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Thus far, our publicly available LTCF data do not break cases into residents vs. staff, although we do have that data (i.e., all the points listed <above>). We are working to provide the overall LTCF data by point values, rather than ranges, on the website after other new reporting priorities are addressed.</p>
+<p>We're still not convinced that we should provide these LTCF data at the facility AND point level, since the facilities have pushed back when our numbers do not exactly match theirs. Our conclusion is that it's better to continue providing ranges for cases and deaths at the facility level.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 22, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Response to Racial and Demographic Data SG: Within this category, the area that need the most attention from RI is:  RI reports race / ethnicity for less than 80% of cases and less than 90% of deaths.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 22, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The only reason we don't report race/ethnicity for those 20% of cases and 10% of deaths is due to refusal to disclose, or lack of accurate collection in Vital Records.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 21, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>As of 12/09 in the Multiple Race category(found in the Demographics tab of the &quot;COVID-19 Rhode Island Data&quot; Google spreadsheet), there is a discrepancy between the data on people tested (on 12/09, this number was 141) and the data on positive cases (on 12/09, this number was 475).  On 1/6/21, the number is 274 for All People Tested and 741 for Positive Cases.  Could we get some clarification on these numbers, please?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 21, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The testing data and case data are compiled as separate datasets. The discrepancy where certain racial/ethnic groups may have a greater # of cases than the # of tests is related to the large quantity of missing race/ethnicity data for tests. Many people tested (~58%) did not have race/ethnicity information provided by the lab facility. However, the case investigation race/ethnicity data are much more complete because RIDOH is asking people directly.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 21, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>On 12/23 in the summary tab of RI's data the cumulative hospitalizations is 6131, while the demographic tab says 6605, the numbers adding all hospitalizations by race together only add up to 6005.  On 1/6/21, the number of cumulative hospitalizations in the summary tab is 6905 while the number is 6806 in the demographics tab of RI’s data.  Can you help us understand why that is?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 21, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The total count for hospitalizations on the demographics tab is updated weekly and only includes admissions through the previous Saturday.  The cumulative hospital admission count on the summary tab is updated daily, so the counts will always be inconsistent.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 26, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How do you define a case?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 26, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We follow the CDC and CSTE guidance for case classification, here. The exception is that we are not including non-test-based probables in our case counts and to date we have not separated counts for lab-probable and lab-confirmed criteria. We recommend linking to CDC on our website and leaving it at that, or risk not having the most updated info if the case definition changes.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is Rhode Island performing pool testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Rhode Island is not performing pool testing at this time but is considering it for the future.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What types of testing are you using?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>PCR, serology, and some antigen tests.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Are you conducting antigen tests?  If so, are those test results included in your state COVID portal?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Yes, we are conducting antigen tests. Yes, we include positives in our portal.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>And how many antigen tests have you conducted?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>I don’t know the precise number. Need to look into this.</p>
+
+        </div>
+      
+    
+  
+    <h2>July 21, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We're seeing a very large difference between the ICU and bed data from RI's covid dashboard and the data from the CDC.  The difference can be seen here:</p>
+<p>https://www.covidexitstrategy.org/</p>
+<p>It shows Rhode Island's ICU 83% occupied.  The overall measures of spread such as cases per million seem to be inconsistent as well.</p>
+<p>Here is Rhode Island's most recent data on our site:</p>
+<p>https://covidtracking.com/data/state/rhode-island</p>
+<p>We're trying to figure out what's going on here.  Does this have to do, as you suggested, with overall hospitalization numbers not having to do with covid?  Is there some other health emergency?  We'd just like to make sure we correctly understand Rhode Island's data.</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 21, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>In terms of the ICU bed data, as I mentioned on the phone, CDC reported the number of people who were in the ICU overall and the RIDOH data dashboard reported the number of people in the ICU due to COVID.</p>
+<p>(Context from reporter: &quot;When I asked him about this on the phone, he seemed caught off guard and suggested what he answers here- that the number could be overall ICU usage. But I asked him if that was actually the case, and he said he needed to look into it. He didn't answer why the ICU usage was so high here, unfortunately.&quot;)</p>
+
+        </div>
+      
+    
+  
+    <h2>June 3, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Does &quot;total tested&quot; refer to people tested or specimens tested? Are antibody tests included in this figure, and if so does the state have plans to break them out?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Total tested refers to people tested. Antibody tests are not included in that figure. They plan to put out antibody testing info within the next week.</p>
+
+        </div>
+      
+    
+  
+    <h2>May 27, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Given that &quot;Percentages do not include cases with unknown or declined demographics or those that are pending further information&quot;, could RI give the number of such unknown cases / fatalities?
+Could RI report n= for cases &amp; fatlities (what is the total that the percentage is of?)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>1. Unknown or declined demographics question-The number of unknowns/declined are whatever the total is minus the rest of the data.</p>
+<p>2. n+ for cases &amp; fatalities question- If you go to bottom of RI dashboard, it says &quot;Click Here&quot;. When you click it, it will take you to their Google spreadsheet. There, in the race and ethnicity data, you can see the denominator to find that number.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>

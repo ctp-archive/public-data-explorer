@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>North Carolina Github issues</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">North Carolina</a>
+              
+            </li>
+          
+            <li>
+              
+                Github issues
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">North Carolina</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>April 1, 2021, 6:29 AM PDT</td>
+          <td>1138</td>
+          <td>
+            <a href="#issue-1138">[NC] Patch 03/06 timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>April 1, 2021, 6:29 AM PDT</td>
+          <td>1138</td>
+          <td>
+            <a href="#issue-1138">[NC] Patch 03/06 timestamp</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 3, 2021, 1:47 PM PST</td>
+          <td>1122</td>
+          <td>
+            <a href="#issue-1122">[NC] Clear Negative (people or cases)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 3, 2021, 1:47 PM PST</td>
+          <td>1122</td>
+          <td>
+            <a href="#issue-1122">[NC] Clear Negative (people or cases)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 2, 2021, 12:04 PM PST</td>
+          <td>1119</td>
+          <td>
+            <a href="#issue-1119">[NC] backfill total tests, and adjust PCR testing based on PCR-only testing numbers from the state</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 2, 2021, 12:04 PM PST</td>
+          <td>1119</td>
+          <td>
+            <a href="#issue-1119">[NC] backfill total tests, and adjust PCR testing based on PCR-only testing numbers from the state</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 27, 2020, 12:59 PM PDT</td>
+          <td>869</td>
+          <td>
+            <a href="#issue-869">[NC] Patching probable deaths for 9/26</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>September 3, 2020, 7:09 AM PDT</td>
+          <td>811</td>
+          <td>
+            <a href="#issue-811">[NC] Backfill NCDHHS historical data</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 17, 2020, 7:47 PM PDT</td>
+          <td>772</td>
+          <td>
+            <a href="#issue-772">[NC] Total Tests (PCR) has no data before 5/13</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>August 13, 2020, 7:25 AM PDT</td>
+          <td>759</td>
+          <td>
+            <a href="#issue-759">[NC] CTP Reporting Specimens Results in Total PCR Tests (People) Instead of Total Tests (PCR)</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>July 23, 2020, 8:17 AM PDT</td>
+          <td>658</td>
+          <td>
+            <a href="#issue-658">[NC] Updated Hospitalization Methodology and Curr. ICU</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>June 10, 2020, 7:56 AM PDT</td>
+          <td>485</td>
+          <td>
+            <a href="#issue-485">NC Test Historicals 5/23</a>
+          </td>
+        </tr>
+      
+        <tr>
+          <td>March 17, 2020, 4:43 PM PDT</td>
+          <td>16</td>
+          <td>
+            <a href="#issue-16">NC Data correction</a>
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+  
+
+    <h2 id="issue-1138">#1138: [NC] Patch 03/06 timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1138</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 1, 2021, 6:29 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1138" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NC</p>
+<p><strong>Dates affected:</strong> 03/06/21</p>
+<p><strong>Describe the issue:</strong> On March 6, 2021, we incorrectly entered North Carolina's timestamp  as 03/02/21 11:35 when it should have been 03/06/21 11:35. We are correcting this error in our historical data.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-811909525">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 1, 2021, 6:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1138#issuecomment-811909525" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+NC 2021-03-06
+lastUpdateTime: 2021-03-06 16:35:00+00:00 (was 2021-03-02 16:35:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1138">#1138: [NC] Patch 03/06 timestamp</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1138</p>
+          <p>
+            <strong>hmhoffman</strong> opened this issue on April 1, 2021, 6:29 AM PDT</p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1138" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NC</p>
+<p><strong>Dates affected:</strong> 03/06/21</p>
+<p><strong>Describe the issue:</strong> On March 6, 2021, we incorrectly entered North Carolina's timestamp  as 03/02/21 11:35 when it should have been 03/06/21 11:35. We are correcting this error in our historical data.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-811909525">
+          <div class="frontmatter">
+            <div>
+              <strong>hmhoffman</strong> commented on April 1, 2021, 6:30 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1138#issuecomment-811909525" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Rows edited: 1
+NC 2021-03-06
+lastUpdateTime: 2021-03-06 16:35:00+00:00 (was 2021-03-02 16:35:00+00:00)</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1122">#1122: [NC] Clear Negative (people or cases)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1122</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on March 3, 2021, 1:47 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1122" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NC</p>
+<p><strong>Describe the problem</strong>
+We are clearing history of Negative (people or cases) in NC. This number mixes units, but we kept it because we relied on it for totalTestResults. Now, with totalTestResults drawn from totalTestsViral, we no longer need the negatives field to be filled.</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790085306">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 3, 2021, 1:50 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1122#issuecomment-790085306" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6079398/Changes.8.txt">Changes (8).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1122">#1122: [NC] Clear Negative (people or cases)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1122</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on March 3, 2021, 1:47 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1122" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NC</p>
+<p><strong>Describe the problem</strong>
+We are clearing history of Negative (people or cases) in NC. This number mixes units, but we kept it because we relied on it for totalTestResults. Now, with totalTestResults drawn from totalTestsViral, we no longer need the negatives field to be filled.</p>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-790085306">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 3, 2021, 1:50 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1122#issuecomment-790085306" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6079398/Changes.8.txt">Changes (8).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1119">#1119: [NC] backfill total tests, and adjust PCR testing based on PCR-only testing numbers from the state</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1119</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on March 2, 2021, 12:04 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1119" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> Backfilling tests from March-17th to May-17th, 2020.
+Updating the time series with the separated PCR (from antigen) tests starting on September 22th, 2020 -- this is when the state started reporting separate PCR and antigen testing.</p>
+<p>Source for testing data: https://covid19.ncdhhs.gov/dashboard/data-behind-dashboards &quot;Daily Testing Metrics&quot; tab
+Molecular data only = &quot;Molecular Test&quot;</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-789195881">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on March 2, 2021, 12:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1119#issuecomment-789195881" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6071630/Multi-edit.tool-PRODUCTION.-.NC-reb-20210302_post.csv.txt">Multi-edit tool-PRODUCTION - NC-reb-20210302_post.csv.txt</a>
+<a href="../../assets/github/files/6071631/Multi-edit.tool-PRODUCTION.-.NC-reb-20210302.csv.txt">Multi-edit tool-PRODUCTION - NC-reb-20210302.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-790063551">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 3, 2021, 1:21 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1119#issuecomment-790063551" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We carried a source note and accidentally used lumped at the topline by mistake -- fixing
+<a href="../../assets/github/files/6079266/Changes.7.txt">Changes (7).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-1119">#1119: [NC] backfill total tests, and adjust PCR testing based on PCR-only testing numbers from the state</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            1119</p>
+          <p>
+            <strong>space-buzzer</strong> opened this issue on March 2, 2021, 12:04 PM PST</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1119" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>Target Date:</strong> Backfilling tests from March-17th to May-17th, 2020.
+Updating the time series with the separated PCR (from antigen) tests starting on September 22th, 2020 -- this is when the state started reporting separate PCR and antigen testing.</p>
+<p>Source for testing data: https://covid19.ncdhhs.gov/dashboard/data-behind-dashboards &quot;Daily Testing Metrics&quot; tab
+Molecular data only = &quot;Molecular Test&quot;</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-789195881">
+          <div class="frontmatter">
+            <div>
+              <strong>space-buzzer</strong> commented on March 2, 2021, 12:33 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1119#issuecomment-789195881" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><a href="../../assets/github/files/6071630/Multi-edit.tool-PRODUCTION.-.NC-reb-20210302_post.csv.txt">Multi-edit tool-PRODUCTION - NC-reb-20210302_post.csv.txt</a>
+<a href="../../assets/github/files/6071631/Multi-edit.tool-PRODUCTION.-.NC-reb-20210302.csv.txt">Multi-edit tool-PRODUCTION - NC-reb-20210302.csv.txt</a></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-790063551">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on March 3, 2021, 1:21 PM PST</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/1119#issuecomment-790063551" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>We carried a source note and accidentally used lumped at the topline by mistake -- fixing
+<a href="../../assets/github/files/6079266/Changes.7.txt">Changes (7).txt</a></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-869">#869: [NC] Patching probable deaths for 9/26</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            869</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on September 27, 2020, 12:59 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/869" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: NC</p>
+<p><strong>Describe the problem</strong>
+NC added probables 9/26 but we did not break out our confirmed and probable capture. We should record the breakdown.</p>
+<p><strong>Link to data source</strong>
+<img width="730" alt="Screen Shot 2020-09-26 at 1 40 20 PM" src="https://user-images.githubusercontent.com/15933271/94374450-57275c80-00da-11eb-92ee-7696bdfcad15.png"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-699681214">
+          <div class="frontmatter">
+            <div>
+              <strong>karaschechtman</strong> commented on September 27, 2020, 1:00 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/869#issuecomment-699681214" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>Before</strong>
+<img width="184" alt="Screen Shot 2020-09-27 at 3 58 17 PM" src="../../assets/github/images/15933271/94374468-76be8500-00da-11eb-84df-daa549ac787c.png">
+<strong>After</strong>
+<img width="245" alt="Screen Shot 2020-09-27 at 3 59 57 PM" src="../../assets/github/images/15933271/94374476-85a53780-00da-11eb-814e-316614f8790a.png"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-811">#811: [NC] Backfill NCDHHS historical data</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            811</p>
+          <p>
+            <strong>vlucent</strong> opened this issue on September 3, 2020, 7:09 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/811" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>North Carolina</p>
+<p>As you are aware, NC announced a major <a href="https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting">correction </a>in their testing data on 8/12.</p>
+<blockquote>
+<p>The error reduces NCDHHS’s official count of cumulative tests performed from 2,044,727 to 1,823,283. It did not impact the case count total or the percent positive calculation that NCDHHS reports. Going back to the beginning of the reporting error, the data will be updated to reflect the accurate number of tests performed.</p>
+</blockquote>
+<p>The  <a href="https://public.tableau.com/views/NCDHHS_COVID-19_DataDownload/DailyMetrics?:embed=y&amp;:toolbar=n&amp;:embed_code_version=3&amp;:loadOrderID=0&amp;:display_count=n&amp;publish=yes&amp;:origin=viz_share_link&amp;:showVizHome=no">NCDHHS data</a> does appear to be updated while the COVID19Tracking project data has not, which still records a negative test change for that day, resulting in awkward 7-day average plots:</p>
+<p><img src="https://user-images.githubusercontent.com/22573473/92125652-42062900-edcd-11ea-8149-fd930bcedee2.png" alt="image"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-698042936">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on September 23, 2020, 5:35 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/811#issuecomment-698042936" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-703184833">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on October 3, 2020, 6:14 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/811#issuecomment-703184833" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-772">#772: [NC] Total Tests (PCR) has no data before 5/13</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            772</p>
+          <p>
+            <strong>muamichali</strong> opened this issue on August 17, 2020, 7:47 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/772" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: North Caroline</p>
+<p><strong>Describe the problem</strong></p>
+<ol>
+<li>Before 5/13 there are not values for <code>Total Tests (PCR)</code></li>
+<li>On 5/17 there is no value for <code>Total Tests (PCR)</code></li>
+</ol>
+<p><strong>Link to data source</strong>
+Provide links to original data sources that we can refer to, like a state COVID website.</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-814447383">
+          <div class="frontmatter">
+            <div>
+              <strong>muamichali</strong> commented on April 6, 2021, 2:20 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/772#issuecomment-814447383" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This was addressed by https://github.com/COVID19Tracking/issues/issues/1119. Closing ticket. 🎉</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-759">#759: [NC] CTP Reporting Specimens Results in Total PCR Tests (People) Instead of Total Tests (PCR)</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            759</p>
+          <p>
+            <strong>jesseandersonumd</strong> opened this issue on August 13, 2020, 7:25 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State:</strong> NC</p>
+<p><strong>Dates impacted:</strong> 5/13 - 8/12</p>
+<p><strong>Issue:</strong> Upon further outreach and review of the document linked in sources, we have updated our understanding of how NC reports total test results. NC's total tests include results from <strong>all tests</strong> administered for one person and have reported that the unit for total tests is specimens. Therefore, we should copy over all values from <strong>Total PCR Tests (People)</strong> to <strong>Total Tests (PCR)</strong> and report all values for total tests in <strong>Total Tests (PCR)</strong> from here on out.</p>
+<p>Sources: https://www.ncdhhs.gov/news/press-releases/ncdhhs-corrects-covid-19-testing-totals-after-identifying-labcorp-reporting</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-673521082">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:44 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673521082" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>BEFORE:</strong>
+<img src="../../assets/github/images/57415941/90148846-d0990480-dd51-11ea-8a07-42ec108af47f.png" alt="Screen Shot 2020-08-13 at 10 42 51 AM"></p>
+<p>All values:</p>
+<p>1823283
+2017498
+2001919
+1986548
+1969766
+1939812
+1904750
+1873668
+1854026
+1837410
+1813510
+1786412
+1757102
+1724924
+1691434
+1663540
+1635476
+1613385
+1579042
+1550297
+1523675
+1491820
+1458997
+1423888
+1394864
+1379143
+1343974
+1312757
+1284637
+1254846
+1220486
+1199575
+1176058
+1150612
+1121811
+1096682
+1071290
+1051846
+1036838
+1018296
+999293
+971120
+942238
+910033
+886305
+871905
+855131
+836725
+811278
+791285
+773828
+757345
+745775
+731341
+712313
+693678
+667422
+651421
+638479
+627130
+611690
+595697
+572677
+553650
+535711
+520113
+511226
+497350
+482147
+468302
+449263
+434921
+421908
+416289
+404157
+391231
+375192
+364156
+352331
+344690
+336656
+329582
+303224
+290645
+277603
+265008
+255755
+238586
+231547
+210457
+202244</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673522336">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:46 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673522336" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>AFTER:</p>
+<p><img src="../../assets/github/images/57415941/90149236-4604d500-dd52-11ea-9f2b-fd2fa504f11c.png" alt="Screen Shot 2020-08-13 at 10 46 28 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673523512">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:48 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673523512" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>UPDATED in database:</p>
+<p><img src="../../assets/github/images/57415941/90149511-9419d880-dd52-11ea-961e-25f83fb8008e.png" alt="Screen Shot 2020-08-13 at 10 48 34 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673524666">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 7:50 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673524666" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>States Matrix before:</p>
+<p><img src="../../assets/github/images/57415941/90154257-e7daf080-dd57-11ea-9cc3-28ae4ede14c9.png" alt="Screen Shot 2020-08-13 at 11 27 15 AM"></p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-673545078">
+          <div class="frontmatter">
+            <div>
+              <strong>jesseandersonumd</strong> commented on August 13, 2020, 8:27 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/759#issuecomment-673545078" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>States Matrix after:</p>
+<p><img src="../../assets/github/images/57415941/90154292-f1fcef00-dd57-11ea-8272-07c17edc6bad.png" alt="Screen Shot 2020-08-13 at 10 50 26 AM"></p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-658">#658: [NC] Updated Hospitalization Methodology and Curr. ICU</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            658</p>
+          <p>
+            <strong>the-daniel-lin</strong> opened this issue on July 23, 2020, 8:17 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Backfill
+                </span>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  not stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/658" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p><strong>State or US</strong>: North Carolina</p>
+<p><strong>Describe the problem</strong>
+On 7/21, NC announced: &quot;North Carolina has launched new, more detailed hospitalization data to provide more insights into North Carolina's hospital capacity.&quot; This slightly altered historical 'current hospitalization' and 'current icu' values until 6/21. On 7/22, we reported the 7/21 numbers for hospitalization and icu. For the backfill, data should be lagged by a day.</p>
+<p><strong>Link to data source</strong>
+Slack Thread:
+https://covid-tracking.slack.com/archives/C010RFJ0ZD3/p1595306262410800</p>
+<p>State Site (bar chart below the chart labeled 'Currently Hospitalized COVID-19 Patients' --&gt; select 'Adult ICU Patients')
+https://covid19.ncdhhs.gov/dashboard/hospitalizations#content-container</p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-670647608">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on August 7, 2020, 11:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/658#issuecomment-670647608" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-691349185">
+          <div class="frontmatter">
+            <div>
+              <strong>MattHilliard</strong> commented on September 11, 2020, 4:12 PM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/658#issuecomment-691349185" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Unfortunately it looks like the state dashboard's Tableau graph only shows one month of data, so we can't get the July statistics at this point unless <strong>@space-buzzer</strong> knows of a different data source for NC hospitalization data.</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-485">#485: NC Test Historicals 5/23</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            485</p>
+          <p>
+            <strong>karaschechtman</strong> opened this issue on June 10, 2020, 7:56 AM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Historical Data
+                </span>
+              
+                <span class="tag">
+                  stale
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/485" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>For North Carolina, the historical data currently lists 26,358 new tests for May 23. According to the state website there were only 8,320 tests on that day.</p>
+<p><img src="https://frontapp.com/assets/img/favicons/favicon-32x32.png" height="16" width="16" alt="Front logo" /> <a href="https://app.frontapp.com/open/top_24m35">Front conversations</a></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-649624694">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on June 25, 2020, 8:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/485#issuecomment-649624694" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-653915904">
+          <div class="frontmatter">
+            <div>
+              <strong>stale[bot]</strong> commented on July 5, 2020, 10:29 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/485#issuecomment-653915904" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>This issue has been closed because it was stale for 15 days, and there was no further activity on it for 10 days. You can feel free to re-open it if the issue is important, and label it as &quot;not stale.&quot;</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    <h2 id="issue-16">#16: NC Data correction</h2>
+    <div class="issue">
+      <div class="frontmatter">
+        <div>
+          <p>
+            <strong>Issue number</strong>
+            16</p>
+          <p>
+            <strong>careeningspace</strong> opened this issue on March 17, 2020, 4:43 PM PDT</p>
+          
+            <p>
+              <strong>Labels </strong>
+              
+                <span class="tag">
+                  Data quality
+                </span>
+              
+            </p>
+          
+        </div>
+        <div>
+          <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/16" target="_blank">Open in Github</a>
+        </div>
+      </div>
+      <div class="body">
+        <p>We were temporarily adding Deaths into our total for SC and NV. I cleaned the data up and fixed the formula:</p>
+<p><img src="https://user-images.githubusercontent.com/43073915/76911590-88031b00-6887-11ea-9e0d-54b9e81d3c09.png" alt="Screen Shot 2020-03-17 at 7 28 34 PM"></p>
+<p><img src="https://user-images.githubusercontent.com/43073915/76911695-d7494b80-6887-11ea-8a62-3b4049578593.png" alt="Screen Shot 2020-03-17 at 7 28 34 PM"></p>
+<p><img src="https://user-images.githubusercontent.com/43073915/76911591-89ccde80-6887-11ea-8483-7384d960d071.png" alt="Screen Shot 2020-03-17 at 7 41 22 PM"></p>
+
+      </div>
+
+    </div>
+    
+      <h3>Comments</h3>
+      
+        <div class="comment" id="comment-601696387">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 20, 2020, 6:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/16#issuecomment-601696387" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@careeningspace</strong> thanks for the catch! i think this issue can be closed?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601696768">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 20, 2020, 6:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/16#issuecomment-601696768" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Please do!</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601696387">
+          <div class="frontmatter">
+            <div>
+              <strong>hammer</strong> commented on March 20, 2020, 6:19 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/16#issuecomment-601696387" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p><strong>@careeningspace</strong> thanks for the catch! i think this issue can be closed?</p>
+
+          </div>
+        </div>
+      
+        <div class="comment" id="comment-601696768">
+          <div class="frontmatter">
+            <div>
+              <strong>careeningspace</strong> commented on March 20, 2020, 6:20 AM PDT</div>
+            <div>
+              <a class="github-link" href="https://github.com/COVID19Tracking/issues/issues/16#issuecomment-601696768" target="_blank">Open in Github</a>
+            </div>
+          </div>
+          <div class="body">
+            <p>Please do!</p>
+
+          </div>
+        </div>
+      
+    
+  
+
+    </main>
+  </body>
+</html>

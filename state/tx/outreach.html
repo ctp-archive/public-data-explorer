@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Texas Outreach</title>
+    <style>
+      .breadcrumbs {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 1rem 0;
+}
+.breadcrumbs ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs ul li {
+  display: inline-block;
+}
+.breadcrumbs ul li::after {
+  content: ">";
+  padding-left: 0.5rem;
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.breadcrumbs ul li:last-child::after {
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diff .added {
+  display: inline-block;
+  background: lightgreen;
+  border: green;
+}
+.diff .removed {
+  display: inline-block;
+  background: pink;
+  border: red;
+  text-decoration: line-through;
+}
+
+.comment,
+.issue {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.comment .body,
+.issue .body {
+  padding: 1rem;
+}
+.comment .body img,
+.issue .body img {
+  display: block;
+  margin: 0.5rem 0;
+}
+.comment .body p:first-child,
+.issue .body p:first-child {
+  margin-top: 0;
+}
+.comment .body p:last-child,
+.issue .body p:last-child {
+  margin-bottom: 0;
+}
+.comment .frontmatter,
+.issue .frontmatter {
+  background: rgb(246, 248, 250);
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid grey;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment .frontmatter div,
+.issue .frontmatter div {
+  width: 80%;
+}
+.comment .frontmatter div:last-child,
+.issue .frontmatter div:last-child {
+  width: 20%;
+  text-align: right;
+}
+.comment .frontmatter p,
+.issue .frontmatter p {
+  margin: 0;
+}
+.comment .frontmatter .github-link,
+.comment .frontmatter .github-link:visited,
+.issue .frontmatter .github-link,
+.issue .frontmatter .github-link:visited {
+  color: blue;
+  font-weight: bold;
+}
+
+ul.unstyled {
+  list-style-type: none;
+  padding: 0;
+}
+ul.unstyled[role=navigation] li {
+  margin-bottom: 0.5rem;
+}
+
+.slack-message {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+.slack-message .meta,
+.slack-message div {
+  padding: 1rem;
+}
+.slack-message div > p:first-child {
+  margin-top: 0;
+}
+.slack-message .meta {
+  margin-top: 0;
+  border-bottom: 1px solid grey;
+}
+.slack-message .attachments {
+  border-top: 1px solid grey;
+}
+
+.redacted {
+  display: inline-block;
+  width: 80px;
+  height: 1rem;
+  background: black;
+}
+
+.state-navigation {
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.state-navigation .nav-wrapper {
+  margin-bottom: 1rem;
+}
+.state-navigation .nav-wrapper:last-child {
+  margin-bottom: 0;
+}
+.state-navigation .nav-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.state-navigation ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.state-navigation ul li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.state-navigation ul li a {
+  font-weight: bold;
+}
+
+p.download {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+table {
+  overflow-y: auto;
+  height: 100px;
+  width: 100vw;
+  margin-bottom: 2rem;
+  text-align: left;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  padding: 0.5rem;
+}
+table thead {
+  position: sticky;
+  background: white;
+  top: 0;
+  border-left: 1px solid grey;
+  z-index: 4;
+}
+table thead tr {
+  border-bottom: 2px solid black;
+}
+table th {
+  text-align: left;
+}
+table tbody tr:hover {
+  background: #eaf5ff;
+}
+table tbody th {
+  background: white;
+  white-space: nowrap;
+}
+table td {
+  border-left: 1px solid grey;
+}
+table td.changed {
+  background: rgb(197, 149, 149);
+}
+table.sticky thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+table.sticky tbody {
+  height: 80vh;
+  overflow: scroll;
+}
+table.sticky tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.summary-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited {
+  color: #0366d6;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.muted {
+  color: grey;
+}
+
+blockquote {
+  border-left: 3px solid grey;
+  padding-left: 1rem;
+  color: grey;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+dl dl,
+dl dt {
+  margin-bottom: 1rem;
+}
+dl dt {
+  font-weight: bold;
+  grid-column: 1;
+}
+dl dd {
+  grid-column: 2;
+}
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <div class="container">
+        <ul>
+          
+            <li>
+              
+                <a href="../../index.html">Home</a>
+              
+            </li>
+          
+            <li>
+              
+                <a href="index.html">Texas</a>
+              
+            </li>
+          
+            <li>
+              
+                Outreach
+              
+            </li>
+          
+        </ul>
+      </div>
+    </nav>
+    <header>
+      
+  <div class="state-navigation" role="nav">
+  <div class="container">
+    <h1>
+      <a href="index.html">Texas</a>
+      
+    </h1>
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Testing &amp; outcomes</span>
+      <ul role="nav" aria-label="Testing and outcomes">
+        <li>
+          <a href="index.html">Data</a>
+        </li>
+        <li>
+          <a href="metadata-history.html">Metadata history</a>
+        </li>
+        <li>
+          <a href="outreach.html">Outreach</a>
+        </li>
+        <li>
+          <a href="data-quality-log.html">Data quality log</a>
+        </li>
+        <li>
+          <a href="annotations.html">Annotation history</a>
+        </li>
+        <li>
+          <a href="github-issues.html">Github issues</a>
+        </li>
+        <li>
+          <a href="tweets.html">Tweets</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Long-term care</span>
+      <ul role="nav" aria-label="Long-term care navigation">
+        <li>
+          <a href="ltc/index.html">Data</a>
+        </li>
+        <li>
+          <a href="ltc/notes.html">Notes</a>
+        </li>
+        <li>
+          <a href="ltc/metadata-history.html">Metadata History</a>
+        </li>
+
+        <li>
+          <a href="ltc/facilities.html">Facilities</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-wrapper">
+      <span class="nav-label" aria-hidden="true">Race &amp; ethnicity</span>
+      <ul role="nav" aria-label="Race and ethnicity navigation">
+        <li>
+          <a href="crdt/index.html">Data</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </header>
+    <main class="container">
+      
+  
+    <h2>April 1, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We notice that the number of positive antigen tests that TX reports is much lower than the number of probable cases. On March 22, for example, there were 379,471 probable cases vs. only 223,567 antigen positive tests.
+In most other states reporting both figures using the most recent case definition as TX does, the values track very closely.
+Why are TX’s antigen positive tests so much lower than its probable cases?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>April 6, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The definition of probable cases doesn’t require a person be tested if they meet clinical criteria and have an epidemiological link to a confirmed case. There are 57 local health departments and 8 regional health departments in Texas that investigate and report their cases to DSHS. The counts they provide are what is posted for probable cases on the DSHS dashboard.</p>
+
+        </div>
+      
+    
+  
+    <h2>January 15, 2021</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Do you have plans to post LTC Vaccination Data (Staff &amp; Residents)?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>January 15, 2021</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>As the regulatory authority for long-term care facilities in Texas, our top priority is the health and safety of the people in these facilities. Our team is working hard to protect residents and staff in these facilities from COVID-19. The Texas Department of State Health Services is coordinating the distribution of COVID-19 vaccines, and we are supporting their efforts. Please contact Texas DSHS for information on vaccine distribution and vaccination rates. Texas HHSC recently established rules requiring nursing facilities and assisted living facilities to report vaccination data. We will be placing this self-reported information on the HHSC website and updating it daily. You can read the emergency rules here: <a href="https://hhs.texas.gov/about-hhs/communications-events/news/2021/01/hhsc-adopts-new-covid-19-vaccination-data-reporting-emergency-rules-nf-alf-providers">https://hhs.texas.gov/about-hhs/communications-events/news/2021/01/hhsc-adopts-new-covid-19-vaccination-data-reporting-emergency-rules-nf-alf-providers</a></p>
+
+        </div>
+      
+    
+  
+    <h2>October 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>We would like to know the total number of tested individuals that correspond to the number posted for &quot;Total Molecular Tests&quot; on your Covid-19 &quot;Texas Tests by Type&quot; Dashboard.  Today, it has the following data:    Screen Shot 2020-09-24 at 3.28.11 PM.png  What would it take to have, in small type underneath 5,740,674,  the number of people who have obtained a Molecular Test?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are not tracking the tests by person.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Request for Testing Data in &quot;Friendly&quot; file format (e.g. CSV or JSON)</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We post an Excel spreadsheet daily with all of the data in the accessible dashboard file. This file is very easy to access and download. If anyone wants help, I can work with them.</p>
+
+        </div>
+      
+    
+  
+    <h2>October 20, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>According to the notes on the &quot;Texas Tests by Type&quot; Dashboard, the data is &quot;totally deduplicated&quot; since that is the only way it can get passed the quality checks performed by the NEDSS. How should we interpret your data for individuals that are tested multiple times, for example those who test on a routine basis for their job?  Are your numbers in terms of:  instances swabbed per week, recording only the first positive per person?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>October 20, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>We are counting the number of tests by day and not the number of tests by person. So, if a person receives multiple tests (same type of test) on the same day with the same sample, then they will only be counted once. If they are getting tested daily (different collection dates, samples and tests), these tests are ALL getting counted. We are only removing the true duplicate reports. If they were tested by different types of tests on the same day, each test would be counted in its respective category.</p>
+
+        </div>
+      
+    
+  
+    <h2>August 3, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>HHS changes</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>August 3, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The biggest change is that US HHS was asking for more data fields to be reported, and in some cases we needed to update which fields we were pulling together ensure the data matches what we were reporting previously.</p>
+<p>After the change, hospitals initially reported directly to HHS, but DSHS has again assumed reporting responsibility and is submitting data to the federal government on hospitals’ behalf. There hasn’t been a change in which hospitals are reporting (or should be).</p>
+
+        </div>
+      
+    
+  
+    <h2>July 24, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>How many LTC Facilities were tested?
+With 330 staff testing positive, how many tests were performed total?<br>
+With 384 residents testing positive, how many tests were performed for this group?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 24, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Q1. To date (7/24), 25.
+Q2. Waiting for approval of Records Release Request<br>
+Q3. Waiting for approval of Records Release Request</p>
+
+        </div>
+      
+    
+  
+    <h2>July 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Antigen testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>&quot;We know that a very small number of commercial labs are using the antigen test. These results are included with the viral testing numbers.&quot;</p>
+
+        </div>
+      
+    
+  
+    <h2>July 10, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Pool testing?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>July 10, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>No</p>
+
+        </div>
+      
+    
+  
+    <h2>June 8, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Why the high # of race/ethnicity &quot;unknown&quot;s for Harris County/Houston</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>June 8, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>The bulk of the unknowns are from early in the crisis when they weren't collecting this. She says that data is lost forever; no way of going back to find out (may be worth following up in case they can be pressured reach back out to people? but sounded like a no anyway). She also said they have a 'prefer not to disclose' option and that those are categorized &quot;unknown.&quot;</p>
+<p>She did give provide some additional data (percentages, unfortunately) as of today, June 8 2020, that may not be on the dashboard. These are for the 119 (as of today June 8) deaths in Harris County EXCLUDING city of Houston</p>
+<p>32.48% - White (Non-Hispanic)
+30.77% - Hispanic/Latino
+27.35% - Black/African-American (Non-Hispanic)
+7.69% - Asian/Pacific Islander
+0.85% - Other</p>
+
+        </div>
+      
+    
+  
+    <h2>May 31, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>What groups are included in Other?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>May 31, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>Other includes pac islander, native hawaiian, native american, multi-racial, or another race than listed. hispanic of any race is counted hispanic. non-hispanic unknown are counted as blank/null.</p>
+
+        </div>
+      
+    
+  
+    <h2>May 31, 2020</h2>
+    <h3>Question</h3>
+    <div>
+      <p>Is TX working to get demographic data for more of the cases / deaths?</p>
+
+    </div>
+    
+      <h3>Answer
+      </h3>
+      
+        <h4>May 31, 2020</h4>
+        <p>
+          <strong>Answered by</strong>
+          
+            <span class="redacted"></span>
+          
+        </p>
+        <div>
+          <p>They are, but it's slow going.</p>
+
+        </div>
+      
+    
+  
+  
+    </main>
+  </body>
+</html>
